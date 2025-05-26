@@ -379,7 +379,7 @@ export default {
         const json = await response.json();
 
         if (json.statusCode === 200) {
-          console.log(json.data);
+          console.log("raw::", json.data);
 
           // ใช้ map เพื่อสร้างข้อมูล Billings และเก็บข้อมูลทั้งหมดใน this.Billings
           this.Billings = json.data.map((item) => {
@@ -420,7 +420,7 @@ export default {
               billing_status: item.billing_status,
               payments: item.payments,
               productForms: item.details.map((detail) => ({
-                ID: detail.ID,
+                ID: detail.productID,
                 sale_price: detail.sale_price,
                 sale_discount: detail.sale_discount,
                 sale_qty: detail.sale_qty,
@@ -659,7 +659,7 @@ export default {
       // ดึงข้อมูลจาก Billings ที่ถูกกรองแล้ว เพื่อรวมยอดขายแยกตามประเภทสินค้า
       const productTypeSales = {};
 
-      // console.log(this.ProductFilter)
+      console.log("---------------->>", this.filteredData);
 
       this.filteredData.forEach((billing) => {
         billing.productForms.forEach((product) => {
@@ -682,15 +682,35 @@ export default {
           }
 
           productTypeSales[productTypeName] += totalPrice;
+          // console.log("productTypeName", productTypeName);
         });
       });
 
-      const chartData = Object.keys(productTypeSales).map((productTypeName) => {
-        return {
-          value: productTypeSales[productTypeName],
-          name: productTypeName,
-        };
-      });
+      // const chartData = Object.keys(productTypeSales).map((productTypeName) => {
+      //   return {
+      //     value: productTypeSales[productTypeName],
+      //     name: productTypeName,
+      //   };
+      // });
+
+      console.log("----------dffdf??", this.Billings[0].productForms);
+      this.Billings.productForms;
+
+      const data = [
+        {
+          product_type: "สินค้า",
+          total_price: 50000,
+        },
+        {
+          product_type: "บริการ",
+          total_price: 20000,
+        },
+      ];
+
+      const chartData = data.map((item) => ({
+        value: item.total_price,
+        name: item.product_type,
+      }));
 
       const option = {
         // title: {

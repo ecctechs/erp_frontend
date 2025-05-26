@@ -1504,7 +1504,7 @@ export default {
         // console.log(product);
         return [
           index + 1,
-          product ? product.productImg : "", // ดึงรูปภาพสินค้าถ้ามี
+          product && product.productImg ? product.productImg : "---", // ดึงรูปภาพสินค้าถ้ามี
           product ? product.productname + "\n" + form.product_detail : "", // ดึงชื่อสินค้าถ้ามี
           form.sale_qty,
           this.formatDecimal(product ? product.price : ""),
