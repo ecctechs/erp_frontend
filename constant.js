@@ -1,3 +1,5 @@
-require('dotenv').config()
+import dotenv from 'dotenv'
 
-export const config = {url: process.env.BACKEND_URL}
+dotenv.config()
+
+export const config = {url: import.meta.env.VITE_BACKEND_URL}
