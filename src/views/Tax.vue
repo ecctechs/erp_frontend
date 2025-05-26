@@ -1032,7 +1032,7 @@ export default {
         { label: this.t("remarkHeaderTable"), key: "tax_invoice_remark" },
         { label: this.t("statusHide"), key: "statusHide" },
         { label: this.t("statusHide"), key: "statusHide" },
-          { label: this.t("statusHide"), key: "statusHide" },
+        { label: this.t("statusHide"), key: "statusHide" },
         // { label: this.t("billingStatusHeaderTable"), key: "billing" },
       ];
     },
@@ -1083,7 +1083,7 @@ export default {
       if (this.t("headerLang") === "TH") {
         filteredInvoices = filteredInvoices.map((inv) => ({
           ...inv,
-     
+
           showAllowButton: inv.deleted_at === "" || inv.deleted_at === null,
           tax_invoice_status:
             inv.tax_invoice_status === "Pending"
@@ -1716,7 +1716,7 @@ export default {
         // console.log(product);
         return [
           index + 1,
-          product ? product.productImg : "", // ดึงรูปภาพสินค้าถ้ามี
+          product && product.productImg ? product.productImg : "---", // ดึงรูปภาพสินค้าถ้ามี
           product ? product.productname + "\n" + form.product_detail : "", // ดึงชื่อสินค้าถ้ามี
           form.sale_qty,
           this.formatDecimal(product ? product.price : ""),
@@ -2835,7 +2835,7 @@ export default {
               sale_id: item.sale_id,
               tax_invoice_id: item.tax_invoice_id,
               invoice_id: item.invoice_id,
-               deleted_at: item.deleted_at,
+              deleted_at: item.deleted_at,
               productForms: item.details.map((detail) => ({
                 productID: detail.productID,
                 sale_price: detail.sale_price,

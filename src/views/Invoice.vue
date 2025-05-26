@@ -1069,7 +1069,7 @@ export default {
         "พ.ย.": "Nov",
         "ธ.ค.": "Dec",
       };
-console.log("filteredInvoices ----",filteredInvoices)
+      console.log("filteredInvoices ----", filteredInvoices);
 
       // แปลงค่าของ billing ถ้าภาษาเป็น TH
       if (this.t("headerLang") === "TH") {
@@ -1670,7 +1670,7 @@ console.log("filteredInvoices ----",filteredInvoices)
         // console.log(product);
         return [
           index + 1,
-          product ? product.productImg : "", // ดึงรูปภาพสินค้าถ้ามี
+          product && product.productImg ? product.productImg : "---", // ดึงรูปภาพสินค้าถ้ามี
           product ? product.productname + "\n" + form.product_detail : "", // ดึงชื่อสินค้าถ้ามี
           form.sale_qty,
           this.formatDecimal(product ? product.price : ""),
@@ -2862,7 +2862,7 @@ console.log("filteredInvoices ----",filteredInvoices)
 
               invoice_date: InvoiceDate,
               remark: item.invoice_remark || "",
-               deleted_at:item.deleted_at,
+              deleted_at: item.deleted_at,
               // billing: item.billing,
               productForms: item.details.map((detail) => ({
                 productID: detail.productID,

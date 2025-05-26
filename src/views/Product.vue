@@ -213,9 +213,9 @@
         </select>
       </div>
       <div class="mb-3 div-for-formControl">
-        <label for="productname" class="col-sm-3 col-md-6"><span style="color: red">*</span>{{
-          t("productNameProduct")
-        }}</label>
+        <label for="productname" class="col-sm-3 col-md-6"
+          ><span style="color: red">*</span>{{ t("productNameProduct") }}</label
+        >
         <input
           class="form-control col-sm-7 col-md-6"
           v-model="formData.productname"
@@ -237,9 +237,9 @@
         />
       </div>
       <div class="mb-3 div-for-formControl">
-        <label class="col-sm-3 col-md-6" for="price"><span style="color: red">*</span>{{
-          t("productPriceSale")
-        }}</label>
+        <label class="col-sm-3 col-md-6" for="price"
+          ><span style="color: red">*</span>{{ t("productPriceSale") }}</label
+        >
         <input
           class="form-control col-sm-7 col-md-6"
           v-model="formattedPrice"
@@ -424,9 +424,9 @@ export default {
   setup() {
     const { t } = useI18n();
 
-     const documentName = computed(() => t("dontHaveProduct"));
+    const documentName = computed(() => t("dontHaveProduct"));
 
-     const documentName2 = computed(() => t("dontHaveService"));
+    const documentName2 = computed(() => t("dontHaveService"));
 
     return {
       t,
@@ -667,27 +667,37 @@ export default {
       });
 
       // ฟิลเตอร์ตาม dropDownStatus
-      if (this.dropDownStatus === "active") {    
+      if (this.selectedType === "A") {
+        if (this.dropDownStatus === "active") {
+          filteredProduct = filteredProduct.filter(
+            (emp) =>
+              emp.status.toLowerCase() === "on sales" ||
+              emp.status === "เปิดขาย"
+          );
+        } else if (this.dropDownStatus === "not_active") {
+          filteredProduct = filteredProduct.filter(
+            (emp) =>
+              emp.status.toLowerCase() === "discontinued " ||
+              emp.status === "ยกเลิกขาย"
+          );
+        } else if (this.dropDownStatus === "discon") {
+          filteredProduct = filteredProduct.filter(
+            (emp) => emp.status === "Out of Stock" || emp.status === "หมดสต็อก"
+          );
+        } else {
+          filteredProduct = filteredProduct.filter(
+            (emp) =>
+              emp.status.toLowerCase() === "on sales" ||
+              emp.status === "เปิดขาย"
+          );
+        }
+      } else {
         filteredProduct = filteredProduct.filter(
-          (emp) =>
-            emp.status.toLowerCase() === "on sales" || emp.status === "เปิดขาย"
-        );
-      } else if (this.dropDownStatus === "not_active") {     
-        filteredProduct = filteredProduct.filter(
-          (emp) =>
-            emp.status.toLowerCase() === "discontinued " ||
-            emp.status === "ยกเลิกขาย"
-        );
-      } else if (this.dropDownStatus === "discon") {   
-        filteredProduct = filteredProduct.filter(
-          (emp) => emp.status === "Out of Stock" || emp.status === "หมดสต็อก"
-        );
-      }else{
-              filteredProduct = filteredProduct.filter(
-          (emp) =>
-            emp.status.toLowerCase() === "on sales" || emp.status === "เปิดขาย"
+          (emp) => emp.status.toLowerCase() === "active"
         );
       }
+
+      console.log("filteredProduct-->>", filteredProduct);
 
       // }
       return filteredProduct; // ถ้าไม่มีการค้นหาแสดงทั้งหมด
@@ -937,66 +947,66 @@ export default {
     //     this.isLoading = false;
     //   }
     // },
-async exportProduct() {
+    async exportProduct() {
+      this.isLoading = true;
+      try {
+        const data = this.currentTableData;
 
-  this.isLoading = true;
-  try {
-    const data = this.currentTableData;
+        // Map คอลัมน์เป็นภาษาไทย
+        const columnMap = {
+          ID: "รหัสสินค้า",
+          Category: "หมวดหมู่",
+          productname: "ชื่อสินค้า",
+          productdetail: "รายละเอียดสินค้า",
+          price: "ราคาขาย",
+          productImg: "รูปภาพ",
+          productTypeID: "ประเภทสินค้า",
+          productcost: "ต้นทุน",
+          categoryID: "หมวดหมู่ย่อย",
+          amount: "จำนวน",
+          // ละ status ไม่ต้องแสดง
+        };
 
-    // Map คอลัมน์เป็นภาษาไทย
-    const columnMap = {
-      ID: "รหัสสินค้า",
-      Category: "หมวดหมู่",
-      productname: "ชื่อสินค้า",
-      productdetail: "รายละเอียดสินค้า",
-      price: "ราคาขาย",
-      productImg: "รูปภาพ",
-      productTypeID: "ประเภทสินค้า",
-      productcost: "ต้นทุน",
-      categoryID: "หมวดหมู่ย่อย",
-      amount: "จำนวน",
-      // ละ status ไม่ต้องแสดง
-    };
+        // หัวตารางภาษาไทย
+        const headers = Object.keys(columnMap);
+        const headerRow = headers.map((key) => `"${columnMap[key]}"`).join(",");
 
-    // หัวตารางภาษาไทย
-    const headers = Object.keys(columnMap);
-    const headerRow = headers.map(key => `"${columnMap[key]}"`).join(",");
+        // แปลงข้อมูลแต่ละแถว
+        const rows = data.map((item) => {
+          return headers
+            .map((key) => {
+              let value = item[key] ?? "";
+              // Escape เครื่องหมาย " ถ้ามี
+              if (typeof value === "string") {
+                value = value.replace(/"/g, '""');
+              }
+              return `"${value}"`;
+            })
+            .join(",");
+        });
 
-    // แปลงข้อมูลแต่ละแถว
-    const rows = data.map(item => {
-      return headers.map(key => {
-        let value = item[key] ?? "";
-        // Escape เครื่องหมาย " ถ้ามี
-        if (typeof value === "string") {
-          value = value.replace(/"/g, '""');
-        }
-        return `"${value}"`;
-      }).join(",");
-    });
+        const csvContent = [headerRow, ...rows].join("\n");
 
-    const csvContent = [headerRow, ...rows].join("\n");
+        // ใส่ BOM สำหรับภาษาไทย
+        const bom = "\uFEFF";
+        const utf8Blob = new Blob([bom + csvContent], {
+          type: "text/csv;charset=utf-8;",
+        });
 
-    // ใส่ BOM สำหรับภาษาไทย
-    const bom = "\uFEFF";
-    const utf8Blob = new Blob([bom + csvContent], {
-      type: "text/csv;charset=utf-8;",
-    });
-
-    // ดาวน์โหลด
-    const url = window.URL.createObjectURL(utf8Blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "Products.csv");
-    document.body.appendChild(link);
-    link.click();
-    window.URL.revokeObjectURL(url);
-  } catch (error) {
-    console.error("Error exporting product:", error);
-  } finally {
-    this.isLoading = false;
-  }
-},
-
+        // ดาวน์โหลด
+        const url = window.URL.createObjectURL(utf8Blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "Products.csv");
+        document.body.appendChild(link);
+        link.click();
+        window.URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error("Error exporting product:", error);
+      } finally {
+        this.isLoading = false;
+      }
+    },
 
     // async exportProduct() {
     //   const accessToken = localStorage.getItem("@accessToken");
