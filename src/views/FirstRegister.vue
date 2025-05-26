@@ -953,6 +953,7 @@ if (this.Image_bus) {
             localStorage.setItem("user_id", json.userID);
             localStorage.setItem("user_name", json.userF_name);
             localStorage.setItem("RoleID", json.RoleID);
+            localStorage.setItem("TokenCreate", json.TokenCreate);
 
             // If token and user info are stored, redirect to home
             if (localStorage.getItem("@accessToken")) {
