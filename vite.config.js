@@ -10,19 +10,17 @@ export default defineConfig({
   ],
   server: {
     port: 5111, // เปลี่ยนเลขพอร์ตที่นี่
-  },
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  },
-  server: {
     proxy: {
       '/api': {
-        target: 'https://erp-backend-5gd0.onrender.com',
+        target: process.env.VITE_BACKEND_URL,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  }
 })
