@@ -4,7 +4,8 @@
     <!-- <Navigate /> -->
     <div class="page-body">
       <div class="mb-4">
-        <h2>{{ t("headerProduct") }}</h2>
+        <h2 v-if="selectedType === 'A'">{{ t("product") }}</h2>
+        <h2 v-else-if="selectedType === 'B'">{{ t("service") }}</h2>
       </div>
       <div style="width: 100%; display: flex; justify-content: center">
         <div class="mb-3 btn-group btn-group-size custome-tab">
@@ -84,9 +85,16 @@
         <!-- <div class="col-1 col-sm-1 col-md-7 col-lg-7"></div> -->
         <div class="col-6 col-sm-6 col-md-9 col-lg-9 text-end">
           <a
+            v-if="selectedType === 'A'"
             class="btn btn-success me-3 size-font-sm me-2"
             @click="openPopup"
             >{{ t("addProduct") }}</a
+          >
+          <a
+            v-else-if="selectedType === 'B'"
+            class="btn btn-success me-3 size-font-sm me-2"
+            @click="openPopup"
+            >{{ t("addService") }}</a
           >
           <a
             class="btn btn-outline-secondary mdi mdi-export-variant size-font-sm"
@@ -171,8 +179,18 @@
   <div>
     <Popup :isOpen="isPopupOpen" :closePopup="closePopup" :formData="formData">
       <div class="mb-3" style="margin-left: -10px; margin-top: -25px">
-        <h2 v-if="isAddingMode">{{ t("headerPopupAddProduct") }}</h2>
-        <h2 v-if="isEditMode">{{ t("headerPopupEditProduct") }}</h2>
+        <h2 v-if="isAddingMode && selectedType === 'A'">
+          {{ t("headerPopupAddProduct") }}
+        </h2>
+        <h2 v-if="isAddingMode && selectedType === 'B'">
+          {{ t("headerPopupAddService") }}
+        </h2>
+        <h2 v-if="isEditMode && selectedType === 'A'">
+          {{ t("headerPopupEditProduct") }}
+        </h2>
+        <h2 v-if="isEditMode && selectedType === 'B'">
+          {{ t("headerPopupEditService") }}
+        </h2>
       </div>
       <div class="mb-3 div-for-formControl" hidden>
         <label class="col-sm-3 col-md-6" for="productTypeID">{{
@@ -213,8 +231,17 @@
         </select>
       </div>
       <div class="mb-3 div-for-formControl">
-        <label for="productname" class="col-sm-3 col-md-6"
+        <label
+          for="productname"
+          class="col-sm-3 col-md-6"
+          v-if="selectedType === 'A'"
           ><span style="color: red">*</span>{{ t("productNameProduct") }}</label
+        >
+        <label
+          for="productname"
+          class="col-sm-3 col-md-6"
+          v-else-if="selectedType === 'B'"
+          ><span style="color: red">*</span>{{ t("productNameService") }}</label
         >
         <input
           class="form-control col-sm-7 col-md-6"
@@ -297,7 +324,7 @@
         </div>
         <div class="mb-3 col-6">
           <img
-            v-if="exp_files != '' || isEditMode"
+            v-if="exp_files != ''"
             :src="exp_files || formData.productImg"
             alt="Uploaded Image"
             class="image_exp"
@@ -521,11 +548,11 @@ export default {
       } else if (this.selectedType === "B") {
         return [
           { label: this.t("categoryNameHeaderTable"), key: "Category" },
-          { label: this.t("productHeaderTable"), key: "Product Name" },
+          { label: this.t("serviceHeaderTable"), key: "Product Name" },
           { label: this.t("productDetailHeaderTable"), key: "Detail" },
           { label: this.t("priceHeaderTable"), key: "Price" },
           { label: this.t("costHeaderTable"), key: "Cost" },
-          { label: this.t("productImageHeaderTable"), key: "Product Image" },
+          { label: this.t("serviceImageHeaderTable"), key: "Product Image" },
           { label: this.t("onlystatusHeaderTable"), key: "status" },
         ];
       }
@@ -688,12 +715,14 @@ export default {
           filteredProduct = filteredProduct.filter(
             (emp) =>
               emp.status.toLowerCase() === "on sales" ||
+              emp.status === "Out of Stock" ||
+              emp.status === "หมดสต็อก" ||
               emp.status === "เปิดขาย"
           );
         }
       } else {
         filteredProduct = filteredProduct.filter(
-          (emp) => emp.status.toLowerCase() === "active"
+          (emp) => emp.status.toLowerCase() !== "not active"
         );
       }
 
@@ -758,6 +787,10 @@ export default {
       } else {
         this.formData.productTypeID = "2";
       }
+      // จัดการทั้งกรณี null และ undefined
+      this.Image_pd = [];
+      this.exp_files = [];
+      this.formData.productdetail = "";
     },
     // Closes the popup and resets form data
     closePopup() {
@@ -814,10 +847,20 @@ export default {
         productImg: item.productImg,
         status: item.status,
       }; // Copy item data to formData
+
       this.exp_files = this.formData.productImg;
-      this.formData.status = getCurrentStatus;
+      // this.formData.status = getCurrentStatus;
       this.getProductType();
       this.getCategory();
+
+      if (!item.productImg) {
+        // จัดการทั้งกรณี null และ undefined
+        this.Image_pd = [];
+        this.exp_files = [];
+      } else {
+        // เพิ่มเติม: จัดการกรณีที่ productImg มีค่า
+        console.log("กำลังแก้ไขข้อมูลสินค้าที่มีรูปภาพ:", item.productImg);
+      }
     },
     // Opens the delete confirmation popup
     handleDelete(item) {
@@ -1208,6 +1251,7 @@ export default {
       this.isLoading = true;
       try {
         const formDataImage = this.createFormData();
+
         const response = await fetch(`${API_CALL}/product/AddProduct`, {
           method: "POST",
           headers: { Authorization: `Bearer ${accessToken}` },
@@ -1311,6 +1355,7 @@ export default {
         );
         const json = await response.json();
         if (json.statusCode === 200) {
+          this.isPopupOpen = false;
           this.getProduct(); // Refresh product list after editing
           this.showPopup(this.$t("validation.EditSucc"));
           this.closePopup();
@@ -1322,6 +1367,7 @@ export default {
       } finally {
         this.isLoading = false;
         this.isPopupOpen = true;
+        this.isPopupOpen = false;
       }
     },
     // Deletes a product from the list
@@ -1329,6 +1375,7 @@ export default {
       const accessToken = localStorage.getItem("@accessToken");
       this.isLoading = true;
       const productID = this.formData.productID;
+
       try {
         const response = await fetch(
           `${API_CALL}/product/DeleteProduct/${productID}`,
@@ -1496,13 +1543,13 @@ export default {
       //   }
       // }
 
-      if (this.isEditMode) {
-        if (!this.Image_pd?.name && !this.formData.productImg) {
-          this.isEmpty.productImg = true;
-          errorMessages.push(this.$t("validation.productImg"));
-        } else {
-        }
-      }
+      // if (this.isEditMode) {
+      //   if (!this.Image_pd?.name && !this.formData.productImg) {
+      //     this.isEmpty.productImg = true;
+      //     errorMessages.push(this.$t("validation.productImg"));
+      //   } else {
+      //   }
+      // }
       if (errorMessages.length > 0) {
         this.showPopup_validate(errorMessages);
         return false;
@@ -1588,6 +1635,11 @@ export default {
 
 .show-only-desktop table thead tr th:nth-child(9),
 .show-only-desktop table tbody tr td:nth-child(9) {
+  display: none;
+}
+
+.show-only-desktop table thead tr th:nth-child(7),
+.show-only-desktop table tbody tr td:nth-child(7) {
   display: none;
 }
 </style>

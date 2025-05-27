@@ -78,6 +78,7 @@
               v-if="searchNav === ''"
               class="nav-item"
               :class="{ active: activePage === 'home' }"
+              @click="handleSidebarToggleOnMobile"
             >
               <router-link
                 @click="handleClicktoHome"
@@ -91,6 +92,7 @@
               v-if="searchNav === ''"
               class="nav-item"
               :class="{ active: activePage === 'expenses' }"
+              @click="handleSidebarToggleOnMobile"
             >
               <router-link
                 @click="handleClicktoExpenses"
@@ -158,6 +160,7 @@
                 v-if="searchNav === ''"
                 class="nav-item"
                 :class="{ active: activePage === 'quotation' }"
+                @click="handleSidebarToggleOnMobile"
               >
                 <router-link
                   @click="handleClicktoQuotation"
@@ -172,6 +175,7 @@
                 v-if="searchNav === ''"
                 class="nav-item"
                 :class="{ active: activePage === 'invoice' }"
+                @click="handleSidebarToggleOnMobile"
               >
                 <router-link
                   @click="handleClicktoInvoice"
@@ -186,6 +190,7 @@
                 v-if="searchNav === ''"
                 class="nav-item"
                 :class="{ active: activePage === 'taxinvoice' }"
+                @click="handleSidebarToggleOnMobile"
               >
                 <router-link
                   @click="handleClicktoTaxInvoice"
@@ -200,6 +205,7 @@
                 v-if="searchNav === ''"
                 class="nav-item"
                 :class="{ active: activePage === 'billingnote' }"
+                @click="handleSidebarToggleOnMobile"
               >
                 <router-link
                   @click="handleClicktoBillingNote"
@@ -214,6 +220,7 @@
                 v-if="searchNav === ''"
                 class="nav-item"
                 :class="{ active: activePage === 'customer' }"
+                @click="handleSidebarToggleOnMobile"
               >
                 <router-link
                   @click="handleClicktoCustomer"
@@ -250,6 +257,7 @@
                 v-if="searchNav === ''"
                 class="nav-item"
                 :class="{ active: activePage === 'product' }"
+                @click="handleSidebarToggleOnMobile"
               >
                 <router-link
                   @click="subProduct"
@@ -264,6 +272,7 @@
                 v-if="searchNav === ''"
                 class="nav-item"
                 :class="{ active: activePage === 'stockmanage' }"
+                @click="handleSidebarToggleOnMobile"
               >
                 <router-link
                   @click="subProduct_manageStock"
@@ -278,6 +287,7 @@
                 v-if="searchNav === ''"
                 class="nav-item"
                 :class="{ active: activePage === 'category' }"
+                @click="handleSidebarToggleOnMobile"
               >
                 <router-link
                   class="nav-link"
@@ -315,6 +325,7 @@
                 v-if="searchNav === ''"
                 class="nav-item"
                 :class="{ active: activePage === 'employee' }"
+                @click="handleSidebarToggleOnMobile"
               >
                 <router-link
                   @click="subEmployee"
@@ -329,6 +340,7 @@
                 v-if="searchNav === ''"
                 class="nav-item"
                 :class="{ active: activePage === 'leave' }"
+                @click="handleSidebarToggleOnMobile"
               >
                 <router-link
                   @click="subLeave"
@@ -343,6 +355,7 @@
                 v-if="searchNav === ''"
                 class="nav-item"
                 :class="{ active: activePage === 'department' }"
+                @click="handleSidebarToggleOnMobile"
               >
                 <router-link
                   @click="subEmployee_department"
@@ -357,6 +370,7 @@
                 v-if="searchNav === ''"
                 class="nav-item"
                 :class="{ active: activePage === 'position' }"
+                @click="handleSidebarToggleOnMobile"
               >
                 <router-link
                   @click="subEmployee_position"
@@ -401,8 +415,9 @@
               <!-- Sales report -->
               <li
                 v-if="searchNav === ''"
-                class="nav-item "
+                class="nav-item"
                 :class="{ active: activePage === 'salesreport' }"
+                @click="handleSidebarToggleOnMobile"
                 hidden
               >
                 <router-link
@@ -418,6 +433,7 @@
                 v-if="searchNav === ''"
                 class="nav-item"
                 :class="{ active: activePage === 'employeereport' }"
+                @click="handleSidebarToggleOnMobile"
               >
                 <router-link
                   @click="subEmployeeReport"
@@ -452,6 +468,7 @@
                 v-if="searchNav === ''"
                 class="nav-item"
                 :class="{ active: activePage === 'rolemanage' }"
+                @click="handleSidebarToggleOnMobile"
               >
                 <router-link
                   @click="handleAdministrator"
@@ -466,6 +483,7 @@
                 v-if="searchNav === ''"
                 class="nav-item"
                 :class="{ active: activePage === 'user' }"
+                @click="handleSidebarToggleOnMobile"
               >
                 <router-link
                   @click="subAdmin_register"
@@ -480,6 +498,7 @@
                 v-if="searchNav === ''"
                 class="nav-item"
                 :class="{ active: activePage === 'about' }"
+                @click="handleSidebarToggleOnMobile"
               >
                 <router-link
                   @click="handleAbout"
@@ -963,6 +982,14 @@ export default {
     console.log("Sidebar:", this.$refs.sidebar); // ตรวจสอบค่า
   },
   methods: {
+    isMobile() {
+      return window.innerWidth <= 768; // กำหนดขนาดสำหรับ mobile
+    },
+    handleSidebarToggleOnMobile() {
+      if (this.isMobile()) {
+        this.toggleSidebarMenu();
+      }
+    },
     closeErrorPopup() {
       this.isPopupVisible_error = false;
     },

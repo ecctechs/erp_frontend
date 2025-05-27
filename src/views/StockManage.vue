@@ -50,7 +50,10 @@
       </div>
       <div class="div-for-formControl mb-3">
         <div class="col-6 col-sm-6 col-md-6 col-lg-6">
-          <label class="col-sm-6 col-md-6"><span style="color: red">*</span>{{ t("productNameProduct") }}</label>
+          <label class="col-sm-6 col-md-6"
+            ><span style="color: red">*</span
+            >{{ t("productNameProduct") }}</label
+          >
         </div>
         <div class="col-6 col-sm-6 col-md-6 col-lg-6">
           <v-autocomplete
@@ -87,7 +90,9 @@
                 </select> -->
       <!-- </div> -->
       <div class="mb-3 div-for-formControl">
-        <label><span style="color: red">*</span>{{ t("manageStockType") }}</label>
+        <label
+          ><span style="color: red">*</span>{{ t("manageStockType") }}</label
+        >
         <select
           class="form-control form-select"
           v-model="formData.transactionType"
@@ -108,7 +113,9 @@
         />
       </div>
       <div class="mb-3 div-for-formControl">
-        <label><span style="color: red">*</span>{{ t("quantityProduct") }}</label>
+        <label
+          ><span style="color: red">*</span>{{ t("quantityProduct") }}</label
+        >
         <input
           class="form-control"
           v-model="formData.quantity"
@@ -593,6 +600,7 @@ export default {
         if (json.statusCode === 200) {
           console.log(json);
           this.getTransaction();
+          this.getProduct();
           this.showPopup(this.$t("validation.EditSucc"));
           this.closePopup();
         } else {
@@ -613,7 +621,7 @@ export default {
       // Edits an existing product transaction
       const accessToken = localStorage.getItem("@accessToken");
 
-      // this.errorMessage = [];
+      this.errorMessage = [];
       this.isLoading = true;
       // if (
       //   this.formData.productID === "" ||
@@ -648,6 +656,7 @@ export default {
 
         if (json.statusCode === 200) {
           this.getTransaction();
+          this.getProduct();
           this.showPopup(this.$t("validation.EditSucc"));
           this.closePopup();
         } else {
@@ -655,6 +664,9 @@ export default {
           // errorMessages.push(json.data);
           // this.showPopup_validate(errorMessages);
           // this.showPopup_error(json.data);
+          let errorMessages = [];
+          errorMessages.push(json.data);
+          this.showPopup_validate(errorMessages);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
