@@ -277,7 +277,7 @@
         </div>
       </div>
 
-      <div class="show-only-desktop">
+      <div class="show-only-desktop sale_hide">
         <InvoiceList
           :initialTableData="filteredIn"
           :tableHeaders="tableHeaders"
