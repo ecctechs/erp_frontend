@@ -1180,6 +1180,7 @@ export default {
         discount_quotation: quotationData.discount_quotation,
         vatType: quotationData.vatType,
       };
+      console.log("console.log(row.productForms)", this.Products);
       //loop of product
       this.productForms = (row.productForms || []).map((detail) => {
         const selectedProduct = this.Products.find(
@@ -2686,22 +2687,20 @@ export default {
         const json = await response.json();
 
         if (json.statusCode === 200) {
-          this.Products = json.data
-            .filter((item) => item.Status === "active")
-            .map((item) => {
-              return {
-                productID: item.productID,
-                Category: item.product_category.categoryName,
-                productname: item.productname,
-                Detail: item.productdetail,
-                price: item.price,
-                Cost: item.productcost,
-                Amount: item.amount,
-                productImg: item.productImg,
-                productTypeID: item.productTypeID,
-                categoryID: item.categoryID,
-              };
-            });
+          this.Products = json.data.map((item) => {
+            return {
+              productID: item.productID,
+              Category: item.product_category.categoryName,
+              productname: item.productname,
+              Detail: item.productdetail,
+              price: item.price,
+              Cost: item.productcost,
+              Amount: item.amount,
+              productImg: item.productImg,
+              productTypeID: item.productTypeID,
+              categoryID: item.categoryID,
+            };
+          });
         } else {
           this.showPopup_error(json.data);
           console.log("Product: ", json);
