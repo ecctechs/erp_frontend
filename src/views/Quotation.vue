@@ -304,7 +304,7 @@
         </div>
       </div>
 
-      <div class="show-only-desktop">
+      <div class="show-only-desktop sale_hide">
         <QuotationList
           :tableHeaders="tableHeaders"
           :initialTableData="filteredQuo"
@@ -385,7 +385,8 @@
         <!-- </div> -->
         <div class="div-for-formControl">
           <div class="col-6 col-sm-6 col-md-6">
-            <span style="color: red">*</span><label class="col-sm-6 col-md-6">{{ t("employeeName") }}</label>
+            <span style="color: red">*</span
+            ><label class="col-sm-6 col-md-6">{{ t("employeeName") }}</label>
           </div>
           <div class="col-6 col-sm-6 col-md-6">
             <v-autocomplete
@@ -440,7 +441,9 @@
         </div>
         <div class="div-for-formControl mb-3">
           <div class="col-6 col-sm-6 col-md-6">
-            <span style="color: red">*</span><label class="col-sm-6 col-md-6">{{ t("customerName") }}</label>
+            <label class="col-sm-6 col-md-6"
+              ><span style="color: red">*</span>{{ t("customerName") }}</label
+            >
           </div>
           <div class="col-6 col-sm-6 col-md-6">
             <div style="position: relative">
@@ -519,7 +522,9 @@
           </div>
         </div> -->
         <div class="mb-3 div-for-formControl">
-          <span style="color: red">*</span><label class="col-sm-5 col-md-6">{{ t("customerAddress") }}</label>
+          <label class="col-sm-5 col-md-6"
+            ><span style="color: red">*</span>{{ t("customerAddress") }}</label
+          >
           <input
             class="form-control readonly"
             v-model="formData.cus_address"
@@ -530,7 +535,9 @@
           />
         </div>
         <div class="mb-3 div-for-formControl">
-          <span style="color: red">*</span><label class="col-sm-5 col-md-6">{{ t("phoneNum") }} </label>
+          <label class="col-sm-5 col-md-6"
+            ><span style="color: red">*</span>{{ t("phoneNum") }}
+          </label>
           <input
             class="form-control readonly"
             v-model="formData.cus_tel"
@@ -543,7 +550,9 @@
           />
         </div>
         <div class="mb-3 div-for-formControl">
-          <span style="color: red">*</span><label class="col-sm-5 col-md-6">{{ t("email") }} </label>
+          <label class="col-sm-5 col-md-6"
+            ><span style="color: red">*</span>{{ t("email") }}
+          </label>
           <input
             class="form-control readonly"
             v-model="formData.cus_email"
@@ -554,7 +563,9 @@
           />
         </div>
         <div class="mb-3 div-for-formControl">
-          <span style="color: red">*</span><label class="col-sm-5 col-md-6">{{ t("taxID") }} </label>
+          <label class="col-sm-5 col-md-6"
+            ><span style="color: red">*</span>{{ t("taxID") }}
+          </label>
           <input
             class="form-control readonly"
             v-model="formData.cus_tax"
@@ -567,7 +578,10 @@
           />
         </div>
         <div class="mb-3 div-for-formControl">
-          <span style="color: red">*</span><label class="col-sm-5 col-md-6">{{ t("customerPurchaseBy") }}</label>
+          <label class="col-sm-5 col-md-6"
+            ><span style="color: red">*</span
+            >{{ t("customerPurchaseBy") }}</label
+          >
           <input
             class="form-control readonly"
             v-model="formData.cus_purchase"
@@ -586,7 +600,9 @@
           :class="{ error: isEmpty.productForms }"
           style="padding: 20px; width: unset"
         >
-          <h5 style="text-decoration-line: underline"><span style="color: red">*</span>{{ t("product") }}</h5>
+          <h5 style="text-decoration-line: underline">
+            <span style="color: red">*</span>{{ t("product") }}
+          </h5>
           <div class="mb-3">
             <button
               class="round-button btn btn-primary"
