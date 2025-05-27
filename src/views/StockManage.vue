@@ -621,7 +621,7 @@ export default {
       // Edits an existing product transaction
       const accessToken = localStorage.getItem("@accessToken");
 
-      // this.errorMessage = [];
+      this.errorMessage = [];
       this.isLoading = true;
       // if (
       //   this.formData.productID === "" ||
