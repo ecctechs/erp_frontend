@@ -1542,7 +1542,7 @@ export default {
         doc.setTextColor(0, 0, 0); // ตั้งสีดำสนิท (RGB 0,0,0)
         doc.setFont("PromptBold", "bold");
         doc.setFontSize(20);
-        doc.text("Billing", 179, 40);
+        doc.text("Receipt", 174, 40);
 
         doc.addFileToVFS("Prompt-Regular.ttf", PromptRegular);
         doc.addFont("Prompt-Regular.ttf", "PromptRegular", "normal");
@@ -1639,7 +1639,7 @@ export default {
         // แสดงเฉพาะถึงบรรทัดนี้เท่านั้น
         drawAlignedRow("Date:", IN_date);
         drawAlignedRow(
-          "Bill Number:",
+          "Receipt Number:",
           row.billing_number || row.billing_number
         );
         drawAlignedRow(
@@ -1820,7 +1820,7 @@ export default {
 
         // ตั้งค่าฟอนต์ที่ต้องการ
         doc.setFont("PromptRegular", "normal");
-        doc.text("Bill Receiver", 110, 250);
+        doc.text("Receipt Receiver", 110, 250);
         doc.text("Buyer", 10, 42);
         doc.setFontSize(14);
         doc.text(`Sales Person`, 10, 248);
