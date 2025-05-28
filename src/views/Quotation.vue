@@ -3059,6 +3059,16 @@ export default {
     },
 
     async addProductQuotataion() {
+      const isIncomplete = this.productForms.some(
+        (productForm) =>
+          !productForm.productName ||
+          !productForm.price ||
+          !productForm.sale_qty
+      );
+
+      if (isIncomplete) {
+        return 0; // หยุดการทำงานหากข้อมูลไม่สมบูรณ์
+      }
       const response = await fetch(`${API_CALL}/product/getCategory`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -3104,6 +3114,11 @@ export default {
             this.getQuotation();
           }
         }
+
+        console.log(
+          "addedProductIDs----------------------------->>",
+          addedProductIDs
+        );
         return addedProductIDs; // ส่งคืน productID ทั้งหมด
       } else {
         console.warn("ไม่พบหมวดหมู่ชื่อ ไม่มีหมวดหมู่");
@@ -3113,10 +3128,18 @@ export default {
       const addedProductIDs = await this.addProductQuotataion(); // ดึง productIDs ที่เพิ่มสำเร็จ
 
       if (addedProductIDs.length > 0) {
-        // อัปเดต productForms ด้วย productID ที่เพิ่งเพิ่ม
-        this.productForms.forEach((form, index) => {
-          if (index < addedProductIDs.length) {
-            form.productID = addedProductIDs[index];
+        let addedIndex = 0; // ตัวชี้ตำแหน่งใน addedProductIDs
+        this.productForms.forEach((form) => {
+          // ตรวจสอบว่าสินค้านี้เป็นสินค้าที่เพิ่งเพิ่มใหม่
+          if (!form.productID) {
+            if (addedIndex < addedProductIDs.length) {
+              form.productID = addedProductIDs[addedIndex];
+              addedIndex++;
+            } else {
+              console.warn(
+                "จำนวน addedProductIDs ไม่เพียงพอสำหรับอัปเดต productForms"
+              );
+            }
           }
         });
       }
@@ -3268,16 +3291,24 @@ export default {
       const addedProductIDs = await this.addProductQuotataion(); // ดึง productIDs ที่เพิ่มสำเร็จ
 
       if (addedProductIDs.length > 0) {
-        // อัปเดต productForms ด้วย productID ที่เพิ่งเพิ่ม
-        this.productForms.forEach((form, index) => {
-          if (index < addedProductIDs.length) {
-            form.productID = addedProductIDs[index];
+        let addedIndex = 0; // ตัวชี้ตำแหน่งใน addedProductIDs
+        this.productForms.forEach((form) => {
+          // ตรวจสอบว่าสินค้านี้เป็นสินค้าที่เพิ่งเพิ่มใหม่
+          if (!form.productID) {
+            if (addedIndex < addedProductIDs.length) {
+              form.productID = addedProductIDs[addedIndex];
+              addedIndex++;
+            } else {
+              console.warn(
+                "จำนวน addedProductIDs ไม่เพียงพอสำหรับอัปเดต productForms"
+              );
+            }
           }
         });
       }
+
       const accessToken = localStorage.getItem("@accessToken");
       if (!(await this.validateFormData())) return;
-      //fdfd
       try {
         if (this.NotCustomerExit) {
           await fetch(`${API_CALL}/Quotation/addCustomer`, {
