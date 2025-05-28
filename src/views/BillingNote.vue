@@ -1184,7 +1184,7 @@ export default {
       //loop of product
       this.productForms = (row.productForms || []).map((detail) => {
         const selectedProduct = this.Products.find(
-          (product) => product.productname === detail.productID
+          (product) => product.productID === detail.productID
         );
         let price = 0;
         let productname = "";
@@ -1500,7 +1500,7 @@ export default {
         //   (p) => p.productID === form.productID.toString()
         // );
         const product = this.Products.find(
-          (product) => product.productname === form.productID
+          (product) => product.productID === form.productID
         );
         // console.log(product);
         return [

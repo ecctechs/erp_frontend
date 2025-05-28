@@ -418,7 +418,6 @@
                 class="nav-item"
                 :class="{ active: activePage === 'salesreport' }"
                 @click="handleSidebarToggleOnMobile"
-                hidden
               >
                 <router-link
                   @click="subSalesReport"

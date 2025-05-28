@@ -314,8 +314,11 @@ export default {
   },
   data() {
     return {
+      Categories: [],
       startDateFilter: [],
       endDateFilter: [],
+      startDateFilterChart: [],
+      endDateFilterChart: [],
       Expenses: [],
       BusinessJson: [],
       custom_filter_start_date: new Date(),
@@ -379,7 +382,7 @@ export default {
         const json = await response.json();
 
         if (json.statusCode === 200) {
-          console.log("raw::", json.data);
+          // console.log("raw::", json.data);
 
           // ใช้ map เพื่อสร้างข้อมูล Billings และเก็บข้อมูลทั้งหมดใน this.Billings
           this.Billings = json.data.map((item) => {
@@ -541,7 +544,7 @@ export default {
         if (json.statusCode === 200) {
           this.allTypeofproduct = json.data;
         } else {
-          console.log("ProductType", json);
+          // console.log("ProductType", json);
         }
       } catch (err) {
         console.log("error fetching: ", err);
@@ -627,7 +630,7 @@ export default {
           this.filterDataByOption();
         } else {
           //this.showPopup_error(json.data);
-          console.log("ProductByType", json);
+          // console.log("ProductByType", json);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -635,215 +638,141 @@ export default {
         this.isLoading = false;
       }
     },
-    renderChart() {
+    convertThaiDateToISO(thaiDate) {
+      // แยกส่วนวันที่
+      const [day, monthThai, yearThai] = thaiDate.split(" ");
+
+      // แผนที่เดือนภาษาไทยไปยังลำดับเดือน
+      const months = {
+        มกราคม: "01",
+        กุมภาพันธ์: "02",
+        มีนาคม: "03",
+        เมษายน: "04",
+        พฤษภาคม: "05",
+        มิถุนายน: "06",
+        กรกฎาคม: "07",
+        สิงหาคม: "08",
+        กันยายน: "09",
+        ตุลาคม: "10",
+        พฤศจิกายน: "11",
+        ธันวาคม: "12",
+      };
+
+      // แปลงปี พ.ศ. เป็น ค.ศ.
+      const yearCE = parseInt(yearThai, 10) - 543;
+
+      // แปลงวันที่เป็นรูปแบบ ISO
+      return `${yearCE}-${months[monthThai]}-${day.padStart(2, "0")}`;
+    },
+    async renderChart() {
       // ตรวจสอบว่ามีการ mount ของ donutChart แล้วหรือไม่
       const chartDom = this.$refs.donutChart;
       if (!chartDom) return;
 
-      let chart = echarts.getInstanceByDom(chartDom);
-      if (chart) {
-        chart.dispose(); // ทำลาย instance เก่า
-      }
-
-      chart = echarts.init(chartDom);
-
-      // กรองข้อมูล Billings ตามช่วงวันที่ startDate และ endDate
-      const start = new Date(this.startDate);
-      const end = new Date(this.endDate);
-
-      // const filteredBillings = this.Billings.filter(item => {
-      //     const billingDate = new Date(item.billing_date);
-      //     return billingDate >= start && billingDate <= end;
-      // });
-
-      // ดึงข้อมูลจาก Billings ที่ถูกกรองแล้ว เพื่อรวมยอดขายแยกตามประเภทสินค้า
-      const productTypeSales = {};
-
-      console.log("---------------->>", this.filteredData);
-
-      this.filteredData.forEach((billing) => {
-        billing.productForms.forEach((product) => {
-          const productInFilter = this.ProductFilter.find(
-            (p) => p.ID === product.ID || 0
-          );
-
-          // if (!productInFilter) {
-          //     console.warn(`Product with ID ${product.ID} not found in ProductFilter`);
-          // }
-
-          const productTypeName = productInFilter
-            ? productInFilter.productTypeName
-            : "Unknown"; // ดึงชื่อ productType จาก ProductFilter
-
-          const totalPrice = product.sale_price - product.sale_discount;
-
-          if (!productTypeSales[productTypeName]) {
-            productTypeSales[productTypeName] = 0;
-          }
-
-          productTypeSales[productTypeName] += totalPrice;
-          // console.log("productTypeName", productTypeName);
-        });
-      });
-
-      // const chartData = Object.keys(productTypeSales).map((productTypeName) => {
-      //   return {
-      //     value: productTypeSales[productTypeName],
-      //     name: productTypeName,
-      //   };
-      // });
-
-      console.log("----------dffdf??", this.Billings[0].productForms);
-      this.Billings.productForms;
-
-      const data = [
-        {
-          product_type: "สินค้า",
-          total_price: 50000,
-        },
-        {
-          product_type: "บริการ",
-          total_price: 20000,
-        },
-      ];
-
-      const chartData = data.map((item) => ({
-        value: item.total_price,
-        name: item.product_type,
-      }));
-
-      const option = {
-        // title: {
-        //   text: this.t("inventoryVolume"),
-        //   left: "center",
-        // },
-        tooltip: {
-          trigger: "item",
-          formatter: "{a} <br/>{b} : {c} ({d}%)",
-        },
-        legend: {
-          orient: "vertical",
-          left: "left",
-        },
-        series: [
-          {
-            name: this.t("inventoryVolume"),
-            type: "pie",
-            radius: ["50%", "70%"],
-            avoidLabelOverlap: false,
-            label: {
-              show: false,
-              position: "center",
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: "30",
-                fontWeight: "bold",
-              },
-            },
-            labelLine: {
-              show: false,
-            },
-            data: chartData, // ข้อมูลที่เตรียมไว้
-          },
-        ],
-      };
-
-      chart.setOption(option);
-    },
-    renderAmountProductChart() {
-      const chartDom = this.$refs.donutChartAmountProduct;
-      if (!chartDom) return;
-
+      // ตรวจสอบและทำลาย instance เก่าของกราฟ
       let chart = echarts.getInstanceByDom(chartDom);
       if (chart) {
         chart.dispose();
       }
-
+      if (this.startDateFilter !== "") {
+        this.startDateFilterChart = this.convertThaiDateToISO(
+          this.startDateFilter
+        ); // 26 พฤษภาคม 2568 convert to 2025-05-28
+        this.endDateFilterChart = this.convertThaiDateToISO(this.endDateFilter);
+      }
+      // สร้าง instance ใหม่
       chart = echarts.init(chartDom);
 
-      const productData = {};
-
-      this.ProductFilter.forEach((product) => {
-        const productType = product.productTypeName;
-        if (productType === "product") {
-          const productName = product["Product Name"];
-          const amount = product.Amount || 0;
-
-          if (!productData[productName]) {
-            productData[productName] = 0;
-          }
-
-          productData[productName] += amount;
-        }
-      });
-
-      // แปลง object เป็น array เพื่อจัดอันดับ
-      let sortedData = Object.keys(productData)
-        .map((name) => ({
-          name,
-          value: productData[name],
-        }))
-        .sort((a, b) => b.value - a.value); // เรียงจากมากไปน้อย
-
-      // แยก top 7 และอื่น ๆ
-      const top7 = sortedData.slice(0, 7);
-      const others = sortedData.slice(7);
-
-      console.log("Others:__.>", others);
-
-      const otherTotal = others.reduce((sum, item) => sum + item.value, 0);
-
-      console.log("Others:__.>", otherTotal);
-
-      if (otherTotal > 0) {
-        top7.push({
-          name: this.t("others"), // หรือใช้ชื่อว่า 'อื่นๆ'
-          value: otherTotal,
-        });
-      }
-
-      const option = {
-        tooltip: {
-          trigger: "item",
-          formatter: "{a} <br/>{b} : {c} ({d}%)",
-        },
-        legend: {
-          orient: "vertical",
-          left: "left",
-        },
-        series: [
+      try {
+        const accessToken = localStorage.getItem("@accessToken");
+        // เรียก API เพื่อดึงข้อมูลยอดขายแยกตามประเภทสินค้า
+        const response = await fetch(
+          `${API_CALL}/quotation/get_sale_report_product_type`,
           {
-            name: this.t("stockP"),
-            type: "pie",
-            radius: ["50%", "70%"],
-            center: ["65%", "50%"], // ขยับกราฟไปทางขวา
-            avoidLabelOverlap: false,
-            label: {
-              show: false,
-              position: "center",
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
             },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: "30",
-                fontWeight: "bold",
-              },
-            },
-            labelLine: {
-              show: false,
-            },
-            data: top7,
-          },
-        ],
-      };
+            body: JSON.stringify({
+              startDate: this.startDateFilterChart,
+              endDate: this.endDateFilterChart,
+            }),
+          }
+        );
+        console.log("---->", response);
+        // const response = await fetch(
+        //   `${API_CALL}/Quotation/get_sale_report_product_type`,
+        //   {
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //       Authorization: `Bearer ${accessToken}`,
+        //     },
+        //     body: JSON.stringify({
+        //       startDate: this.startDate,
+        //       endDate: this.endDate,
+        //     }),
+        //   }
+        // );
 
-      chart.setOption(option);
+        if (!response.ok) {
+          throw new Error("Failed to fetch data from the API");
+        }
+
+        const data = await response.json();
+
+        // เตรียมข้อมูลสำหรับกราฟ
+        const chartData = data.data.map((item) => ({
+          value: item.total_sale_price,
+          name: item.product_type,
+        }));
+
+        // ตั้งค่ากราฟ
+        const option = {
+          tooltip: {
+            trigger: "item",
+            formatter: "{a} <br/>{b} : {c} ({d}%)",
+          },
+          legend: {
+            orient: "vertical",
+            left: "left",
+          },
+          series: [
+            {
+              name: this.t("inventoryVolume"),
+              type: "pie",
+              radius: ["50%", "70%"],
+              avoidLabelOverlap: false,
+              label: {
+                show: false,
+                position: "center",
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: "30",
+                  fontWeight: "bold",
+                },
+              },
+              labelLine: {
+                show: false,
+              },
+              data: chartData, // ข้อมูลที่ได้รับจาก API
+            },
+          ],
+        };
+
+        // ตั้งค่ากราฟลงใน chart instance
+        chart.setOption(option);
+      } catch (error) {
+        console.error("Error rendering chart:", error.message);
+      }
     },
 
-    // renderAmountProductChart() {
-    //   const chartDom = this.$refs.donutChartAmountProduct;
+    // renderChart() {
+    //   // ตรวจสอบว่ามีการ mount ของ donutChart แล้วหรือไม่
+    //   const chartDom = this.$refs.donutChart;
     //   if (!chartDom) return;
 
     //   let chart = echarts.getInstanceByDom(chartDom);
@@ -853,68 +782,80 @@ export default {
 
     //   chart = echarts.init(chartDom);
 
-    //   const productData = {};
+    //   // กรองข้อมูล Billings ตามช่วงวันที่ startDate และ endDate
+    //   const start = new Date(this.startDate);
+    //   const end = new Date(this.endDate);
 
-    //   this.ProductFilter.forEach((product) => {
-    //     const productType = product.productTypeName; // ชื่อประเภทสินค้า
-    //     if (productType === "product") {
-    //       // เงื่อนไข: เอาเฉพาะประเภท 'product'
-    //       const productName = product["Product Name"]; // ชื่อสินค้าที่เป็น product
-    //       const amount = product.Amount || 0; // ปริมาณสินค้าที่มีในคลัง
+    //   // const filteredBillings = this.Billings.filter(item => {
+    //   //     const billingDate = new Date(item.billing_date);
+    //   //     return billingDate >= start && billingDate <= end;
+    //   // });
 
-    //       if (!productData[productName]) {
-    //         productData[productName] = 0;
+    //   // ดึงข้อมูลจาก Billings ที่ถูกกรองแล้ว เพื่อรวมยอดขายแยกตามประเภทสินค้า
+    //   const productTypeSales = {};
+
+    //   // console.log("---------------->>", this.filteredData);
+
+    //   this.filteredData.forEach((billing) => {
+    //     billing.productForms.forEach((product) => {
+    //       const productInFilter = this.ProductFilter.find(
+    //         (p) => p["Product Name"] === product.ID || 0
+    //       );
+
+    //       // if (!productInFilter) {
+    //       //     console.warn(`Product with ID ${product.ID} not found in ProductFilter`);
+    //       // }
+
+    //       const productTypeName = productInFilter
+    //         ? productInFilter.productTypeName
+    //         : "Unknown"; // ดึงชื่อ productType จาก ProductFilter
+
+    //       const totalPrice = product.sale_price - product.sale_discount;
+
+    //       if (!productTypeSales[productTypeName]) {
+    //         productTypeSales[productTypeName] = 0;
     //       }
 
-    //       productData[productName] += amount;
-    //     }
+    //       productTypeSales[productTypeName] += totalPrice;
+    //       // console.log("productTypeName", productTypeName);
+    //     });
     //   });
 
-    //   const chartData = Object.keys(productData).map((productName) => {
+    //   const chartData = Object.keys(productTypeSales).map((productTypeName) => {
     //     return {
-    //       name: productName, // ชื่อสินค้า
-    //       value: productData[productName], // ปริมาณสินค้าของสินค้านั้น ๆ
+    //       value: productTypeSales[productTypeName],
+    //       name: productTypeName,
     //     };
     //   });
-    //   // const option = {
-    //   //         title: {
-    //   //           text: this.t("stockP"), // หัวข้อของกราฟ
-    //   //           left: "center",
-    //   //         },
-    //   //         tooltip: {
-    //   //           trigger: "axis",
-    //   //           axisPointer: { type: "shadow" }, // ใช้เส้น shadow เมื่อ hover
-    //   //         },
-    //   //         yAxis: {
-    //   //           type: "value", // แกน x แสดงข้อมูลเชิงตัวเลข (ราคาของ service)
-    //   //           boundaryGap: [0, 0.01], // กำหนดขอบให้แถบไม่ชนขอบ
-    //   //         },
-    //   //         xAxis: {
-    //   //           type: "category", // แกน y แสดงชื่อของ service
-    //   //           data: Sale_date, // แสดงรายชื่อ service เป็นแกน y
-    //   //         },
-    //   //         series: [
-    //   //           {
-    //   //             name: "Value", // ชื่อซีรีส์
-    //   //             type: "bar", // ประเภทกราฟเป็น bar
-    //   //             data: SaleData, // ข้อมูลราคาของ service
-    //   //             label: {
-    //   //               show: true,
-    //   //               position: "top", // แสดง label ที่ปลายกราฟแท่ง
-    //   //             },
-    //   //           },
-    //   //         ],
-    //   //       };
-    //   //       chart.setOption(option);
-    //   //     },
+
+    //   // console.log("chartData", chartData);
+
+    //   // this.Billings.productForms;
+
+    //   // const data = [
+    //   //   {
+    //   //     product_type: "สินค้า",
+    //   //     total_price: 50000,
+    //   //   },
+    //   //   {
+    //   //     product_type: "บริการ",
+    //   //     total_price: 20000,
+    //   //   },
+    //   // ];
+
+    //   // const chartData = data.map((item) => ({
+    //   //   value: item.total_price,
+    //   //   name: item.product_type,
+    //   // }));
+
     //   const option = {
     //     // title: {
-    //     //   text: this.t("stockP"), // หัวข้อของกราฟ
+    //     //   text: this.t("inventoryVolume"),
     //     //   left: "center",
     //     // },
     //     tooltip: {
     //       trigger: "item",
-    //       formatter: "{a} <br/>{b} : {c} ({d}%)", // แสดง tooltip เมื่อ hover
+    //       formatter: "{a} <br/>{b} : {c} ({d}%)",
     //     },
     //     legend: {
     //       orient: "vertical",
@@ -922,9 +863,9 @@ export default {
     //     },
     //     series: [
     //       {
-    //         name: this.t("stockP"),
+    //         name: this.t("inventoryVolume"),
     //         type: "pie",
-    //         radius: ["50%", "70%"], // ขนาดของกราฟวงกลม
+    //         radius: ["50%", "70%"],
     //         avoidLabelOverlap: false,
     //         label: {
     //           show: false,
@@ -945,171 +886,414 @@ export default {
     //     ],
     //   };
 
-    //   // สร้างกราฟ
     //   chart.setOption(option);
     // },
-    renderServiceBarChart() {
-      const chartDom = this.$refs.barChartService;
-      if (!chartDom) return;
+    async renderAmountProductChart() {
+      try {
+        const chartDom = this.$refs.donutChartAmountProduct; // ตรวจสอบว่า element ถูก mount แล้วหรือไม่
+        if (!chartDom) return;
 
-      let chart = echarts.getInstanceByDom(chartDom);
-      if (chart) {
-        chart.dispose(); // ทำลาย instance เก่า
-      }
-
-      chart = echarts.init(chartDom);
-
-      const serviceData = [];
-      const serviceNames = [];
-
-      this.ProductFilter.forEach((product) => {
-        console.log("In loop Service Chart4:");
-        const productType = product.productTypeName; // ชื่อประเภทสินค้า
-        if (productType === "service") {
-          // เงื่อนไข: เอาเฉพาะประเภท 'service'
-          const serviceName = product["Product Name"]; // ชื่อของ service
-          const price = product.Price || 0; // ราคาของ service
-
-          serviceNames.push(serviceName); // เพิ่มชื่อ service ใน array
-          serviceData.push(price); // เพิ่มราคาใน array
-          // console.log("In loop Service Chart4:",serviceNames)
+        let chart = echarts.getInstanceByDom(chartDom);
+        if (chart) {
+          chart.dispose(); // ทำลาย instance เดิมก่อนสร้างใหม่
         }
-      });
-      console.log("Service Chart4:", serviceNames);
-      const option = {
-        // title: {
-        //   text: this.t("serviceprice"), // หัวข้อของกราฟ
-        //   left: "center",
-        // },
-        tooltip: {
-          trigger: "axis",
-          axisPointer: { type: "shadow" }, // ใช้เส้น shadow เมื่อ hover
-        },
-        xAxis: {
-          type: "value", // แกน x แสดงข้อมูลเชิงตัวเลข (ราคาของ service)
-          boundaryGap: [0, 0.01], // กำหนดขอบให้แถบไม่ชนขอบ
-        },
-        yAxis: {
-          type: "category", // แกน y แสดงชื่อของ service
-          data: serviceNames, // แสดงรายชื่อ service เป็นแกน y
-        },
-        series: [
+
+        chart = echarts.init(chartDom);
+
+        if (this.startDateFilter !== "") {
+          this.startDateFilterChart = this.convertThaiDateToISO(
+            this.startDateFilter
+          ); // 26 พฤษภาคม 2568 convert to 2025-05-28
+          this.endDateFilterChart = this.convertThaiDateToISO(
+            this.endDateFilter
+          );
+        }
+
+        // ดึงข้อมูลจาก API
+        const response = await fetch(
+          `${API_CALL}/quotation/get_sale_report_product_rank`,
           {
-            name: "Value", // ชื่อซีรีส์
-            type: "bar", // ประเภทกราฟเป็น bar
-            data: serviceData, // ข้อมูลราคาของ service
-            label: {
-              show: true,
-              position: "right", // แสดง label ที่ปลายกราฟแท่ง
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
             },
+            body: JSON.stringify({
+              startDate: this.startDateFilterChart,
+              endDate: this.endDateFilterChart,
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch product rank data");
+        }
+
+        const result = await response.json();
+        console.log(result);
+
+        // แปลงข้อมูลให้เหมาะสมกับกราฟ
+        let sortedData = result.data
+          .map((item) => ({
+            name: item.product,
+            value: item.total_sale_price,
+          }))
+          .sort((a, b) => b.value - a.value); // เรียงจากมากไปน้อย
+
+        // แยก top 7 และรวมอื่น ๆ
+        const top7 = sortedData.slice(0, 7);
+        const others = sortedData.slice(7);
+
+        const otherTotal = others.reduce((sum, item) => sum + item.value, 0);
+
+        if (otherTotal > 0) {
+          top7.push({
+            name: this.t("others"), // หรือใช้ชื่อว่า 'อื่นๆ'
+            value: otherTotal,
+          });
+        }
+
+        const option = {
+          tooltip: {
+            trigger: "item",
+            formatter: "{a} <br/>{b} : {c} ({d}%)",
           },
-        ],
-      };
+          legend: {
+            orient: "vertical",
+            left: "left",
+          },
+          series: [
+            {
+              name: this.t("stockP"),
+              type: "pie",
+              radius: ["50%", "70%"],
+              center: ["65%", "50%"], // ขยับกราฟไปทางขวา
+              avoidLabelOverlap: false,
+              label: {
+                show: false,
+                position: "center",
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: "30",
+                  fontWeight: "bold",
+                },
+              },
+              labelLine: {
+                show: false,
+              },
+              data: top7,
+            },
+          ],
+        };
 
-      chart.setOption(option);
-    },
-    renderBarChart(data, timeGroups) {
-      const chartDom = this.$refs.barChart;
-      if (!chartDom) return; // เช็คว่ามีการ mount ของ barChart แล้วหรือไม่
-
-      let chart = echarts.getInstanceByDom(chartDom);
-      if (chart) {
-        chart.dispose(); // ทำลาย instance เก่า
+        chart.setOption(option); // สร้างกราฟด้วย option ที่ตั้งไว้
+      } catch (error) {
+        console.error("Error rendering donut chart:", error);
       }
-
-      chart = echarts.init(chartDom);
-
-      const Sale_date = [];
-      const SaleData = [];
-
-      this.filteredData.forEach((bill) => {
-        console.log("In loop Service Chart4:");
-
-        const date = bill.billing_date; // ชื่อของ service
-        const data = bill.sale_totalprice || 0; // ราคาของ service
-
-        Sale_date.push(date); // เพิ่มชื่อ service ใน array
-        SaleData.push(data); // เพิ่มราคาใน array
-        // console.log("In loop Service Chart4:",serviceNames)
-      });
-
-      const option = {
-        // title: {
-        //   text: this.t("summarySaleMonth"), // หัวข้อของกราฟ
-        //   left: "center",
-        // },
-        tooltip: {
-          trigger: "axis",
-          axisPointer: { type: "shadow" }, // ใช้เส้น shadow เมื่อ hover
-        },
-        yAxis: {
-          type: "value", // แกน x แสดงข้อมูลเชิงตัวเลข (ราคาของ service)
-          boundaryGap: [0, 0.01], // กำหนดขอบให้แถบไม่ชนขอบ
-        },
-        xAxis: {
-          type: "category", // แกน y แสดงชื่อของ service
-          data: Sale_date, // แสดงรายชื่อ service เป็นแกน y
-        },
-        series: [
-          {
-            name: "Value", // ชื่อซีรีส์
-            type: "bar", // ประเภทกราฟเป็น bar
-            data: SaleData, // ข้อมูลราคาของ service
-            label: {
-              show: true,
-              position: "top", // แสดง label ที่ปลายกราฟแท่ง
-            },
-          },
-        ],
-      };
-      chart.setOption(option);
     },
-    // prepareBarChartData() {
-    //     // const start = new Date(this.startDate);
-    //     // const end = new Date(this.endDate);
-    //     const productSalesData = {}; // เก็บข้อมูลยอดขายสินค้าตาม product type และช่วงเวลา
 
-    //     // const today = new Date()
+    // renderAmountProductChart() {
+    //   const chartDom = this.$refs.donutChartAmountProduct;
+    //   if (!chartDom) return;
 
-    //     // let timeGroups = [];
+    //   let chart = echarts.getInstanceByDom(chartDom);
+    //   if (chart) {
+    //     chart.dispose();
+    //   }
 
-    //     // const filteredBillings = this.Billings.filter(item => {
-    //     //     const billingDate = new Date(item.billing_date);
-    //     //     return billingDate >= start && billingDate <= end;
-    //     // });
+    //   chart = echarts.init(chartDom);
 
-    //     // if (filteredBillings.length === 0 || this.ProductFilter.length === 0) {
-    //     //     timeGroups.forEach(timeGroup => {
-    //     //         productSalesData['No Data'] = { [timeGroup]: 0 };
-    //     //     });
-    //     // } else {
+    //   const productData = {};
 
-    //         this.filteredData.forEach(billing => {
-    //             billing.productForms.forEach(product => {
-    //                 const productInFilter = this.ProductFilter.find(p => p.ID === product.ID);
-    //                 const productTypeName = productInFilter ? productInFilter.productTypeName : 'Unknown'; // ดึงชื่อ productType
+    //   this.ProductFilter.forEach((product) => {
+    //     const productType = product.productTypeName;
+    //     if (productType === "product") {
+    //       const productName = product["Product Name"];
+    //       const amount = product.Amount || 0;
 
-    //                 const amount = product.sale_qty; // ปริมาณสินค้าที่ขายได้
+    //       if (!productData[productName]) {
+    //         productData[productName] = 0;
+    //       }
 
-    //                 if (!productSalesData[productTypeName]) {
-    //                     productSalesData[productTypeName] = {};
-    //                 }
+    //       productData[productName] += amount;
+    //     }
+    //   });
 
-    //             });
-    //         });
-    //     // }
+    //   // แปลง object เป็น array เพื่อจัดอันดับ
+    //   let sortedData = Object.keys(productData)
+    //     .map((name) => ({
+    //       name,
+    //       value: productData[name],
+    //     }))
+    //     .sort((a, b) => b.value - a.value); // เรียงจากมากไปน้อย
 
-    //     const barChartData = Object.keys(productSalesData).map(productTypeName => {
-    //         return {
-    //             name: productTypeName,
-    //             type: 'bar',
-    //             stack: 'total',
-    //             data: barChartData.map(timeGroup => productSalesData[productTypeName][timeGroup] || 0) // ถ้าไม่มีข้อมูลให้แสดงเป็น 0
-    //         };
+    //   // แยก top 7 และอื่น ๆ
+    //   const top7 = sortedData.slice(0, 7);
+    //   const others = sortedData.slice(7);
+
+    //   const otherTotal = others.reduce((sum, item) => sum + item.value, 0);
+
+    //   if (otherTotal > 0) {
+    //     top7.push({
+    //       name: this.t("others"), // หรือใช้ชื่อว่า 'อื่นๆ'
+    //       value: otherTotal,
     //     });
+    //   }
 
-    //     this.renderBarChart(barChartData);
+    //   const option = {
+    //     tooltip: {
+    //       trigger: "item",
+    //       formatter: "{a} <br/>{b} : {c} ({d}%)",
+    //     },
+    //     legend: {
+    //       orient: "vertical",
+    //       left: "left",
+    //     },
+    //     series: [
+    //       {
+    //         name: this.t("stockP"),
+    //         type: "pie",
+    //         radius: ["50%", "70%"],
+    //         center: ["65%", "50%"], // ขยับกราฟไปทางขวา
+    //         avoidLabelOverlap: false,
+    //         label: {
+    //           show: false,
+    //           position: "center",
+    //         },
+    //         emphasis: {
+    //           label: {
+    //             show: true,
+    //             fontSize: "30",
+    //             fontWeight: "bold",
+    //           },
+    //         },
+    //         labelLine: {
+    //           show: false,
+    //         },
+    //         data: top7,
+    //       },
+    //     ],
+    //   };
+
+    //   chart.setOption(option);
     // },
+
+    async renderServiceBarChart() {
+      try {
+        const chartDom = this.$refs.barChartService; // ตรวจสอบว่า DOM มีอยู่หรือไม่
+        if (!chartDom) return;
+
+        let chart = echarts.getInstanceByDom(chartDom);
+        if (chart) {
+          chart.dispose(); // ทำลาย instance เก่าหากมี
+        }
+
+        chart = echarts.init(chartDom); // สร้าง instance ใหม่
+
+        // ดึงข้อมูลจาก API
+        const response = await fetch(
+          `${API_CALL}/quotation/get_sale_report_service`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              startDate: this.startDateFilterChart, // วันที่เริ่มต้น
+              endDate: this.endDateFilterChart, // วันที่สิ้นสุด
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch service data");
+        }
+
+        const result = await response.json();
+        console.log(result);
+
+        // แปลงข้อมูลจาก API ให้เหมาะสมกับกราฟ
+        const serviceNames = result.data.map((item) => item.product_name); // ชื่อ service
+        const serviceData = result.data.map((item) => item.total_sale_price); // ราคารวม
+
+        // ตั้งค่ากราฟ
+        const option = {
+          tooltip: {
+            trigger: "axis",
+            axisPointer: { type: "shadow" }, // ใช้เส้น shadow เมื่อ hover
+          },
+          xAxis: {
+            type: "value", // แกน x แสดงข้อมูลเชิงตัวเลข
+            boundaryGap: [0, 0.01], // กำหนดขอบให้แถบไม่ชนขอบ
+          },
+          yAxis: {
+            type: "category", // แกน y แสดงชื่อของ service
+            data: serviceNames, // ใช้ชื่อ service เป็นแกน y
+          },
+          series: [
+            {
+              name: "Value", // ชื่อซีรีส์
+              type: "bar", // ประเภทกราฟเป็น bar
+              data: serviceData, // ข้อมูลราคาของ service
+              label: {
+                show: true,
+                position: "right", // แสดง label ที่ปลายกราฟแท่ง
+              },
+            },
+          ],
+        };
+
+        chart.setOption(option); // ตั้งค่า option ให้กับกราฟ
+      } catch (error) {
+        console.error("Error rendering service bar chart:", error);
+      }
+    },
+
+    // renderServiceBarChart() {
+    //   const chartDom = this.$refs.barChartService;
+    //   if (!chartDom) return;
+
+    //   let chart = echarts.getInstanceByDom(chartDom);
+    //   if (chart) {
+    //     chart.dispose(); // ทำลาย instance เก่า
+    //   }
+
+    //   chart = echarts.init(chartDom);
+
+    //   const serviceData = [];
+    //   const serviceNames = [];
+
+    //   this.ProductFilter.forEach((product) => {
+    //     // console.log("In loop Service Chart4:");
+    //     const productType = product.productTypeName; // ชื่อประเภทสินค้า
+    //     if (productType === "service") {
+    //       // เงื่อนไข: เอาเฉพาะประเภท 'service'
+    //       const serviceName = product["Product Name"]; // ชื่อของ service
+    //       const price = product.Price || 0; // ราคาของ service
+
+    //       serviceNames.push(serviceName); // เพิ่มชื่อ service ใน array
+    //       serviceData.push(price); // เพิ่มราคาใน array
+    //       // console.log("In loop Service Chart4:",serviceNames)
+    //     }
+    //   });
+    //   // console.log("Service Chart4:", serviceNames);
+    //   const option = {
+    //     // title: {
+    //     //   text: this.t("serviceprice"), // หัวข้อของกราฟ
+    //     //   left: "center",
+    //     // },
+    //     tooltip: {
+    //       trigger: "axis",
+    //       axisPointer: { type: "shadow" }, // ใช้เส้น shadow เมื่อ hover
+    //     },
+    //     xAxis: {
+    //       type: "value", // แกน x แสดงข้อมูลเชิงตัวเลข (ราคาของ service)
+    //       boundaryGap: [0, 0.01], // กำหนดขอบให้แถบไม่ชนขอบ
+    //     },
+    //     yAxis: {
+    //       type: "category", // แกน y แสดงชื่อของ service
+    //       data: serviceNames, // แสดงรายชื่อ service เป็นแกน y
+    //     },
+    //     series: [
+    //       {
+    //         name: "Value", // ชื่อซีรีส์
+    //         type: "bar", // ประเภทกราฟเป็น bar
+    //         data: serviceData, // ข้อมูลราคาของ service
+    //         label: {
+    //           show: true,
+    //           position: "right", // แสดง label ที่ปลายกราฟแท่ง
+    //         },
+    //       },
+    //     ],
+    //   };
+
+    //   chart.setOption(option);
+    // },
+
+    async renderBarChart() {
+      try {
+        const chartDom = this.$refs.barChart; // ตรวจสอบว่า barChart มีอยู่หรือไม่
+        if (!chartDom) return;
+
+        // ทำลาย instance ก่อนหน้า หากมี
+        let chart = echarts.getInstanceByDom(chartDom);
+        if (chart) {
+          chart.dispose();
+        }
+
+        chart = echarts.init(chartDom); // สร้าง instance ใหม่
+
+        if (this.startDateFilter !== "") {
+          this.startDateFilterChart = this.convertThaiDateToISO(
+            this.startDateFilter
+          ); // แปลงวันที่เริ่มต้น
+          this.endDateFilterChart = this.convertThaiDateToISO(
+            this.endDateFilter
+          ); // แปลงวันที่สิ้นสุด
+        }
+
+        // ดึงข้อมูลจาก API
+        const response = await fetch(
+          `${API_CALL}/quotation/get_sale_report_category`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              startDate: this.startDateFilterChart, // ใช้วันที่เริ่มต้น
+              endDate: this.endDateFilterChart, // ใช้วันที่สิ้นสุด
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch category data");
+        }
+
+        const result = await response.json();
+
+        // แปลงข้อมูลให้เหมาะสมกับการแสดงผล
+        const Sale_date = result.data.map((item) => item.categoryName); // ดึงชื่อหมวดหมู่
+        const SaleData = result.data.map((item) => item.total_sale_price); // ดึงยอดขายรวม
+
+        // ตัวเลือกของกราฟ
+        const option = {
+          tooltip: {
+            trigger: "axis",
+            axisPointer: { type: "shadow" },
+          },
+          xAxis: {
+            type: "category",
+            data: Sale_date,
+          },
+          yAxis: {
+            type: "value",
+            boundaryGap: [0, 0.01],
+          },
+          series: [
+            {
+              name: "Value",
+              type: "bar",
+              data: SaleData,
+              label: {
+                show: true,
+                position: "top",
+              },
+            },
+          ],
+        };
+
+        chart.setOption(option); // ตั้งค่า option ให้กับกราฟ
+      } catch (error) {
+        console.error("Error rendering bar chart:", error);
+      }
+    },
+
     destroyCharts() {
       if (this.$refs.donutChart) {
         const donutChart = echarts.getInstanceByDom(this.$refs.donutChart);
@@ -1481,6 +1665,33 @@ export default {
         this.isLoading = false;
       }
     },
+    async getProductCategory() {
+      const accessToken = localStorage.getItem("@accessToken");
+      this.isLoading = true;
+      try {
+        const response = await fetch(`${API_CALL}/product/getCategory`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        const json = await response.json();
+
+        if (json.statusCode === 200) {
+          this.Categories = json.data.map((item) => ({
+            ID: item.categoryID,
+            "Category Name": item.categoryName,
+          }));
+          console.log(json);
+        } else {
+          this.showPopup_error(json.data);
+          console.log(this.Categories);
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      } finally {
+        this.isLoading = false;
+      }
+    },
   },
   watch: {
     custom_filter_start_date() {
@@ -1540,6 +1751,7 @@ export default {
     },
   },
   created() {
+    this.getProductCategory();
     this.getBilling();
     this.getProduct();
     this.getTypeOfProduct();
