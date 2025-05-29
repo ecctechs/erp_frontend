@@ -177,6 +177,7 @@
           v-if="CompanyPerson"
           :isLoading="isLoading"
           :documentName="documentName2"
+          :showAllowButton="true"
         />
       </div>
       <div
@@ -196,7 +197,8 @@
       </h2>
       <h2 v-if="isEditMode">{{ t("headerPopupEditCustomer") }}</h2>
       <div class="mb-3">
-        <span style="color: red">*</span><label class="col-sm-5 col-md-6">{{ t("customerName") }}</label>
+        <span style="color: red">*</span
+        ><label class="col-sm-5 col-md-6">{{ t("customerName") }}</label>
         <input
           v-model="formData.cus_name"
           type="text"
@@ -206,7 +208,8 @@
         />
       </div>
       <div class="mb-3">
-        <span style="color: red">*</span><label class="col-sm-5 col-md-6">{{ t("customerAddress") }}</label>
+        <span style="color: red">*</span
+        ><label class="col-sm-5 col-md-6">{{ t("customerAddress") }}</label>
         <input
           :class="{ error: isEmpty.cus_address, 'form-control': true }"
           v-model="formData.cus_address"
@@ -216,7 +219,8 @@
         />
       </div>
       <div class="mb-3">
-        <span style="color: red">*</span><label class="col-sm-5 col-md-6">{{ t("phoneNum") }}</label>
+        <span style="color: red">*</span
+        ><label class="col-sm-5 col-md-6">{{ t("phoneNum") }}</label>
         <input
           :class="{ error: isEmpty.cus_tel, 'form-control': true }"
           v-model="formData.cus_tel"
@@ -228,7 +232,8 @@
         />
       </div>
       <div class="mb-3">
-        <span style="color: red">*</span><label class="col-sm-5 col-md-6">{{ t("email") }}</label>
+        <span style="color: red">*</span
+        ><label class="col-sm-5 col-md-6">{{ t("email") }}</label>
         <input
           :class="{ error: isEmpty.cus_email, 'form-control': true }"
           v-model="formData.cus_email"
@@ -239,7 +244,8 @@
       </div>
 
       <div class="mb-3">
-        <span style="color: red">*</span><label class="col-sm-5 col-md-6">{{ t("taxID") }}</label>
+        <span style="color: red">*</span
+        ><label class="col-sm-5 col-md-6">{{ t("taxID") }}</label>
         <input
           :class="{ error: isEmpty.cus_tax, 'form-control': true }"
           v-model="formData.cus_tax"
@@ -251,7 +257,8 @@
         />
       </div>
       <div class="mb-3">
-        <span style="color: red">*</span><label class="col-sm-5 col-md-6">{{ t("customerPurchaseBy") }}</label>
+        <span style="color: red">*</span
+        ><label class="col-sm-5 col-md-6">{{ t("customerPurchaseBy") }}</label>
         <input
           :class="{ error: isEmpty.cus_purchase, 'form-control': true }"
           v-model="formData.cus_purchase"
@@ -303,7 +310,10 @@
       </h2>
 
       <div class="mb-3">
-        <label class="col-sm-5 col-md-6"><span style="color: red">*</span>{{ t("cusNameHeaderTable2") }}</label>
+        <label class="col-sm-5 col-md-6"
+          ><span style="color: red">*</span
+          >{{ t("cusNameHeaderTable2") }}</label
+        >
         <input
           v-model="formDataCustomer.company_person_name"
           type="text"
@@ -313,9 +323,10 @@
         />
       </div>
       <div class="mb-3">
-        <span style="color: red">*</span><label class="col-sm-5 col-md-6">{{
-          t("cusAddressHeaderTable2")
-        }}</label>
+        <label class="col-sm-5 col-md-6" hidden>
+          <span style="color: red">*</span
+          >{{ t("cusAddressHeaderTable2") }}</label
+        >
         <input
           :class="{
             error: isEmpty2.company_person_address,
@@ -325,10 +336,13 @@
           type="text"
           id="input-text"
           required
+          hidden
         />
       </div>
       <div class="mb-3">
-        <label class="col-sm-5 col-md-6"><span style="color: red">*</span>{{ t("cusTelHeaderTable2") }}</label>
+        <label class="col-sm-5 col-md-6"
+          ><span style="color: red">*</span>{{ t("cusTelHeaderTable2") }}</label
+        >
         <input
           :class="{ error: isEmpty2.company_person_tel, 'form-control': true }"
           v-model="formDataCustomer.company_person_tel"
@@ -340,7 +354,10 @@
         />
       </div>
       <div class="mb-3">
-        <label class="col-sm-5 col-md-6"><span style="color: red">*</span>{{ t("cusEmailHeaderTable2") }}</label>
+        <label class="col-sm-5 col-md-6"
+          ><span style="color: red">*</span
+          >{{ t("cusEmailHeaderTable2") }}</label
+        >
         <input
           :class="{
             error: isEmpty2.company_person_email,
@@ -361,7 +378,9 @@
         ></textarea>
       </div>
       <div class="mb-3">
-        <label class="col-sm-5 col-md-6"><span style="color: red">*</span>{{ t("cusCompany") }}</label>
+        <label class="col-sm-5 col-md-6"
+          ><span style="color: red">*</span>{{ t("cusCompany") }}</label
+        >
         <select
           class="form-control col-sm-7 col-md-6 form-select"
           v-model="formDataCustomer.company_person_customer"
@@ -582,7 +601,7 @@ export default {
       return [
         { label: this.t("onlystatusHeaderTable"), key: "status" },
         { label: this.t("cusNameHeaderTable2"), key: "Customer Name" },
-        { label: this.t("cusAddressHeaderTable2"), key: "Customer Address" },
+        // { label: this.t("cusAddressHeaderTable2"), key: "Customer Address" },
         { label: this.t("cusTelHeaderTable2"), key: "Customer Tel" },
         { label: this.t("cusEmailHeaderTable2"), key: "Customer Email" },
         { label: this.t("cusCompany"), key: "Customer Company" },
@@ -793,10 +812,10 @@ export default {
         errorMessages.push(this.$t("validation.company_person_name"));
       }
 
-      if (this.formDataCustomer.company_person_address.trim() === "") {
-        this.isEmpty2.company_person_address = true;
-        errorMessages.push(this.$t("validation.company_person_address"));
-      }
+      // if (this.formDataCustomer.company_person_address.trim() === "") {
+      //   this.isEmpty2.company_person_address = true;
+      //   errorMessages.push(this.$t("validation.company_person_address"));
+      // }
 
       if (this.formDataCustomer.company_person_tel.trim() === "") {
         this.isEmpty2.company_person_tel = true;
@@ -1125,7 +1144,7 @@ export default {
                   ID: item.company_person_id,
                   status: item.company_person_status,
                   "Customer Name": item.company_person_name,
-                  "Customer Address": item.company_person_address,
+                  // "Customer Address": item.company_person_address,
                   "Customer Tel": item.company_person_tel,
                   "Customer Email": item.company_person_email,
                   "Customer Company": item.cus_name,
