@@ -3104,7 +3104,7 @@ export default {
           const json = await res.json();
           console.log("AddProductQuotataion ", json);
 
-          if (json.statusCode == 200) {
+          if (json.statusCode == 200 && json.data && json.data.productID) {
             addedProductIDs.push(json.data.productID); // สมมติว่าตอบกลับ API มี field `data.productID`
             console.warn("เพิ่มสินค้าไม่สำเร็จ", json.message || json);
             this.getEmployee();
@@ -3114,11 +3114,6 @@ export default {
             this.getQuotation();
           }
         }
-
-        console.log(
-          "addedProductIDs----------------------------->>",
-          addedProductIDs
-        );
         return addedProductIDs; // ส่งคืน productID ทั้งหมด
       } else {
         console.warn("ไม่พบหมวดหมู่ชื่อ ไม่มีหมวดหมู่");
@@ -5116,7 +5111,6 @@ export default {
     this.getBusiness();
     this.getQuotation();
     this.getBanks();
-    this.addProductQuotataion();
   },
 };
 </script>
