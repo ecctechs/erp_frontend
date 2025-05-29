@@ -3125,6 +3125,7 @@ export default {
       }
     },
     async addQuotation() {
+      if (!(await this.validateFormData())) return;
       const addedProductIDs = await this.addProductQuotataion(); // ดึง productIDs ที่เพิ่มสำเร็จ
 
       if (addedProductIDs.length > 0) {
@@ -3145,7 +3146,6 @@ export default {
       }
 
       const accessToken = localStorage.getItem("@accessToken");
-      if (!(await this.validateFormData())) return;
       this.isLoading = true;
       this.formData.sale_date = new Date(this.formData.sale_date)
         .toISOString()
@@ -3288,6 +3288,7 @@ export default {
       // }
     },
     async editQuotation() {
+      if (!(await this.validateFormData())) return;
       const addedProductIDs = await this.addProductQuotataion(); // ดึง productIDs ที่เพิ่มสำเร็จ
 
       if (addedProductIDs.length > 0) {
@@ -3308,7 +3309,6 @@ export default {
       }
 
       const accessToken = localStorage.getItem("@accessToken");
-      if (!(await this.validateFormData())) return;
       try {
         if (this.NotCustomerExit) {
           await fetch(`${API_CALL}/Quotation/addCustomer`, {
