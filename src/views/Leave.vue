@@ -478,7 +478,9 @@
         <h2>จัดการวันลา</h2>
       </div>
       <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6"><span style="color: red">*</span>{{ t("empname") }}</label>
+        <label class="col-sm-5 col-md-6"
+          ><span style="color: red">*</span>{{ t("empname") }}</label
+        >
         <select
           class="form-control col-sm-9 col-md-6 form-select"
           v-model="formDataLeave.employeeID"
@@ -627,19 +629,17 @@
       </div>
 
       <!-- ลาหลายวัน -->
+
       <div v-if="leaveType === 'multi'" class="mb-3">
-        <label>{{ t("StartDateLeave") }}:</label>
-        <!-- <DatePicker
-          v-model:value="formDataLeave.date"
-          format="DD/MM/YYYY"
-          value-type="date"
-          placeholder="DD/MM/YYYY"
-          class="form-control"
-          :class="{ error: isEmpty.date }"
-          :formatter="momentFormat"
-          :lang="currentLocale"
-        /> -->
+        <label>{{ t("StartDateLeave") }}:</label><br />
         <v-date-picker
+          v-model.range="formDataLeave.range"
+          mode="range"
+          locale="th-TH"
+          :format="formatDatePicker"
+        />
+        <!-- {{ formDataLeave.range.start }} {{ formDataLeave.range.end }} -->
+        <!-- <v-date-picker
           v-model="formDataLeave.date"
           locale="th-TH"
           :format="formatDatePicker"
@@ -653,18 +653,8 @@
               style="width: 100%"
             />
           </template>
-        </v-date-picker>
-        <label>{{ t("EndDateLeave") }}:</label>
-        <!-- <DatePicker
-          v-model:value="formDataLeave.dateEnd"
-          format="DD/MM/YYYY"
-          value-type="date"
-          placeholder="DD/MM/YYYY"
-          class="form-control"
-          :class="{ error: isEmpty.dateEnd }"
-          :formatter="momentFormat"
-          :lang="currentLocale"
-        /> -->
+        </v-date-picker> -->
+        <!-- <label>{{ t("EndDateLeave") }}:</label>
         <v-date-picker
           v-model="formDataLeave.dateEnd"
           locale="th-TH"
@@ -679,7 +669,7 @@
               style="width: 100%"
             />
           </template>
-        </v-date-picker>
+        </v-date-picker> -->
       </div>
       <div class="mb-3 modal-footer">
         <button
@@ -1133,6 +1123,10 @@ export default {
         status: "active",
       },
       formDataLeave: {
+        range: {
+          start: null,
+          end: null,
+        },
         ID: "",
         employeeID: "",
         detail: "ลาป่วย",
@@ -2470,6 +2464,9 @@ export default {
       } else if (this.leaveType === "half") {
         const date = new Date(this.formDataLeave.date); // คัดลอก date
         this.formDataLeave.dateEnd = date;
+      } else {
+        this.formDataLeave.date = this.formDataLeave.range.start;
+        this.formDataLeave.dateEnd = this.formDataLeave.range.end;
       }
 
       if (this.isEditMode === false) {
