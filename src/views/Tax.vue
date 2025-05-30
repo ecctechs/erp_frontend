@@ -2078,7 +2078,7 @@ export default {
           });
 
           const maxBoxWidth = 35;
-          const maxBoxHeight = 35;
+          const maxBoxHeight = 20;
 
           let imgWidth = img.width;
           let imgHeight = img.height;
@@ -2099,7 +2099,6 @@ export default {
           // วางรูปในกรอบ โดยชิดขวา-บนของกล่อง (แต่ต้องเว้นให้ไม่เกินขอบ)
           const imgX = boxX + (maxBoxWidth - scaledWidth); // ชิดขวาภายในกรอบ
           const imgY = boxY; // ชิดบน
-
           // วาดภาพ
           doc.addImage(img, "JPEG", imgX, imgY, scaledWidth, scaledHeight);
         }
