@@ -2793,4 +2793,9 @@ export default {
   width: 10%; /* คอลัมน์ปุ่มลบ */
   min-width: 10px !important;
 }
+
+.show-only-desktop table thead tr th:nth-child(7),
+.show-only-desktop table tbody tr td:nth-child(7) {
+  display: block !important;
+}
 </style>

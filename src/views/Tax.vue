@@ -3142,4 +3142,8 @@ export default {
 .show-only-desktop table tbody tr td:nth-child(21) {
   display: none;
 }
+.show-only-desktop table thead tr th:nth-child(7),
+.show-only-desktop table tbody tr td:nth-child(7) {
+  display: block !important;
+}
 </style>
