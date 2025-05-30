@@ -633,7 +633,7 @@
                           list="browsers2"
                           name="myBrowser2"
                           class="form-control"
-                          v-model="form.productID"
+                          v-model="form.productName"
                           @input="getDetailProduct(form, index)"
                           :class="{ error: inputError }"
                           autoComplete="off"
@@ -781,7 +781,7 @@
             <label class="col-sm-6 col-md-6">{{ t("quotationDate") }}</label>
           </div>
           <div class="col-6 col-sm-6 col-md-6">
-            <DatePicker
+            <!-- <DatePicker
               v-model:value="formData.sale_date"
               format="DD/MM/YYYY"
               value-type="date"
@@ -789,7 +789,22 @@
               :formatter="momentFormat"
               :lang="currentLocale"
               :class="{ error: isEmpty.sale_date, 'form-control': true }"
-            />
+            /> -->
+            <v-date-picker
+              v-model="formData.sale_date"
+              locale="th-TH"
+              :format="formatDatePicker"
+            >
+              <template v-slot="{ inputEvents }">
+                <input
+                  class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
+                  :value="formatDatePicker(formData.sale_date)"
+                  v-on="inputEvents"
+                  placeholder="เลือกวันที่"
+                  style="width: 100%"
+                />
+              </template>
+            </v-date-picker>
           </div>
         </div>
         <div class="mb-3 div-for-formControl">
@@ -819,7 +834,7 @@
             <label class="col-sm-6 col-md-6">{{ t("expireDate") }}</label>
           </div>
           <div class="col-6 col-sm-6 col-md-6">
-            <DatePicker
+            <!-- <DatePicker
               v-model:value="formData.credit_expired_date"
               format="DD/MM/YYYY"
               value-type="date"
@@ -827,7 +842,22 @@
               :formatter="momentFormat"
               :lang="currentLocale"
               class="form-control readonly"
-            />
+            /> -->
+            <v-date-picker
+              v-model="formData.credit_expired_date"
+              locale="th-TH"
+              :format="formatDatePicker"
+            >
+              <template v-slot="{ inputEvents }">
+                <input
+                  class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
+                  :value="formatDatePicker(formData.credit_expired_date)"
+                  v-on="inputEvents"
+                  placeholder="เลือกวันที่"
+                  style="width: 100%"
+                />
+              </template>
+            </v-date-picker>
           </div>
         </div>
         <div class="mb-3 div-for-formControl">
@@ -1671,6 +1701,15 @@ export default {
     },
   },
   methods: {
+    formatDatePicker(date) {
+      if (!date) return "";
+      const d = new Date(date);
+      const day = d.getDate().toString().padStart(2, "0");
+      const month = (d.getMonth() + 1).toString().padStart(2, "0");
+      const buddhistYear = d.getFullYear() + 543;
+
+      return `${day}/${month}/${buddhistYear}`; // 🔸 แสดงเป็น พ.ศ.
+    },
     closePopupAllow() {
       this.openPopupAllow = false;
     },
@@ -1726,13 +1765,18 @@ export default {
     },
 
     getDetailProduct(form, index) {
-      const selectedProductId = form.productID;
+      // const selectedProductId = form.productID;
+      const selectedProductName = form.productName;
 
       const selectedProduct = this.Products.find(
-        (product) => product.productname === selectedProductId
+        (product) => product.productname === selectedProductName
       );
+
       console.log("=====================>>", form);
+
+      // form.productID = selectedProduct.productID;
       if (selectedProduct !== undefined) {
+        form.productID = selectedProduct.productID;
         form.price = this.formatDecimal(
           parseFloat(selectedProduct.price.toFixed(2))
         );
@@ -1818,6 +1862,25 @@ export default {
         form.sale_price = "0.00";
         form.sale_qty = "0";
         form.price = "0";
+      }
+      if (form.productName.trim() === "") {
+        form.productID = "";
+        form.productName = "";
+        form.price = "";
+        form.sale_qty = 0;
+        form.sale_price = 0.0;
+        form.sale_discount = 0;
+        form.discounttype = "amount"; // ค่าเริ่มต้น
+        form.productImg = null;
+        form.product_detail = "";
+        form.pro_unit = "";
+        form.showDetails = false;
+        form.isReadonly2 = false;
+        form.isDisabled2 = false;
+      }
+
+      if (selectedProduct === undefined) {
+        form.productID = "";
       }
     },
     getDetailCustomer() {
@@ -2117,7 +2180,7 @@ export default {
         //   (p) => p.productID === form.productID.toString()
         // );
         const product = this.Products.find(
-          (product) => product.productname === form.productID
+          (product) => product.productID === form.productID
         );
 
         return [
@@ -2313,22 +2376,24 @@ export default {
         );
 
         doc.text(`${employ.position}`, 10, 255);
+        doc.text(`Name: `, 10, 255);
+        doc.text(row.employeeName, 40, 255);
         doc.text(`Email: `, 10, 260);
         doc.text(employ.Email, 40, 260);
         doc.text(`Contact No.: `, 10, 265);
         doc.text(employ.Phone_num, 40, 265);
         doc.text(`Remark: `, 10, 215);
 
-        const FormEmployee_sale = [
-          `${row.employeeName}`,
-          // `${employ.Email}`,
-          // `${employ.Phone_num}`,
-        ];
-        doc.text(FormEmployee_sale, 40, 255, {
-          align: "left",
-          valign: "middle",
-          lineGap: 5,
-        });
+        // const FormEmployee_sale = [
+        //   `${row.employeeName}`,
+        //   // `${employ.Email}`,
+        //   // `${employ.Phone_num}`,
+        // ];
+        // doc.text(FormEmployee_sale, 40, 255, {
+        //   align: "left",
+        //   valign: "middle",
+        //   lineGap: 5,
+        // });
 
         doc.text(`Total Before Discount: `, 130, 215);
         doc.text(`Total Before VAT: `, 130, 220);
@@ -2966,7 +3031,11 @@ export default {
 
       if (this.productForms.length !== 0) {
         this.productForms.forEach((productForm, index) => {
-          if (!productForm.productID) {
+          if (
+            !productForm.productName ||
+            !productForm.price ||
+            !productForm.sale_qty
+          ) {
             // ตรวจสอบว่า field `someField` ของแต่ละ productForm ว่าง
             this.isEmpty.productForms = true;
             errorMessages.push(
@@ -3019,7 +3088,7 @@ export default {
         const formData = new FormData();
         formData.append("file", product.file || ""); // ไฟล์ถ้ามี
         formData.append("productTypeID", 1);
-        formData.append("productname", product.productID);
+        formData.append("productname", product.productName);
         formData.append("productdetail", product.product_detail);
         formData.append("amount", 100);
         formData.append("price", parseInt(product.price));
@@ -3031,6 +3100,16 @@ export default {
     },
 
     async addProductQuotataion() {
+      const isIncomplete = this.productForms.some(
+        (productForm) =>
+          !productForm.productName ||
+          !productForm.price ||
+          !productForm.sale_qty
+      );
+
+      if (isIncomplete) {
+        return 0; // หยุดการทำงานหากข้อมูลไม่สมบูรณ์
+      }
       const response = await fetch(`${API_CALL}/product/getCategory`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -3053,6 +3132,8 @@ export default {
           this.CategoryIDFormAddNewProduct,
           this.productForms
         );
+        const addedProductIDs = [];
+
         for (const formData of formDataList) {
           const res = await fetch(`${API_CALL}/product/AddProduct`, {
             method: "POST",
@@ -3062,8 +3143,10 @@ export default {
             body: formData,
           });
           const json = await res.json();
+          console.log("AddProductQuotataion ", json);
 
-          if (json.statusCode == 200) {
+          if (json.statusCode == 200 && json.data && json.data.productID) {
+            addedProductIDs.push(json.data.productID); // สมมติว่าตอบกลับ API มี field `data.productID`
             console.warn("เพิ่มสินค้าไม่สำเร็จ", json.message || json);
             this.getEmployee();
             this.getCustomer();
@@ -3072,15 +3155,33 @@ export default {
             this.getQuotation();
           }
         }
+        return addedProductIDs; // ส่งคืน productID ทั้งหมด
       } else {
         console.warn("ไม่พบหมวดหมู่ชื่อ ไม่มีหมวดหมู่");
       }
     },
     async addQuotation() {
-      await this.addProductQuotataion();
+      if (!(await this.validateFormData())) return;
+      const addedProductIDs = await this.addProductQuotataion(); // ดึง productIDs ที่เพิ่มสำเร็จ
+
+      if (addedProductIDs.length > 0) {
+        let addedIndex = 0; // ตัวชี้ตำแหน่งใน addedProductIDs
+        this.productForms.forEach((form) => {
+          // ตรวจสอบว่าสินค้านี้เป็นสินค้าที่เพิ่งเพิ่มใหม่
+          if (!form.productID) {
+            if (addedIndex < addedProductIDs.length) {
+              form.productID = addedProductIDs[addedIndex];
+              addedIndex++;
+            } else {
+              console.warn(
+                "จำนวน addedProductIDs ไม่เพียงพอสำหรับอัปเดต productForms"
+              );
+            }
+          }
+        });
+      }
 
       const accessToken = localStorage.getItem("@accessToken");
-      if (!(await this.validateFormData())) return;
       this.isLoading = true;
       this.formData.sale_date = new Date(this.formData.sale_date)
         .toISOString()
@@ -3180,7 +3281,7 @@ export default {
             discount_quotation: this.formData.discount_quotation,
             vatType: this.formData.vatType,
             products: this.productForms.map((form) => ({
-              productID: form.productID,
+              productID: form.productID, // กรณีเพิ่มสินค้าใน quotaion จะหาตัวนี้ไม่เจอ
               sale_price: parseFloat(form.sale_price.replace(/,/g, "")),
               discounttype: form.discounttype,
               sale_discount: parseFloat(form.sale_discount),
@@ -3223,9 +3324,27 @@ export default {
       // }
     },
     async editQuotation() {
-      await this.addProductQuotataion();
-      const accessToken = localStorage.getItem("@accessToken");
       if (!(await this.validateFormData())) return;
+      const addedProductIDs = await this.addProductQuotataion(); // ดึง productIDs ที่เพิ่มสำเร็จ
+
+      if (addedProductIDs.length > 0) {
+        let addedIndex = 0; // ตัวชี้ตำแหน่งใน addedProductIDs
+        this.productForms.forEach((form) => {
+          // ตรวจสอบว่าสินค้านี้เป็นสินค้าที่เพิ่งเพิ่มใหม่
+          if (!form.productID) {
+            if (addedIndex < addedProductIDs.length) {
+              form.productID = addedProductIDs[addedIndex];
+              addedIndex++;
+            } else {
+              console.warn(
+                "จำนวน addedProductIDs ไม่เพียงพอสำหรับอัปเดต productForms"
+              );
+            }
+          }
+        });
+      }
+
+      const accessToken = localStorage.getItem("@accessToken");
       try {
         if (this.NotCustomerExit) {
           await fetch(`${API_CALL}/Quotation/addCustomer`, {
@@ -4628,7 +4747,7 @@ export default {
       }
       this.productForms = (row.productForms || []).map((detail) => {
         const selectedProduct = this.Products.find(
-          (product) => product.productname === detail.productID
+          (product) => product.productID === detail.productID
         );
         console.log("selectedProduct", selectedProduct);
         let price = 0;
@@ -4657,6 +4776,7 @@ export default {
           discounttype: detail.discounttype,
           product_detail: detail.product_detail,
           pro_unti: detail.pro_unti,
+          productName: selectedProduct.productname,
         };
       });
 
@@ -4873,6 +4993,8 @@ export default {
         setTimeout(() => {
           this.openPopupAllow = false;
         }, 3000);
+      } else if (this.formData.status === "expired") {
+        alert("Quotation หมดอายุ");
       } else {
         await this.editQuotation2();
         setTimeout(() => {
@@ -5032,7 +5154,6 @@ export default {
     this.getBusiness();
     this.getQuotation();
     this.getBanks();
-    this.addProductQuotataion();
   },
 };
 </script>

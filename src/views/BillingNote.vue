@@ -301,7 +301,7 @@
       </div>
       <div class="mb-3 div-for-formControl">
         <label class="col-sm-6 col-md-6">{{ t("dateBilling") }}</label>
-        <DatePicker
+        <!-- <DatePicker
           v-model:value="formData.billing_date"
           format="DD/MM/YYYY"
           value-type="date"
@@ -309,7 +309,22 @@
           class="form-control"
           :formatter="momentFormat"
           :lang="currentLocale"
-        />
+        /> -->
+        <v-date-picker
+          v-model="formData.billing_date"
+          locale="th-TH"
+          :format="formatDatePicker"
+        >
+          <template v-slot="{ inputEvents }">
+            <input
+              class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
+              :value="formatDatePicker(formData.billing_date)"
+              v-on="inputEvents"
+              placeholder="เลือกวันที่"
+              style="width: 100%"
+            />
+          </template>
+        </v-date-picker>
       </div>
       <div class="mb-3 div-for-formControl">
         <label class="col-sm-5 col-md-2">{{ t("employeeName") }}</label>
@@ -1002,6 +1017,15 @@ export default {
     },
   },
   methods: {
+    formatDatePicker(date) {
+      if (!date) return "";
+      const d = new Date(date);
+      const day = d.getDate().toString().padStart(2, "0");
+      const month = (d.getMonth() + 1).toString().padStart(2, "0");
+      const buddhistYear = d.getFullYear() + 543;
+
+      return `${day}/${month}/${buddhistYear}`; // 🔸 แสดงเป็น พ.ศ.
+    },
     closeErrorPopup() {
       this.isPopupVisible_error = false;
     },
@@ -1184,7 +1208,7 @@ export default {
       //loop of product
       this.productForms = (row.productForms || []).map((detail) => {
         const selectedProduct = this.Products.find(
-          (product) => product.productname === detail.productID
+          (product) => product.productID === detail.productID
         );
         let price = 0;
         let productname = "";
@@ -1500,7 +1524,7 @@ export default {
         //   (p) => p.productID === form.productID.toString()
         // );
         const product = this.Products.find(
-          (product) => product.productname === form.productID
+          (product) => product.productID === form.productID
         );
         // console.log(product);
         return [
@@ -1684,22 +1708,13 @@ export default {
         );
 
         doc.text(`${employ.position}`, 10, 255);
+        doc.text(`Name: `, 10, 255);
+        doc.text(row.employeeName, 40, 255);
         doc.text(`Email: `, 10, 260);
         doc.text(employ.Email, 40, 260);
         doc.text(`Contact No.: `, 10, 265);
         doc.text(employ.Phone_num, 40, 265);
         doc.text(`Remark: `, 10, 215);
-
-        const FormEmployee_sale = [
-          `${row.employeeName}`,
-          // `${employ.Email}`,
-          // `${employ.Phone_num}`,
-        ];
-        doc.text(FormEmployee_sale, 40, 255, {
-          align: "left",
-          valign: "middle",
-          lineGap: 5,
-        });
 
         doc.text(`Total Before Discount: `, 130, 215);
         doc.text(`Total Before VAT: `, 130, 220);

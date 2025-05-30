@@ -132,23 +132,22 @@
             class="form-control me-3 size-font-sm"
             :placeholder="$t('Search')"
           /> -->
-                  <select
-          class="form-control form-select size-font-sm"
-          v-model="searchQuery"
-          aria-label="Expense Category select"
-          :class="{ error: isEmpty.cateExpense }"
-        >
-          <option value="" selected hidden>
-            {{ t("expense.selectCategory") }}
-          </option>
-          <option value="เงินเดือน">{{ t("expense.salary") }}</option>
-          <option value="ต้นทุนสินค้า">{{ t("expense.stock") }}</option>
-          <option value="ค่าจ้าง">{{ t("expense.wages") }}</option>
-          <option value="ค่าการตลาด">{{ t("expense.marketing") }}</option>
-          <option value="อุปกรณ์สํานักงาน">{{ t("expense.office") }}</option>
-          <option value="ค่าเช่า">{{ t("expense.rentals") }}</option>
-          <option value="อื่นๆ">{{ t("expense.others") }}</option>
-        </select>
+          <select
+            class="form-control form-select size-font-sm"
+            v-model="searchQuery"
+            aria-label="Expense Category select"
+          >
+            <option value="" selected hidden>
+              {{ t("expense.selectCategory") }}
+            </option>
+            <option value="เงินเดือน">{{ t("expense.salary") }}</option>
+            <option value="ต้นทุนสินค้า">{{ t("expense.stock") }}</option>
+            <option value="ค่าจ้าง">{{ t("expense.wages") }}</option>
+            <option value="ค่าการตลาด">{{ t("expense.marketing") }}</option>
+            <option value="อุปกรณ์สํานักงาน">{{ t("expense.office") }}</option>
+            <option value="ค่าเช่า">{{ t("expense.rentals") }}</option>
+            <option value="อื่นๆ">{{ t("expense.others") }}</option>
+          </select>
         </div>
         <!-- <div class="col-1 col-sm-1 col-md-7 col-lg-7"></div> -->
         <div class="col-6 col-sm-6 col-md-9 col-lg-9 text-end">
@@ -194,7 +193,9 @@
         <h3 v-if="isEditMode">{{ t("headerPopupEditExpenses") }}</h3>
       </div>
       <div class="mb-3">
-        <label class="col-sm-5 col-md-6 mb-3"><span style="color: red">*</span>{{ t("dateHeaderTable") }}</label>
+        <label class="col-sm-5 col-md-6 mb-3"
+          ><span style="color: red">*</span>{{ t("dateHeaderTable") }}</label
+        >
         <!-- <DatePicker
           v-model:value="formData.DateExpense"
           format="DD/MM/YYYY"
@@ -205,25 +206,27 @@
           :lang="currentLocale"
           :class="{ error: isEmpty.DateExpense }"
         /> -->
-        
-                              <v-date-picker
-                        v-model="formData.DateExpense"
-                        locale="th-TH"
-                        :format="formatDatePicker"
-                      >
-                        <template v-slot="{ inputEvents }">
-                          <input
-                            class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
-                            :value="formatDatePicker(formData.DateExpense)"
-                            v-on="inputEvents"
-                            placeholder="เลือกวันที่"
-                            style="width: 100%"
-                          />
-                        </template>
-                      </v-date-picker>
+
+        <v-date-picker
+          v-model="formData.DateExpense"
+          locale="th-TH"
+          :format="formatDatePicker"
+        >
+          <template v-slot="{ inputEvents }">
+            <input
+              class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
+              :value="formatDatePicker(formData.DateExpense)"
+              v-on="inputEvents"
+              placeholder="เลือกวันที่"
+              style="width: 100%"
+            />
+          </template>
+        </v-date-picker>
       </div>
       <div class="mb-3">
-        <label class="col-sm-5 col-md-6 mb-3"><span style="color: red">*</span>{{ t("cateHeaderTable") }}</label>
+        <label class="col-sm-5 col-md-6 mb-3"
+          ><span style="color: red">*</span>{{ t("cateHeaderTable") }}</label
+        >
         <select
           class="form-control form-select size-font-sm"
           v-model="formData.cateExpense"
@@ -243,9 +246,10 @@
         </select>
       </div>
       <div class="mb-3">
-        <label class="col-sm-5 col-md-6 mb-3"><span style="color: red">*</span>{{
-          t("amountmoneyHeaderTable")
-        }}</label>
+        <label class="col-sm-5 col-md-6 mb-3"
+          ><span style="color: red">*</span
+          >{{ t("amountmoneyHeaderTable") }}</label
+        >
         <input
           class="form-control col-sm-7 col-md-6"
           v-model="formattedPrice"
@@ -268,6 +272,34 @@
           maxlength="220"
           :class="{ error: isEmpty.remarkExpense }"
         ></textarea>
+      </div>
+      <div class="mb-3 div-for-formControl">
+        <label class="col-sm-5 col-md-6">{{ t("FileLabel") }}</label>
+        <div class="input-group input-upload-custom">
+          <label class="input-group-text btn btn-primary">
+            {{ t("SelectImage") }}
+            <input type="file" hidden @change="previewImage" />
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            :value="fileName || t('FileImageName')"
+            ref="fileInput"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="mb-5 div-for-formControl-textarea">
+        <label class="col-sm-5 col-md-6 label-textarea"></label>
+        <div class="text-editor">
+          <div v-if="imageSrc" class="image-preview mt-3">
+            <img
+              :src="imageSrc"
+              alt="Preview"
+              style="max-width: 200px; max-height: 200px"
+            />
+          </div>
+        </div>
       </div>
       <div class="modal-footer mb-3">
         <button
@@ -436,6 +468,9 @@ export default {
   },
   data() {
     return {
+      fileName: "",
+      Image_pd: [],
+      imageSrc: null, // สำหรับเก็บ URL ของรูปภาพที่แสดง
       searchQuery: "",
       Expenses: [],
       startDate: [],
@@ -455,10 +490,10 @@ export default {
       isLoading: false, // Loading state
       isPopupVisible: false, // For success message popup
       inputError: false, // Validation flag for inputs
-      ExportData:[],
+      ExportData: [],
       formData: {
         expense_id: "",
-        DateExpense: new Date(), 
+        DateExpense: new Date(),
         remarkExpense: "",
         cateExpense: "",
         priceExpense: "",
@@ -550,14 +585,13 @@ export default {
           dateEnd = new Date(this.endDate);
         }
 
-
-if(this.selectedOption !== "all"){
-    filteredData = filteredData.filter((item) => {
-          if (!item.realDateObj) return false;
-          return item.realDateObj >= dateStart && item.realDateObj <= dateEnd;
-        });
-}
-}
+        if (this.selectedOption !== "all") {
+          filteredData = filteredData.filter((item) => {
+            if (!item.realDateObj) return false;
+            return item.realDateObj >= dateStart && item.realDateObj <= dateEnd;
+          });
+        }
+      }
 
       // console.log(filteredData);
       if (this.searchQuery) {
@@ -598,6 +632,7 @@ if(this.selectedOption !== "all"){
         { label: this.t("remarkHeaderTable"), key: "quantity_remark_new3" },
         { label: this.t("remarkHeaderTable"), key: "quantity_remark_new4" },
         { label: this.t("remarkHeaderTable"), key: "quantity_remark_new5" },
+        { label: this.t("remarkHeaderTable"), key: "quantity_remark_new6" },
       ];
     },
   },
@@ -614,6 +649,21 @@ if(this.selectedOption !== "all"){
     },
   },
   methods: {
+    async previewImage(event) {
+      const file = event.target.files[0];
+      this.Image_pd = event.target.files[0];
+      this.fileName = file ? file.name : "";
+      if (file && file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.imageSrc = e.target.result; // อัปเดต URL รูปภาพสำหรับ preview
+        };
+        reader.readAsDataURL(file);
+        this.newImg = true;
+      } else {
+        this.imageSrc = null; // หากไม่ใช่ไฟล์รูปภาพ ให้ลบตัวอย่าง
+      }
+    },
     formatDatePicker(date) {
       if (!date) return "";
       const d = new Date(date);
@@ -872,31 +922,27 @@ if(this.selectedOption !== "all"){
       this.isPopupVisible_error = false;
     },
     async validateFormData() {
-      this.isEmpty.Position = false;
-
-      const errorMessages = [];
-
-      if (this.formPosition.Position.trim() === "") {
-        this.isEmpty.Position = true;
-        errorMessages.push(this.$t("validation.Position"));
-      }
-
-      const isDuplicate = this.Positions.some(
-        (item) =>
-          item["Position"].trim() === this.formPosition.Position.trim() &&
-          item.ID !== this.formPosition.Position // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
-      );
-      if (isDuplicate) {
-        this.isEmpty.Position = true;
-        errorMessages.push(this.$t("validation.positionDup"));
-      }
-
-      if (errorMessages.length > 0) {
-        this.showPopup_validate(errorMessages);
-        return false;
-      } else {
-        return true;
-      }
+      // this.isEmpty.Position = false;
+      // const errorMessages = [];
+      // if (this.formPosition.Position.trim() === "") {
+      //   this.isEmpty.Position = true;
+      //   errorMessages.push(this.$t("validation.Position"));
+      // }
+      // const isDuplicate = this.Positions.some(
+      //   (item) =>
+      //     item["Position"].trim() === this.formPosition.Position.trim() &&
+      //     item.ID !== this.formPosition.Position // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
+      // );
+      // if (isDuplicate) {
+      //   this.isEmpty.Position = true;
+      //   errorMessages.push(this.$t("validation.positionDup"));
+      // }
+      // if (errorMessages.length > 0) {
+      //   this.showPopup_validate(errorMessages);
+      //   return false;
+      // } else {
+      //   return true;
+      // }
     },
     showPopup_validate(messages) {
       if (Array.isArray(messages)) {
@@ -912,18 +958,19 @@ if(this.selectedOption !== "all"){
     },
     // Opens the department add/edit popup
     openPopup() {
+      this.isEmpty.DateExpense = false;
+      this.isEmpty.cateExpense = false;
+      this.isEmpty.priceExpense = false;
       this.isPopupOpen = true;
       this.isAddingMode = true; // Add mode
       this.isEditMode = false; // Disable edit mode
-      this.DateExpense = new Date();
+      this.formData.DateExpense = new Date();
+      this.formData.expense_id = "";
+      this.formData.remarkExpense = "";
+      this.formData.cateExpense = "";
+      this.formData.priceExpense = "";
 
-      if (this.t("lang") === "en") {
-        const buddhistYear = moment().year() + 543;
-        const formattedDate = moment().format(`DD/MM/${buddhistYear}`);
-        // this.formData.DateExpense = formattedDate;
-      } else {
-        // this.formData.DateExpense = moment().format("DD/MM/YYYY");
-      }
+      this.clearFile();
     },
     // Closes the department add/edit popup
     closePopup() {
@@ -968,17 +1015,38 @@ if(this.selectedOption !== "all"){
     },
     // Opens the edit popup with selected department data
     handleEdit(item) {
+      this.isEmpty.DateExpense = false;
+      this.isEmpty.cateExpense = false;
+      this.isEmpty.priceExpense = false;
       console.log("item", item);
       this.isPopupOpen = true;
       this.isAddingMode = false; // Edit mode
       this.isEditMode = true; // Enable edit mode
+
+      const thaiDate = item.expense_date;
+      const [day, month, year] = thaiDate.split("/");
+      const convert_expense_date = new Date(year - 543, month - 1, day); // แปลง พ.ศ. เป็น ค.ศ.
+
+      // const formatDateForPicker = (date) => {
+      //   if (!date) return null;
+      //   const d = new Date(date);
+      //   if (isNaN(d.getTime())) return null; // ตรวจสอบว่าเป็นวันที่ถูกต้อง
+      //   return d;
+      // };
+      // const formattedexpense_date = formatDateForPicker(item.expense_date);
+
       this.formData = {
         expense_id: item.expense_id,
-        DateExpense: item.expense_date,
+        DateExpense: convert_expense_date,
         remarkExpense: item.quantity_remark,
         cateExpense: item.expense_category,
         priceExpense: item.expense_amount,
       };
+      if (!item.expense_image) {
+        this.clearFile();
+      } else {
+        this.imageSrc = item.expense_image; // มีรูป ก็แสดงได้เล
+      }
       this.getExpense();
     },
     // Opens the delete confirmation popup for department
@@ -1053,21 +1121,6 @@ if(this.selectedOption !== "all"){
         errorMessages.push(this.$t("validation.priceExpense"));
       }
 
-      // if (this.formData.remarkExpense === "") {
-      //   this.isEmpty.remarkExpense = true;
-      //   errorMessages.push(this.$t("validation.remarkExpense"));
-      // }
-
-      //   const isDuplicateName = this.currentTableData.some(
-      //     (item) =>
-      //       item.productname.trim() === this.formData.productname.trim() &&
-      //       item.ID !== this.formData.productID // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
-      //   );
-      //   if (isDuplicateName) {
-      //     this.isEmpty.productname = true;
-      //     errorMessages.push(this.$t("validation.duplicateProductName"));
-      //   }
-
       if (errorMessages.length > 0) {
         this.showPopup_validate(errorMessages);
         return false;
@@ -1095,6 +1148,7 @@ if(this.selectedOption !== "all"){
           expense_category: item.expense_category,
           expense_amount: item.expense_amount,
           quantity_remark: item.quantity_remark,
+          expense_image: item.expense_image,
         }));
         if (json.statusCode === 200) {
         } else {
@@ -1106,21 +1160,34 @@ if(this.selectedOption !== "all"){
         this.isLoading = false;
       }
     },
-      formatDatePickerTH(date) {
-    if (!date || isNaN(new Date(date))) return '';
-    const d = new Date(date);
-    const day = d.getDate();
-    const month = d.getMonth() + 1; // เดือนนับจาก 0
-    const year = d.getFullYear() + 543; // แปลง ค.ศ. เป็น พ.ศ.
-    return `${day}/${month}/${year}`;
-  },
+    clearFile() {
+      this.fileName = "";
+      this.Image_pd = [];
+      this.imageSrc = null;
+      this.newImg = false;
+
+      // ใช้ ref เพื่อเคลียร์ input[type="file"]
+      if (this.$refs.fileInput) {
+        this.$refs.fileInput.value = "";
+      }
+    },
+    formatDatePickerTH(date) {
+      if (!date || isNaN(new Date(date))) return "";
+      const d = new Date(date);
+      const day = d.getDate();
+      const month = d.getMonth() + 1; // เดือนนับจาก 0
+      const year = d.getFullYear() + 543; // แปลง ค.ศ. เป็น พ.ศ.
+      return `${day}/${month}/${year}`;
+    },
 
     async addExpense() {
       const accessToken = localStorage.getItem("@accessToken");
       if (!(await this.validateFormData())) return;
       this.errorMessage = [];
       this.isLoading = true;
-      this.formData.DateExpense = this.formatDatePickerTH(this.formData.DateExpense);
+      this.formData.DateExpense = this.formatDatePickerTH(
+        this.formData.DateExpense
+      );
       try {
         const response = await fetch(`${API_CALL}/product/addExpenses`, {
           method: "POST",
@@ -1147,7 +1214,29 @@ if(this.selectedOption !== "all"){
             priceExpense: "",
             remarkExpense: "",
           };
+
+          const formDataImage = new FormData();
+
+          formDataImage.append("expense_id", json.data.expense_id);
+          formDataImage.append("file", this.Image_pd);
+
+          console.log("json.data.expense_id", json.data.expense_id);
+
+          // if (!this.Image_pd || this.Image_pd !== []) {
+          const imageExpense = await fetch(
+            `${API_CALL}/Quotation/AddExpense_img`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+              body: formDataImage,
+            }
+          );
+
           this.getExpense();
+
+          // }
         } else {
           this.showPopup_error(json.data);
         }
@@ -1163,6 +1252,11 @@ if(this.selectedOption !== "all"){
       if (!(await this.validateFormData())) return;
       this.errorMessage = [];
       this.isLoading = true;
+
+      const date = new Date(this.formData.DateExpense); // ตัวอย่างวันที่
+      const DateExpense = `${date.getDate()}/${date.getMonth() + 1}/${
+        date.getFullYear() + 543
+      }`;
       try {
         const response = await fetch(
           `${API_CALL}/product/editExpenses/${this.formData.expense_id}`,
@@ -1173,7 +1267,7 @@ if(this.selectedOption !== "all"){
               Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-              expense_date: this.formData.DateExpense,
+              expense_date: DateExpense,
               expense_category: this.formData.cateExpense,
               expense_amount: parseInt(this.formData.priceExpense),
               quantity_remark: this.formData.remarkExpense,
@@ -1191,6 +1285,29 @@ if(this.selectedOption !== "all"){
             priceExpense: "",
             remarkExpense: "",
           };
+          const formDataImage = new FormData();
+
+          console.log("edit succ", json.data);
+
+          formDataImage.append("expense_id", json.data);
+          formDataImage.append("file", this.Image_pd);
+
+          // console.log("json.data.expense_id", json.data);
+
+          // if (!this.Image_pd || this.Image_pd !== []) {
+          const imageExpense = await fetch(
+            `${API_CALL}/Quotation/AddExpense_img`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+              body: formDataImage,
+            }
+          );
+
+          console.log("imageExpense", imageExpense);
+
           this.getExpense();
         } else {
           this.showPopup_error(json.data);
@@ -1275,6 +1392,10 @@ if(this.selectedOption !== "all"){
 }
 .expenseTable table thead tr th:nth-child(6),
 .expenseTable table tbody tr td:nth-child(6) {
+  display: none;
+}
+.expenseTable table thead tr th:nth-child(15),
+.expenseTable table tbody tr td:nth-child(15) {
   display: none;
 }
 </style>

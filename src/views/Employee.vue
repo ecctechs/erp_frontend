@@ -221,7 +221,9 @@
       </div>
       <h5 style="text-decoration: underline">{{ t("employeeInformation") }}</h5>
       <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6"><span style="color: red">*</span>{{ t("title") }}</label>
+        <label class="col-sm-5 col-md-6"
+          ><span style="color: red">*</span>{{ t("title") }}</label
+        >
         <select
           class="form-control col-sm-9 col-md-6 form-select"
           v-model="formData.title"
@@ -234,7 +236,9 @@
         </select>
       </div>
       <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6"><span style="color: red">*</span>{{ t("firstname") }}</label>
+        <label class="col-sm-5 col-md-6"
+          ><span style="color: red">*</span>{{ t("firstname") }}</label
+        >
         <input
           class="form-control col-sm-9 col-md-6"
           v-model="formData.F_name"
@@ -244,7 +248,9 @@
         />
       </div>
       <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6"><span style="color: red">*</span>{{ t("lastname") }}</label>
+        <label class="col-sm-5 col-md-6"
+          ><span style="color: red">*</span>{{ t("lastname") }}</label
+        >
         <input
           class="form-control col-sm-9 col-md-6"
           v-model="formData.L_name"
@@ -255,7 +261,9 @@
       </div>
       <div class="mb-3 div-for-formControl">
         <div class="col-6 col-sm-6 col-md-6">
-          <label class="col-sm-6 col-md-6"><span style="color: red">*</span>{{ t("birthdate") }}</label>
+          <label class="col-sm-6 col-md-6"
+            ><span style="color: red">*</span>{{ t("birthdate") }}</label
+          >
         </div>
         <div class="col-6 col-sm-6 col-md-6">
           <!-- <DatePicker
@@ -269,25 +277,27 @@
             :disabled-date="disabledBeforeToday"
             :class="{ error: isEmpty.Birthdate }"
           /> -->
-                  <v-date-picker
-          v-model="formData.Birthdate"
-          locale="th-TH"
-          :format="formatDatePicker"
-        >
-          <template v-slot="{ inputEvents }">
-            <input
-              class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
-              :value="formatDatePicker(formData.Birthdate)"
-              v-on="inputEvents"
-              placeholder="เลือกวันที่"
-              style="width: 100%"
-            />
-          </template>
-        </v-date-picker>
+          <v-date-picker
+            v-model="formData.Birthdate"
+            locale="th-TH"
+            :format="formatDatePicker"
+          >
+            <template v-slot="{ inputEvents }">
+              <input
+                class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
+                :value="formatDatePicker(formData.Birthdate)"
+                v-on="inputEvents"
+                placeholder="เลือกวันที่"
+                style="width: 100%"
+              />
+            </template>
+          </v-date-picker>
         </div>
       </div>
       <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6"><span style="color: red">*</span>{{ t("address") }}</label>
+        <label class="col-sm-5 col-md-6"
+          ><span style="color: red">*</span>{{ t("address") }}</label
+        >
         <input
           class="form-control col-sm-9 col-md-6"
           v-model="formData.Address"
@@ -297,7 +307,9 @@
         />
       </div>
       <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6"><span style="color: red">*</span>{{ t("phoneNum") }}</label>
+        <label class="col-sm-5 col-md-6"
+          ><span style="color: red">*</span>{{ t("phoneNum") }}</label
+        >
         <input
           class="form-control col-sm-9 col-md-6"
           v-model="formData.Phone_num"
@@ -309,7 +321,9 @@
         />
       </div>
       <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6"><span style="color: red">*</span>{{ t("NID") }}</label>
+        <label class="col-sm-5 col-md-6"
+          ><span style="color: red">*</span>{{ t("NID") }}</label
+        >
         <input
           class="form-control col-sm-9 col-md-6"
           v-model="formData.NID_num"
@@ -321,7 +335,9 @@
         />
       </div>
       <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6"><span style="color: red">*</span>{{ t("email") }}</label>
+        <label class="col-sm-5 col-md-6"
+          ><span style="color: red">*</span>{{ t("email") }}</label
+        >
         <input
           class="form-control col-sm-9 col-md-6"
           v-model="formData.Email"
@@ -332,7 +348,9 @@
       </div>
       <h5 style="text-decoration: underline">{{ t("headerAboutJob") }}</h5>
       <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6"><span style="color: red">*</span>{{ t("empType") }}</label>
+        <label class="col-sm-5 col-md-6"
+          ><span style="color: red">*</span>{{ t("empType") }}</label
+        >
         <select
           class="form-control col-sm-9 col-md-6 form-select"
           v-model="formData.employeeType"
@@ -345,7 +363,9 @@
         </select>
       </div>
       <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6"><span style="color: red">*</span>{{ t("department") }}</label>
+        <label class="col-sm-5 col-md-6"
+          ><span style="color: red">*</span>{{ t("department") }}</label
+        >
         <div class="col-sm-9 col-md-6">
           <select
             class="form-control form-select"
@@ -369,8 +389,10 @@
           </div>
         </div>
       </div>
-      <div class="mb-3 div-for-formControl" v-if="isAddingMode">
-        <label class="col-sm-5 col-md-6"><span style="color: red">*</span>{{ t("position") }}</label>
+      <div class="mb-3 div-for-formControl">
+        <label class="col-sm-5 col-md-6"
+          ><span style="color: red">*</span>{{ t("position") }}</label
+        >
         <div class="col-sm-9 col-md-6">
           <select
             class="form-control form-select"
@@ -388,14 +410,13 @@
               {{ employ.Position }}
             </option>
           </select>
-
           <!-- แสดงข้อความใต้ select -->
           <div v-if="Positions.length === 0" class="text-danger mt-1">
             {{ t("pleasePosition") }}
           </div>
         </div>
       </div>
-      <div class="mb-3 div-for-formControl" v-if="isEditMode">
+      <!-- <div class="mb-3 div-for-formControl" v-if="isEditMode">
         <label class="col-sm-5 col-md-6">{{ t("position") }}</label>
         <div class="col-sm-9 col-md-6">
           <select
@@ -413,14 +434,14 @@
             >
               {{ employ.Position }}
             </option>
-          </select>
+          </select> -->
 
-          <!-- แสดงข้อความใต้ select -->
-          <div v-if="Positions.length === 0" class="text-danger mt-1">
+      <!-- แสดงข้อความใต้ select -->
+      <!-- <div v-if="Positions.length === 0" class="text-danger mt-1">
             {{ t("pleasePosition") }}
           </div>
-        </div>
-      </div>
+        </div> -->
+      <!-- </div> -->
       <div class="mb-3 div-for-formControl">
         <label class="col-sm-5 col-md-6">{{ t("salary") }}</label>
         <input
@@ -449,21 +470,21 @@
             :disabled-date="disabledBeforeToday"
             :class="{ error: isEmpty.start_working_date }"
           ></DatePicker> -->
-                            <v-date-picker
-          v-model="formData.start_working_date"
-          locale="th-TH"
-          :format="formatDatePicker"
-        >
-          <template v-slot="{ inputEvents }">
-            <input
-              class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
-              :value="formatDatePicker(formData.start_working_date)"
-              v-on="inputEvents"
-              placeholder="เลือกวันที่"
-              style="width: 100%"
-            />
-          </template>
-        </v-date-picker>
+          <v-date-picker
+            v-model="formData.start_working_date"
+            locale="th-TH"
+            :format="formatDatePicker"
+          >
+            <template v-slot="{ inputEvents }">
+              <input
+                class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
+                :value="formatDatePicker(formData.start_working_date)"
+                v-on="inputEvents"
+                placeholder="เลือกวันที่"
+                style="width: 100%"
+              />
+            </template>
+          </v-date-picker>
         </div>
       </div>
       <h5 style="text-decoration: underline">{{ t("headerAboutBank") }}</h5>
@@ -1215,7 +1236,7 @@ export default {
     },
   },
   methods: {
-        formatDatePicker(date) {
+    formatDatePicker(date) {
       if (!date) return "";
       const d = new Date(date);
       const day = d.getDate().toString().padStart(2, "0");
@@ -1470,7 +1491,24 @@ export default {
       }
 
       const filteredEmp = this.employees.filter((emp) => emp.ID === item.ID);
-      // alert(formatDateForPicker(filteredEmp[0].Birthdate));
+
+      let Birthdate = [];
+      let startingworkdate = [];
+      if (filteredEmp[0].Birthdate) {
+        Birthdate = new Date(filteredEmp[0].Birthdate + " GMT+0700"); // เพิ่มเขตเวลา
+        Birthdate.toString();
+      } else {
+        Birthdate = new Date();
+      }
+      if (filteredEmp[0]["Start Working Date"]) {
+        startingworkdate = new Date(
+          filteredEmp[0]["Start Working Date"] + " GMT+0700"
+        ); // เพิ่มเขตเวลา
+        startingworkdate.toString();
+      } else {
+        startingworkdate = new Date();
+      }
+
       console.log("Edit item:", filteredEmp);
       this.isPopupOpen = true;
       this.isAddingMode = false;
@@ -1482,16 +1520,14 @@ export default {
         L_name: item.Name.split(" ")[1],
         Address: item.Address,
         // Birthdate: formattedBirthdate,
-        Birthdate: formatDateForPicker(filteredEmp[0].Birthdate),
+        Birthdate: Birthdate,
         NID_num: item["National ID"],
         Phone_num: item["Tel."],
         Email: item.Email,
         departmentID: item.departmentID,
         PositionID: item.PositionID,
         // start_working_date: formattedStartWorking,
-        start_working_date: formatDateForPicker(
-          filteredEmp[0]["Start Working Date"]
-        ),
+        start_working_date: startingworkdate,
         Salary: item.Salary,
         employeeType: item["Emp. type"],
         bankName: item["Bank Name"],
@@ -1500,6 +1536,7 @@ export default {
         positions: positions.join(", "),
         status: item.status,
       };
+      this.getEmployee();
     },
     handleDelete(item) {
       console.log("Delete button clicked for item:", item);
@@ -2152,12 +2189,18 @@ export default {
         errorMessages.push(this.$t("validation.Email"));
       }
 
-      if (this.formData.departmentID === "") {
+      if (
+        this.formData.departmentID === "" ||
+        this.formData.departmentID === null
+      ) {
         this.isEmpty.departmentID = true;
         errorMessages.push(this.$t("validation.departmentID"));
       }
 
-      if (this.formData.PositionID === "") {
+      if (
+        this.formData.PositionID === "" ||
+        this.formData.PositionID === null
+      ) {
         this.isEmpty.PositionID = true;
         errorMessages.push(this.$t("validation.PositionID"));
       }
@@ -2336,7 +2379,6 @@ export default {
         console.error("Error fetching data:", error);
       } finally {
         this.isLoading = false;
-        this.isPopupOpen = false;
       }
       // }
     },
@@ -2611,7 +2653,6 @@ export default {
         console.error("Error fetching data:", error);
       } finally {
         this.isLoading = false;
-        this.isPopupOpen = false;
       }
       // }
     },
@@ -2684,7 +2725,6 @@ export default {
         console.error("Error fetching data:", error);
       } finally {
         this.isLoading = false;
-        this.isPopupOpen = false;
       }
     },
   },
@@ -2703,5 +2743,4 @@ export default {
 .show-only-desktop table tbody tr td:nth-child(17) {
   display: none;
 }
-
 </style>
