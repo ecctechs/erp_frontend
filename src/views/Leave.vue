@@ -1852,54 +1852,58 @@ export default {
 
         if (json.statusCode === 200) {
           console.log("-----", json.data);
-          this.employees = json.data.map((item) => {
-            let departments = item.department
-              ? [item.department.departmentName]
-              : [];
-            let positions = item.position ? [item.position.Position] : [];
+          this.employees = json.data
+            .filter((item) => item.Status === "active") // กรอง status active เท่านั้น
+            .map((item) => {
+              let departments = item.department
+                ? [item.department.departmentName]
+                : [];
+              let positions = item.position ? [item.position.Position] : [];
 
-            const BD = new Date(item.Birthdate);
-            const startWorkingDate = new Date(item.start_working_date);
-            const formatDate = {
-              day: "2-digit",
-              month: "short",
-              year: "numeric",
-            };
-            const Birthdate = BD.toLocaleDateString("en-GB", formatDate);
-            const startWorking = startWorkingDate.toLocaleDateString(
-              "en-GB",
-              formatDate
-            );
+              const BD = new Date(item.Birthdate);
+              const startWorkingDate = new Date(item.start_working_date);
+              const formatDate = {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+              };
+              const Birthdate = BD.toLocaleDateString("en-GB", formatDate);
+              const startWorking = startWorkingDate.toLocaleDateString(
+                "en-GB",
+                formatDate
+              );
 
-            function formatSalary(salary) {
-              if (salary !== null && typeof salary !== "undefined") {
-                return salary.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              function formatSalary(salary) {
+                if (salary !== null && typeof salary !== "undefined") {
+                  return salary
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                }
+                return "";
               }
-              return "";
-            }
 
-            let initialTableData = {
-              ID: item.employeeID,
-              Title: item.title,
-              Name: item.F_name + " " + item.L_name,
-              Address: item.Address,
-              Birthdate: Birthdate,
-              "National ID": item.NID_num,
-              "Tel.": item.Phone_num,
-              Email: item.Email,
-              "Start Working Date": startWorking,
-              Salary: formatSalary(item.Salary),
-              "Emp. type": item.employeeType,
-              "Bank Name": item.bankName,
-              "Bank Account ID": item.bankAccountID,
-              Department: departments.join(", "),
-              Position: positions.join(", "),
-              departmentID: item.departmentID,
-              PositionID: item.PositionID,
-              status: item.Status,
-            };
-            return initialTableData;
-          });
+              let initialTableData = {
+                ID: item.employeeID,
+                Title: item.title,
+                Name: item.F_name + " " + item.L_name,
+                Address: item.Address,
+                Birthdate: Birthdate,
+                "National ID": item.NID_num,
+                "Tel.": item.Phone_num,
+                Email: item.Email,
+                "Start Working Date": startWorking,
+                Salary: formatSalary(item.Salary),
+                "Emp. type": item.employeeType,
+                "Bank Name": item.bankName,
+                "Bank Account ID": item.bankAccountID,
+                Department: departments.join(", "),
+                Position: positions.join(", "),
+                departmentID: item.departmentID,
+                PositionID: item.PositionID,
+                status: item.Status,
+              };
+              return initialTableData;
+            });
           this.getLeave();
           this.getOvertime();
         } else {

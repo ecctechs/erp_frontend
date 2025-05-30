@@ -1862,7 +1862,7 @@ export default {
           });
 
           const maxBoxWidth = 35;
-          const maxBoxHeight = 35;
+          const maxBoxHeight = 20;
 
           let imgWidth = img.width;
           let imgHeight = img.height;

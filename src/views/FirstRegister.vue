@@ -474,8 +474,22 @@
           <button class="btn btn-secondary" @click="BacktoLogin">
             {{ t("backtologinbutton") }}
           </button>
-          <button class="btn btn-primary" @click="RegisterNewUsers">
+          <!-- <button class="btn btn-primary" @click="RegisterNewUsers">
             {{ t("register") }}
+          </button> -->
+
+          <button
+            :disabled="isLoading"
+            class="btn btn-primary me-3"
+            @click="RegisterNewUsers"
+          >
+            <span
+              v-if="isLoading"
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            <span v-else>{{ t("register") }}</span>
           </button>
         </div>
       </div>
@@ -879,6 +893,7 @@ export default {
     // Method to register a new user along with their business details
     async RegisterNewUsers() {
       if (!this.validateFormData()) return;
+      this.isLoading = true;
       // Prepare form data to send, including the image and other business details
 
       const formDataBusiness = new FormData();
@@ -896,10 +911,10 @@ export default {
       formDataBusiness.append("bus_website", this.formData.bus_website);
       formDataBusiness.append("bus_tel", this.formData.bus_tel);
       formDataBusiness.append("bus_tax", this.formData.bus_tax);
-// แนบไฟล์ถ้ามี
-if (this.Image_bus) {
-  formDataBusiness.append("file", this.Image_bus);
-}
+      // แนบไฟล์ถ้ามี
+      if (this.Image_bus) {
+        formDataBusiness.append("file", this.Image_bus);
+      }
       formDataBusiness.append("bank_name", this.formData.bank_name);
       formDataBusiness.append("bank_account", this.formData.bank_account);
       formDataBusiness.append("bank_number", this.formData.bank_number);
@@ -908,7 +923,7 @@ if (this.Image_bus) {
       for (var pair of formDataBusiness.entries()) {
         console.log(pair[0] + ": " + pair[1]);
       }
-           console.log("formDataBusiness",formDataBusiness);
+      console.log("formDataBusiness", formDataBusiness);
 
       try {
         // API call to register a new user
@@ -920,7 +935,7 @@ if (this.Image_bus) {
         // add Employee from User Register
 
         const json = await response.json();
-        console.log(json)
+        console.log(json);
 
         if (json.data === "User already exists") {
           this.errorMessages = [];

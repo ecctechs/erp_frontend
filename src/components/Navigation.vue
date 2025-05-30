@@ -1681,6 +1681,7 @@ export default {
             userPassword: json.data.userPassword,
             RoleID: json.data.role.RoleID,
           };
+          this.userName = this.formDataUser.userF_name;
         } else {
           this.showPopup_error(json.data); // call popup error
           console.log(json);

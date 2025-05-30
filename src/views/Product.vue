@@ -995,20 +995,30 @@ export default {
       try {
         const data = this.currentTableData;
 
+        console.log("currentTableData---------------->", this.currentTableData);
+
         // Map คอลัมน์เป็นภาษาไทย
-        const columnMap = {
-          ID: "รหัสสินค้า",
-          Category: "หมวดหมู่",
-          productname: "ชื่อสินค้า",
-          productdetail: "รายละเอียดสินค้า",
-          price: "ราคาขาย",
-          productImg: "รูปภาพ",
-          productTypeID: "ประเภทสินค้า",
-          productcost: "ต้นทุน",
-          categoryID: "หมวดหมู่ย่อย",
-          amount: "จำนวน",
-          // ละ status ไม่ต้องแสดง
-        };
+        let columnMap = [];
+        if (this.selectedType === "A") {
+          columnMap = {
+            Category: "หมวดหมู่",
+            productname: "รายการสินค้า",
+            productdetail: "รายละเอียด",
+            price: "ราคาขาย",
+            productImg: "รูปภาพ",
+            amount: "จำนวนสินค้าในคลัง",
+            // ละ status ไม่ต้องแสดง
+          };
+        } else {
+          columnMap = {
+            Category: "หมวดหมู่",
+            productname: "รายการสินค้า",
+            productdetail: "รายละเอียด",
+            price: "ราคาขาย",
+            productImg: "รูปภาพ",
+            // ละ status ไม่ต้องแสดง
+          };
+        }
 
         // หัวตารางภาษาไทย
         const headers = Object.keys(columnMap);

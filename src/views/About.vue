@@ -326,7 +326,7 @@ export default {
         "bus_id",
         "bus_name",
         "bus_address",
-        "bus_website",
+        // "bus_website",
         "bus_tel",
       ];
 
