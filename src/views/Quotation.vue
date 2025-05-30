@@ -2541,7 +2541,7 @@ export default {
           });
 
           const maxBoxWidth = 35;
-          const maxBoxHeight = 35;
+          const maxBoxHeight = 20;
 
           let imgWidth = img.width;
           let imgHeight = img.height;
@@ -3090,7 +3090,7 @@ export default {
         formData.append("productTypeID", 1);
         formData.append("productname", product.productName);
         formData.append("productdetail", product.product_detail);
-        formData.append("amount", 100);
+        formData.append("amount", 0);
         formData.append("price", parseInt(product.price));
         formData.append("productcost", 0);
         formData.append("categoryID", cate_id);
@@ -3343,7 +3343,7 @@ export default {
           }
         });
       }
-
+      this.isLoading = true;
       const accessToken = localStorage.getItem("@accessToken");
       try {
         if (this.NotCustomerExit) {
@@ -3498,11 +3498,14 @@ export default {
         }
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        this.isLoading = false;
       }
       // }
     },
     async editQuotation2() {
       const accessToken = localStorage.getItem("@accessToken");
+      this.isLoading = true;
       if (!(await this.validateFormData())) return;
 
       try {
@@ -3682,12 +3685,15 @@ export default {
         }
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        this.isLoading = false;
       }
       this.closeAllowConfirmPopup();
       // }
     },
     async editQuotation3() {
       const accessToken = localStorage.getItem("@accessToken");
+      this.isLoading = true;
       if (!(await this.validateFormData())) return;
 
       try {
@@ -3844,6 +3850,8 @@ export default {
         }
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        this.isLoading = false;
       }
       this.closeAllowConfirmPopup();
       // }
