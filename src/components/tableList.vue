@@ -301,7 +301,7 @@ export default {
         "Receipt Issued",
       ];
 
-      const redKeywords = ["Not Active"];
+      const redKeywords = ["Not Active", "เกินกําหนด", "expired"];
 
       // เช็คว่า status มีคำใดคำหนึ่งใน orangeKeywords
       if (orangeKeywords.some((keyword) => status.includes(keyword))) {

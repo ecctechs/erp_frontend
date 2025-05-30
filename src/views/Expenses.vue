@@ -136,7 +136,6 @@
             class="form-control form-select size-font-sm"
             v-model="searchQuery"
             aria-label="Expense Category select"
-            :class="{ error: isEmpty.cateExpense }"
           >
             <option value="" selected hidden>
               {{ t("expense.selectCategory") }}
@@ -923,31 +922,27 @@ export default {
       this.isPopupVisible_error = false;
     },
     async validateFormData() {
-      this.isEmpty.Position = false;
-
-      const errorMessages = [];
-
-      if (this.formPosition.Position.trim() === "") {
-        this.isEmpty.Position = true;
-        errorMessages.push(this.$t("validation.Position"));
-      }
-
-      const isDuplicate = this.Positions.some(
-        (item) =>
-          item["Position"].trim() === this.formPosition.Position.trim() &&
-          item.ID !== this.formPosition.Position // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
-      );
-      if (isDuplicate) {
-        this.isEmpty.Position = true;
-        errorMessages.push(this.$t("validation.positionDup"));
-      }
-
-      if (errorMessages.length > 0) {
-        this.showPopup_validate(errorMessages);
-        return false;
-      } else {
-        return true;
-      }
+      // this.isEmpty.Position = false;
+      // const errorMessages = [];
+      // if (this.formPosition.Position.trim() === "") {
+      //   this.isEmpty.Position = true;
+      //   errorMessages.push(this.$t("validation.Position"));
+      // }
+      // const isDuplicate = this.Positions.some(
+      //   (item) =>
+      //     item["Position"].trim() === this.formPosition.Position.trim() &&
+      //     item.ID !== this.formPosition.Position // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
+      // );
+      // if (isDuplicate) {
+      //   this.isEmpty.Position = true;
+      //   errorMessages.push(this.$t("validation.positionDup"));
+      // }
+      // if (errorMessages.length > 0) {
+      //   this.showPopup_validate(errorMessages);
+      //   return false;
+      // } else {
+      //   return true;
+      // }
     },
     showPopup_validate(messages) {
       if (Array.isArray(messages)) {
@@ -963,19 +958,19 @@ export default {
     },
     // Opens the department add/edit popup
     openPopup() {
+      this.isEmpty.DateExpense = false;
+      this.isEmpty.cateExpense = false;
+      this.isEmpty.priceExpense = false;
       this.isPopupOpen = true;
       this.isAddingMode = true; // Add mode
       this.isEditMode = false; // Disable edit mode
-      this.DateExpense = new Date();
-      this.clearFile();
+      this.formData.DateExpense = new Date();
+      this.formData.expense_id = "";
+      this.formData.remarkExpense = "";
+      this.formData.cateExpense = "";
+      this.formData.priceExpense = "";
 
-      if (this.t("lang") === "en") {
-        const buddhistYear = moment().year() + 543;
-        const formattedDate = moment().format(`DD/MM/${buddhistYear}`);
-        // this.formData.DateExpense = formattedDate;
-      } else {
-        // this.formData.DateExpense = moment().format("DD/MM/YYYY");
-      }
+      this.clearFile();
     },
     // Closes the department add/edit popup
     closePopup() {
@@ -1020,13 +1015,29 @@ export default {
     },
     // Opens the edit popup with selected department data
     handleEdit(item) {
+      this.isEmpty.DateExpense = false;
+      this.isEmpty.cateExpense = false;
+      this.isEmpty.priceExpense = false;
       console.log("item", item);
       this.isPopupOpen = true;
       this.isAddingMode = false; // Edit mode
       this.isEditMode = true; // Enable edit mode
+
+      const thaiDate = item.expense_date;
+      const [day, month, year] = thaiDate.split("/");
+      const convert_expense_date = new Date(year - 543, month - 1, day); // แปลง พ.ศ. เป็น ค.ศ.
+
+      // const formatDateForPicker = (date) => {
+      //   if (!date) return null;
+      //   const d = new Date(date);
+      //   if (isNaN(d.getTime())) return null; // ตรวจสอบว่าเป็นวันที่ถูกต้อง
+      //   return d;
+      // };
+      // const formattedexpense_date = formatDateForPicker(item.expense_date);
+
       this.formData = {
         expense_id: item.expense_id,
-        DateExpense: item.expense_date,
+        DateExpense: convert_expense_date,
         remarkExpense: item.quantity_remark,
         cateExpense: item.expense_category,
         priceExpense: item.expense_amount,
@@ -1109,21 +1120,6 @@ export default {
         this.isEmpty.priceExpense = true;
         errorMessages.push(this.$t("validation.priceExpense"));
       }
-
-      // if (this.formData.remarkExpense === "") {
-      //   this.isEmpty.remarkExpense = true;
-      //   errorMessages.push(this.$t("validation.remarkExpense"));
-      // }
-
-      //   const isDuplicateName = this.currentTableData.some(
-      //     (item) =>
-      //       item.productname.trim() === this.formData.productname.trim() &&
-      //       item.ID !== this.formData.productID // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
-      //   );
-      //   if (isDuplicateName) {
-      //     this.isEmpty.productname = true;
-      //     errorMessages.push(this.$t("validation.duplicateProductName"));
-      //   }
 
       if (errorMessages.length > 0) {
         this.showPopup_validate(errorMessages);
@@ -1256,6 +1252,11 @@ export default {
       if (!(await this.validateFormData())) return;
       this.errorMessage = [];
       this.isLoading = true;
+
+      const date = new Date(this.formData.DateExpense); // ตัวอย่างวันที่
+      const DateExpense = `${date.getDate()}/${date.getMonth() + 1}/${
+        date.getFullYear() + 543
+      }`;
       try {
         const response = await fetch(
           `${API_CALL}/product/editExpenses/${this.formData.expense_id}`,
@@ -1266,7 +1267,7 @@ export default {
               Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-              expense_date: this.formData.DateExpense,
+              expense_date: DateExpense,
               expense_category: this.formData.cateExpense,
               expense_amount: parseInt(this.formData.priceExpense),
               quantity_remark: this.formData.remarkExpense,
