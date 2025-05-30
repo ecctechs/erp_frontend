@@ -640,7 +640,7 @@
                       /></label>
                       <datalist id="browsers2">
                         <option
-                          v-for="item in Products"
+                          v-for="item in filteredProducts"
                           :key="item.productID"
                           :value="item.productname"
                         ></option>
@@ -1474,6 +1474,9 @@ export default {
     };
   },
   computed: {
+    filteredProducts() {
+      return this.Products.filter((item) => item.Status !== "not active");
+    },
     allExpanded() {
       return this.expandedItems.size === this.Quotations.length; // ถ้าทั้งหมดขยาย ให้ return true
     },
@@ -3880,6 +3883,7 @@ export default {
 
         if (json.statusCode === 200) {
           this.Products = json.data
+            // Filter only products with "Active" status
             // Include only products with active status
             .map((item) => ({
               productID: item.productID,
