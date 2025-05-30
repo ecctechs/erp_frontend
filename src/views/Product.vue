@@ -781,7 +781,7 @@ export default {
       this.isAddingMode = true;
       this.isEditMode = false;
       this.getCategory();
-
+      this.clearFormData();
       if (this.selectedType === "A") {
         this.formData.productTypeID = "1";
       } else {
@@ -790,7 +790,6 @@ export default {
       // จัดการทั้งกรณี null และ undefined
       this.Image_pd = [];
       this.exp_files = [];
-      this.formData.productdetail = "";
     },
     // Closes the popup and resets form data
     closePopup() {
@@ -1598,7 +1597,7 @@ export default {
     },
     clearFormData() {
       this.formData = {
-        productTypeID: "",
+        productTypeID: "1",
         productname: "",
         productdetail: "",
         amount: 0,
