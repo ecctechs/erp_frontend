@@ -2378,7 +2378,7 @@ export default {
           (p) => p.employeeID === row.employeeID
         );
 
-        doc.text(`${employ.position}`, 10, 255);
+        // doc.text(`${employ.position}`, 10, 255);
         doc.text(`Name: `, 10, 255);
         doc.text(row.employeeName, 40, 255);
         doc.text(`Email: `, 10, 260);
