@@ -59,6 +59,7 @@
             </td>
 
             <!-- Column handle edit and delete button -->
+
             <td class="align-middle button-table" v-if="columnEditAndDelete">
               <div class="icon-table">
                 <span
