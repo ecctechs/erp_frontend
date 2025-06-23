@@ -196,6 +196,8 @@
   "issueReceipt": "สร้างใบเสร็จรับเงิน",
 
   "deleteConfirmSentence": "คุณต้องการลบใช่หรือไม่?",
+  "CutStockConfirmSentence": "คุณต้องการตัดสต็อกใช่หรือไม่?",
+  "CancalCutStockConfirmSentence": "คุณต้องการแก้ไขการตัดสต็อกใช่หรือไม่?",
   "AllowConfirmSentence": "คุณต้องการอนุมัติใช่หรือไม่?",
   "closeconfirm": "คุณต้องการปิดหน้าโปรไฟล์ใช่หรือไม่? สิ่งที่คุณกำลังแก้ไขจะไม่ถูกบันทึก.",
 
@@ -522,6 +524,8 @@
   "issueReceipt_invoice": "สร้างใบกํากับภาษีแล้ว",
   "issueReceipt_tax_invoice": "สร้างใบเสร็จรับเงินแล้ว",
   "popupCreatedBilling": "สร้างใบเสร็จรับเงินแล้ว",
+  "popupCutBilling": "ทําการตัดสต็อกสินค้าเรียบร้อยแล้ว",
+  "popupCancalCutBilling": "ทําการคืนค่าจํานวนสินค้าเดิมเรียบร้อยแล้ว",
   "popupCalcelBilling": "ใบเสร็จรับเงินถูกยกเลิกแล้ว",
   "AllowLG": "สร้างใบวางบิลแล้ว",
   "CancelLG": "ยกเลิก",

@@ -273,7 +273,7 @@
           @handleAllow="handleAllow"
           :isLoading="isLoading"
           :documentName="documentName"
-          :showAllowButton="true"
+          :showAllowButton="false"
         />
       </div>
     </div>
@@ -426,7 +426,7 @@
                     v-if="form.showDetails || form.product_detail !== ''"
                     class="form-control"
                     v-model="form.product_detail"
-                    style="height: 50px"
+                    rows="3"
                     readonly
                     disabled
                   ></textarea>
@@ -713,6 +713,31 @@
       </div>
     </Popup>
   </div>
+  <div class="delete-popup">
+    <Popup
+      :isOpen="isCutStockConfirmPopupOpen"
+      :closePopup="closeCutStockConfirmPopup"
+    >
+      <div
+        v-if="formData.deleted_at === '' || formData.deleted_at === null"
+        class="mb-5"
+      >
+        <a>{{ t("CutStockConfirmSentence") }}</a>
+      </div>
+      <div v-else-if="formData.deleted_at !== ''" class="mb-5">
+        <a>{{ t("CancalCutStockConfirmSentence") }}</a>
+      </div>
+      <div class="modal-footer mb-5">
+        <button class="btn btn-danger me-2" @click="cutStock">
+          {{ t("buttonConfirm") }}
+        </button>
+        <button class="btn btn-secondary" @click="closeCutStockConfirmPopup">
+          {{ t("buttonCancel") }}
+        </button>
+      </div>
+    </Popup>
+  </div>
+
   <div>
     <div v-if="isPopupVisible" class="popup-success">
       <div class="popup-content-success">
@@ -747,6 +772,18 @@
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
+  <transition name="fade">
+    <div v-if="openPopupAllow" class="popup-overlay">
+      <div class="popup-content-custome alert alert-light" role="alert">
+        <span v-if="formData.deleted_at === ''">
+          <i class="fa-solid fa-check"></i> {{ t("popupCutBilling") }}
+        </span>
+        <span v-else-if="formData.deleted_at !== ''">
+          <i class="fa-solid fa-ban"></i> {{ t("popupCancalCutBilling") }}
+        </span>
+      </div>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -828,6 +865,9 @@ export default {
   },
   data() {
     return {
+      openPopupAllow: false,
+      shortcutAllow: false,
+      isCutStockConfirmPopupOpen: false,
       isAllowConfirmPopupOpen: false,
       expandedItems: new Set(), // ใช้ Set() แทน isExpanded,
       AllBanks: [],
@@ -957,6 +997,8 @@ export default {
       if (this.t("headerLang") === "TH") {
         filteredInvoices = filteredInvoices.map((inv) => ({
           ...inv,
+          showAllowButton: true,
+          // statusds: inv.deleted_at,
           billing_status:
             inv.billing_status === "Complete"
               ? this.t("CompleteLG")
@@ -1028,12 +1070,99 @@ export default {
     },
     closeErrorPopup() {
       this.isPopupVisible_error = false;
+      this.shortcutAllow = false;
+    },
+    closeCutStockConfirmPopup() {
+      this.isCutStockConfirmPopupOpen = false;
+      this.shortcutAllow = false;
     },
     async handleAllow(row) {
-      this.isAllowConfirmPopupOpen = true;
-      this.handleEdit(row);
-      this.isPopupOpen = false;
+      this.shortcutAllow = true;
+      await this.handleEdit(row);
+      this.isCutStockConfirmPopupOpen = true;
     },
+    async cutStock() {
+      this.isLoading = true;
+      this.shortcutAllow = false;
+
+      const isAlreadyCut = this.formData.deleted_at !== "";
+      const transactionType = isAlreadyCut ? "Receive" : "Issue";
+
+      try {
+        // ✅ STEP 1: ตรวจสอบทั้งหมดก่อน
+        for (const form of this.productForms) {
+          const productData = this.Products.find(
+            (p) => p.productID === form.productID
+          );
+
+          if (!productData) {
+            alert(`ไม่พบข้อมูลสินค้า ${form.productID}`);
+            return;
+          }
+
+          if (!form.sale_qty || form.sale_qty <= 0) {
+            alert(`กรุณาระบุจำนวนของสินค้า "${productData.name}" ให้มากกว่า 0`);
+            return;
+          }
+
+          if (
+            transactionType === "Issue" &&
+            form.sale_qty > productData.Amount
+          ) {
+            alert(
+              `ไม่สามารถตัดสต็อกสินค้า "${productData.productname}" ได้\nจำนวนขาย (${form.sale_qty}) มากกว่าจำนวนในคลัง (${productData.Amount})`
+            );
+            return;
+          }
+        }
+
+        // ✅ STEP 2: ถ้าผ่านหมด → ค่อยส่ง API
+        for (const form of this.productForms) {
+          const response = await fetch(
+            `${API_CALL}/product/cut_strock_product`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                id: form.productID,
+                transactionType,
+                quantity: form.sale_qty,
+                billing_number: this.formData.billing_number,
+              }),
+            }
+          );
+
+          const json = await response.json();
+          console.log(json);
+
+          if (json.statusCode !== 200) {
+            alert(
+              `ไม่สามารถดำเนินการกับสินค้า ${form.productID} ได้: ${
+                json.message || "เกิดข้อผิดพลาด"
+              }`
+            );
+            return;
+          }
+        }
+
+        // 🎉 ทุกอย่างผ่าน
+        await this.getBilling();
+        this.isCutStockConfirmPopupOpen = false;
+        this.openPopupAllow = true;
+        setTimeout(() => {
+          this.openPopupAllow = false;
+        }, 3000);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        alert("เกิดข้อผิดพลาดในการติดต่อกับเซิร์ฟเวอร์");
+      } finally {
+        this.isLoading = false;
+        this.shortcutAllow = false;
+      }
+    },
+
     closeAllowConfirmPopup() {
       this.isAllowConfirmPopupOpen = false;
     },
@@ -1126,7 +1255,9 @@ export default {
     async handleEdit(row) {
       this.getBilling();
       console.log("Edit item:", row);
-      this.isPopupOpen = true;
+      if (this.shortcutAllow === false) {
+        this.isPopupOpen = true;
+      }
       this.isAddingMode = false;
       this.isEditMode = true;
       //set date format
@@ -1180,10 +1311,11 @@ export default {
       const filteredInvoice = this.Billings.filter(
         (inv) => inv.billing_number === row.billing_number
       );
-      // console.log("-->>", this.Billings);
+      console.log("this.Billings->>", this.Billings);
       // filteredInvoice[0].payments
 
       this.formData = {
+        deleted_at: row.deleted_at,
         billing_number: row.billing_number,
         employeeID: row.employeeID,
         employeeName: row.employeeName,
@@ -1530,7 +1662,8 @@ export default {
         return [
           index + 1,
           product && product.productImg ? product.productImg : "---", // ดึงรูปภาพสินค้าถ้ามี
-          product ? product.productname + "\n" + form.product_detail : "", // ดึงชื่อสินค้าถ้ามี
+          product.productname +
+            (form.product_detail ? "\n" + form.product_detail : ""), // ดึงชื่อสินค้าถ้ามี
           form.sale_qty,
           this.formatDecimal(product ? product.price : ""),
           this.formatDecimal(form.sale_discount),
@@ -1707,7 +1840,7 @@ export default {
           (p) => p.employeeID === row.employeeID
         );
 
-        doc.text(`${employ.position}`, 10, 255);
+        // doc.text(`${employ.position}`, 10, 255);
         doc.text(`Name: `, 10, 255);
         doc.text(row.employeeName, 40, 255);
         doc.text(`Email: `, 10, 260);
@@ -2263,11 +2396,9 @@ export default {
     // },
     //draw header table
     drawHeader(doc, headerText, startY, margin) {
-      //set style font
       doc.setFontSize(10);
       doc.setTextColor(0, 0, 0); // สีข้อความ (สีดำ)
 
-      //calculate size of cell
       const cellWidth =
         (doc.internal.pageSize.width - margin * 2) / headerText.length;
       const startX = margin;
@@ -2298,7 +2429,7 @@ export default {
         });
         x += cellWidth;
       });
-      //set stroke of table
+
       doc.setLineWidth(0.1);
       doc.rect(
         margin,
@@ -2329,20 +2460,36 @@ export default {
         }
       });
 
+      // วนลูปแต่ละแถวของข้อมูล
       data.forEach((row) => {
+        // คำนวณหาความสูงที่มากที่สุดของแถวปัจจุบัน
+        let maxRowHeight = lineHeight;
+        const productDetailCell = row[2] || "";
+        if (
+          typeof productDetailCell === "string" &&
+          productDetailCell.includes("\n")
+        ) {
+          const lines = productDetailCell.split("\n");
+          const requiredHeight = lines.length * 5;
+          if (requiredHeight > maxRowHeight) {
+            maxRowHeight = requiredHeight;
+          }
+        }
+
         let x = startX;
 
+        // วนลูปแต่ละเซลล์เพื่อวาด
         row.forEach((cell, index) => {
           const currentCellWidth = cellWidths[index];
-          doc.rect(x, y, currentCellWidth, lineHeight, "S");
+          // วาดกรอบของเซลล์โดยใช้ความสูงที่คำนวณได้
+          doc.rect(x, y, currentCellWidth, maxRowHeight, "S");
 
-          if (index === 1 && cell) {
+          if (index === 1 && cell && cell !== "---") {
+            // คอลัมน์รูปภาพ
             try {
-              // ให้รูปเต็มเซลล์ โดยเหลือ margin เล็กน้อย
-              const padding = 1; // ความเว้นขอบรูปเล็กน้อย
+              const padding = 1;
               const imgWidth = currentCellWidth - padding * 2;
-              const imgHeight = lineHeight - padding * 2;
-
+              const imgHeight = maxRowHeight - padding * 2;
               doc.addImage(
                 cell,
                 x + padding,
@@ -2353,68 +2500,39 @@ export default {
                 "FAST"
               );
             } catch (e) {
-              console.warn("ไม่สามารถโหลดรูปภาพ:", e);
+              console.warn("Could not add image:", e);
             }
           } else if (index === 2 && typeof cell === "string") {
-            // กรณีคอลัมน์ชื่อสินค้า + รายละเอียด
-            const [productName, productDetail] = cell.split("\n");
-            if (productDetail !== "") {
-              const [productName, productDetail] = cell.split("\n");
+            // คอลัมน์ชื่อสินค้า + รายละเอียด
+            const lines = cell.split("\n");
 
-              doc.setFontSize(10);
-              doc.setTextColor(0, 0, 0);
-              doc.text(
-                productName,
-                x + currentCellWidth / 2,
-                y + lineHeight / 2 - 1,
-                {
-                  align: "center",
-                }
-              );
-
-              if (productDetail && productDetail.trim() !== "") {
-                doc.setFontSize(8);
-                doc.setTextColor(150, 150, 150);
-                doc.text(
-                  productDetail,
-                  x + currentCellWidth / 2,
-                  y + lineHeight / 2 + 3,
-                  {
-                    align: "center",
-                  }
-                );
-              }
-              //  alert(productDetail);
+            // --- ส่วนที่แก้ไขตามความต้องการล่าสุด ---
+            if (lines.length > 1) {
+              // ถ้ามีหลายบรรทัด (มี detail) ให้จัดชิดซ้าย
+              doc.text(lines, x + 2, y + 4, { align: "left" });
             } else {
-              // ถ้าไม่มี \n หรือ product_detail ว่าง
-              doc.setFontSize(10);
-              doc.setTextColor(0, 0, 0);
-              doc.text(cell, x + currentCellWidth / 2, y + lineHeight / 2 + 2, {
-                align: "center",
-              });
-            }
-
-            // รีเซ็ตค่าหลังใช้
-            doc.setFontSize(10);
-            doc.setTextColor(0, 0, 0);
-          } else {
-            doc.setFontSize(10);
-            doc.setTextColor(0, 0, 0);
-            doc.text(
-              String(cell),
-              x + currentCellWidth / 2,
-              y + lineHeight / 2 + 2,
-              {
+              // ถ้ามีบรรทัดเดียว (ไม่มี detail) ให้จัดกึ่งกลาง
+              const textY = y + maxRowHeight / 2;
+              doc.text(lines[0], x + currentCellWidth / 2, textY, {
                 align: "center",
                 valign: "middle",
-              }
-            );
+              });
+            }
+            // --- จบส่วนที่แก้ไข ---
+          } else {
+            // เซลล์อื่นๆ
+            // วาดข้อความให้อยู่กึ่งกลางแนวตั้งของเซลล์
+            const textY = y + maxRowHeight / 2;
+            doc.text(String(cell), x + currentCellWidth / 2, textY, {
+              align: "center",
+              valign: "middle",
+            });
           }
-
           x += currentCellWidth;
         });
 
-        y += lineHeight;
+        // เพิ่มค่า y ตามความสูงจริงของแถวที่เพิ่งวาดไป
+        y += maxRowHeight;
       });
     },
     //Close Pdf view
@@ -2477,7 +2595,7 @@ export default {
         console.log("--->", json.data);
 
         if (json.statusCode === 200) {
-          console.log(json.data);
+          console.log("---->", json.data);
           this.Billings = json.data.map((item) => {
             const QTDate = new Date(item.quotation_start_date);
             const EXPD = new Date(item.quotation_expired_date);
@@ -2543,6 +2661,7 @@ export default {
               ID: item.billing_id,
               billing_date: BillingDate,
               payments: item.payments,
+              deleted_at: item.deleted_at,
               productForms: item.details.map((detail) => ({
                 productID: detail.productID,
                 sale_price: detail.sale_price,
