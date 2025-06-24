@@ -2587,9 +2587,11 @@ export default {
 
         // ตั้งค่าฟอนต์ที่ต้องการ
         doc.setFont("PromptRegularLight", "normal");
-
+        // console.log("PDF-->",row)
+        this.shortcutAllow = true;
+        await this.handleEdit(row);
         // doc.text(`${row.remark}`, 40, 235);
-        doc.text(`${row.remark}`, 40, 215, { maxWidth });
+        doc.text(`${this.formData.remark}`, 40, 215, { maxWidth });
         this.drawHeader(doc, headerText, startY, margin);
         this.drawTable(doc, currentPageData, startY, margin, lineHeight);
       }
@@ -2604,6 +2606,7 @@ export default {
       } else if (action === "download") {
         doc.save(`quotation-${row.cus_name}-${row.sale_number}.pdf`);
       }
+      this.shortcutAllow = false;
     },
     drawHeader(doc, headerText, startY, margin) {
       doc.setFontSize(10);
