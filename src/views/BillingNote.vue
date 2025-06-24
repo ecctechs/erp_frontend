@@ -775,7 +775,7 @@
   <transition name="fade">
     <div v-if="openPopupAllow" class="popup-overlay">
       <div class="popup-content-custome alert alert-light" role="alert">
-        <span v-if="formData.deleted_at === ''">
+        <span v-if="formData.deleted_at === '' || formData.deleted_at === null">
           <i class="fa-solid fa-check"></i> {{ t("popupCutBilling") }}
         </span>
         <span v-else-if="formData.deleted_at !== ''">
@@ -784,6 +784,24 @@
       </div>
     </div>
   </transition>
+  <div v-if="isPopupVisible_error" class="popup-error2">
+    <div class="text-end">
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        @click="closeErrorPopup"
+        style="color: #9f9999"
+      ></button>
+    </div>
+    <div class="popup-content-error2">
+      <ul>
+        <li v-for="(msg, index) in errorMessages" :key="index">
+          {{ msg }}
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -866,6 +884,7 @@ export default {
   data() {
     return {
       openPopupAllow: false,
+      errorMessages: [],
       shortcutAllow: false,
       isCutStockConfirmPopupOpen: false,
       isAllowConfirmPopupOpen: false,
@@ -1071,10 +1090,12 @@ export default {
     closeErrorPopup() {
       this.isPopupVisible_error = false;
       this.shortcutAllow = false;
+      this.isPopupVisible_error = false;
     },
     closeCutStockConfirmPopup() {
       this.isCutStockConfirmPopupOpen = false;
       this.shortcutAllow = false;
+      this.isPopupVisible_error = false;
     },
     async handleAllow(row) {
       this.shortcutAllow = true;
@@ -1082,10 +1103,11 @@ export default {
       this.isCutStockConfirmPopupOpen = true;
     },
     async cutStock() {
+      this.errorMessages = [];
       this.isLoading = true;
       this.shortcutAllow = false;
 
-      const isAlreadyCut = this.formData.deleted_at !== "";
+      const isAlreadyCut = !!this.formData.deleted_at;
       const transactionType = isAlreadyCut ? "Receive" : "Issue";
 
       try {
@@ -1101,17 +1123,22 @@ export default {
           }
 
           if (!form.sale_qty || form.sale_qty <= 0) {
-            alert(`กรุณาระบุจำนวนของสินค้า "${productData.name}" ให้มากกว่า 0`);
+            alert(
+              `กรุณาระบุจำนวนของสินค้า "${productData.productname}" ให้มากกว่า 0`
+            );
             return;
           }
-
           if (
             transactionType === "Issue" &&
             form.sale_qty > productData.Amount
           ) {
-            alert(
+            this.errorMessages.push(
               `ไม่สามารถตัดสต็อกสินค้า "${productData.productname}" ได้\nจำนวนขาย (${form.sale_qty}) มากกว่าจำนวนในคลัง (${productData.Amount})`
             );
+            this.showPopup_validate(this.errorMessages);
+            // alert(
+            //   `ไม่สามารถตัดสต็อกสินค้า "${productData.productname}" ได้\nจำนวนขาย (${form.sale_qty}) มากกว่าจำนวนในคลัง (${productData.Amount})`
+            // );
             return;
           }
         }
@@ -1143,12 +1170,16 @@ export default {
                 json.message || "เกิดข้อผิดพลาด"
               }`
             );
+            // alert(
+            //   `ไม่สามารถตัดสต็อกสินค้า "${productData.productname}" ได้\nจำนวนขาย (${form.sale_qty}) มากกว่าจำนวนในคลัง (${productData.Amount})`
+            // );
             return;
           }
         }
 
         // 🎉 ทุกอย่างผ่าน
         await this.getBilling();
+        await this.getProduct();
         this.isCutStockConfirmPopupOpen = false;
         this.openPopupAllow = true;
         setTimeout(() => {
@@ -1160,6 +1191,18 @@ export default {
       } finally {
         this.isLoading = false;
         this.shortcutAllow = false;
+      }
+    },
+    showPopup_validate(messages) {
+      if (Array.isArray(messages)) {
+        this.errorMessages = messages; // เก็บข้อความใน errorMessages
+        // this.showErrorPopup = true; // แสดง Popup
+        this.isPopupVisible_error = true;
+        // setTimeout(() => {
+        //   this.isPopupVisible_error = false; // ซ่อน Popup หลังจากหน่วงเวลา
+        // }, 3000); // หน่วงเวลา 3 วินาที (3000 มิลลิวินาที)
+      } else {
+        this.showPopup_error(messages);
       }
     },
 

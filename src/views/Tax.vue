@@ -306,7 +306,7 @@
     </div>
   </div>
   <popup :isOpen="isPopupOpen" :closePopup="closePopup">
-    <h2>{{ t("headerInvoice") }}</h2>
+    <h2>{{ t("taxinvoice") }}</h2>
     <div class="border p-4 mb-3">
       <!-- <h2>{{ t("headerInvoice") }}</h2> -->
       <div class="mb-3 div-for-formControl">
@@ -1396,7 +1396,7 @@ export default {
         cus_tax: row.cus_tax,
         cus_purchase: row.cus_purchase,
         sale_totalprice: row.sale_totalprice,
-        remark: row.remark || "", // จัดการค่า remark ให้เป็น string ว่างถ้าเป็น null
+        remark: row.tax_invoice_remark || "", // จัดการค่า remark ให้เป็น string ว่างถ้าเป็น null
         invoice_id: row.ID,
         invoice_number: row.invoice_number,
         invoice_status: filteredInvoice[0].tax_invoice_status,
@@ -2121,7 +2121,7 @@ export default {
         doc.setFont("PromptRegularLight", "normal");
 
         // doc.text(`${row.remark}`, 40, 235);
-        doc.text(`${row.remark}`, 40, 215, { maxWidth });
+        doc.text(`${row.tax_invoice_remark}`, 40, 215, { maxWidth });
         this.drawHeader(doc, headerText, startY, margin);
         this.drawTable(doc, currentPageData, startY, margin, lineHeight);
       }
@@ -2785,7 +2785,7 @@ export default {
           this.Invoices = json.data.map((item) => {
             const QTDate = new Date(item.quotation_start_date);
             const EXPD = new Date(item.quotation_expired_date);
-            const IND = new Date(item.invoice_date);
+            const IND = new Date(item.tax_invoice_date);
             const formatDate = {
               day: "2-digit",
               month: "short",
@@ -2891,7 +2891,7 @@ export default {
           console.log("Not Space");
           const in_id = this.formData.invoice_id;
           const response = await fetch(
-            `${API_CALL}/quotation/editInvoice/${in_id}`,
+            `${API_CALL}/quotation/editTaxInvoice/${in_id}`,
             {
               method: "PUT",
               headers: {
@@ -2907,6 +2907,8 @@ export default {
                 //     : this.formData.invoice_date,
                 invoice_status: this.formData.invoice_status,
                 remark: this.formData.remark,
+                tax_invoice_id: this.formData.tax_invoice_id,
+                sale_id: this.formData.sale_id,
               }),
             }
           );
@@ -2987,7 +2989,6 @@ export default {
       }
     },
     async editInvoice_Custome() {
-      // alert(this.formData.remark);
       const accessToken = localStorage.getItem("@accessToken");
       console.log("Testtttttttt: ", this.formData.invoice_status);
 

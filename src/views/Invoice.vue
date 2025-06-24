@@ -2101,6 +2101,8 @@ export default {
         // ตั้งค่าฟอนต์ที่ต้องการ
         doc.setFont("PromptRegularLight", "normal");
 
+        this.shortcutAllow = true;
+        await this.handleEdit(row);
         // doc.text(`${row.remark}`, 40, 235);
         doc.text(`${row.remark}`, 40, 215, { maxWidth });
         this.drawHeader(doc, headerText, startY, margin);
@@ -2117,6 +2119,7 @@ export default {
       } else if (action === "download") {
         doc.save(`quotation-${row.cus_name}-${row.sale_number}.pdf`);
       }
+      this.shortcutAllow = false;
     },
     // async viewformpdf(action, row) {
     //   console.log("Preview Item: ", row);
@@ -2814,7 +2817,7 @@ export default {
         console.log("json", json);
 
         if (json.statusCode === 200) {
-          console.log(json.data);
+          console.log("getInvoice", json.data);
           this.Invoices = json.data.map((item) => {
             const QTDate = new Date(item.quotation_start_date);
             const EXPD = new Date(item.quotation_expired_date);
