@@ -306,7 +306,7 @@
     </div>
   </div>
   <popup :isOpen="isPopupOpen" :closePopup="closePopup">
-    <h2>{{ t("headerInvoice") }}</h2>
+    <h2>{{ t("taxinvoice") }}</h2>
     <div class="border p-4 mb-3">
       <!-- <h2>{{ t("headerInvoice") }}</h2> -->
       <div class="mb-3 div-for-formControl">
@@ -477,7 +477,7 @@
                     v-if="form.showDetails || form.product_detail !== ''"
                     class="form-control"
                     v-model="form.product_detail"
-                    style="height: 50px"
+                    rows="3"
                     readonly
                     disabled
                   ></textarea>
@@ -1396,7 +1396,7 @@ export default {
         cus_tax: row.cus_tax,
         cus_purchase: row.cus_purchase,
         sale_totalprice: row.sale_totalprice,
-        remark: row.remark || "", // จัดการค่า remark ให้เป็น string ว่างถ้าเป็น null
+        remark: row.tax_invoice_remark || "", // จัดการค่า remark ให้เป็น string ว่างถ้าเป็น null
         invoice_id: row.ID,
         invoice_number: row.invoice_number,
         invoice_status: filteredInvoice[0].tax_invoice_status,
@@ -1741,7 +1741,8 @@ export default {
         return [
           index + 1,
           product && product.productImg ? product.productImg : "---", // ดึงรูปภาพสินค้าถ้ามี
-          product ? product.productname + "\n" + form.product_detail : "", // ดึงชื่อสินค้าถ้ามี
+          product.productname +
+            (form.product_detail ? "\n" + form.product_detail : ""), // ดึงชื่อสินค้าถ้ามี
           form.sale_qty,
           this.formatDecimal(product ? product.price : ""),
           this.formatDecimal(form.sale_discount),
@@ -1915,7 +1916,7 @@ export default {
           (p) => p.employeeID === row.employeeID
         );
 
-        doc.text(`${employ.position}`, 10, 255);
+        // doc.text(`${employ.position}`, 10, 255);
         doc.text(`Name: `, 10, 255);
         doc.text(row.employeeName, 40, 255);
         doc.text(`Email: `, 10, 260);
@@ -2120,7 +2121,7 @@ export default {
         doc.setFont("PromptRegularLight", "normal");
 
         // doc.text(`${row.remark}`, 40, 235);
-        doc.text(`${row.remark}`, 40, 215, { maxWidth });
+        doc.text(`${row.tax_invoice_remark}`, 40, 215, { maxWidth });
         this.drawHeader(doc, headerText, startY, margin);
         this.drawTable(doc, currentPageData, startY, margin, lineHeight);
       }
@@ -2528,20 +2529,36 @@ export default {
         }
       });
 
+      // วนลูปแต่ละแถวของข้อมูล
       data.forEach((row) => {
+        // คำนวณหาความสูงที่มากที่สุดของแถวปัจจุบัน
+        let maxRowHeight = lineHeight;
+        const productDetailCell = row[2] || "";
+        if (
+          typeof productDetailCell === "string" &&
+          productDetailCell.includes("\n")
+        ) {
+          const lines = productDetailCell.split("\n");
+          const requiredHeight = lines.length * 5;
+          if (requiredHeight > maxRowHeight) {
+            maxRowHeight = requiredHeight;
+          }
+        }
+
         let x = startX;
 
+        // วนลูปแต่ละเซลล์เพื่อวาด
         row.forEach((cell, index) => {
           const currentCellWidth = cellWidths[index];
-          doc.rect(x, y, currentCellWidth, lineHeight, "S");
+          // วาดกรอบของเซลล์โดยใช้ความสูงที่คำนวณได้
+          doc.rect(x, y, currentCellWidth, maxRowHeight, "S");
 
-          if (index === 1 && cell) {
+          if (index === 1 && cell && cell !== "---") {
+            // คอลัมน์รูปภาพ
             try {
-              // ให้รูปเต็มเซลล์ โดยเหลือ margin เล็กน้อย
-              const padding = 1; // ความเว้นขอบรูปเล็กน้อย
+              const padding = 1;
               const imgWidth = currentCellWidth - padding * 2;
-              const imgHeight = lineHeight - padding * 2;
-
+              const imgHeight = maxRowHeight - padding * 2;
               doc.addImage(
                 cell,
                 x + padding,
@@ -2552,68 +2569,39 @@ export default {
                 "FAST"
               );
             } catch (e) {
-              console.warn("ไม่สามารถโหลดรูปภาพ:", e);
+              console.warn("Could not add image:", e);
             }
           } else if (index === 2 && typeof cell === "string") {
-            // กรณีคอลัมน์ชื่อสินค้า + รายละเอียด
-            const [productName, productDetail] = cell.split("\n");
-            if (productDetail !== "") {
-              const [productName, productDetail] = cell.split("\n");
+            // คอลัมน์ชื่อสินค้า + รายละเอียด
+            const lines = cell.split("\n");
 
-              doc.setFontSize(10);
-              doc.setTextColor(0, 0, 0);
-              doc.text(
-                productName,
-                x + currentCellWidth / 2,
-                y + lineHeight / 2 - 1,
-                {
-                  align: "center",
-                }
-              );
-
-              if (productDetail && productDetail.trim() !== "") {
-                doc.setFontSize(8);
-                doc.setTextColor(150, 150, 150);
-                doc.text(
-                  productDetail,
-                  x + currentCellWidth / 2,
-                  y + lineHeight / 2 + 3,
-                  {
-                    align: "center",
-                  }
-                );
-              }
-              //  alert(productDetail);
+            // --- ส่วนที่แก้ไขตามความต้องการล่าสุด ---
+            if (lines.length > 1) {
+              // ถ้ามีหลายบรรทัด (มี detail) ให้จัดชิดซ้าย
+              doc.text(lines, x + 2, y + 4, { align: "left" });
             } else {
-              // ถ้าไม่มี \n หรือ product_detail ว่าง
-              doc.setFontSize(10);
-              doc.setTextColor(0, 0, 0);
-              doc.text(cell, x + currentCellWidth / 2, y + lineHeight / 2 + 2, {
-                align: "center",
-              });
-            }
-
-            // รีเซ็ตค่าหลังใช้
-            doc.setFontSize(10);
-            doc.setTextColor(0, 0, 0);
-          } else {
-            doc.setFontSize(10);
-            doc.setTextColor(0, 0, 0);
-            doc.text(
-              String(cell),
-              x + currentCellWidth / 2,
-              y + lineHeight / 2 + 2,
-              {
+              // ถ้ามีบรรทัดเดียว (ไม่มี detail) ให้จัดกึ่งกลาง
+              const textY = y + maxRowHeight / 2;
+              doc.text(lines[0], x + currentCellWidth / 2, textY, {
                 align: "center",
                 valign: "middle",
-              }
-            );
+              });
+            }
+            // --- จบส่วนที่แก้ไข ---
+          } else {
+            // เซลล์อื่นๆ
+            // วาดข้อความให้อยู่กึ่งกลางแนวตั้งของเซลล์
+            const textY = y + maxRowHeight / 2;
+            doc.text(String(cell), x + currentCellWidth / 2, textY, {
+              align: "center",
+              valign: "middle",
+            });
           }
-
           x += currentCellWidth;
         });
 
-        y += lineHeight;
+        // เพิ่มค่า y ตามความสูงจริงของแถวที่เพิ่งวาดไป
+        y += maxRowHeight;
       });
     },
     ClosePDFview() {
@@ -2797,7 +2785,7 @@ export default {
           this.Invoices = json.data.map((item) => {
             const QTDate = new Date(item.quotation_start_date);
             const EXPD = new Date(item.quotation_expired_date);
-            const IND = new Date(item.invoice_date);
+            const IND = new Date(item.tax_invoice_date);
             const formatDate = {
               day: "2-digit",
               month: "short",
@@ -2903,7 +2891,7 @@ export default {
           console.log("Not Space");
           const in_id = this.formData.invoice_id;
           const response = await fetch(
-            `${API_CALL}/quotation/editInvoice/${in_id}`,
+            `${API_CALL}/quotation/editTaxInvoice/${in_id}`,
             {
               method: "PUT",
               headers: {
@@ -2919,6 +2907,8 @@ export default {
                 //     : this.formData.invoice_date,
                 invoice_status: this.formData.invoice_status,
                 remark: this.formData.remark,
+                tax_invoice_id: this.formData.tax_invoice_id,
+                sale_id: this.formData.sale_id,
               }),
             }
           );
@@ -2999,7 +2989,6 @@ export default {
       }
     },
     async editInvoice_Custome() {
-      // alert(this.formData.remark);
       const accessToken = localStorage.getItem("@accessToken");
       console.log("Testtttttttt: ", this.formData.invoice_status);
 

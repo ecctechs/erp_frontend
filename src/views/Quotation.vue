@@ -669,8 +669,7 @@
                         v-if="form.showDetails || form.product_detail !== ''"
                         class="form-control"
                         v-model="form.product_detail"
-                        style="height: 50px"
-                        maxlength="20"
+                        rows="3"
                       ></textarea>
                     </div>
                     <!-- <select
@@ -2189,7 +2188,10 @@ export default {
         return [
           index + 1,
           product && product.productImg ? product.productImg : "---", // ดึงรูปภาพสินค้าถ้ามี
-          product ? product.productname + "\n" + form.product_detail : "", // ดึงชื่อสินค้าถ้ามี
+          product
+            ? product.productname +
+              (form.product_detail ? "\n" + form.product_detail : "")
+            : "",
           form.sale_qty.toLocaleString(),
           this.formatDecimal(product ? product.price : ""),
           this.formatDecimal(form.sale_discount),
@@ -2378,7 +2380,7 @@ export default {
           (p) => p.employeeID === row.employeeID
         );
 
-        doc.text(`${employ.position}`, 10, 255);
+        // doc.text(`${employ.position}`, 10, 255);
         doc.text(`Name: `, 10, 255);
         doc.text(row.employeeName, 40, 255);
         doc.text(`Email: `, 10, 260);
@@ -2585,9 +2587,11 @@ export default {
 
         // ตั้งค่าฟอนต์ที่ต้องการ
         doc.setFont("PromptRegularLight", "normal");
-
+        // console.log("PDF-->",row)
+        this.shortcutAllow = true;
+        await this.handleEdit(row);
         // doc.text(`${row.remark}`, 40, 235);
-        doc.text(`${row.remark}`, 40, 215, { maxWidth });
+        doc.text(`${this.formData.remark}`, 40, 215, { maxWidth });
         this.drawHeader(doc, headerText, startY, margin);
         this.drawTable(doc, currentPageData, startY, margin, lineHeight);
       }
@@ -2602,6 +2606,7 @@ export default {
       } else if (action === "download") {
         doc.save(`quotation-${row.cus_name}-${row.sale_number}.pdf`);
       }
+      this.shortcutAllow = false;
     },
     drawHeader(doc, headerText, startY, margin) {
       doc.setFontSize(10);
@@ -2721,20 +2726,36 @@ export default {
         }
       });
 
+      // วนลูปแต่ละแถวของข้อมูล
       data.forEach((row) => {
+        // คำนวณหาความสูงที่มากที่สุดของแถวปัจจุบัน
+        let maxRowHeight = lineHeight;
+        const productDetailCell = row[2] || "";
+        if (
+          typeof productDetailCell === "string" &&
+          productDetailCell.includes("\n")
+        ) {
+          const lines = productDetailCell.split("\n");
+          const requiredHeight = lines.length * 5;
+          if (requiredHeight > maxRowHeight) {
+            maxRowHeight = requiredHeight;
+          }
+        }
+
         let x = startX;
 
+        // วนลูปแต่ละเซลล์เพื่อวาด
         row.forEach((cell, index) => {
           const currentCellWidth = cellWidths[index];
-          doc.rect(x, y, currentCellWidth, lineHeight, "S");
+          // วาดกรอบของเซลล์โดยใช้ความสูงที่คำนวณได้
+          doc.rect(x, y, currentCellWidth, maxRowHeight, "S");
 
-          if (index === 1 && cell) {
+          if (index === 1 && cell && cell !== "---") {
+            // คอลัมน์รูปภาพ
             try {
-              // ให้รูปเต็มเซลล์ โดยเหลือ margin เล็กน้อย
-              const padding = 1; // ความเว้นขอบรูปเล็กน้อย
+              const padding = 1;
               const imgWidth = currentCellWidth - padding * 2;
-              const imgHeight = lineHeight - padding * 2;
-
+              const imgHeight = maxRowHeight - padding * 2;
               doc.addImage(
                 cell,
                 x + padding,
@@ -2745,70 +2766,150 @@ export default {
                 "FAST"
               );
             } catch (e) {
-              console.warn("ไม่สามารถโหลดรูปภาพ:", e);
+              console.warn("Could not add image:", e);
             }
           } else if (index === 2 && typeof cell === "string") {
-            // กรณีคอลัมน์ชื่อสินค้า + รายละเอียด
-            const [productName, productDetail] = cell.split("\n");
-            if (productDetail !== "") {
-              const [productName, productDetail] = cell.split("\n");
+            // คอลัมน์ชื่อสินค้า + รายละเอียด
+            const lines = cell.split("\n");
 
-              doc.setFontSize(10);
-              doc.setTextColor(0, 0, 0);
-              doc.text(
-                productName,
-                x + currentCellWidth / 2,
-                y + lineHeight / 2 - 1,
-                {
-                  align: "center",
-                }
-              );
-
-              if (productDetail && productDetail.trim() !== "") {
-                doc.setFontSize(8);
-                doc.setTextColor(150, 150, 150);
-                doc.text(
-                  productDetail,
-                  x + currentCellWidth / 2,
-                  y + lineHeight / 2 + 3,
-                  {
-                    align: "center",
-                  }
-                );
-              }
-              //  alert(productDetail);
+            // --- ส่วนที่แก้ไขตามความต้องการล่าสุด ---
+            if (lines.length > 1) {
+              // ถ้ามีหลายบรรทัด (มี detail) ให้จัดชิดซ้าย
+              doc.text(lines, x + 2, y + 4, { align: "left" });
             } else {
-              // ถ้าไม่มี \n หรือ product_detail ว่าง
-              doc.setFontSize(10);
-              doc.setTextColor(0, 0, 0);
-              doc.text(cell, x + currentCellWidth / 2, y + lineHeight / 2 + 2, {
-                align: "center",
-              });
-            }
-
-            // รีเซ็ตค่าหลังใช้
-            doc.setFontSize(10);
-            doc.setTextColor(0, 0, 0);
-          } else {
-            doc.setFontSize(10);
-            doc.setTextColor(0, 0, 0);
-            doc.text(
-              String(cell),
-              x + currentCellWidth / 2,
-              y + lineHeight / 2 + 2,
-              {
+              // ถ้ามีบรรทัดเดียว (ไม่มี detail) ให้จัดกึ่งกลาง
+              const textY = y + maxRowHeight / 2;
+              doc.text(lines[0], x + currentCellWidth / 2, textY, {
                 align: "center",
                 valign: "middle",
-              }
-            );
+              });
+            }
+            // --- จบส่วนที่แก้ไข ---
+          } else {
+            // เซลล์อื่นๆ
+            // วาดข้อความให้อยู่กึ่งกลางแนวตั้งของเซลล์
+            const textY = y + maxRowHeight / 2;
+            doc.text(String(cell), x + currentCellWidth / 2, textY, {
+              align: "center",
+              valign: "middle",
+            });
           }
-
           x += currentCellWidth;
         });
 
-        y += lineHeight;
+        // เพิ่มค่า y ตามความสูงจริงของแถวที่เพิ่งวาดไป
+        y += maxRowHeight;
       });
     },
+    // drawTable(doc, data, startY, margin, lineHeight) {
+    //   const startX = margin;
+    //   let y = startY + 5;
+    //   doc.setFontSize(10);
+
+    //   const cellWidths = data[0].map((_, index) => {
+    //     if (index === 0) return 10;
+    //     else if (index === 1) return 30;
+    //     else if (index === 2)
+    //       return (doc.internal.pageSize.width - margin * 2) * 0.3;
+    //     else {
+    //       return (
+    //         (doc.internal.pageSize.width -
+    //           margin * 2 -
+    //           (doc.internal.pageSize.width - margin * 2) * 0.4 -
+    //           20) /
+    //         (data[0].length - 3)
+    //       );
+    //     }
+    //   });
+
+    //   data.forEach((row) => {
+    //     let x = startX;
+
+    //     row.forEach((cell, index) => {
+    //       const currentCellWidth = cellWidths[index];
+    //       doc.rect(x, y, currentCellWidth, lineHeight, "S");
+
+    //       if (index === 1 && cell) {
+    //         try {
+    //           // ให้รูปเต็มเซลล์ โดยเหลือ margin เล็กน้อย
+    //           const padding = 1; // ความเว้นขอบรูปเล็กน้อย
+    //           const imgWidth = currentCellWidth - padding * 2;
+    //           const imgHeight = lineHeight - padding * 2;
+
+    //           doc.addImage(
+    //             cell,
+    //             x + padding,
+    //             y + padding,
+    //             imgWidth,
+    //             imgHeight,
+    //             undefined,
+    //             "FAST"
+    //           );
+    //         } catch (e) {
+    //           console.warn("ไม่สามารถโหลดรูปภาพ:", e);
+    //         }
+    //       } else if (index === 2 && typeof cell === "string") {
+    //         // กรณีคอลัมน์ชื่อสินค้า + รายละเอียด
+    //         const [productName, productDetail] = cell.split("\n");
+    //         if (productDetail !== "") {
+    //           const [productName, productDetail] = cell.split("\n");
+
+    //           doc.setFontSize(10);
+    //           doc.setTextColor(0, 0, 0);
+    //           doc.text(
+    //             productName,
+    //             x + currentCellWidth / 2,
+    //             y + lineHeight / 2 - 1,
+    //             {
+    //               align: "center",
+    //             }
+    //           );
+
+    //           if (productDetail && productDetail.trim() !== "") {
+    //             doc.setFontSize(8);
+    //             doc.setTextColor(150, 150, 150);
+    //             doc.text(
+    //               productDetail,
+    //               x + currentCellWidth / 2,
+    //               y + lineHeight / 2 + 3,
+    //               {
+    //                 align: "center",
+    //               }
+    //             );
+    //           }
+    //           //  alert(productDetail);
+    //         } else {
+    //           // ถ้าไม่มี \n หรือ product_detail ว่าง
+    //           doc.setFontSize(10);
+    //           doc.setTextColor(0, 0, 0);
+    //           doc.text(cell, x + currentCellWidth / 2, y + lineHeight / 2 + 2, {
+    //             align: "center",
+    //           });
+    //         }
+
+    //         // รีเซ็ตค่าหลังใช้
+    //         doc.setFontSize(10);
+    //         doc.setTextColor(0, 0, 0);
+    //       } else {
+    //         doc.setFontSize(10);
+    //         doc.setTextColor(0, 0, 0);
+    //         doc.text(
+    //           String(cell),
+    //           x + currentCellWidth / 2,
+    //           y + lineHeight / 2 + 2,
+    //           {
+    //             align: "center",
+    //             valign: "middle",
+    //           }
+    //         );
+    //       }
+
+    //       x += currentCellWidth;
+    //     });
+
+    //     y += lineHeight;
+    //   });
+    // },
 
     ClosePDFview() {
       this.isPopupPDFOpen = false;
