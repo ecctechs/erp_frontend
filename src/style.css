@@ -644,7 +644,6 @@ a {
   padding: 0.5rem;
   display: flex;
   height: 6.5vh;
-  /* position: relative; */
   box-shadow: 2px 2px 4px #cfcfcf;
   justify-content: space-between;
   z-index: 2;
