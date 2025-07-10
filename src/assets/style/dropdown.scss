@@ -1,0 +1,37 @@
+.dropdown-menu {
+  display: block;
+  min-width: 100px;
+  padding: 0.5rem;
+}
+
+.dropdown-item {
+  cursor: pointer;
+  padding: 0.25rem 1rem;
+}
+
+.dropdown-toggle {
+  color: #cf0f0f;
+}
+
+/* --- Custom Input with Dropdown --- */
+.relative-wrapper {
+  position: relative;
+  width: -webkit-fill-available;
+}
+.div-for-InputDropdown ul {
+  background-color: #fff;
+  list-style-type: none;
+  position: absolute;
+  width: -webkit-fill-available;
+}
+.div-for-InputDropdown ul li {
+  border: 1px solid #cfcfcf;
+  padding: 3px;
+  background-color: #fff;
+  margin-left: -32px;
+}
+.div-for-InputDropdown ul li:hover {
+  border: 1px solid #dee2e6;
+  padding: 3px;
+  background-color: #384fb9;
+}

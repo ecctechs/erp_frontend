@@ -1,7 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "@/router.js";
-import "./style.css";
+// import "./style.css";
+import "./assets/style/main.scss";
 import i18n from "../i18n";
 import VCalendar from "@peeraop21/v-calendar-buddhist";
 import "@peeraop21/v-calendar-buddhist/style.css";

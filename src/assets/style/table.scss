@@ -1,0 +1,45 @@
+.orange-text {
+  color: orange;
+}
+.green-text {
+  color: green;
+}
+.red-text {
+  color: rgb(255, 0, 0);
+}
+
+.table {
+  border: 1px solid #cfcfcf;
+}
+
+.table-form {
+  border-radius: 4px;
+  background-color: #ffffff;
+  padding: 30px;
+  margin-bottom: 20px;
+  border: 1px solid #cfcfcf;
+}
+
+.table-contain {
+  height: auto;
+  overflow-x: auto;
+}
+
+.table-in-popup .table-contain {
+  height: 350px;
+}
+
+.pagination .page-link {
+  border: 1px solid #cfcfcf;
+}
+
+.active > .page-link,
+.page-link.active {
+  z-index: auto;
+}
+
+td,
+th {
+  text-align: center;
+  vertical-align: middle;
+}

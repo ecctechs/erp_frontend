@@ -1,0 +1,125 @@
+.card-body-p {
+  border-bottom: 1px solid #c9c9c9;
+  padding-bottom: 10px;
+}
+
+.card-body-p.header-dash {
+  padding-bottom: 0px !important;
+}
+
+.card-body-detail {
+  display: flex;
+  flex-direction: row;
+}
+
+.card-body-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Card สรุปยอด (Sale, Cost, Profit) --- */
+.sale-card {
+  background-color: #999caf;
+  color: #fff;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.cost-card {
+  background-color: #676977;
+  color: #fff;
+}
+
+.profit-card {
+  background-color: #57be6d;
+  color: #fff;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+/* --- Layout ภายใน Card สรุปยอด --- */
+.card-body-left {
+  border-right: 1px solid #c9c9c9;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex: 2;
+}
+
+.card-body-right {
+  flex: 1;
+}
+
+.card-body-left-sale {
+  flex: 1;
+  border-right: 1px solid #c9c9c9;
+}
+
+.card-body-left-cost {
+  flex: 1;
+}
+
+.header-dash {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.select-date-period-dash,
+.datepicker-dash {
+  flex: 1;
+  margin-bottom: 1rem;
+}
+
+.select-date-period-dash-from,
+.select-date-period-dash-to {
+  flex: 0.5;
+}
+
+.date-period-dash {
+  flex: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* --- ส่วนควบคุมกราฟ --- */
+.card-body-barchart-detail {
+  display: flex;
+  flex-direction: row;
+}
+
+.menu-barchart {
+  flex: 1;
+  cursor: pointer;
+}
+
+.filter-box-content {
+  padding: 10px 0px;
+}
+
+.filter-box-content:first-child {
+  padding-top: 0px !important;
+}
+
+.card-body-access {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.fast-access-button {
+  border: 1px solid #909090;
+  border-radius: 10px;
+  width: 30vh;
+  height: 20vh;
+  margin: 5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.fast-access-button:hover {
+  background-color: #cdddf7;
+}
