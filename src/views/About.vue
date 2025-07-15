@@ -1,7 +1,5 @@
 <template>
   <div class="main-page">
-    <!-- call navigate tab -->
-    <!-- <Navigate /> -->
     <div class="page-body">
       <div class="mb-3">
         <h2>{{ t("headerAbout") }}</h2>
@@ -136,17 +134,17 @@
             />
           </div>
           <div class="modal-footer">
-            <button
+            <Button
               v-if="isShowing"
               @click="handleEdit"
-              class="btn btn-primary"
+              customClass="btn btn-primary"
             >
               {{ t("buttonEdit") }}
-            </button>
-            <button
+            </Button>
+            <Button
               v-if="isEditMode"
               :disabled="isLoading"
-              class="btn btn-primary me-3"
+              customClass="btn btn-primary me-3"
               @click="editBusiness"
             >
               <span
@@ -156,14 +154,14 @@
                 aria-hidden="true"
               ></span>
               <span v-else>{{ t("buttonSave") }}</span>
-            </button>
-            <button
-              class="btn btn-secondary"
+            </Button>
+            <Button
+              customClass="btn btn-secondary"
               v-if="isEditMode"
               @click="closeEdit"
             >
               {{ t("buttonCancel") }}
-            </button>
+            </Button>
           </div>
         </div>
         <div
@@ -179,20 +177,21 @@
             <a>{{ popupMessage }}</a>
           </div>
         </div>
-        <!-- <div v-if="isPopupVisible_error" class="popup-success">
-          <div class="popup-content-error">
-            <a>{{ popupMessage_error }}</a>
-          </div>
-        </div> -->
         <div v-if="isPopupVisible_error" class="popup-error2">
           <div class="text-end">
-            <button
+            <!-- <button
               type="button"
               class="btn-close"
               aria-label="Close"
               @click="closeErrorPopup"
               style="color: #9f9999"
-            ></button>
+            ></button> -->
+            <Button
+              @click="closeErrorPopup"
+              type="button"
+              customClass="btn-close"
+            >
+            </Button>
           </div>
           <div class="popup-content-error2">
             <ul>
@@ -216,6 +215,7 @@
 </template>
 <script>
 import Navigate from "../components/Navigation.vue";
+import Button from "../components/button.vue"; // Changed
 import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n";
 
@@ -226,6 +226,7 @@ export default {
   name: "About",
   components: {
     Navigate,
+    Button, // Changed
   },
   setup() {
     const { t } = useI18n();
