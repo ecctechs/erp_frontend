@@ -1,114 +1,107 @@
-.icon-edit {
-  background-image: url("../edit.svg");
-  cursor: pointer;
-  width: 25px;
-  height: 25px;
+/* --- Base Icon Styles (using background-image) --- */
+.icon-edit,
+.icon-delete,
+.icon-preview,
+.icon-download,
+.icon-search,
+.icon-sort {
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
-.icon-edit:hover {
-  background-image: url("../edit-hover.svg");
+.icon-edit {
+  background-image: url("../edit.svg");
+  width: 25px;
+  height: 25px;
+  &:hover {
+    background-image: url("../edit-hover.svg");
+  }
 }
 
 .icon-delete {
   background-image: url("../delete.svg");
-  cursor: pointer;
   width: 25px;
   height: 25px;
-  background-repeat: no-repeat;
-}
-
-.icon-delete:hover {
-  background-image: url("../delete-hover.svg");
+  &:hover {
+    background-image: url("../delete-hover.svg");
+  }
 }
 
 .icon-preview {
   background-image: url("../preview.svg");
   width: 25px;
   height: 25px;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
-
-.icon-preview:hover {
-  background-image: url("../preview-hover.svg");
+  &:hover {
+    background-image: url("../preview-hover.svg");
+  }
 }
 
 .icon-download {
   background-image: url("../download.svg");
   width: 25px;
   height: 25px;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
-
-.icon-download:hover {
-  background-image: url("../download-hover.svg");
+  &:hover {
+    background-image: url("../download-hover.svg");
+  }
 }
 
 .icon-search {
   background-image: url("../search.svg");
   width: 25px;
   height: 25px;
-  background-repeat: no-repeat;
+  cursor: default;
 }
 
 .icon-sort {
   background-image: url("../sort.svg");
   width: 20px;
   height: 20px;
-  background-repeat: no-repeat;
-  cursor: pointer;
 }
 
+.icon-table {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/* --- Language & Access Icons --- */
+.icon_language,
 .icon_language_dark {
-  background-image: url("../language_dark.svg");
   width: 30px;
   height: 30px;
   background-repeat: no-repeat;
   cursor: pointer;
 }
-
 .icon_language {
   background-image: url("../language.svg");
-  width: 30px;
-  height: 30px;
+}
+.icon_language_dark {
+  background-image: url("../language_dark.svg");
+}
+
+.icon_product_access,
+.icon_product_stock_access,
+.icon_quotation_access,
+.icon_sale_report_access {
+  width: 100px;
+  height: 100px;
   background-repeat: no-repeat;
   cursor: pointer;
 }
-
 .icon_product_access {
   background-image: url("../icon_product.png");
-  width: 100px;
-  height: 100px;
-  background-repeat: no-repeat;
-  cursor: pointer;
 }
-
 .icon_product_stock_access {
   background-image: url("../icon_product_stock.png");
-  width: 100px;
-  height: 100px;
-  background-repeat: no-repeat;
-  cursor: pointer;
 }
-
 .icon_quotation_access {
   background-image: url("../icon_quotation.png");
-  width: 100px;
-  height: 100px;
-  background-repeat: no-repeat;
-  cursor: pointer;
 }
-
 .icon_sale_report_access {
   background-image: url("../icon_sale_report.png");
-  width: 100px;
-  height: 100px;
-  background-repeat: no-repeat;
-  cursor: pointer;
 }
 
+/* --- Material Design Icons (MDI) --- */
 span.mdi.mdi-check-circle-outline {
   display: none !important;
 }
@@ -122,10 +115,4 @@ span.mdi.mdi-check-circle-outline {
   margin-right: 10px !important;
   cursor: pointer;
   margin-top: -2px;
-}
-
-.icon-table {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
 }

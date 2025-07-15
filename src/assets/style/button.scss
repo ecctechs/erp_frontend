@@ -1,16 +1,12 @@
+/* --- Base Button Styles --- */
 .btn-primary {
   color: #ffffff !important;
-}
-
-.btn-primary:hover {
-  border: 2px solid #0d6efd; /* แก้ไขตามสไตล์ตัวสุดท้าย */
-  color: #0d6efd !important;
-  background-color: rgba(255, 255, 255, 0);
-  font-weight: bold; /* เพิ่ม font-weight */
-}
-
-button.btn.btn-primary:hover {
-  color: #0d6efd !important;
+  &:hover {
+    border: 2px solid #0d6efd;
+    color: #0d6efd !important;
+    background-color: rgba(255, 255, 255, 0);
+    font-weight: bold;
+  }
 }
 
 .btn-secondary:hover {
@@ -19,59 +15,49 @@ button.btn.btn-primary:hover {
   background-color: rgba(255, 255, 255, 0);
 }
 
-.btn-outline-secondary {
-  background-color: #ffffff;
-}
-
-.btn-outline-secondary:hover {
-  border: 1px solid #0d6efd;
-  color: #0d6efd;
-  background-color: #ffffff;
-}
-
 .btn-success:hover {
   border: 1px solid #198754;
   color: #198754;
   background-color: rgba(255, 255, 255, 0);
 }
 
+.btn-outline-secondary {
+  background-color: #ffffff;
+  &:hover {
+    border: 1px solid #0d6efd;
+    color: #0d6efd;
+    background-color: #ffffff;
+  }
+}
+
+/* --- Specific Button Components --- */
 .logout-btn {
   padding: 5px;
   background-color: #66bb32;
   color: #ffffff;
   border: 1px solid #ffffff;
   border-radius: 4px;
-  left: 0;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 12px;
 }
 
 .round-button {
   border-radius: 100%;
 }
 
+/* --- Button Groups & Tabs --- */
 .btn-group-size {
   width: 80%;
 }
 
-.btn-group-vertical > .btn-check:checked + .btn,
-.btn-group-vertical > .btn-check:focus + .btn,
-.btn-group-vertical > .btn.active,
-.btn-group-vertical > .btn:active,
-.btn-group-vertical > .btn:focus,
-.btn-group-vertical > .btn:hover,
-.btn-group > .btn-check:checked + .btn,
-.btn-group > .btn-check:focus + .btn,
-.btn-group > .btn.active,
-.btn-group > .btn:active,
-.btn-group > .btn:focus,
-.btn-group > .btn:hover {
+.btn-group > .btn:hover,
+.btn-group-vertical > .btn:hover {
   z-index: auto;
-}
-
-.custome-tab button.btn.btn-primary.active {
-  border: 2px solid #0d6efd !important;
-  color: #f3f1f1 !important;
-  background-color: #0d6efd !important;
-  font-weight: bold !important;
 }
 
 .custome-tab button.btn.btn-primary {
@@ -79,9 +65,11 @@ button.btn.btn-primary:hover {
   color: #0d6efd !important;
   background-color: rgba(255, 255, 255, 0) !important;
   font-weight: bold !important;
-}
-
-.custome-tab button.btn.btn-primary:hover {
-  text-decoration: underline;
-  text-underline-position: auto;
+  &:hover {
+    text-decoration: underline;
+  }
+  &.active {
+    color: #f3f1f1 !important;
+    background-color: #0d6efd !important;
+  }
 }

@@ -1,3 +1,4 @@
+/* --- General Form Controls --- */
 .form-control {
   border: 1px solid #cfcfcf !important;
 }
@@ -7,8 +8,8 @@
   color: #000;
 }
 
-.size-font-sm {
-  font-size: 12px;
+.readonly {
+  color: #919191;
 }
 
 .error {
@@ -16,17 +17,35 @@
   box-shadow: 0 0 5px #e300004d !important;
 }
 
-.readonly {
-  color: #919191;
+.size-font-sm {
+  font-size: 12px;
 }
 
-textarea {
-  width: 100%;
-  height: 150px;
+/* --- Form Layout Containers --- */
+.div-for-formControl {
+  display: flex;
+  flex-wrap: inherit;
+  align-items: center;
+  justify-content: space-between;
+  select,
+  input {
+    width: 50%;
+    border: 1px solid #cfcfcf;
+  }
 }
 
-.label-textarea {
-  align-self: self-start;
+.div-for-formProfile {
+  display: flex;
+  label,
+  a,
+  input {
+    flex: 1;
+  }
+}
+
+/* --- Select / Dropdown Input --- */
+select {
+  min-width: 150px;
 }
 
 .form-select {
@@ -43,15 +62,97 @@ textarea {
   background-position: right 0.75rem center;
   border-radius: 0.375rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
+
+  &:focus {
+    --bs-form-select-bg-img: url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3e%3cpath fill="currentColor" opacity="0.6" transform="rotate(180 12 12)" d="M7,10L12,15L17,10H7Z"/%3e%3c/svg%3e');
+  }
 }
 
-.form-select:focus {
-  --bs-form-select-bg-img: url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3e%3cpath fill="currentColor" opacity="0.6" transform="rotate(180 12 12)" d="M7,10L12,15L17,10H7Z"/%3e%3c/svg%3e');
+.discount-type {
+  display: flex;
 }
 
-select {
-  min-width: 150px;
+/* --- Textarea & Rich Text Editor --- */
+textarea {
+  width: 100%;
+  height: 150px;
+}
+
+.label-textarea {
+  align-self: self-start;
+}
+
+.text-editor {
+  width: 100%;
+}
+
+.editor {
+  border: 1px solid #ccc;
+  min-height: 200px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.preview {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.tool-texteditor {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f1;
+  border: 1px solid #cfcfcf;
+  button {
+    width: 30px;
+    background-color: #ffffff;
+    border: 1px solid #cfcfcf;
+  }
+}
+
+.editor-textcolor {
+  width: 10% !important;
+  padding: 0;
+}
+
+.editor-textsize {
+  min-width: 80px !important;
+  width: 10% !important;
+}
+
+.editor-textcolor-hex {
+  max-width: 80px;
+}
+
+.div-for-formControl-textarea {
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* --- Vue Datepicker Overrides --- */
+.mx-datepicker {
+  width: 100%;
+}
+
+.mx-input {
+  width: 100% !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0px !important;
+  height: auto;
+  font-size: 1rem;
+  line-height: 1.5;
+  &:disabled,
+  &.disabled {
+    color: #919191 !important;
+    background-color: #fff !important;
+    border-color: unset !important;
+    cursor: not-allowed;
+  }
+}
+
+.mx-icon-calendar,
+.mx-icon-clear {
+  right: 0px !important;
 }

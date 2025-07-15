@@ -1,3 +1,4 @@
+/* --- Default Dropdown Menu --- */
 .dropdown-menu {
   display: block;
   min-width: 100px;
@@ -18,20 +19,21 @@
   position: relative;
   width: -webkit-fill-available;
 }
+
 .div-for-InputDropdown ul {
   background-color: #fff;
   list-style-type: none;
   position: absolute;
   width: -webkit-fill-available;
-}
-.div-for-InputDropdown ul li {
-  border: 1px solid #cfcfcf;
-  padding: 3px;
-  background-color: #fff;
-  margin-left: -32px;
-}
-.div-for-InputDropdown ul li:hover {
-  border: 1px solid #dee2e6;
-  padding: 3px;
-  background-color: #384fb9;
+  margin-left: -32px; /* To align with input */
+  z-index: 5; /* Ensure it's above other elements */
+  li {
+    border: 1px solid #cfcfcf;
+    padding: 3px;
+    background-color: #fff;
+    &:hover {
+      background-color: #384fb9;
+      color: #fff;
+    }
+  }
 }

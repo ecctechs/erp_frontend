@@ -1,4 +1,4 @@
-/* popup component */
+/* --- Base Popup/Modal/Dialog Styles --- */
 .popup {
   position: fixed;
   top: 0;
@@ -17,12 +17,6 @@
   box-shadow: none;
 }
 
-@media (max-width: 767px) {
-  .popup-content {
-    padding: 50px 8px 8px 8px;
-  }
-}
-
 .popup-content {
   background: #ffffff;
   width: 120vh;
@@ -31,6 +25,10 @@
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   overflow-y: auto;
+  position: relative;
+  @media (max-width: 767px) {
+    padding: 50px 8px 8px 8px;
+  }
 }
 
 .close {
@@ -41,36 +39,17 @@
   font-size: 40px;
 }
 
-.popup-error2 {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  background: #fbe4e4;
-  border: 1px solid #fbe4e4;
-  border-radius: 8px;
-  padding: 16px 24px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-  min-width: 280px;
-  max-width: 90vw;
-  text-align: left;
+.delete-popup .popup-content {
+  height: 200px;
+  overflow: hidden;
 }
 
-.popup-success {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeIn 0.5s ease-in-out;
-  z-index: 10;
+.modal-footer {
+  padding-top: 60px !important;
 }
 
+/* --- Animated Popups (Success/Error Banners) --- */
+.popup-success,
 .popup-error {
   position: fixed;
   top: 0;
@@ -88,26 +67,20 @@
 .popup-content-success {
   background: #b7ecb1;
   color: #137109;
-  width: auto;
-  height: auto;
-  padding: 10px;
   border: 1px solid #137109;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  position: relative;
-  overflow-y: auto;
-  align-self: flex-start;
-  top: calc(50px + 15px);
-  animation: slideIn 0.5s ease-in-out;
 }
 
 .popup-content-error {
   background: #fe9393;
   color: #cf0f0f;
+  border: 1px solid #cf0f0f;
+}
+
+.popup-content-success,
+.popup-content-error {
   width: auto;
   height: auto;
   padding: 10px;
-  border: 1px solid #cf0f0f;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   position: relative;
@@ -117,6 +90,7 @@
   animation: slideIn 0.5s ease-in-out;
 }
 
+/* --- Top Banner Error --- */
 .popup-error2 {
   position: fixed;
   top: 20px;
@@ -137,4 +111,23 @@
   position: relative;
   color: #b60000;
   font-size: 14px;
+}
+
+/* --- Keyframe Animations for Popups --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+  }
+  to {
+    transform: translateY(0);
+  }
 }

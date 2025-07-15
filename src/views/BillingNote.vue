@@ -650,7 +650,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button
+      <!-- <button
         :disabled="isLoading"
         class="btn btn-primary me-3"
         v-if="isEditMode"
@@ -666,7 +666,24 @@
       </button>
       <button class="btn btn-secondary" @click="closePopup">
         {{ t("buttonCancel") }}
-      </button>
+      </button> -->
+      <Button
+        :disabled="isLoading"
+        customClass="btn btn-primary me-3"
+        v-if="isEditMode"
+        @click="editBilling"
+      >
+        <span
+          v-if="isLoading"
+          class="spinner-border spinner-border-sm"
+          role="status"
+          aria-hidden="true"
+        ></span>
+        <span v-else>{{ t("buttonSave") }}</span>
+      </Button>
+      <Button customClass="btn btn-secondary" @click="closePopup">
+        {{ t("buttonCancel") }}
+      </Button>
     </div>
   </popup>
   <popup :isOpen="isPopupPDFOpen" :closePopup="ClosePDFview">
@@ -805,6 +822,7 @@
 </template>
 
 <script>
+import Button from "../components/button.vue";
 import Navigate from "../components/Navigation.vue";
 import BillingList from "../components/tableList.vue";
 import { useI18n } from "vue-i18n";
@@ -836,6 +854,7 @@ export default {
     BillingList,
     Popup,
     DatePicker,
+    Button,
   },
   setup() {
     const { t } = useI18n();
