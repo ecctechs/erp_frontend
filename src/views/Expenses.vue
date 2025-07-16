@@ -22,16 +22,6 @@
                     v-if="toggleCustomDate"
                   >
                     <div class="mb-3 div-for-formControl form-filter-home">
-                      <!-- <DatePicker
-                        v-model:value="custom_filter_start_date"
-                        format="DD/MM/YYYY"
-                        value-type="date"
-                        placeholder="DD/MM/YYYY"
-                        class="form-control"
-                        :formatter="momentFormat"
-                        :lang="currentLocale"
-                        @change="filterDataByOption"
-                      /> -->
                       <v-date-picker
                         v-model="custom_filter_start_date"
                         locale="th-TH"
@@ -50,16 +40,6 @@
                     </div>
                     <span class="mdi mdi-minus" style="padding: 10px"></span>
                     <div class="mb-3 div-for-formControl form-filter-home">
-                      <!-- <DatePicker
-                        v-model:value="custom_filter_end_date"
-                        format="DD/MM/YYYY"
-                        value-type="date"
-                        placeholder="DD/MM/YYYY"
-                        class="form-control"
-                        :formatter="momentFormat"
-                        :lang="currentLocale"
-                        @change="filterDataByOption"
-                      /> -->
                       <v-date-picker
                         v-model="custom_filter_end_date"
                         locale="th-TH"
@@ -126,12 +106,6 @@
       </div>
       <div class="row mb-3 mt-3">
         <div class="col-6 col-sm-6 col-md-3 col-lg-3">
-          <!-- <input
-            v-model="searchQuery"
-            type="text"
-            class="form-control me-3 size-font-sm"
-            :placeholder="$t('Search')"
-          /> -->
           <select
             class="form-control form-select size-font-sm"
             v-model="searchQuery"
@@ -149,7 +123,6 @@
             <option value="อื่นๆ">{{ t("expense.others") }}</option>
           </select>
         </div>
-        <!-- <div class="col-1 col-sm-1 col-md-7 col-lg-7"></div> -->
         <div class="col-6 col-sm-6 col-md-9 col-lg-9 text-end">
           <a
             class="btn btn-success me-3 size-font-sm me-2"
@@ -196,17 +169,6 @@
         <label class="col-sm-5 col-md-6 mb-3"
           ><span style="color: red">*</span>{{ t("dateHeaderTable") }}</label
         >
-        <!-- <DatePicker
-          v-model:value="formData.DateExpense"
-          format="DD/MM/YYYY"
-          value-type="format"
-          placeholder="DD/MM/YYYY"
-          class="form-control"
-          :formatter="momentFormat"
-          :lang="currentLocale"
-          :class="{ error: isEmpty.DateExpense }"
-        /> -->
-
         <v-date-picker
           v-model="formData.DateExpense"
           locale="th-TH"
@@ -302,9 +264,9 @@
         </div>
       </div>
       <div class="modal-footer mb-3">
-        <button
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           v-if="isAddingMode"
           @click="addExpense"
         >
@@ -315,10 +277,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonAdd") }}</span>
-        </button>
-        <button
+        </Button>
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           v-if="isEditMode"
           @click="editExpense"
         >
@@ -329,10 +291,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonSave") }}</span>
-        </button>
-        <button class="btn btn-secondary" @click="closePopup">
+        </Button>
+        <Button customClass="btn btn-secondary" @click="closePopup">
           {{ t("buttonCancel") }}
-        </button>
+        </Button>
       </div>
     </Popup>
     <div class="delete-popup">
@@ -344,9 +306,9 @@
           <a>{{ t("deleteConfirmSentence") }}</a>
         </div>
         <div class="modal-footer mb-3">
-          <button
+          <Button
             :disabled="isLoading"
-            class="btn btn-danger me-3"
+            customClass="btn btn-danger me-3"
             @click="deleteExpenses"
           >
             <span
@@ -356,10 +318,13 @@
               aria-hidden="true"
             ></span>
             <span v-else>{{ t("buttonDelete") }}</span>
-          </button>
-          <button class="btn btn-secondary" @click="closeDeleteConfirmPopup">
+          </Button>
+          <Button
+            customClass="btn btn-secondary"
+            @click="closeDeleteConfirmPopup"
+          >
             {{ t("buttonCancel") }}
-          </button>
+          </Button>
         </div>
       </Popup>
     </div>
@@ -371,13 +336,12 @@
     </div>
     <div v-if="isPopupVisible_error" class="popup-error2">
       <div class="text-end">
-        <button
+        <Button
           type="button"
-          class="btn-close"
+          customClass="btn-close"
           aria-label="Close"
           @click="closeErrorPopup"
-          style="color: #9f9999"
-        ></button>
+        />
       </div>
       <div class="popup-content-error2">
         <ul>
@@ -394,6 +358,7 @@
 import Navigate from "../components/Navigation.vue";
 import Popup from "../components/popup.vue";
 import tableList from "../components/tableList.vue";
+import Button from "../components/button.vue"; // 1. นำเข้า component
 import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n";
 import jsPDF from "jspdf";
@@ -407,17 +372,17 @@ import "moment/locale/th";
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
 
-// ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
 import en from "vue-datepicker-next/locale/en.es";
 
 export default {
   name: "Expenses",
   components: {
-    Navigate, // Navigation component
-    Popup, // Popup component
+    Navigate,
+    Popup,
     tableList,
-    DatePicker, // Table component to display departments and positions
+    DatePicker,
+    Button, // 2. ลงทะเบียน component
   },
   setup() {
     const { t } = useI18n();
@@ -426,22 +391,20 @@ export default {
 
     const currentLocale = computed(() => {
       return {
-        ...(locale.value === "th" ? th : en), // ✅ ใช้ค่าจาก locale ปัจจุบัน
+        ...(locale.value === "th" ? th : en),
         yearFormat:
-          locale.value === "en" ? moment().year() : moment().year() + 543, // ✅ แปลงปี พ.ศ. หรือ ค.ศ.
+          locale.value === "en" ? moment().year() : moment().year() + 543,
       };
     });
 
-    const date = ref(null); // ✅ ค่าที่เก็บเป็น YYYY-MM-DD (ค.ศ.)
+    const date = ref(null);
 
     const momentFormat = computed(() => ({
-      // 📌 Date → String (แสดงผลเป็น พ.ศ. ถ้าภาษาเป็นไทย)
       stringify: (date) => {
         if (!date) return "";
-        const yearOffset = lang.value === "en" ? 543 : 0; // ✅ ตรวจสอบภาษาผ่าน computed
+        const yearOffset = lang.value === "en" ? 543 : 0;
         return moment(date).add(yearOffset, "years").format("DD/MM/YYYY");
       },
-      // 📌 String → Date (แปลงกลับเป็น ค.ศ. ถ้าภาษาเป็นไทย)
       parse: (value) => {
         if (!value) return null;
         const yearOffset = lang.value === "en" ? 543 : 0;
@@ -449,7 +412,6 @@ export default {
           .subtract(yearOffset, "years")
           .toDate();
       },
-      // 📌 ใช้ moment คำนวณเลขสัปดาห์ (ถ้าจำเป็น)
       getWeek: (date) => {
         return moment(date).week();
       },
@@ -462,15 +424,16 @@ export default {
       momentFormat,
       currentLocale,
       t,
-      lang, // ✅ นำ lang ไปใช้ใน template ได้
+      lang,
       documentName,
     };
   },
+  // ... The rest of your script remains unchanged
   data() {
     return {
       fileName: "",
       Image_pd: [],
-      imageSrc: null, // สำหรับเก็บ URL ของรูปภาพที่แสดง
+      imageSrc: null,
       searchQuery: "",
       Expenses: [],
       startDate: [],
@@ -482,14 +445,14 @@ export default {
       selectedOption: "all",
       filteredData: [],
       errorMessages: [],
-      isPopupVisible_error: false, // For error message popups
-      isPopupOpen: false, // For department add/edit popup
-      isDeleteConfirmPopupOpen: false, // For delete confirmation popup
-      isManagePositionPopupOpen: false, // For managing positions popup
-      isAddPositionPopupOpen: false, // For add/edit position popup
-      isLoading: false, // Loading state
-      isPopupVisible: false, // For success message popup
-      inputError: false, // Validation flag for inputs
+      isPopupVisible_error: false,
+      isPopupOpen: false,
+      isDeleteConfirmPopupOpen: false,
+      isManagePositionPopupOpen: false,
+      isAddPositionPopupOpen: false,
+      isLoading: false,
+      isPopupVisible: false,
+      inputError: false,
       ExportData: [],
       formData: {
         expense_id: "",
@@ -517,7 +480,6 @@ export default {
         let formattedDate = item.expense_date;
         let realDateObj = null;
 
-        // แปลหมวดหมู่รายจ่าย
         const translatedCategory =
           lang === "TH"
             ? this.$t(`expense.${item.expense_category}`)
@@ -528,7 +490,6 @@ export default {
           const isBuddhistYear = year > 2500;
           const realYear = isBuddhistYear ? year - 543 : year;
 
-          // สร้าง Date object ไว้สำหรับเปรียบเทียบช่วงวันที่
           realDateObj = new Date(realYear, month - 1, day);
 
           const m = moment(`${realYear}-${month}-${day}`).locale(
@@ -537,7 +498,6 @@ export default {
 
           if (lang === "TH") {
             const buddhistYear = realYear + 543;
-            // แปลงเดือนเป็นภาษาไทย
             const monthsInThai = [
               "มกราคม",
               "กุมภาพันธ์",
@@ -552,7 +512,7 @@ export default {
               "พฤศจิกายน",
               "ธันวาคม",
             ];
-            const thaiMonth = monthsInThai[month - 1]; // เดือน 1 ถึง 12
+            const thaiMonth = monthsInThai[month - 1];
 
             formattedDate = `${day} ${thaiMonth} ${buddhistYear}`;
           } else {
@@ -563,17 +523,16 @@ export default {
         return {
           expense_date_new2: formattedDate,
           expense_date_new: formattedDate,
-          expense_category_new: translatedCategory, // ใช้ field ใหม่สำหรับ
+          expense_category_new: translatedCategory,
           expense_amount_new: item.expense_amount,
           expense_amount_new2: item.expense_amount.toLocaleString(),
           quantity_remark_new: item.quantity_remark,
-          realDateObj, // เพิ่มไว้ใช้ตอน filter
+          realDateObj,
           ...item,
           realDateObj,
         };
       });
 
-      // 📅 Filter ด้วยช่วงวันที่
       if (this.startDate && this.endDate) {
         let dateStart, dateEnd;
 
@@ -593,7 +552,6 @@ export default {
         }
       }
 
-      // console.log(filteredData);
       if (this.searchQuery) {
         filteredData = filteredData.filter((item) =>
           item.expense_category_new.toLowerCase().includes(query)
@@ -613,10 +571,10 @@ export default {
           : "";
       },
       set(value) {
-        this.formData.priceExpense = Number(value.replace(/,/g, "")); // ลบ , ออกก่อนบันทึกค่า
+        this.formData.priceExpense = Number(value.replace(/,/g, ""));
       },
     },
-    // Define table headers for department table
+
     tableHeaders() {
       return [
         { label: this.t("expense_id"), key: "expense_id" },
@@ -638,7 +596,6 @@ export default {
   },
   watch: {
     "$i18n.locale"(newLocale, oldLocale) {
-      // เรียกฟังก์ชันกรองข้อมูลหรืออัปเดตวันที่เมื่อภาษามีการเปลี่ยนแปลง
       this.filterDataByOption();
     },
     custom_filter_start_date() {
@@ -656,12 +613,12 @@ export default {
       if (file && file.type.startsWith("image/")) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.imageSrc = e.target.result; // อัปเดต URL รูปภาพสำหรับ preview
+          this.imageSrc = e.target.result;
         };
         reader.readAsDataURL(file);
         this.newImg = true;
       } else {
-        this.imageSrc = null; // หากไม่ใช่ไฟล์รูปภาพ ให้ลบตัวอย่าง
+        this.imageSrc = null;
       }
     },
     formatDatePicker(date) {
@@ -671,7 +628,7 @@ export default {
       const month = (d.getMonth() + 1).toString().padStart(2, "0");
       const buddhistYear = d.getFullYear() + 543;
 
-      return `${day}/${month}/${buddhistYear}`; // 🔸 แสดงเป็น พ.ศ.
+      return `${day}/${month}/${buddhistYear}`;
     },
     parseThaiDate(dateStr) {
       if (
@@ -679,7 +636,7 @@ export default {
         dateStr.trim() === "" ||
         dateStr.split(" ").length !== 3
       ) {
-        return null; // ❌ ไม่ใช่ string หรือมีส่วนไม่ครบ
+        return null;
       }
       const monthsInThai = {
         มกราคม: 0,
@@ -705,34 +662,29 @@ export default {
       if (!isNaN(day) && month !== undefined && !isNaN(gregorianYear)) {
         return new Date(gregorianYear, month, day);
       }
-
-      return null; // ถ้าแปลงไม่ได้
+      return null;
     },
     exportExpense() {
-      // console.log(this.ExportData)
-      //export จาก this.Expenses;
       const lang = this.$t("headerLang");
       const exportData = this.ExportData.map((item) => {
         const translatedCategory =
           lang === "TH"
             ? this.$t(`expense.${item.expense_category}`)
             : this.$t(`expense.${item.expense_category}`);
-
         return {
           วันที่:
             lang === "TH"
               ? item.expense_date
               : this.formatDateToThai(item.expense_date),
           หมวดหมู่ค่าใช้จ่าย: translatedCategory,
-          "จำนวนเงิน (บาท)": item.expense_amount, // ใส่ลูกน้ำ
+          "จำนวนเงิน (บาท)": item.expense_amount,
           "หมายเหตุ ": item.quantity_remark,
         };
       });
 
       const header = Object.keys(exportData[0]).join(",");
       const rows = exportData.map((row) => Object.values(row).join(","));
-
-      const csvContent = "\uFEFF" + [header, ...rows].join("\n"); // ✅ Add BOM for UTF-8
+      const csvContent = "\uFEFF" + [header, ...rows].join("\n");
 
       const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
       const link = document.createElement("a");
@@ -742,10 +694,8 @@ export default {
       link.click();
       document.body.removeChild(link);
     },
-
     formatDateToThai(dateStr) {
       const [day, month, year] = dateStr.split("/").map(Number);
-
       const thaiMonths = [
         "",
         "มกราคม",
@@ -761,48 +711,34 @@ export default {
         "พฤศจิกายน",
         "ธันวาคม",
       ];
-
       const thaiYear = year - 543;
       const thaiMonth = thaiMonths[month];
-
       return `${day} ${thaiMonth} ${thaiYear}`;
     },
-
     onlyNumber(event) {
       if (!/[\d]/.test(event.key)) {
-        event.preventDefault(); // ป้องกันการพิมพ์อักขระที่ไม่ใช่ตัวเลข
+        event.preventDefault();
       }
     },
     updatePrice(event) {
-      const rawValue = event.target.value.replace(/,/g, ""); // ลบ , ออกก่อนแปลงเป็นตัวเลข
-      this.formData.price = Number(rawValue); // แปลงเป็นตัวเลขแล้วบันทึก
+      const rawValue = event.target.value.replace(/,/g, "");
+      this.formData.price = Number(rawValue);
     },
     parseThaiDateTime(thaiDateTimeStr) {
-      // แยกวันที่ เวลา
-      const [datePart, timePart] = thaiDateTimeStr.split(" "); // "7/4/2568", "15:46:12"
-      const [day, month, yearBE] = datePart.split("/"); // "7", "4", "2568"
-
-      const year = parseInt(yearBE) - 543; // แปลง พ.ศ. -> ค.ศ.
-
-      // สร้าง string ให้ JS เข้าใจ: "2025-04-07T15:46:12"
+      const [datePart, timePart] = thaiDateTimeStr.split(" ");
+      const [day, month, yearBE] = datePart.split("/");
+      const year = parseInt(yearBE) - 543;
       const isoDateStr = `${year}-${month.padStart(2, "0")}-${day.padStart(
         2,
         "0"
       )}T${timePart}`;
-
       return new Date(isoDateStr);
     },
     formatDate(date) {
-      const monthIndex = date.getMonth(); // ดึงเดือนเป็นตัวเลข
-      const year = date.getFullYear(); // ดึงปี ค.ศ.
-
-      // เรียกชื่อเดือนตามภาษาที่เลือก
+      const monthIndex = date.getMonth();
+      const year = date.getFullYear();
       const monthName = this.t(`months.${this.getMonthKey(monthIndex)}`);
-
-      // แปลงปี ค.ศ. เป็น พ.ศ. ถ้าภาษาไทยถูกเลือก
       const formattedYear = this.$i18n.locale === "th" ? year + 543 : year;
-
-      // แสดงวันที่แบบ "เดือน ปี" พร้อมกับการแปล
       return `${date.getDate()} ${monthName} ${formattedYear}`;
     },
     getMonthKey(monthIndex) {
@@ -830,7 +766,6 @@ export default {
       const lastQuarter = currentQuarter === 1 ? 4 : currentQuarter - 1;
       const lastQuarterYear =
         currentQuarter === 1 ? currentYear - 1 : currentYear;
-
       let startDate, endDate;
 
       switch (this.selectedOption) {
@@ -904,9 +839,7 @@ export default {
       try {
         const response = await fetch(`${API_CALL}/Quotation/getBusinessByID`, {
           method: "GET",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          headers: { Authorization: `Bearer ${accessToken}` },
         });
         const json = await response.json();
         this.BusinessJson = json.data;
@@ -921,120 +854,72 @@ export default {
     closeErrorPopup() {
       this.isPopupVisible_error = false;
     },
-    async validateFormData() {
-      // this.isEmpty.Position = false;
-      // const errorMessages = [];
-      // if (this.formPosition.Position.trim() === "") {
-      //   this.isEmpty.Position = true;
-      //   errorMessages.push(this.$t("validation.Position"));
-      // }
-      // const isDuplicate = this.Positions.some(
-      //   (item) =>
-      //     item["Position"].trim() === this.formPosition.Position.trim() &&
-      //     item.ID !== this.formPosition.Position // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
-      // );
-      // if (isDuplicate) {
-      //   this.isEmpty.Position = true;
-      //   errorMessages.push(this.$t("validation.positionDup"));
-      // }
-      // if (errorMessages.length > 0) {
-      //   this.showPopup_validate(errorMessages);
-      //   return false;
-      // } else {
-      //   return true;
-      // }
-    },
     showPopup_validate(messages) {
       if (Array.isArray(messages)) {
-        this.errorMessages = messages; // เก็บข้อความใน errorMessages
-        // this.showErrorPopup = true; // แสดง Popup
+        this.errorMessages = messages;
         this.isPopupVisible_error = true;
-        // setTimeout(() => {
-        //   this.isPopupVisible_error = false; // ซ่อน Popup หลังจากหน่วงเวลา
-        // }, 3000); // หน่วงเวลา 3 วินาที (3000 มิลลิวินาที)
       } else {
         this.showPopup_error(messages);
       }
     },
-    // Opens the department add/edit popup
     openPopup() {
-      this.isEmpty.DateExpense = false;
-      this.isEmpty.cateExpense = false;
-      this.isEmpty.priceExpense = false;
+      this.isEmpty = {
+        DateExpense: false,
+        cateExpense: false,
+        priceExpense: false,
+      };
       this.isPopupOpen = true;
-      this.isAddingMode = true; // Add mode
-      this.isEditMode = false; // Disable edit mode
-      this.formData.DateExpense = new Date();
-      this.formData.expense_id = "";
-      this.formData.remarkExpense = "";
-      this.formData.cateExpense = "";
-      this.formData.priceExpense = "";
-
+      this.isAddingMode = true;
+      this.isEditMode = false;
+      this.formData = {
+        DateExpense: new Date(),
+        expense_id: "",
+        remarkExpense: "",
+        cateExpense: "",
+        priceExpense: "",
+      };
       this.clearFile();
     },
-    // Closes the department add/edit popup
     closePopup() {
       this.isPopupOpen = false;
       this.isAddingMode = false;
       this.isEditMode = false;
-      this.formData = {
-        // Reset form data
-        departmentID: "",
-        departmentName: "",
-      };
-      this.inputError = false; // Reset validation errors
+      this.formData = { departmentID: "", departmentName: "" };
+      this.inputError = false;
       this.isPopupVisible_error = false;
     },
-    // Closes the delete confirmation popup
     closeDeleteConfirmPopup() {
       this.isDeleteConfirmPopupOpen = false;
     },
-    // Opens the manage position popup
     openManagePositionPopup() {
       this.isManagePositionPopupOpen = true;
     },
-    // Closes the manage position popup
     closeManagePositionPopup() {
       this.isManagePositionPopupOpen = false;
     },
-    // Opens the position add/edit popup
     openAddPositionPopup() {
       this.isAddPositionPopupOpen = true;
-      this.isAddingMode = true; // Add mode
-      this.isEditMode = false; // Disable edit mode
+      this.isAddingMode = true;
+      this.isEditMode = false;
     },
-    // Closes the position add/edit popup
     closeAddPositionPopup() {
       this.isAddPositionPopupOpen = false;
-      this.formPosition = {
-        // Reset form data
-        PositionID: "",
-        Position: "",
-      };
-      this.inputError = false; // Reset validation errors
+      this.formPosition = { PositionID: "", Position: "" };
+      this.inputError = false;
     },
-    // Opens the edit popup with selected department data
     handleEdit(item) {
-      this.isEmpty.DateExpense = false;
-      this.isEmpty.cateExpense = false;
-      this.isEmpty.priceExpense = false;
+      this.isEmpty = {
+        DateExpense: false,
+        cateExpense: false,
+        priceExpense: false,
+      };
       console.log("item", item);
       this.isPopupOpen = true;
-      this.isAddingMode = false; // Edit mode
-      this.isEditMode = true; // Enable edit mode
-
+      this.isAddingMode = false;
+      this.isEditMode = true;
       const thaiDate = item.expense_date;
       const [day, month, year] = thaiDate.split("/");
-      const convert_expense_date = new Date(year - 543, month - 1, day); // แปลง พ.ศ. เป็น ค.ศ.
-
-      // const formatDateForPicker = (date) => {
-      //   if (!date) return null;
-      //   const d = new Date(date);
-      //   if (isNaN(d.getTime())) return null; // ตรวจสอบว่าเป็นวันที่ถูกต้อง
-      //   return d;
-      // };
-      // const formattedexpense_date = formatDateForPicker(item.expense_date);
-
+      const convert_expense_date = new Date(year - 543, month - 1, day);
       this.formData = {
         expense_id: item.expense_id,
         DateExpense: convert_expense_date,
@@ -1045,45 +930,36 @@ export default {
       if (!item.expense_image) {
         this.clearFile();
       } else {
-        this.imageSrc = item.expense_image; // มีรูป ก็แสดงได้เล
+        this.imageSrc = item.expense_image;
       }
       this.getExpense();
     },
-    // Opens the delete confirmation popup for department
     handleDelete(item) {
       this.isDeleteConfirmPopupOpen = true;
-      this.formData = { expense_id: item.expense_id }; // Store department ID for deletion
+      this.formData = { expense_id: item.expense_id };
     },
-    // Opens the edit popup with selected position data
     handleEditPosition(item) {
       this.isAddPositionPopupOpen = true;
-      this.isAddingMode = false; // Edit mode
-      this.isEditMode = true; // Enable edit mode
-      this.formPosition = {
-        // Fill form with selected data
-        PositionID: item.ID,
-        Position: item.Position,
-      };
+      this.isAddingMode = false;
+      this.isEditMode = true;
+      this.formPosition = { PositionID: item.ID, Position: item.Position };
     },
-    // Opens the delete confirmation popup for position
     handleDeletePosition(item) {
       this.isDeleteConfirmPopupOpen = true;
-      this.formPosition = { PositionID: item.ID }; // Store position ID for deletion
+      this.formPosition = { PositionID: item.ID };
     },
-    // Displays a success popup message
     showPopup(message) {
       this.popupMessage = message;
       this.isPopupVisible = true;
       setTimeout(() => {
-        this.isPopupVisible = false; // Auto-hide after 2 seconds
+        this.isPopupVisible = false;
       }, 2000);
     },
-    // Displays an error popup message
     showPopup_error(message) {
       this.popupMessage_error = message;
       this.isPopupVisible_error = true;
       setTimeout(() => {
-        this.isPopupVisible_error = false; // Auto-hide after 2 seconds
+        this.isPopupVisible_error = false;
       }, 2000);
     },
     async getPosition() {
@@ -1094,33 +970,25 @@ export default {
         this.isLoading = false;
       }
     },
-    // Adds a new position via API call
     validateFormData() {
-      // ตั้งค่า isEmpty ของทุกฟิลด์เป็น false ก่อนเริ่มการตรวจสอบ
-      this.isEmpty.DateExpense = false;
-      this.isEmpty.cateExpense = false;
-      this.isEmpty.priceExpense = false;
-      // this.isEmpty.remarkExpense = false;
-
+      this.isEmpty = {
+        DateExpense: false,
+        cateExpense: false,
+        priceExpense: false,
+      };
       const errorMessages = [];
-
-      // ตรวจสอบฟิลด์ productTypeID
       if (this.formData.DateExpense === "") {
         this.isEmpty.DateExpense = true;
         errorMessages.push(this.$t("validation.DateExpense"));
       }
-
-      // ตรวจสอบฟิลด์ categoryID
       if (this.formData.cateExpense === "") {
         this.isEmpty.cateExpense = true;
         errorMessages.push(this.$t("validation.cateExpense"));
       }
-
       if (this.formData.priceExpense === "") {
         this.isEmpty.priceExpense = true;
         errorMessages.push(this.$t("validation.priceExpense"));
       }
-
       if (errorMessages.length > 0) {
         this.showPopup_validate(errorMessages);
         return false;
@@ -1141,7 +1009,6 @@ export default {
           },
         });
         const json = await response.json();
-        // this.Expenses = json.data;
         this.Expenses = json.data.map((item) => ({
           expense_id: item.expense_id,
           expense_date: item.expense_date,
@@ -1150,8 +1017,7 @@ export default {
           quantity_remark: item.quantity_remark,
           expense_image: item.expense_image,
         }));
-        if (json.statusCode === 200) {
-        } else {
+        if (json.statusCode !== 200) {
           this.showPopup_error(json.data);
         }
       } catch (error) {
@@ -1165,8 +1031,6 @@ export default {
       this.Image_pd = [];
       this.imageSrc = null;
       this.newImg = false;
-
-      // ใช้ ref เพื่อเคลียร์ input[type="file"]
       if (this.$refs.fileInput) {
         this.$refs.fileInput.value = "";
       }
@@ -1175,11 +1039,10 @@ export default {
       if (!date || isNaN(new Date(date))) return "";
       const d = new Date(date);
       const day = d.getDate();
-      const month = d.getMonth() + 1; // เดือนนับจาก 0
-      const year = d.getFullYear() + 543; // แปลง ค.ศ. เป็น พ.ศ.
+      const month = d.getMonth() + 1;
+      const year = d.getFullYear() + 543;
       return `${day}/${month}/${year}`;
     },
-
     async addExpense() {
       const accessToken = localStorage.getItem("@accessToken");
       if (!(await this.validateFormData())) return;
@@ -1214,29 +1077,19 @@ export default {
             priceExpense: "",
             remarkExpense: "",
           };
-
           const formDataImage = new FormData();
-
           formDataImage.append("expense_id", json.data.expense_id);
           formDataImage.append("file", this.Image_pd);
-
           console.log("json.data.expense_id", json.data.expense_id);
-
-          // if (!this.Image_pd || this.Image_pd !== []) {
           const imageExpense = await fetch(
             `${API_CALL}/Quotation/AddExpense_img`,
             {
               method: "POST",
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
+              headers: { Authorization: `Bearer ${accessToken}` },
               body: formDataImage,
             }
           );
-
           this.getExpense();
-
-          // }
         } else {
           this.showPopup_error(json.data);
         }
@@ -1246,14 +1099,12 @@ export default {
         this.isLoading = false;
       }
     },
-    // Edits an existing position via API call
     async editExpense() {
       const accessToken = localStorage.getItem("@accessToken");
       if (!(await this.validateFormData())) return;
       this.errorMessage = [];
       this.isLoading = true;
-
-      const date = new Date(this.formData.DateExpense); // ตัวอย่างวันที่
+      const date = new Date(this.formData.DateExpense);
       const DateExpense = `${date.getDate()}/${date.getMonth() + 1}/${
         date.getFullYear() + 543
       }`;
@@ -1286,28 +1137,18 @@ export default {
             remarkExpense: "",
           };
           const formDataImage = new FormData();
-
           console.log("edit succ", json.data);
-
           formDataImage.append("expense_id", json.data);
           formDataImage.append("file", this.Image_pd);
-
-          // console.log("json.data.expense_id", json.data);
-
-          // if (!this.Image_pd || this.Image_pd !== []) {
           const imageExpense = await fetch(
             `${API_CALL}/Quotation/AddExpense_img`,
             {
               method: "POST",
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
+              headers: { Authorization: `Bearer ${accessToken}` },
               body: formDataImage,
             }
           );
-
           console.log("imageExpense", imageExpense);
-
           this.getExpense();
         } else {
           this.showPopup_error(json.data);
@@ -1318,8 +1159,6 @@ export default {
         this.isLoading = false;
       }
     },
-
-    // Deletes a position via API call
     async deleteExpenses() {
       const accessToken = localStorage.getItem("@accessToken");
       if (!(await this.validateFormData())) return;
@@ -1352,7 +1191,6 @@ export default {
       }
     },
   },
-  // Fetches department and position data when the component is created
   async created() {
     await this.getBusiness();
     await this.filterDataByOption();
