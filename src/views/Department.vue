@@ -1,7 +1,5 @@
 <template>
   <div class="main-page">
-    <!-- call navigate tab -->
-    <!-- <Navigate /> -->
     <div class="page-body">
       <div class="mb-4">
         <h2>{{ t("headerDepartment") }}</h2>
@@ -42,7 +40,9 @@
       </div>
 
       <div class="mb-3">
-        <label class="col-sm-5 col-md-6 mb-3"><span style="color: red">*</span>{{ t("departName") }} </label>
+        <label class="col-sm-5 col-md-6 mb-3"
+          ><span style="color: red">*</span>{{ t("departName") }}
+        </label>
         <input
           class="col-sm-9 col-md-6 form-control"
           v-model="formData.departmentName"
@@ -53,9 +53,9 @@
         />
       </div>
       <div class="modal-footer">
-        <button
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           v-if="isAddingMode"
           @click="addDepartment"
         >
@@ -66,10 +66,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonAdd") }}</span>
-        </button>
-        <button
+        </Button>
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           v-if="isEditMode"
           @click="editDepartment"
         >
@@ -80,10 +80,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonSave") }}</span>
-        </button>
-        <button class="btn btn-secondary" @click="closePopup">
+        </Button>
+        <Button customClass="btn btn-secondary" @click="closePopup">
           {{ t("buttonCancel") }}
-        </button>
+        </Button>
       </div>
     </Popup>
     <div class="delete-popup">
@@ -95,9 +95,9 @@
           <a>{{ t("deleteConfirmSentence") }}</a>
         </div>
         <div class="modal-footer mb-3">
-          <button
+          <Button
             :disabled="isLoading"
-            class="btn btn-danger me-3"
+            customClass="btn btn-danger me-3"
             @click="deleteDepartment"
           >
             <span
@@ -107,10 +107,13 @@
               aria-hidden="true"
             ></span>
             <span v-else>{{ t("buttonDelete") }}</span>
-          </button>
-          <button class="btn btn-secondary" @click="closeDeleteConfirmPopup">
+          </Button>
+          <Button
+            customClass="btn btn-secondary"
+            @click="closeDeleteConfirmPopup"
+          >
             {{ t("buttonCancel") }}
-          </button>
+          </Button>
         </div>
       </Popup>
     </div>
@@ -119,23 +122,14 @@
         <a>{{ popupMessage }}</a>
       </div>
     </div>
-    <!-- <div v-if="isPopupVisible_error" class="popup-success">
-      <div class="popup-content-error">
-        <h3>{{ $t("validate_popupError") }}</h3>
-        <ul>
-          <li v-for="(msg, index) in errorMessages" :key="index">{{ msg }}</li>
-        </ul>
-      </div>
-    </div> -->
     <div v-if="isPopupVisible_error" class="popup-error2">
       <div class="text-end">
-        <button
+        <Button
           type="button"
-          class="btn-close"
+          customClass="btn-close"
           aria-label="Close"
           @click="closeErrorPopup"
-          style="color: #9f9999"
-        ></button>
+        />
       </div>
       <div class="popup-content-error2">
         <ul>
@@ -152,6 +146,7 @@
 import Navigate from "../components/Navigation.vue";
 import Popup from "../components/popup.vue";
 import tableList from "../components/tableList.vue";
+import Button from "../components/button.vue"; // 1. นำเข้า component
 import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n";
 import { computed } from "vue";
@@ -162,54 +157,50 @@ const accessToken = localStorage.getItem("@accessToken");
 export default {
   name: "Departments",
   components: {
-    Navigate, // Navigation component
-    Popup, // Popup component
-    tableList, // Table component to display departments and positions
+    Navigate,
+    Popup,
+    tableList,
+    Button, // 2. ลงทะเบียน component
   },
   setup() {
-    const { t } = useI18n(); // Setup translation
+    const { t } = useI18n();
     const documentName = computed(() => t("dontHaveDepartment"));
     return { t, documentName };
   },
   data() {
     return {
       errorMessages: [],
-      isPopupVisible_error: false, // For error message popups
-      isPopupOpen: false, // For department add/edit popup
-      isDeleteConfirmPopupOpen: false, // For delete confirmation popup
-      isManagePositionPopupOpen: false, // For managing positions popup
-      isAddPositionPopupOpen: false, // For add/edit position popup
-      Departments: [], // Array to hold department data
-      Positions: [], // Array to hold position data
-      isLoading: false, // Loading state
-      isPopupVisible: false, // For success message popup
-      inputError: false, // Validation flag for inputs
+      isPopupVisible_error: false,
+      isPopupOpen: false,
+      isDeleteConfirmPopupOpen: false,
+      isManagePositionPopupOpen: false,
+      isAddPositionPopupOpen: false,
+      Departments: [],
+      Positions: [],
+      isLoading: false,
+      isPopupVisible: false,
+      inputError: false,
       formData: {
-        // Form data for department
         departmentID: "",
         departmentName: "",
       },
       isEmpty: {
-        // Form data for department
         departmentID: "",
         departmentName: "",
       },
       formPosition: {
-        // Form data for position
         PositionID: "",
         Position: "",
       },
     };
   },
   computed: {
-    // Define table headers for department table
     tableHeaders() {
       return [
         { label: this.t("departNameHeaderTable"), key: "Department Name" },
         { label: this.t("employeeNumHeaderTable"), key: "Employee" },
       ];
     },
-    // Define table headers for position table
     tableHeadersPosition() {
       return [{ label: this.t("positionHeaderTable"), key: "Position" }];
     },
@@ -232,7 +223,7 @@ export default {
         (item) =>
           item["Department Name"].trim() ===
             this.formData.departmentName.trim() &&
-          item.ID !== this.formData.departmentID // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
+          item.ID !== this.formData.departmentID
       );
       if (isDuplicateNDepartmentName) {
         this.isEmpty.departmentName = true;
@@ -248,112 +239,90 @@ export default {
     },
     showPopup_validate(messages) {
       if (Array.isArray(messages)) {
-        this.errorMessages = messages; // เก็บข้อความใน errorMessages
-        // this.showErrorPopup = true; // แสดง Popup
+        this.errorMessages = messages;
         this.isPopupVisible_error = true;
-        // setTimeout(() => {
-        //   this.isPopupVisible_error = false; // ซ่อน Popup หลังจากหน่วงเวลา
-        // }, 3000); // หน่วงเวลา 3 วินาที (3000 มิลลิวินาที)
       } else {
         this.showPopup_error(messages);
       }
     },
-    // Opens the department add/edit popup
     openPopup() {
       this.isPopupOpen = true;
-      this.isAddingMode = true; // Add mode
-      this.isEditMode = false; // Disable edit mode
+      this.isAddingMode = true;
+      this.isEditMode = false;
     },
-    // Closes the department add/edit popup
     closePopup() {
       this.isPopupOpen = false;
       this.isAddingMode = false;
       this.isEditMode = false;
       this.formData = {
-        // Reset form data
         departmentID: "",
         departmentName: "",
       };
-      this.inputError = false; // Reset validation errors
+      this.inputError = false;
       this.isPopupVisible_error = false;
     },
-    // Closes the delete confirmation popup
     closeDeleteConfirmPopup() {
       this.isDeleteConfirmPopupOpen = false;
     },
-    // Opens the manage position popup
     openManagePositionPopup() {
       this.isManagePositionPopupOpen = true;
     },
-    // Closes the manage position popup
     closeManagePositionPopup() {
       this.isManagePositionPopupOpen = false;
     },
-    // Opens the position add/edit popup
     openAddPositionPopup() {
       this.isAddPositionPopupOpen = true;
-      this.isAddingMode = true; // Add mode
-      this.isEditMode = false; // Disable edit mode
+      this.isAddingMode = true;
+      this.isEditMode = false;
     },
-    // Closes the position add/edit popup
     closeAddPositionPopup() {
       this.isAddPositionPopupOpen = false;
       this.formPosition = {
-        // Reset form data
         PositionID: "",
         Position: "",
       };
-      this.inputError = false; // Reset validation errors
+      this.inputError = false;
     },
-    // Opens the edit popup with selected department data
     handleEdit(item) {
       this.isPopupOpen = true;
-      this.isAddingMode = false; // Edit mode
-      this.isEditMode = true; // Enable edit mode
+      this.isAddingMode = false;
+      this.isEditMode = true;
       this.formData = {
-        // Fill form with selected data
         departmentID: item.ID,
         departmentName: item["Department Name"],
       };
     },
-    // Opens the delete confirmation popup for department
     handleDelete(item) {
       this.isDeleteConfirmPopupOpen = true;
-      this.formData = { departmentID: item.ID }; // Store department ID for deletion
+      this.formData = { departmentID: item.ID };
     },
-    // Opens the edit popup with selected position data
     handleEditPosition(item) {
       this.isAddPositionPopupOpen = true;
-      this.isAddingMode = false; // Edit mode
-      this.isEditMode = true; // Enable edit mode
+      this.isAddingMode = false;
+      this.isEditMode = true;
       this.formPosition = {
-        // Fill form with selected data
         PositionID: item.ID,
         Position: item.Position,
       };
     },
-    // Opens the delete confirmation popup for position
     handleDeletePosition(item) {
       this.isDeleteConfirmPopupOpen = true;
-      this.formPosition = { PositionID: item.ID }; // Store position ID for deletion
+      this.formPosition = { PositionID: item.ID };
     },
-    // Displays a success popup message
     showPopup(message) {
       this.popupMessage = message;
       this.isPopupVisible = true;
       setTimeout(() => {
-        this.isPopupVisible = false; // Auto-hide after 2 seconds
+        this.isPopupVisible = false;
       }, 2000);
     },
-    // Displays an error popup message
     showPopup_error(message) {
       this.popupMessage_error = message;
       this.isPopupVisible_error = true;
       setTimeout(() => {
-        this.isPopupVisible_error = false; // Auto-hide after 2 seconds
+        this.isPopupVisible_error = false;
       }, 2000);
     },
-    // Fetches the list of departments from the API
     async getDepartment() {
       const accessToken = localStorage.getItem("@accessToken");
       this.isLoading = true;
@@ -363,7 +332,6 @@ export default {
         });
         const json = await response.json();
         if (json.statusCode === 200) {
-          // Map response to table format
           this.Departments = json.data.map((item) => ({
             ID: item.departmentID,
             "Department Name": item.departmentName,
@@ -378,15 +346,9 @@ export default {
         this.isLoading = false;
       }
     },
-    // Adds a new department via API call
     async addDepartment() {
       if (!(await this.validateFormData())) return;
       const accessToken = localStorage.getItem("@accessToken");
-      // if (this.formData.departmentName === "") {
-      //   this.inputError = true;
-      //   this.showPopup_error("Please fill data");
-      // } else {
-      //   this.inputError = false;
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/employee/AddDepartment`, {
@@ -401,7 +363,7 @@ export default {
         });
         const json = await response.json();
         if (json.statusCode === 200) {
-          this.getDepartment(); // Refresh department list
+          this.getDepartment();
           this.showPopup(this.$t("validation.AddSucc"));
           this.closePopup();
         } else {
@@ -412,9 +374,7 @@ export default {
       } finally {
         this.isLoading = false;
       }
-      // }
     },
-    // Edits an existing department via API call
     async editDepartment() {
       const accessToken = localStorage.getItem("@accessToken");
       if (this.formData.departmentName === "") {
@@ -440,7 +400,7 @@ export default {
           );
           const json = await response.json();
           if (json.statusCode === 200) {
-            this.getDepartment(); // Refresh department list
+            this.getDepartment();
             this.showPopup(this.$t("validation.EditSucc"));
             this.closePopup();
           } else {
@@ -453,7 +413,6 @@ export default {
         }
       }
     },
-    // Deletes a department via API call
     async deleteDepartment() {
       const accessToken = localStorage.getItem("@accessToken");
       this.isLoading = true;
@@ -471,7 +430,7 @@ export default {
         );
         const json = await response.json();
         if (json.statusCode === 200) {
-          this.getDepartment(); // Refresh department list
+          this.getDepartment();
           this.showPopup(this.$t("validation.DelateSucc"));
           this.closeDeleteConfirmPopup();
         } else {
@@ -483,7 +442,6 @@ export default {
         this.isLoading = false;
       }
     },
-    // Fetches the list of positions from the API
     async getPosition() {
       const accessToken = localStorage.getItem("@accessToken");
       this.isLoading = true;
@@ -493,7 +451,6 @@ export default {
         });
         const json = await response.json();
         if (json.statusCode === 200) {
-          // Map response to table format
           this.Positions = json.data.map((item) => ({
             ID: item.PositionID,
             Position: item.Position,
@@ -507,7 +464,6 @@ export default {
         this.isLoading = false;
       }
     },
-    // Adds a new position via API call
     async addPosition() {
       const accessToken = localStorage.getItem("@accessToken");
       if (this.formPosition.Position === "") {
@@ -527,7 +483,7 @@ export default {
           });
           const json = await response.json();
           if (json.statusCode === 200) {
-            this.getPosition(); // Refresh position list
+            this.getPosition();
             this.showPopup(this.$t("validation.AddSucc"));
             this.closeAddPositionPopup();
           } else {
@@ -540,7 +496,6 @@ export default {
         }
       }
     },
-    // Edits an existing position via API call
     async editPosition() {
       const accessToken = localStorage.getItem("@accessToken");
       if (this.formPosition.Position === "") {
@@ -564,7 +519,7 @@ export default {
           );
           const json = await response.json();
           if (json.statusCode === 200) {
-            this.getPosition(); // Refresh position list
+            this.getPosition();
             this.showPopup(this.$t("validation.EditSucc"));
             this.closeAddPositionPopup();
           } else {
@@ -577,7 +532,6 @@ export default {
         }
       }
     },
-    // Deletes a position via API call
     async deletePosition() {
       const accessToken = localStorage.getItem("@accessToken");
       this.isLoading = true;
@@ -595,7 +549,7 @@ export default {
         );
         const json = await response.json();
         if (json.statusCode === 200) {
-          this.getPosition(); // Refresh position list
+          this.getPosition();
           this.showPopup(this.$t("validation.DelateSucc"));
           this.closeDeleteConfirmPopup();
         } else {
@@ -608,7 +562,6 @@ export default {
       }
     },
   },
-  // Fetches department and position data when the component is created
   created() {
     this.getDepartment();
     this.getPosition();
