@@ -1,25 +1,11 @@
 <template>
   <div class="main-page">
-    <!-- call navigate tab -->
-    <!-- <Navigate /> -->
     <div class="page-body">
       <div class="mb-4">
         <h2>{{ t("headerEmployee") }}</h2>
       </div>
       <div class="row mb-3">
         <div class="col-4 col-sm-4 col-md-2 col-lg-2">
-          <!-- <select
-            class="form-control form-select size-font-sm"
-            v-model="formData.status"
-          >
-            <option
-              v-for="status in [...new Set(employees.map((emp) => emp.status))]"
-              :key="status"
-              :value="status"
-            >
-              {{ t(status === "active" ? "statusActive" : "statusNotActive") }}
-            </option>
-          </select> -->
           <select
             class="form-control form-select size-font-sm"
             v-model="dropDownStatus"
@@ -41,47 +27,18 @@
             :placeholder="$t('Search')"
           />
         </div>
-        <!-- <div class="col-1 col-sm-1 col-md-7 col-lg-7"></div> -->
         <div class="col-7 col-sm-6 col-md-9 col-lg-9 text-end">
           <a
             class="btn btn-success me-3 size-font-sm me-2"
             @click="openPopup"
             >{{ t("addEmployee") }}</a
           >
-          <button
-            class="btn btn-outline-secondary mdi mdi-export-variant size-font-sm"
+          <Button
+            customClass="btn btn-outline-secondary mdi mdi-export-variant size-font-sm"
             @click="exportEmployee"
-          ></button>
+          ></Button>
         </div>
       </div>
-      <!-- <div class="top-table-for-filter">
-        <div class="col-sm-3">
-          <select class="form-control form-select" v-model="formData.status">
-            <option
-              v-for="status in [...new Set(employees.map((emp) => emp.status))]"
-              :key="status"
-              :value="status"
-            >
-              {{ t(status === "active" ? "statusActive" : "statusNotActive") }}
-            </option>
-          </select>
-        </div>
-        <div class="add-btn mb-3" style="flex: 1">
-          <input
-            v-model="searchQuery"
-            type="text"
-            class="form-control me-3"
-            style="width: 20%"
-            :placeholder="$t('Search')"
-          />
-          <a class="btn btn-success me-3" @click="openPopup">{{
-            t("addEmployee")
-          }}</a>
-          <button class="btn btn-outline-secondary" @click="exportEmployee">
-            Export
-          </button>
-        </div>
-      </div> -->
       <div class="show-only-desktop">
         <employeeList
           :initialTableData="filteredEmp"
@@ -103,114 +60,6 @@
           <span class="visually-hidden">Loading...</span>
         </div>
       </div>
-      <!-- <div class="mb-4">
-        <h2>{{ t("manageLeave") }}</h2>
-      </div>
-      <div class="row mb-3">
-        <div class="col-6 col-sm-6 col-md-3 col-lg-3">
-          <label class="me-1 size-font-sm">{{ t("month") }}</label>
-          <select
-            v-model="selectedMonthFilter"
-            class="me-3 form-control form-select size-font-sm"
-            :class="{ error: inputError } + ' form-control'"
-          >
-            <option v-for="month in months" :value="month" :key="month">
-              {{ month }}
-            </option>
-          </select>
-        </div>
-        <div class="col-6 col-sm-6 col-md-3 col-lg-3">
-          <label class="me-1 size-font-sm">{{ t("year") }}</label>
-          <select
-            v-model="selectedYearFilter"
-            class="me-3 form-control form-select size-font-sm"
-            :class="{ error: inputError } + ' form-control'"
-          >
-            <option v-for="year in years" :key="year" :value="year">
-              {{ year }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="col-6 col-sm-6 col-md-3 col-lg-3">
-          <input
-            v-model="searchQueryLeave"
-            type="text"
-            class="form-control me-3 size-font-sm"
-            :placeholder="$t('Search')"
-          />
-        </div>
-        <div class="col-1 col-sm-1 col-md-7 col-lg-7"></div>
-        <div class="col-5 col-sm-5 col-md-2 col-lg-2 text-end">
-          <button class="btn btn-primary size-font-sm" @click="openPopupLeave">
-            {{ t("manageLeave") }}
-          </button>
-        </div>
-      </div> -->
-      <!-- <div class="mb-3 d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center">
-          <label class="me-1">{{ t("month") }}</label>
-          <select
-            v-model="selectedMonthFilter"
-            class="me-3 form-control form-select"
-            :class="{ error: inputError } + ' form-control'"
-          >
-            <option v-for="month in months" :value="month" :key="month">
-              {{ month }}
-            </option>
-          </select>
-          <label class="me-1">{{ t("year") }}</label>
-          <select
-            v-model="selectedYearFilter"
-            class="me-3 form-control form-select"
-            :class="{ error: inputError } + ' form-control'"
-          >
-            <option v-for="year in years" :key="year" :value="year">
-              {{ year }}
-            </option>
-          </select>
-        </div>
-
-        <div class="d-flex align-items-center">
-          <input
-            v-model="searchQueryLeave"
-            type="text"
-            class="form-control me-3"
-            style="width: 200px"
-            placeholder="Search..."
-          /> -->
-      <!-- <button class="btn btn-outline-secondary me-2" @click="exportSalary">
-            Export
-          </button> -->
-      <!-- <button class="btn btn-primary" @click="openPopupLeave">
-            {{ t("manageLeave") }}
-          </button>
-        </div>
-      </div> -->
-      <!-- <div class="card-body-detail">
-        <div style="display: flex; flex-direction: column; width: 100%">
-          <div
-            class="add-btn mb-3"
-            style="
-              display: flex;
-              flex-direction: row;
-              justify-content: flex-end;
-            "
-          ></div>
-          <div style="height: auto; overflow-x: auto">
-            <employeeList
-              :initialTableData="filteredleave"
-              :tableHeaders="tableHeadersLeave"
-              :columnEditAndDelete="true"
-              @handleEdit="openPopupLeaveEdit"
-              @handleDelete="handleDeleteLeave"
-              v-if="Leaving && Leaving.length > 0"
-              :isLoading="isLoading"
-            />
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
   <div>
@@ -266,17 +115,6 @@
           >
         </div>
         <div class="col-6 col-sm-6 col-md-6">
-          <!-- <DatePicker
-            v-model:value="formData.Birthdate"
-            format="DD/MM/YYYY"
-            value-type="date"
-            placeholder="DD/MM/YYYY"
-            class="form-control"
-            :formatter="momentFormat"
-            :lang="currentLocale"
-            :disabled-date="disabledBeforeToday"
-            :class="{ error: isEmpty.Birthdate }"
-          /> -->
           <v-date-picker
             v-model="formData.Birthdate"
             locale="th-TH"
@@ -383,7 +221,6 @@
             </option>
           </select>
 
-          <!-- แสดงข้อความใต้ select -->
           <div v-if="Departments.length === 0" class="text-danger mt-1">
             {{ t("pleaseDepartment") }}
           </div>
@@ -410,38 +247,11 @@
               {{ employ.Position }}
             </option>
           </select>
-          <!-- แสดงข้อความใต้ select -->
           <div v-if="Positions.length === 0" class="text-danger mt-1">
             {{ t("pleasePosition") }}
           </div>
         </div>
       </div>
-      <!-- <div class="mb-3 div-for-formControl" v-if="isEditMode">
-        <label class="col-sm-5 col-md-6">{{ t("position") }}</label>
-        <div class="col-sm-9 col-md-6">
-          <select
-            class="form-control col-sm-9 col-md-6 form-select"
-            v-model="formData.PositionID"
-            required
-            :disabled="Positions.length === 0"
-            :class="{ error: isEmpty.PositionID }"
-            style="width: 100%"
-          >
-            <option
-              v-for="employ in Positions"
-              :key="employ.PositionID"
-              :value="employ.PositionID"
-            >
-              {{ employ.Position }}
-            </option>
-          </select> -->
-
-      <!-- แสดงข้อความใต้ select -->
-      <!-- <div v-if="Positions.length === 0" class="text-danger mt-1">
-            {{ t("pleasePosition") }}
-          </div>
-        </div> -->
-      <!-- </div> -->
       <div class="mb-3 div-for-formControl">
         <label class="col-sm-5 col-md-6">{{ t("salary") }}</label>
         <input
@@ -457,19 +267,7 @@
         <div class="col-6 col-sm-6 col-md-6">
           <label class="col-sm-6 col-md-6">{{ t("startWorking") }}</label>
         </div>
-        <!-- <input id="date-input" class="form-control col-sm-9 col-md-6" v-model="formData.start_working_date" type="date" required :class="{ 'error': inputError }"> -->
         <div class="col-6 col-sm-6 col-md-6">
-          <!-- <DatePicker
-            v-model:value="formData.start_working_date"
-            format="DD/MM/YYYY"
-            value-type="date"
-            placeholder="DD/MM/YYYY"
-            class="form-control"
-            :formatter="momentFormat"
-            :lang="currentLocale"
-            :disabled-date="disabledBeforeToday"
-            :class="{ error: isEmpty.start_working_date }"
-          ></DatePicker> -->
           <v-date-picker
             v-model="formData.start_working_date"
             locale="th-TH"
@@ -511,9 +309,9 @@
         />
       </div>
       <div class="mb-3 modal-footer">
-        <button
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           v-if="isAddingMode"
           @click="addEmployee"
         >
@@ -524,10 +322,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonAdd") }}</span>
-        </button>
-        <button
+        </Button>
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           v-if="isEditMode"
           @click="editEmployee"
         >
@@ -538,10 +336,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonSave") }}</span>
-        </button>
-        <button class="btn btn-secondary" @click="closePopup">
+        </Button>
+        <Button customClass="btn btn-secondary" @click="closePopup">
           {{ t("buttonCancel") }}
-        </button>
+        </Button>
       </div>
     </Popup>
     <Popup :isOpen="isPopupOpenLeave" :closePopup="closePopupLeave">
@@ -612,9 +410,9 @@
         </div>
       </div>
       <div class="mb-3 modal-footer">
-        <button
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           @click="AddLeave"
         >
           <span
@@ -624,10 +422,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonSave") }}</span>
-        </button>
-        <button class="btn btn-secondary" @click="closePopupLeave">
+        </Button>
+        <Button customClass="btn btn-secondary" @click="closePopupLeave">
           {{ t("buttonCancel") }}
-        </button>
+        </Button>
       </div>
     </Popup>
     <Popup :isOpen="isPopupOpenOvertime" :closePopup="closePopupOvertime">
@@ -687,9 +485,9 @@
       </div>
 
       <div class="mb-3 modal-footer">
-        <button
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           @click="AddOvertime"
         >
           <span
@@ -699,10 +497,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonSave") }}</span>
-        </button>
-        <button class="btn btn-secondary" @click="closePopupOvertime">
+        </Button>
+        <Button customClass="btn btn-secondary" @click="closePopupOvertime">
           {{ t("buttonCancel") }}
-        </button>
+        </Button>
       </div>
     </Popup>
     <div class="delete-popup">
@@ -714,12 +512,15 @@
           <a>{{ t("deleteConfirmSentence") }}</a>
         </div>
         <div class="modal-footer mb-5">
-          <button class="btn btn-danger me-2" @click="deleteEmployee">
+          <Button customClass="btn btn-danger me-2" @click="deleteEmployee">
             {{ t("buttonDelete") }}
-          </button>
-          <button class="btn btn-secondary" @click="closeDeleteConfirmPopup">
+          </Button>
+          <Button
+            customClass="btn btn-secondary"
+            @click="closeDeleteConfirmPopup"
+          >
             {{ t("buttonCancel") }}
-          </button>
+          </Button>
         </div>
       </Popup>
     </div>
@@ -732,15 +533,15 @@
           <a>{{ t("deleteConfirmSentence") }}</a>
         </div>
         <div class="modal-footer mb-5">
-          <button class="btn btn-danger me-2" @click="deleteLeave">
+          <Button customClass="btn btn-danger me-2" @click="deleteLeave">
             {{ t("buttonDelete") }}
-          </button>
-          <button
-            class="btn btn-secondary"
+          </Button>
+          <Button
+            customClass="btn btn-secondary"
             @click="closeDeleteLeaveConfirmPopup"
           >
             {{ t("buttonCancel") }}
-          </button>
+          </Button>
         </div>
       </Popup>
     </div>
@@ -749,23 +550,14 @@
         <a>{{ popupMessage }}</a>
       </div>
     </div>
-    <!-- <div v-if="isPopupVisible_error" class="popup-success">
-      <div class="popup-content-error">
-        <h3>{{ $t("validate_popupError") }}</h3>
-        <ul>
-          <li v-for="(msg, index) in errorMessages" :key="index">{{ msg }}</li>
-        </ul>
-      </div>
-    </div> -->
     <div v-if="isPopupVisible_error" class="popup-error2">
       <div class="text-end">
-        <button
+        <Button
           type="button"
-          class="btn-close"
+          customClass="btn-close"
           aria-label="Close"
           @click="closeErrorPopup"
-          style="color: #9f9999"
-        ></button>
+        />
       </div>
       <div class="popup-content-error2">
         <ul>
@@ -775,23 +567,14 @@
         </ul>
       </div>
     </div>
-    <!-- <div v-if="isPopupVisible_error2" class="popup-success">
-      <div class="popup-content-error">
-        <h3>{{ $t("validate_popupError") }}</h3>
-        <ul>
-          <li v-for="(msg, index) in errorMessages2" :key="index">{{ msg }}</li>
-        </ul>
-      </div>
-    </div> -->
     <div v-if="isPopupVisible_error2" class="popup-error2">
       <div class="text-end">
-        <button
+        <Button
           type="button"
-          class="btn-close"
+          customClass="btn-close"
           aria-label="Close"
           @click="closeErrorPopup2"
-          style="color: #9f9999"
-        ></button>
+        />
       </div>
       <div class="popup-content-error2">
         <ul>
@@ -808,6 +591,7 @@ import { computed } from "vue";
 import Navigate from "../components/Navigation.vue";
 import employeeList from "../components/tableList.vue";
 import Popup from "../components/popup.vue";
+import Button from "../components/button.vue"; // 1. นำเข้า component
 import { config } from "../../constant.js";
 import DatePicker from "vue-datepicker-next";
 import "vue-datepicker-next/index.css";
@@ -816,11 +600,7 @@ import th from "vue-datepicker-next/locale/th.es";
 import en from "vue-datepicker-next/locale/en.es";
 import moment from "moment";
 
-// var today = new Date().toISOString().split('T')[0];
-// document.getElementById("date-input").setAttribute("max", today);
-
 const API_CALL = config["url"];
-// const API_CALL = 'https://erp-backend-9w1r.onrender.com'
 const accessToken = localStorage.getItem("@accessToken");
 export default {
   name: "Employee",
@@ -829,28 +609,26 @@ export default {
     employeeList,
     Popup,
     DatePicker,
+    Button, // 2. ลงทะเบียน component
   },
   setup() {
     const { t } = useI18n();
-    const { locale } = useI18n(); // ดึงค่า locale จาก i18n
+    const { locale } = useI18n();
     const lang = computed(() => t("lang"));
-    // const currentLocale = computed(() => (locale.value === "th" ? th : en));
     const currentLocale = computed(() => {
       return {
-        ...(locale.value === "th" ? th : en), // ✅ ใช้ค่าจาก locale ปัจจุบัน
+        ...(locale.value === "th" ? th : en),
         yearFormat:
-          locale.value === "en" ? moment().year() : moment().year() + 543, // ✅ แปลงปี พ.ศ. หรือ ค.ศ.
+          locale.value === "en" ? moment().year() : moment().year() + 543,
       };
     });
 
     const momentFormat = computed(() => ({
-      // 📌 Date → String (แสดงผลเป็น พ.ศ. ถ้าภาษาเป็นไทย)
       stringify: (date) => {
         if (!date) return "";
-        const yearOffset = lang.value === "en" ? 543 : 0; // ✅ ตรวจสอบภาษาผ่าน computed
+        const yearOffset = lang.value === "en" ? 543 : 0;
         return moment(date).add(yearOffset, "years").format("DD/MM/YYYY");
       },
-      // 📌 String → Date (แปลงกลับเป็น ค.ศ. ถ้าภาษาเป็นไทย)
       parse: (value) => {
         if (!value) return null;
         const yearOffset = lang.value === "en" ? 543 : 0;
@@ -858,13 +636,11 @@ export default {
           .subtract(yearOffset, "years")
           .toDate();
       },
-      // 📌 ใช้ moment คำนวณเลขสัปดาห์ (ถ้าจำเป็น)
       getWeek: (date) => {
         return moment(date).week();
       },
     }));
 
-    // ✅ รายการเดือนแบบสองภาษา (อังกฤษ - ไทย)
     const monthList = {
       en: [
         "January",
@@ -896,9 +672,7 @@ export default {
       ],
     };
 
-    // ✅ Computed สำหรับเปลี่ยนรายการเดือนตามภาษาที่เลือก
     const months = computed(() => monthList[locale.value] || monthList.en);
-
     const documentName = computed(() => t("dontHaveEmployee"));
 
     return {
@@ -910,6 +684,7 @@ export default {
       documentName,
     };
   },
+  // ... The rest of your script remains unchanged
   data() {
     return {
       dropDownStatus: "active",
@@ -984,13 +759,6 @@ export default {
         date: "",
         dateEnd: "",
       },
-      isEmpty: {
-        ID: "",
-        employeeID: "",
-        detail: "",
-        date: "",
-        dateEnd: "",
-      },
       formDataOvertime: {
         ID: "",
         employeeID: "",
@@ -998,21 +766,7 @@ export default {
         date: "",
         hours: "",
       },
-      years: this.generateYears(1900, 2100), // Generates a list of years from 1900 to 2100
-      // months: [
-      //   "January",
-      //   "February",
-      //   "March",
-      //   "April",
-      //   "May",
-      //   "June",
-      //   "July",
-      //   "August",
-      //   "September",
-      //   "October",
-      //   "November",
-      //   "December",
-      // ], // List of months for selection
+      years: this.generateYears(1900, 2100),
       searchQuery: "",
       searchQueryLeave: "",
     };
@@ -1082,17 +836,10 @@ export default {
       const titleMapping = {
         Miss: "นางสาว",
         "Mr.": "นาย",
-        "Mrs.": "นาง", // หรือ "นางสาว" ตามที่คุณต้องการ
+        "Mrs.": "นาง",
       };
-      // กรองตามสถานะ
-      // if (this.formData.status) {
-      //   filteredEmployees = filteredEmployees.filter(
-      //     (emp) =>
-      //       emp.status.toLowerCase() === this.formData.status.toLowerCase()
-      //   );
-      // }
+
       if (this.t("headerLang") === "TH") {
-        // แปลง invoice_date ให้เป็นชื่อเดือนภาษาไทย
         console.log("filteredEmployees++", filteredEmployees);
         filteredEmployees = filteredEmployees.map((emp) => ({
           ...emp,
@@ -1105,19 +852,18 @@ export default {
                 .replace(/(\d{4})/, (match) =>
                   (parseInt(match) + 543).toString()
                 )
-            : "", // ✅ ถ้า null หรือ undefined ให้เป็นค่าว่าง
+            : "",
           ["Start Working Date"]: String(emp["Start Working Date"])
             .replace(
               /\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b/g,
-              (match) => monthMapping[match] // ✅ แปลงชื่อเดือนเป็นไทย
+              (match) => monthMapping[match]
             )
-            .replace(/(\d{4})/, (match) => (parseInt(match) + 543).toString()), // ✅ เพิ่มปี ค.ศ. + 543 (เป็น พ.ศ.)
+            .replace(/(\d{4})/, (match) => (parseInt(match) + 543).toString()),
 
           Title: titleMapping[emp.Title] || emp.Title,
         }));
       }
 
-      // กรองตามการค้นหาชื่อ
       if (this.searchQuery.trim()) {
         filteredEmployees = filteredEmployees.filter(
           (emp) =>
@@ -1142,7 +888,6 @@ export default {
             cus.status = "ปิดใช้งาน";
           }
         } else {
-          // กรณีภาษาอังกฤษหรือภาษาอื่นๆ อยากแสดงกลับเป็น status เดิม (กรณีมีการแปลงไปแล้ว)
           if (cus.status === "เปิดใช้งาน" || cus.status === "active") {
             cus.status = "Active";
           } else if (
@@ -1168,12 +913,11 @@ export default {
         );
       }
 
-      return filteredEmployees; // คืนค่าข้อมูลที่ผ่านการกรองแล้ว
+      return filteredEmployees;
     },
     filteredleave() {
       let filteredLeaving = [...this.Leaving];
 
-      // กรองตามการค้นหาชื่อ
       if (this.searchQueryLeave.trim()) {
         filteredLeaving = filteredLeaving.filter((emp) =>
           emp["Name"]
@@ -1197,7 +941,6 @@ export default {
           Nov: "พ.ย.",
           Dec: "ธ.ค.",
         };
-        // แปลง invoice_date ให้เป็นชื่อเดือนภาษาไทย
         filteredLeaving = filteredLeaving.map((sale) => ({
           ...sale,
           date: String(sale.date)
@@ -1205,34 +948,18 @@ export default {
               /\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b/g,
               (match) => monthMapping[match]
             )
-            .replace(/(\d{4})/, (match) => (parseInt(match) + 543).toString()), // ✅ เพิ่มปี ค.ศ. + 543 (เป็น พ.ศ.),
+            .replace(/(\d{4})/, (match) => (parseInt(match) + 543).toString()),
 
           dateEnd: String(sale.dateEnd)
             .replace(
               /\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b/g,
               (match) => monthMapping[match]
             )
-            .replace(/(\d{4})/, (match) => (parseInt(match) + 543).toString()), // ✅ เพิ่มปี ค.ศ. + 543 (เป็น พ.ศ.),
+            .replace(/(\d{4})/, (match) => (parseInt(match) + 543).toString()),
         }));
       }
 
-      // if (
-      //   this.selectedYearFilter.toString() !== "" &&
-      //   this.selectedMonthFilter.toString() !== ""
-      // ) {
-      //   const selectedMonthShort = monthMap[this.selectedMonthFilter];
-      //   filteredLeaving = filteredLeaving.filter(
-      //     (data) =>
-      //       data["date"]?.toString().includes(this.selectedYearFilter) &&
-      //       data["date"]?.toString().includes(selectedMonthShort)
-      //   );
-      // } else if (this.selectedYearFilter.toString() !== "") {
-      //   filteredLeaving = filteredLeaving.filter((data) =>
-      //     data["date"]?.toString().includes(this.selectedYearFilter)
-      //   );
-      // }
-
-      return filteredLeaving; // คืนค่าข้อมูลที่ผ่านการกรองแล้ว
+      return filteredLeaving;
     },
   },
   methods: {
@@ -1243,7 +970,7 @@ export default {
       const month = (d.getMonth() + 1).toString().padStart(2, "0");
       const buddhistYear = d.getFullYear() + 543;
 
-      return `${day}/${month}/${buddhistYear}`; // 🔸 แสดงเป็น พ.ศ.
+      return `${day}/${month}/${buddhistYear}`;
     },
     closeErrorPopup() {
       this.isPopupVisible_error = false;
@@ -1260,33 +987,21 @@ export default {
     },
     validateInput(event) {
       const charCode = event.which ? event.which : event.keyCode;
-      // Allow only numbers
       if (charCode < 48 || charCode > 57) {
         event.preventDefault();
       }
     },
-    //validate Email format after @/. must be text
     validateEmail(email) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/;
       return emailRegex.test(email);
     },
-    // disabledBeforeToday(date) {
-    //   const today = new Date();
-    //   today.setHours(0, 0, 0, 0);
-
-    //   return date > today;
-    // },
     disabledBeforeToday(date) {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-
       let inputDate = new Date(date);
-
-      // ตรวจสอบว่าปีเป็น พ.ศ. หรือไม่ (ถ้ามากกว่า 2500 แสดงว่าเป็น พ.ศ.)
       if (inputDate.getFullYear() > 2500) {
-        inputDate.setFullYear(inputDate.getFullYear() - 543); // แปลง พ.ศ. เป็น ค.ศ.
+        inputDate.setFullYear(inputDate.getFullYear() - 543);
       }
-
       return inputDate > today;
     },
     openPopup() {
@@ -1294,14 +1009,12 @@ export default {
       this.isAddingMode = true;
       this.isEditMode = false;
       const currentDate = new Date();
-
       this.formData.Birthdate =
         this.t("lang") === "en"
           ? new Date(
               new Date(currentDate).setFullYear(currentDate.getFullYear())
             )
           : currentDate;
-
       this.formData.start_working_date =
         this.t("lang") === "en"
           ? new Date(
@@ -1313,20 +1026,17 @@ export default {
       this.isPopupOpenLeave = true;
       this.isEditMode = false;
       const currentDate = new Date();
-
       this.formDataLeave.date =
         this.t("lang") === "en"
           ? new Date(
               new Date(currentDate).setFullYear(currentDate.getFullYear())
             )
           : currentDate;
-
       this.formDataLeave.dateEnd = (() => {
         let newDate = new Date(currentDate);
-        newDate.setDate(newDate.getDate() + 1); // เพิ่ม 1 วัน
-
+        newDate.setDate(newDate.getDate() + 1);
         if (this.t("lang") === "en") {
-          newDate.setFullYear(newDate.getFullYear()); // ถ้าเป็นภาษาอังกฤษให้ +543 ปี
+          newDate.setFullYear(newDate.getFullYear());
         }
         return newDate;
       })();
@@ -1336,39 +1046,22 @@ export default {
       this.isPopupOpenLeave = true;
       this.isEditMode = true;
       this.EditIdLeaveHandle = item.ID;
-
       this.formDataLeave.ID = item.ID;
       const employee = this.employees.find((emp) => emp.Name === item.Name);
       this.formDataLeave.employeeID = employee.ID;
       this.formDataLeave.detail = item.detail;
-
-      // const formatDateForPicker = (date) => {
-      //   if (!date) return null;
-      //   const d = new Date(date);
-      //   if (isNaN(d.getTime())) return null; // Check if the date is valid
-      //   return d;
-      // };
       const formatDateForPicker = (date) => {
         if (!date) return null;
         const d = new Date(date);
-        if (isNaN(d.getTime())) return null; // ตรวจสอบว่าเป็นวันที่ถูกต้อง
-
-        // 🔹 ถ้าภาษาเป็น "th" (ไทย) ให้เพิ่ม 543 ปี
+        if (isNaN(d.getTime())) return null;
         if (this.t("lang") === "en") {
           d.setFullYear(d.getFullYear());
         }
-
         return d;
       };
-
       const filteredLevea = this.Leaving.filter((emp) => emp.ID === item.ID);
-
-      // const formattedDateStart = formatDateForPicker(item["date"]);
-      // const formattedDateEnd = formatDateForPicker(item["dateEnd"]);
-
       const formattedDateStart = formatDateForPicker(filteredLevea[0]["date"]);
       const formattedDateEnd = formatDateForPicker(filteredLevea[0]["dateEnd"]);
-
       this.formDataLeave.date = formattedDateStart;
       this.formDataLeave.dateEnd = formattedDateEnd;
     },
@@ -1399,41 +1092,36 @@ export default {
         positions: "",
         status: "",
       };
-
-      this.isEmpty.title = false;
-      this.isEmpty.F_name = false;
-      this.isEmpty.L_name = false;
-      this.isEmpty.Address = false;
-      this.isEmpty.Birthdate = false;
-      this.isEmpty.NID_num = false;
-      this.isEmpty.Phone_num = false;
-      this.isEmpty.Email = false;
-      this.isEmpty.departmentID = false;
-      this.isEmpty.PositionID = false;
-      this.isEmpty.start_working_date = false;
-      this.isEmpty.Salary = false;
-      this.isEmpty.employeeType = false;
-      this.isEmpty.bankName = false;
-      this.isEmpty.bankAccountID = false;
-
+      this.isEmpty = {
+        title: false,
+        F_name: false,
+        L_name: false,
+        Address: false,
+        Birthdate: false,
+        NID_num: false,
+        Phone_num: false,
+        Email: false,
+        departmentID: false,
+        PositionID: false,
+        start_working_date: false,
+        Salary: false,
+        employeeType: false,
+        bankName: false,
+        bankAccountID: false,
+      };
       this.formData.status = "active";
       this.inputError = false;
       this.isPopupVisible_error = false;
     },
     closePopupLeave() {
       this.isPopupOpenLeave = false;
-      this.formDataLeave = {
-        ID: "",
-        employeeID: "",
-        detail: "",
-        date: "",
+      this.formDataLeave = { ID: "", employeeID: "", detail: "", date: "" };
+      this.isEmpty = {
+        employeeID: false,
+        detail: false,
+        date: false,
+        dateEnd: false,
       };
-
-      this.isEmpty.employeeID = false;
-      this.isEmpty.detail = false;
-      this.isEmpty.date = false;
-      this.isEmpty.dateEnd = false;
-
       this.inputError = false;
     },
     closePopupOvertime() {
@@ -1461,27 +1149,6 @@ export default {
       let positions = Array.isArray(item.position)
         ? item.position.map((position) => position.Position)
         : [];
-
-      const formatDate = (date) => {
-        const d = new Date(date);
-        const year = d.getFullYear();
-        const month = String(d.getMonth() + 1).padStart(2, "0");
-        const day = String(d.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-      };
-      const formatDateForPicker = (date) => {
-        if (!date) return null;
-        const d = new Date(date);
-        if (isNaN(d.getTime())) return null; // ตรวจสอบว่าเป็นวันที่ถูกต้อง
-
-        // 🔹 ถ้าภาษาเป็น "th" (ไทย) ให้เพิ่ม 543 ปี
-        if (this.t("lang") === "en") {
-          d.setFullYear(d.getFullYear());
-        }
-
-        return d;
-      };
-
       if (item.Title === "นาย") {
         item.Title = "Mr.";
       } else if (item.Title === "นาง") {
@@ -1489,13 +1156,11 @@ export default {
       } else if (item.Title === "นางสาว") {
         item.Title = "Miss";
       }
-
       const filteredEmp = this.employees.filter((emp) => emp.ID === item.ID);
-
       let Birthdate = [];
       let startingworkdate = [];
       if (filteredEmp[0].Birthdate) {
-        Birthdate = new Date(filteredEmp[0].Birthdate + " GMT+0700"); // เพิ่มเขตเวลา
+        Birthdate = new Date(filteredEmp[0].Birthdate + " GMT+0700");
         Birthdate.toString();
       } else {
         Birthdate = new Date();
@@ -1503,12 +1168,11 @@ export default {
       if (filteredEmp[0]["Start Working Date"]) {
         startingworkdate = new Date(
           filteredEmp[0]["Start Working Date"] + " GMT+0700"
-        ); // เพิ่มเขตเวลา
+        );
         startingworkdate.toString();
       } else {
         startingworkdate = new Date();
       }
-
       console.log("Edit item:", filteredEmp);
       this.isPopupOpen = true;
       this.isAddingMode = false;
@@ -1519,14 +1183,12 @@ export default {
         F_name: item.Name.split(" ")[0],
         L_name: item.Name.split(" ")[1],
         Address: item.Address,
-        // Birthdate: formattedBirthdate,
         Birthdate: Birthdate,
         NID_num: item["National ID"],
         Phone_num: item["Tel."],
         Email: item.Email,
         departmentID: item.departmentID,
         PositionID: item.PositionID,
-        // start_working_date: formattedStartWorking,
         start_working_date: startingworkdate,
         Salary: item.Salary,
         employeeType: item["Emp. type"],
@@ -1541,16 +1203,11 @@ export default {
     handleDelete(item) {
       console.log("Delete button clicked for item:", item);
       this.isDeleteConfirmPopupOpen = true;
-      this.formData = {
-        employeeID: item.ID,
-      };
+      this.formData = { employeeID: item.ID };
     },
     handleDeleteLeave(item) {
       console.log("Delete button clicked for item:", item);
       this.isDeleteLeaveConfirmPopupOpen = true;
-      // this.formDataLeve = {
-      //   leaving_id: item.ID,
-      // };
       this.leaving_id = item.ID;
     },
     showPopup(message) {
@@ -1558,7 +1215,7 @@ export default {
       this.isPopupVisible = true;
       setTimeout(() => {
         this.isPopupVisible = false;
-      }, 2000); // 5 seconds
+      }, 2000);
     },
     showPopup_error(message) {
       this.popupMessage_error = message;
@@ -1567,89 +1224,18 @@ export default {
       setTimeout(() => {
         this.isPopupVisible = false;
         this.isPopupVisible_error = false;
-      }, 2000); // 2 seconds
+      }, 2000);
     },
-    // async exportEmployee() {
-    //   const accessToken = localStorage.getItem("@accessToken");
-    //   this.isLoading = true;
-    //   // return;
-    //   try {
-    //     const response = await fetch(
-    //       `${API_CALL}/migrate/export-csv/employees`,
-    //       {
-    //         headers: {
-    //           Authorization: `Bearer ${accessToken}`,
-    //         },
-    //       }
-    //     )
-    //       .then((response) => {
-    //         if (!response.ok) {
-    //           throw new Error("Network response was not ok");
-    //         }
-    //         return response.blob();
-    //       })
-    //       .then((blob) => {
-    //         const url = window.URL.createObjectURL(new Blob([blob]));
-    //         const link = document.createElement("a");
-    //         link.href = url;
-    //         link.setAttribute("download", "Employees.csv"); // ตั้งชื่อไฟล์ที่ต้องการดาวน์โหลด
-    //         document.body.appendChild(link);
-    //         link.click();
-    //         window.URL.revokeObjectURL(url);
-    //       });
-    //   } catch (error) {
-    //     console.error("Error fetching data:", error);
-    //   } finally {
-    //     this.isLoading = false;
-    //   }
-    // },
-    // exportEmployee() {
-    //   this.isLoading = true;
-
-    //   try {
-    //     if (this.formData.status === "") {
-    //       this.formData.status = "active";
-    //     }
-    //     // กรองข้อมูลเฉพาะพนักงานที่มีสถานะ active
-    //     const activeEmployees = this.employees.filter(
-    //       (employee) => employee.status === this.formData.status
-    //     );
-
-    //     // แปลงข้อมูลที่กรองแล้วเป็น CSV
-    //     const csvContent = this.convertToCSV(activeEmployees);
-
-    //     // สร้าง Blob และดาวน์โหลดไฟล์ CSV
-    //     const blob = new Blob([csvContent], { type: "text/csv" });
-    //     const url = window.URL.createObjectURL(blob);
-    //     const link = document.createElement("a");
-    //     link.href = url;
-    //     link.setAttribute("download", "Employees_export.csv");
-    //     document.body.appendChild(link);
-    //     link.click();
-    //     window.URL.revokeObjectURL(url);
-    //   } catch (error) {
-    //     console.error("Error exporting data:", error);
-    //   } finally {
-    //     this.isLoading = false;
-    //   }
-    // },
     exportEmployee() {
       this.isLoading = true;
-
       try {
         if (this.formData.status === "") {
           this.formData.status = "active";
         }
-
-        // กรองเฉพาะพนักงานที่มีสถานะตามที่เลือก
         const activeEmployees = this.employees.filter(
           (employee) => employee.status === this.formData.status
         );
-
-        // แปลงข้อมูลเป็น CSV
         const csvContent = this.convertToCSV(activeEmployees);
-
-        // ดาวน์โหลดไฟล์ CSV
         const blob = new Blob([csvContent], {
           type: "text/csv;charset=utf-8;",
         });
@@ -1667,31 +1253,26 @@ export default {
         this.isLoading = false;
       }
     },
-
     convertToCSV(data) {
       if (!data || data.length === 0) return "";
-
-      // หัวคอลัมน์ภาษาไทย (ไม่มี employeeID และ status)
       const headers = [
-        "คำนำหน้า", // title
-        "ชื่อ-นามสกุล", // F_name
-        "ที่อยู่", // Address
-        "วันเกิด", // Birthdate
-        "เลขบัตรประชาชน", // NID_num
-        "เบอร์โทรศัพท์", // Phone_num
-        "อีเมล", // Email
-        "แผนก", // departmentID (ชื่อแผนกควรถูก resolve ถ้าเป็น ID)
-        "ตำแหน่ง", // PositionID (ชื่อควรดึงจากตำแหน่งจริง ถ้าเป็น ID)
-        "วันเริ่มงาน", // start_working_date
-        "เงินเดือน (บาท)", // Salary
-        "ประเภทพนักงาน", // employeeType
-        "ธนาคาร", // bankName
-        "เลขบัญชีธนาคาร", // bankAccountID
+        "คำนำหน้า",
+        "ชื่อ-นามสกุล",
+        "ที่อยู่",
+        "วันเกิด",
+        "เลขบัตรประชาชน",
+        "เบอร์โทรศัพท์",
+        "อีเมล",
+        "แผนก",
+        "ตำแหน่ง",
+        "วันเริ่มงาน",
+        "เงินเดือน (บาท)",
+        "ประเภทพนักงาน",
+        "ธนาคาร",
+        "เลขบัญชีธนาคาร",
       ];
       console.log("item", data);
-
       const rows = data.map((item) => {
-        // แปลงคำนำหน้าชื่อ (Title)
         if (item.Title === "Mr.") {
           item.Title = "นาย";
         } else if (item.Title === "Mrs.") {
@@ -1699,7 +1280,6 @@ export default {
         } else if (item.Title === "Miss") {
           item.Title = "นางสาว";
         }
-
         return [
           item.Title || "",
           item.Name || "",
@@ -1717,12 +1297,9 @@ export default {
           item["Bank Account ID"] || "",
         ];
       });
-
       const csvRows = [headers.join(","), ...rows.map((r) => r.join(","))];
-
-      return "\uFEFF" + csvRows.join("\n"); // เพิ่ม BOM สำหรับภาษาไทย
+      return "\uFEFF" + csvRows.join("\n");
     },
-
     translateEmpType(type) {
       switch (type) {
         case "Full-time":
@@ -1735,42 +1312,22 @@ export default {
           return "ไม่ระบุ";
       }
     },
-
     formatDateToThai(dateStr) {
       if (!dateStr) return "";
       const date = new Date(dateStr);
       const day = date.getDate().toString().padStart(2, "0");
       const month = (date.getMonth() + 1).toString().padStart(2, "0");
-      const year = date.getFullYear() + 543; // แปลงเป็น พ.ศ.
+      const year = date.getFullYear() + 543;
       return `${day}/${month}/${year}`;
     },
-
-    // ฟังก์ชันแปลงข้อมูล JSON เป็น CSV
-    // convertToCSV(arr) {
-    //   const header = Object.keys(arr[0]);
-    //   const rows = arr.map((row) =>
-    //     header
-    //       .map((fieldName) =>
-    //         JSON.stringify(row[fieldName], (key, value) =>
-    //           value === null ? "" : value
-    //         )
-    //       )
-    //       .join(",")
-    //   );
-    //   return [header.join(","), ...rows].join("\r\n");
-    // },
-
     async getEmployee() {
       const accessToken = localStorage.getItem("@accessToken");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/employee/getEmployee`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          headers: { Authorization: `Bearer ${accessToken}` },
         });
         const json = await response.json();
-
         if (json.statusCode === 200) {
           console.log("-----", json.data);
           this.employees = json.data.map((item) => {
@@ -1778,7 +1335,6 @@ export default {
               ? [item.department.departmentName]
               : [];
             let positions = item.position ? [item.position.Position] : [];
-
             const BD = new Date(item.Birthdate);
             const startWorkingDate = new Date(item.start_working_date);
             const formatDate = {
@@ -1786,12 +1342,6 @@ export default {
               month: "short",
               year: "numeric",
             };
-            // const Birthdate = BD.toLocaleDateString("en-GB", formatDate);
-            // const startWorking = startWorkingDate.toLocaleDateString(
-            //   "en-GB",
-            //   formatDate
-            // );
-
             const Birthdate =
               item.Birthdate && item.Birthdate !== ""
                 ? new Date(item.Birthdate).toLocaleDateString(
@@ -1799,7 +1349,6 @@ export default {
                     formatDate
                   )
                 : "";
-
             const startWorking =
               item.start_working_date && item.start_working_date !== ""
                 ? new Date(item.start_working_date).toLocaleDateString(
@@ -1807,14 +1356,12 @@ export default {
                     formatDate
                   )
                 : "";
-
             function formatSalary(salary) {
               if (salary !== null && typeof salary !== "undefined") {
                 return salary.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
               }
               return "";
             }
-
             let initialTableData = {
               ID: item.employeeID,
               Title: item.title,
@@ -1854,12 +1401,9 @@ export default {
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/employee/getEmployeeSalary`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          headers: { Authorization: `Bearer ${accessToken}` },
         });
         const json = await response.json();
-
         if (json.statusCode === 200) {
           console.log("+++++", json.data);
           this.employeesSalaries = json.data.map((item) => {
@@ -1867,7 +1411,6 @@ export default {
               ? [item.department.departmentName]
               : [];
             let positions = item.position ? [item.position.Position] : [];
-
             const BD = new Date(item.Birthdate);
             const startWorkingDate = new Date(item.start_working_date);
             const formatDate = {
@@ -1880,18 +1423,13 @@ export default {
               "en-GB",
               formatDate
             );
-
             function formatSalary(salary) {
               if (salary !== null && typeof salary !== "undefined") {
                 return salary.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
               }
               return "";
             }
-
-            let initialTableData = {
-              ID: item.employeeID,
-              Name: item.name,
-            };
+            let initialTableData = { ID: item.employeeID, Name: item.name };
             return initialTableData;
           });
         } else {
@@ -1908,12 +1446,9 @@ export default {
       const accessToken = localStorage.getItem("@accessToken");
       try {
         const response = await fetch(`${API_CALL}/employee/getDepartment`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          headers: { Authorization: `Bearer ${accessToken}` },
         });
         const json = await response.json();
-
         if (json.statusCode === 200) {
           this.Departments = json.data;
         } else {
@@ -1928,15 +1463,11 @@ export default {
       const accessToken = localStorage.getItem("@accessToken");
       try {
         const response = await fetch(`${API_CALL}/employee/getPosition`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          headers: { Authorization: `Bearer ${accessToken}` },
         });
         const json = await response.json();
-
         if (json.statusCode === 200) {
           this.Positions = json.data;
-          // console.log("this.Positions", this.Positions);
         } else {
           console.log(json);
           this.showPopup_error(json.data);
@@ -1949,12 +1480,9 @@ export default {
       const accessToken = localStorage.getItem("@accessToken");
       try {
         const response = await fetch(`${API_CALL}/employee/getLeave`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          headers: { Authorization: `Bearer ${accessToken}` },
         });
         const json = await response.json();
-
         if (json.statusCode === 200) {
           this.Leaving = json.data.map((item) => {
             const DateLeave = new Date(item.date);
@@ -1976,7 +1504,6 @@ export default {
               (emp) => emp.ID === item.employeeID
             );
             const employeeName = employee ? employee.Name : "Unknown";
-
             let initialTableData = {
               ID: item.leaving_id,
               Name: employeeName,
@@ -1998,9 +1525,7 @@ export default {
       const accessToken = localStorage.getItem("@accessToken");
       try {
         const response = await fetch(`${API_CALL}/employee/getOvertime`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          headers: { Authorization: `Bearer ${accessToken}` },
         });
         const json = await response.json();
         if (json.statusCode === 200) {
@@ -2016,7 +1541,6 @@ export default {
               formatDate
             );
             const employeeName = `${item.employee.F_name} ${item.employee.L_name}`;
-
             let initialTableData = {
               ID: item.leaving_id,
               Name: employeeName,
@@ -2039,30 +1563,23 @@ export default {
       this.isEmpty.detail = false;
       this.isEmpty.date = false;
       this.isEmpty.dateEnd = false;
-
       let errorMessages2 = [];
-
       if (this.formDataLeave.employeeID === "") {
         this.isEmpty.employeeID = true;
         errorMessages2.push(this.$t("validation.employeeID"));
       }
-
-      // ตรวจสอบฟิลด์ categoryID
       if (this.formDataLeave.detail === "") {
         this.isEmpty.detail = true;
         errorMessages2.push(this.$t("validation.detail"));
       }
-
       if (this.formDataLeave.date === "") {
         this.isEmpty.date = true;
         errorMessages2.push(this.$t("validation.date"));
       }
-
       if (this.formDataLeave.dateEnd === "") {
         this.isEmpty.dateEnd = true;
         errorMessages2.push(this.$t("validation.dateEnd"));
       } else {
-        // ตรวจสอบว่า dateEnd ต้องไม่น้อยกว่า date
         const dateStart = new Date(this.formDataLeave.date);
         const dateEnd = new Date(this.formDataLeave.dateEnd);
         if (dateEnd < dateStart) {
@@ -2070,7 +1587,6 @@ export default {
           errorMessages2.push(this.$t("validation.dateEnd_invalid"));
         }
       }
-
       console.log(errorMessages2);
       if (errorMessages2.length > 0) {
         this.showPopup_validate2(errorMessages2);
@@ -2082,68 +1598,51 @@ export default {
     showPopup_validate2(messages) {
       if (Array.isArray(messages)) {
         this.isPopupVisible_error2 = true;
-        this.errorMessages2 = messages; // เก็บข้อความใน errorMessages
+        this.errorMessages2 = messages;
         console.log(" this.errorMessages2", this.errorMessages2);
-        // this.showErrorPopup = true; // แสดง Popup
-        // this.isPopupVisible_error2 = true;
-        // setTimeout(() => {
-        //   this.isPopupVisible_error2 = false; // ซ่อน Popup หลังจากหน่วงเวลา
-        // }, 3000); // หน่วงเวลา 3 วินาที (3000 มิลลิวินาที)
       } else {
         this.showPopup_error(messages);
       }
     },
     validateFormData() {
-      // ตั้งค่า isEmpty ของทุกฟิลด์เป็น false ก่อนเริ่มการตรวจสอบ
-      this.isEmpty.title = false;
-      this.isEmpty.F_name = false;
-      this.isEmpty.L_name = false;
-      this.isEmpty.Address = false;
-      this.isEmpty.Birthdate = false;
-      this.isEmpty.NID_num = false;
-      this.isEmpty.Phone_num = false;
-      this.isEmpty.Email = false;
-      this.isEmpty.departmentID = false;
-      this.isEmpty.PositionID = false;
-      this.isEmpty.start_working_date = false;
-      this.isEmpty.Salary = false;
-      this.isEmpty.employeeType = false;
-      this.isEmpty.bankName = false;
-      this.isEmpty.bankAccountID = false;
-
-      // ตรวจสอบแต่ละฟิลด์ว่ามีค่าว่างหรือไม่
-      let errorMessages = []; // กำหนดค่าเริ่มต้นว่าฟอร์มถูกต้อง
-
-      // ตรวจสอบฟิลด์ productTypeID
+      this.isEmpty = {
+        title: false,
+        F_name: false,
+        L_name: false,
+        Address: false,
+        Birthdate: false,
+        NID_num: false,
+        Phone_num: false,
+        Email: false,
+        departmentID: false,
+        PositionID: false,
+        start_working_date: false,
+        Salary: false,
+        employeeType: false,
+        bankName: false,
+        bankAccountID: false,
+      };
+      let errorMessages = [];
       if (this.formData.title === "") {
         this.isEmpty.title = true;
         errorMessages.push(this.$t("validation.title"));
       }
-
-      // ตรวจสอบฟิลด์ categoryID
       if (this.formData.F_name === "") {
         this.isEmpty.F_name = true;
         errorMessages.push(this.$t("validation.F_name"));
       }
-
-      // ตรวจสอบฟิลด์ productname
       if (this.formData.L_name === "") {
         this.isEmpty.L_name = true;
         errorMessages.push(this.$t("validation.L_name"));
       }
-
-      // ตรวจสอบฟิลด์ price
       if (this.formData.Address === "") {
         this.isEmpty.Address = true;
         errorMessages.push(this.$t("validation.Address"));
       }
-
-      // ตรวจสอบฟิลด์ productcost
       if (this.formData.Birthdate === "") {
         this.isEmpty.Birthdate = true;
         errorMessages.push(this.$t("validation.Birthdate"));
       }
-
       if (this.formData.NID_num === "") {
         this.isEmpty.NID_num = true;
         errorMessages.push(this.$t("validation.NID_num"));
@@ -2151,17 +1650,15 @@ export default {
         this.isEmpty.NID_num = true;
         errorMessages.push(this.$t("validation.NID_num_length"));
       }
-
       const isDuplicateNID_num = this.employees.some(
         (item) =>
           item["National ID"].trim() === this.formData.NID_num.trim() &&
-          item.ID !== this.formData.employeeID // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
+          item.ID !== this.formData.employeeID
       );
       if (isDuplicateNID_num) {
         this.isEmpty.NID_num = true;
         errorMessages.push(this.$t("validation.duplicateNID_num"));
       }
-
       if (this.formData.Phone_num === "") {
         this.isEmpty.Phone_num = true;
         errorMessages.push(this.$t("validation.Phone_num"));
@@ -2173,22 +1670,19 @@ export default {
         this.isEmpty.Phone_num = true;
         errorMessages.push(this.$t("validation.Phone_num_length"));
       }
-
       const isDuplicatePhone = this.employees.some(
         (item) =>
           item["Tel."].trim() === this.formData.Phone_num.trim() &&
-          item.ID !== this.formData.employeeID // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
+          item.ID !== this.formData.employeeID
       );
       if (isDuplicatePhone) {
         this.isEmpty.Phone_num = true;
         errorMessages.push(this.$t("validation.duplicatePhone"));
       }
-
       if (this.formData.Email === "") {
         this.isEmpty.Email = true;
         errorMessages.push(this.$t("validation.Email"));
       }
-
       if (
         this.formData.departmentID === "" ||
         this.formData.departmentID === null
@@ -2196,7 +1690,6 @@ export default {
         this.isEmpty.departmentID = true;
         errorMessages.push(this.$t("validation.departmentID"));
       }
-
       if (
         this.formData.PositionID === "" ||
         this.formData.PositionID === null
@@ -2204,46 +1697,14 @@ export default {
         this.isEmpty.PositionID = true;
         errorMessages.push(this.$t("validation.PositionID"));
       }
-
       if (this.formData.start_working_date === "") {
         this.isEmpty.start_working_date = true;
         errorMessages.push(this.$t("validation.start_working_date"));
       }
-
-      // if (this.formData.Salary === "") {
-      //   this.isEmpty.Salary = true;
-      //   errorMessages.push(this.$t("validation.Salary"));
-      // }
-
       if (this.formData.employeeType === "") {
         this.isEmpty.employeeType = true;
         errorMessages.push(this.$t("validation.employeeType"));
       }
-
-      // if (this.formData.bankName === "") {
-      //   this.isEmpty.bankName = true;
-      //   errorMessages.push(this.$t("validation.bankName"));
-      // }
-
-      // if (this.formData.bankAccountID === "") {
-      //   this.isEmpty.bankAccountID = true;
-      //   errorMessages.push(this.$t("validation.bankAccountID"));
-      // } else if (this.formData.bankAccountID.length < 10) {
-      //   this.isEmpty.bankAccountID = true;
-      //   errorMessages.push(this.$t("validation.bankAccountID_length"));
-      // }
-
-      // const isDuplicateBankAcc = this.employees.some(
-      //   (item) =>
-      //     item["Bank Account ID"].trim() ===
-      //       this.formData.bankAccountID.trim() &&
-      //     item.ID !== this.formData.employeeID // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
-      // );
-      // if (isDuplicateBankAcc) {
-      //   this.isEmpty.bankAccountID = true;
-      //   errorMessages.push(this.$t("validation.duplicateBankAcc"));
-      // }
-
       if (errorMessages.length > 0) {
         this.showPopup_validate(errorMessages);
         return false;
@@ -2253,12 +1714,8 @@ export default {
     },
     showPopup_validate(messages) {
       if (Array.isArray(messages)) {
-        this.errorMessages = messages; // เก็บข้อความใน errorMessages
-        // this.showErrorPopup = true; // แสดง Popup
+        this.errorMessages = messages;
         this.isPopupVisible_error = true;
-        // setTimeout(() => {
-        //   this.isPopupVisible_error = false; // ซ่อน Popup หลังจากหน่วงเวลา
-        // }, 3000); // หน่วงเวลา 3 วินาที (3000 มิลลิวินาที)
       } else {
         this.showPopup_error(messages);
       }
@@ -2266,50 +1723,9 @@ export default {
     async addEmployee() {
       const accessToken = localStorage.getItem("@accessToken");
       if (!this.validateFormData()) return;
-      // if (
-      //   this.formData.title === "" ||
-      //   this.formData.F_name === "" ||
-      //   this.formData.L_name === "" ||
-      //   this.formData.Address === "" ||
-      //   this.formData.Birthdate === "" ||
-      //   this.formData.NID_num === "" ||
-      //   this.formData.Phone_num === "" ||
-      //   this.formData.Email === "" ||
-      //   this.formData.departmentID === "" ||
-      //   this.formData.PositionID === "" ||
-      //   this.formData.start_working_date === "" ||
-      //   this.formData.Salary === "" ||
-      //   this.formData.employeeType === "" ||
-      //   this.formData.bankName === "" ||
-      //   this.formData.bankAccountID === ""
-      // ) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Please fill all data");
-      // } else if (!this.validateEmail(this.formData.Email)) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Invalid email format");
-      // } else if (this.formData.NID_num.length !== 13) {
-      //   this.inputError = true;
-      //   this.showPopup_error("National ID must be 13 digits");
-      // } else if (this.formData.Phone_num.length !== 10) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Phone number must be 10 digits");
-      // } else if (this.formData.bankAccountID.length !== 10) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Bank account ID must be 10 digits");
-      // } else {
-      //   this.inputError = false;
       this.isLoading = true;
-
-      const date_Birthdate = new Date(this.formData.Birthdate); // ค่าที่ได้
-      date_Birthdate.setFullYear(date_Birthdate.getFullYear() - 543); // ลบ 543 ปี
-
-      // const date_start_working_date = new Date(
-      //   this.formData.start_working_date
-      // ); // ค่าที่ได้
-      // date_start_working_date.setFullYear(
-      //   date_start_working_date.getFullYear() - 543
-      // ); // ลบ 543 ปี
+      const date_Birthdate = new Date(this.formData.Birthdate);
+      date_Birthdate.setFullYear(date_Birthdate.getFullYear() - 543);
       try {
         const response = await fetch(`${API_CALL}/employee/AddEmployee`, {
           method: "POST",
@@ -2323,20 +1739,12 @@ export default {
             L_name: this.formData.L_name,
             Address: this.formData.Address,
             Birthdate: this.formData.Birthdate,
-            // Birthdate:
-            //   this.t("lang") === "en"
-            //     ? date_Birthdate
-            //     : this.formData.Birthdate,
             NID_num: this.formData.NID_num,
             Phone_num: this.formData.Phone_num,
             Email: this.formData.Email,
             departmentID: this.formData.departmentID,
             PositionID: this.formData.PositionID,
             start_working_date: this.formData.start_working_date,
-            // start_working_date:
-            //   this.t("lang") === "en"
-            //     ? date_start_working_date
-            //     : this.formData.start_working_date,
             Salary: this.formData.Salary,
             employeeType: this.formData.employeeType,
             bankName: this.formData.bankName,
@@ -2344,7 +1752,6 @@ export default {
           }),
         });
         const json = await response.json();
-
         if (json.statusCode === 200) {
           this.isPopupVisible_error = false;
           this.getEmployee();
@@ -2372,7 +1779,6 @@ export default {
           };
         } else {
           console.log("Add employee error", json);
-
           this.showPopup_error(json.data);
         }
       } catch (error) {
@@ -2380,26 +1786,11 @@ export default {
       } finally {
         this.isLoading = false;
       }
-      // }
     },
     async AddLeave() {
       const accessToken = localStorage.getItem("@accessToken");
       if (!(await this.validateLeave())) return;
       this.isLoading = true;
-      // const dataStart = new Date(this.formDataLeave.date); // ค่าที่ได้
-      // dataStart.setFullYear(dataStart.getFullYear() - 543); // ลบ 543 ปี
-      // const dateEnd = new Date(this.formDataLeave.dateEnd); // ค่าที่ได้
-      // dateEnd.setFullYear(dateEnd.getFullYear() - 543); // ลบ 543 ปี
-      // if (
-      //   this.formDataLeave.employeeID === "" ||
-      //   this.formDataLeave.date === "" ||
-      //   this.formDataLeave.detail === ""
-      // ) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Please fill data");
-      // } else {
-      // this.inputError = false;
-      // this.isLoading = true;
       if (this.isEditMode === false) {
         try {
           const response = await fetch(`${API_CALL}/employee/AddLeave`, {
@@ -2413,11 +1804,6 @@ export default {
               detail: this.formDataLeave.detail,
               date: this.formDataLeave.date,
               dateEnd: this.formDataLeave.dateEnd,
-              // date:
-              //   this.t("lang") === "en" ? dataStart : this.formDataLeave.date,
-              // // dateEnd: this.formDataLeave.dateEnd,
-              // dateEnd:
-              //   this.t("lang") === "en" ? dateEnd : this.formDataLeave.dateEnd,
             }),
           });
           const json = await response.json();
@@ -2432,12 +1818,11 @@ export default {
               dateEnd: "",
             };
           } else {
-            // this.showPopup_error(json.data);
             this.isPopupVisible_error2 = true;
             this.errorMessages2.push(this.$t("validation.duplicateLeaveDate"));
             setTimeout(() => {
-              this.isPopupVisible_error2 = false; // ซ่อน Popup หลังจากหน่วงเวลา
-            }, 3000); // หน่วงเวลา 3 วินาที (3000 มิลลิวินาที)
+              this.isPopupVisible_error2 = false;
+            }, 3000);
             console.log("Manage Leave error", json);
           }
         } catch (error) {
@@ -2459,13 +1844,7 @@ export default {
                 employeeID: this.formDataLeave.employeeID,
                 detail: this.formDataLeave.detail,
                 date: this.formDataLeave.date,
-                // date:
-                // this.t("lang") === "en" ? dataStart : this.formDataLeave.date,
                 dateEnd: this.formDataLeave.dateEnd,
-                // dateEnd:
-                // this.t("lang") === "en"
-                //   ? dateEnd
-                //   : this.formDataLeave.dateEnd,
               }),
             }
           );
@@ -2491,7 +1870,6 @@ export default {
           this.isLoading = false;
         }
       }
-      // }
     },
     async AddOvertime() {
       const accessToken = localStorage.getItem("@accessToken");
@@ -2506,7 +1884,6 @@ export default {
       } else {
         this.inputError = false;
         this.isLoading = true;
-
         try {
           const response = await fetch(`${API_CALL}/employee/AddOvertime`, {
             method: "POST",
@@ -2546,43 +1923,7 @@ export default {
     async editEmployee() {
       if (!this.validateFormData()) return;
       this.isLoading = true;
-      // console.log("==========",this.formData.departmentID)
       const accessToken = localStorage.getItem("@accessToken");
-      // if (
-      //   this.formData.title === "" ||
-      //   this.formData.F_name === "" ||
-      //   this.formData.L_name === "" ||
-      //   this.formData.Address === "" ||
-      //   this.formData.Birthdate === "" ||
-      //   this.formData.NID_num === "" ||
-      //   this.formData.Phone_num === "" ||
-      //   this.formData.Email === "" ||
-      //   this.formData.departmentID === "" ||
-      //   this.formData.PositionID === "" ||
-      //   this.formData.start_working_date === "" ||
-      //   this.formData.Salary === "" ||
-      //   this.formData.employeeType === "" ||
-      //   this.formData.bankName === "" ||
-      //   this.formData.bankAccountID === ""
-      // ) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Please fill all data");
-      // } else if (!this.validateEmail(this.formData.Email)) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Invalid email format");
-      // } else if (this.formData.NID_num.length !== 13) {
-      //   this.inputError = true;
-      //   this.showPopup_error("National ID must be 13 digits");
-      // } else if (this.formData.Phone_num.length !== 10) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Phone number must be 10 digits");
-      // } else if (this.formData.bankAccountID.length < 10) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Bank account ID must be 10-13 digits");
-      // } else {
-      //   this.inputError = false;
-      //   this.isLoading = true;
-
       function parseSalary(salaryString) {
         if (salaryString !== null && typeof salaryString !== "undefined") {
           return parseFloat(salaryString.replace(/,/g, ""));
@@ -2590,16 +1931,14 @@ export default {
         return null;
       }
       const employee = this.formData.employeeID;
-      const date_Birthdate = new Date(this.formData.Birthdate); // ค่าที่ได้
-      date_Birthdate.setFullYear(date_Birthdate.getFullYear() - 543); // ลบ 543 ปี
-
+      const date_Birthdate = new Date(this.formData.Birthdate);
+      date_Birthdate.setFullYear(date_Birthdate.getFullYear() - 543);
       const date_start_working_date = new Date(
         this.formData.start_working_date
-      ); // ค่าที่ได้
+      );
       date_start_working_date.setFullYear(
         date_start_working_date.getFullYear() - 543
-      ); // ลบ 543 ปี
-
+      );
       try {
         const response = await fetch(
           `${API_CALL}/employee/EditEmployee/${employee}`,
@@ -2609,27 +1948,18 @@ export default {
               "Content-Type": "application/json",
               Authorization: `Bearer ${accessToken}`,
             },
-            // body: JSON.stringify(this.formData),
             body: JSON.stringify({
               title: this.formData.title,
               F_name: this.formData.F_name,
               L_name: this.formData.L_name,
               Address: this.formData.Address,
               Birthdate: this.formData.Birthdate,
-              // Birthdate:
-              //   this.t("lang") === "en"
-              //     ? date_Birthdate
-              //     : this.formData.Birthdate,
               NID_num: this.formData.NID_num,
               Phone_num: this.formData.Phone_num,
               Email: this.formData.Email,
               departmentID: this.formData.departmentID,
               PositionID: this.formData.PositionID,
               start_working_date: this.formData.start_working_date,
-              // start_working_date:
-              //   this.t("lang") === "en"
-              //     ? date_start_working_date
-              //     : this.formData.start_working_date,
               Salary: parseSalary(this.formData.Salary),
               employeeType: this.formData.employeeType,
               bankName: this.formData.bankName,
@@ -2638,8 +1968,6 @@ export default {
           }
         );
         const json = await response.json();
-        //   console.log(json);
-
         if (json.statusCode === 200) {
           this.getEmployee();
           this.showPopup(this.$t("validation.EditSucc"));
@@ -2654,7 +1982,6 @@ export default {
       } finally {
         this.isLoading = false;
       }
-      // }
     },
     async deleteEmployee() {
       const accessToken = localStorage.getItem("@accessToken");
@@ -2669,13 +1996,10 @@ export default {
               "Content-Type": "application/json",
               Authorization: `Bearer ${accessToken}`,
             },
-            body: JSON.stringify({
-              employeeID: employeeID,
-            }),
+            body: JSON.stringify({ employeeID: employeeID }),
           }
         );
         const json = await response.json();
-
         if (json.statusCode === 200) {
           this.getEmployee();
           this.employees = this.employees.filter(
@@ -2705,12 +2029,9 @@ export default {
             "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`,
           },
-          body: JSON.stringify({
-            leaving_id: id,
-          }),
+          body: JSON.stringify({ leaving_id: id }),
         });
         const json = await response.json();
-
         if (json.statusCode === 200) {
           this.getLeave();
           this.getOvertime();
@@ -2732,7 +2053,6 @@ export default {
     this.getPosition();
     this.getDepartment();
     this.getEmployee();
-    // this.getemployeesSalary();
     this.getOvertime();
   },
 };
