@@ -1,7 +1,5 @@
 <template>
   <div class="main-page">
-    <!-- call navigate tab -->
-    <!-- <Navigate /> -->
     <div class="page-body">
       <div class="mb-4">
         <h2 v-if="this.selectedType === 'B'">{{ t("tapcustomerPart") }}</h2>
@@ -9,20 +7,22 @@
       </div>
       <div style="width: 100%; display: flex; justify-content: center">
         <div class="mb-3 btn-group btn-group-size custome-tab">
-          <button
-            class="btn btn-primary"
-            :class="{ active: selectedType === 'A' }"
+          <Button
+            :customClass="
+              'btn btn-primary' + (selectedType === 'A' ? ' active' : '')
+            "
             @click="setTabCompany('A')"
           >
             {{ t("Company") }}
-          </button>
-          <button
-            class="btn btn-primary"
-            :class="{ active: selectedType === 'B' }"
+          </Button>
+          <Button
+            :customClass="
+              'btn btn-primary' + (selectedType === 'B' ? ' active' : '')
+            "
             @click="setTabCompany('B')"
           >
             {{ t("Customer") }}
-          </button>
+          </Button>
         </div>
       </div>
       <div class="row mb-3">
@@ -47,34 +47,6 @@
             <option value="active">{{ t("statusActive") }}</option>
             <option value="not_active">{{ t("statusNotActive") }}</option>
           </select>
-          <!-- <select
-            v-if="selectedType === 'A'"
-            class="form-control form-select size-font-sm"
-            v-model="formData.status"
-          >
-            <option
-              v-for="status in [...new Set(Customers.map((cus) => cus.Status))]"
-              :key="status"
-              :value="status"
-            >
-              {{ t(status === "active" ? "statusActive" : "statusNotActive") }}
-            </option>
-          </select> -->
-          <!-- <select
-            v-if="selectedType === 'B'"
-            class="form-control form-select"
-            v-model="formData.status"
-          >
-            <option
-              v-for="status in [
-                ...new Set(CompanyPerson.map((cus) => cus.status)),
-              ]"
-              :key="status"
-              :value="status"
-            >
-              {{ t(status === "active" ? "statusActive" : "statusNotActive") }}
-            </option>
-          </select> -->
         </div>
       </div>
       <div class="row mb-3">
@@ -102,59 +74,6 @@
         </div>
       </div>
 
-      <!-- <div class="top-table-for-filter">
-        <div>
-          <select
-            v-if="selectedType === 'A'"
-            class="form-control form-select custome-search-css-mini"
-            v-model="formData.status"
-          >
-            <option
-              v-for="status in [...new Set(Customers.map((cus) => cus.Status))]"
-              :key="status"
-              :value="status"
-            >
-              {{ t(status === "active" ? "statusActive" : "statusNotActive") }}
-            </option>
-          </select>
-          <select
-            v-if="selectedType === 'B'"
-            class="form-control form-select custome-search-css-mini"
-            v-model="formData.status"
-          >
-            <option
-              v-for="status in [
-                ...new Set(CompanyPerson.map((cus) => cus.status)),
-              ]"
-              :key="status"
-              :value="status"
-            >
-              {{ t(status === "active" ? "statusActive" : "statusNotActive") }}
-            </option>
-          </select>
-        </div>
-        <div class="add-btn mb-3" style="flex: 1">
-          <input
-            v-model="searchQuery"
-            type="text"
-            class="form-control me-3 custome-search-css"
-            style="width: 20%"
-            :placeholder="$t('Search')"
-          />
-          <a
-            class="btn btn-success"
-            @click="openPopup"
-            v-if="this.selectedType === 'A'"
-            >{{ t("addCustomer2") }}</a
-          >
-          <a
-            class="btn btn-success"
-            @click="openPopup"
-            v-if="this.selectedType === 'B'"
-            >{{ t("addCustomer") }}</a
-          >
-        </div>
-      </div> -->
       <div v-if="selectedType === 'A'">
         <CategoryList
           :initialTableData="filteredCustomer"
@@ -268,9 +187,9 @@
         />
       </div>
       <div class="modal-footer">
-        <button
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           v-if="isAddingMode"
           @click="addCustomer"
         >
@@ -281,10 +200,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonAdd") }}</span>
-        </button>
-        <button
+        </Button>
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           v-if="isEditMode"
           @click="editCustomer"
         >
@@ -295,10 +214,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonSave") }}</span>
-        </button>
-        <button class="btn btn-secondary" @click="closePopup">
+        </Button>
+        <Button customClass="btn btn-secondary" @click="closePopup">
           {{ t("buttonCancel") }}
-        </button>
+        </Button>
       </div>
     </Popup>
     <Popup :isOpen="isPopupOpen2" :closePopup="closePopup2">
@@ -397,16 +316,16 @@
         </select>
       </div>
       <div class="modal-footer">
-        <button
+        <Button
           v-if="this.isEditMode"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           @click="EditCustomer2"
         >
           Save
-        </button>
-        <button
+        </Button>
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           v-if="isAddingMode"
           @click="addCustomer2"
         >
@@ -417,24 +336,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonAdd") }}</span>
-        </button>
-        <!-- <button
-          :disabled="isLoading"
-          class="btn btn-primary me-3"
-          v-if="isEditMode"
-          @click="editCustomer"
-        >
-          <span
-            v-if="isLoading"
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          <span v-else>{{ t("buttonSave") }}</span>
-        </button> -->
-        <button class="btn btn-secondary" @click="closePopup2">
+        </Button>
+        <Button customClass="btn btn-secondary" @click="closePopup2">
           {{ t("buttonCancel") }}
-        </button>
+        </Button>
       </div>
     </Popup>
     <div class="delete-popup">
@@ -446,9 +351,9 @@
           <a>{{ t("deleteConfirmSentence") }}</a>
         </div>
         <div class="modal-footer">
-          <button
+          <Button
             :disabled="isLoading"
-            class="btn btn-danger me-3"
+            customClass="btn btn-danger me-3"
             @click="deleteCustomer"
           >
             <span
@@ -458,10 +363,13 @@
               aria-hidden="true"
             ></span>
             <span v-else>{{ t("buttonDelete") }}</span>
-          </button>
-          <button class="btn btn-secondary" @click="closeDeleteConfirmPopup">
+          </Button>
+          <Button
+            customClass="btn btn-secondary"
+            @click="closeDeleteConfirmPopup"
+          >
             {{ t("buttonCancel") }}
-          </button>
+          </Button>
         </div>
       </Popup>
     </div>
@@ -470,23 +378,14 @@
         <a>{{ popupMessage }}</a>
       </div>
     </div>
-    <!-- <div v-if="isPopupVisible_error" class="popup-success">
-      <div class="popup-content-error">
-        <h3>{{ $t("validate_popupError") }}</h3>
-        <ul>
-          <li v-for="(msg, index) in errorMessages" :key="index">{{ msg }}</li>
-        </ul>
-      </div>
-    </div> -->
     <div v-if="isPopupVisible_error" class="popup-error2">
       <div class="text-end">
-        <button
+        <Button
           type="button"
-          class="btn-close"
+          customClass="btn-close"
           aria-label="Close"
           @click="closeErrorPopup"
-          style="color: #9f9999"
-        ></button>
+        />
       </div>
       <div class="popup-content-error2">
         <ul>
@@ -503,6 +402,7 @@
 import Navigate from "../components/Navigation.vue";
 import CategoryList from "../components/tableList.vue";
 import Popup from "../components/popup.vue";
+import Button from "../components/button.vue"; // 1. นำเข้า component
 import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n";
 import { computed, watch, ref } from "vue";
@@ -513,12 +413,13 @@ const accessToken = localStorage.getItem("@accessToken");
 export default {
   name: "Customer",
   components: {
-    Navigate, // Navigation component for page navigation
-    CategoryList, // Table list component to display customers
-    Popup, // Popup component for adding/editing/deleting customers
+    Navigate,
+    CategoryList,
+    Popup,
+    Button, // 2. ลงทะเบียน component
   },
   setup() {
-    const { t } = useI18n(); // Localization setup for translated texts
+    const { t } = useI18n();
 
     const documentName2 = computed(() => t("dontHaveCompany"));
     const documentName = computed(() => t("dontHaveCustomerCompany"));
@@ -532,17 +433,16 @@ export default {
       selectedType: "",
       category_file: "",
       errorMessages: [],
-      isPopupVisible_error: false, // Control for displaying error popup
-      Customers: [], // List of customers fetched from the server
-      isPopupOpen: false, // Control for add/edit popup visibility
-      isPopupOpen2: false, // Control for add/edit popup visibility
-      isDeleteConfirmPopupOpen: false, // Control for delete confirmation popup visibility
-      isLoading: false, // Loading state for API requests
-      isPopupVisible: false, // Control for success message popup
+      isPopupVisible_error: false,
+      Customers: [],
+      isPopupOpen: false,
+      isPopupOpen2: false,
+      isDeleteConfirmPopupOpen: false,
+      isLoading: false,
+      isPopupVisible: false,
       inputValue: "",
-      inputError: false, // Flag for form input validation
+      inputError: false,
       formData: {
-        // Data model for customer form
         cus_id: "",
         cus_name: "",
         cus_address: "",
@@ -553,7 +453,6 @@ export default {
         status: "active",
       },
       formDataCustomer: {
-        // Data model for customer form
         company_person_id: "",
         company_person_name: "",
         company_person_address: "",
@@ -562,7 +461,6 @@ export default {
         company_person_customer: "",
       },
       isEmpty2: {
-        // Data model for customer form
         company_person_id: "",
         company_person_name: "",
         company_person_address: "",
@@ -571,7 +469,6 @@ export default {
         company_person_customer: "",
       },
       isEmpty: {
-        // Data model for customer form
         cus_id: "",
         cus_name: "",
         cus_address: "",
@@ -585,7 +482,6 @@ export default {
     };
   },
   computed: {
-    // Define table headers for displaying customer data
     tableHeaders() {
       return [
         { label: this.t("onlystatusHeaderTable"), key: "status" },
@@ -601,7 +497,6 @@ export default {
       return [
         { label: this.t("onlystatusHeaderTable"), key: "status" },
         { label: this.t("cusNameHeaderTable2"), key: "Customer Name" },
-        // { label: this.t("cusAddressHeaderTable2"), key: "Customer Address" },
         { label: this.t("cusTelHeaderTable2"), key: "Customer Tel" },
         { label: this.t("cusEmailHeaderTable2"), key: "Customer Email" },
         { label: this.t("cusCompany"), key: "Customer Company" },
@@ -609,13 +504,6 @@ export default {
     },
     filteredCustomer() {
       let filteredCus = [...this.Customers];
-      // กรองข้อมูล Categories โดยเปรียบเทียบกับ searchQuery
-      // if (this.formData.status) {
-      //   filteredCus = filteredCus.filter(
-      //     (cus) =>
-      //       cus.status.toLowerCase() === this.formData.status.toLowerCase()
-      //   );
-      // }
 
       if (this.searchQuery.trim()) {
         filteredCus = filteredCus.filter((cus) =>
@@ -638,7 +526,6 @@ export default {
             cus.status = "ปิดใช้งาน";
           }
         } else {
-          // กรณีภาษาอังกฤษหรือภาษาอื่นๆ อยากแสดงกลับเป็น status เดิม (กรณีมีการแปลงไปแล้ว)
           if (cus.status === "เปิดใช้งาน" || cus.status === "active") {
             cus.status = "Active";
           } else if (
@@ -650,7 +537,6 @@ export default {
         }
       });
 
-      // กรองจาก dropDownStatus
       if (this.selectedType === "A") {
         if (this.dropDownStatus === "active") {
           filteredCus = filteredCus.filter(
@@ -666,12 +552,10 @@ export default {
           );
         }
       }
-      return filteredCus; // ถ้าไม่มีการค้นหาแสดงทั้งหมด
+      return filteredCus;
     },
     filteredCompany() {
       let filteredCus = [...this.CompanyPerson];
-      // console.log("filteredCus__>", filteredCus);
-      // กรองข้อมูล Categories โดยเปรียบเทียบกับ searchQuery
 
       filteredCus.forEach((cus) => {
         const lang = this.t("headerLang");
@@ -686,7 +570,6 @@ export default {
             cus.status = "ปิดใช้งาน";
           }
         } else {
-          // กรณีภาษาอังกฤษหรือภาษาอื่นๆ อยากแสดงกลับเป็น status เดิม (กรณีมีการแปลงไปแล้ว)
           if (cus.status === "เปิดใช้งาน" || cus.status === "active") {
             cus.status = "Active";
           } else if (
@@ -719,20 +602,7 @@ export default {
             .includes(this.searchQuery.toLowerCase())
         );
       }
-      // console.log("filteredCus", filteredCus);
-      // // กรองจาก dropDownStatus
-      // if (this.dropDownStatus === "active") {
-      //   filteredCus = filteredCus.filter(
-      //     (cus) => cus.status.toLowerCase() === "active"
-      //   );
-      // } else if (this.dropDownStatus === "not_active") {
-      //   filteredCus = filteredCus.filter(
-      //     (cus) => cus.status.toLowerCase() === "not active"
-      //   );
-      // }
-      // console.log("filteredCus", filteredCus);
-      // console.log(filteredCus);
-      return filteredCus; // ถ้าไม่มีการค้นหาแสดงทั้งหมด
+      return filteredCus;
     },
   },
   methods: {
@@ -741,11 +611,10 @@ export default {
     },
     async EditCustomer2() {
       const accessToken = localStorage.getItem("@accessToken");
-      // Validate if required fields are filled
       if (!(await this.validateFormData2())) return;
       this.errorMessages = [];
 
-      this.isLoading = true; // Set loading state
+      this.isLoading = true;
       const cusID = this.formDataCustomer.company_person_id;
       try {
         const response = await fetch(
@@ -763,24 +632,14 @@ export default {
         console.log(json);
 
         if (json.statusCode === 200) {
-          this.getCustomer(); // Refresh customer list
+          this.getCustomer();
           this.showPopup(this.$t("validation.EditSucc"));
-          this.closePopup2(); // Close the popup
-        } else {
-          // if (json.data.includes("tax")) {
-          //   this.errorMessages.push(this.$t("validation.cus_tax_already"));
-          //   this.isEmpty.cus_tax = true;
-          // } else if (json.data.includes("Customer")) {
-          //   this.errorMessages.push(this.$t("validation.cus_name_already"));
-          //   this.isEmpty.cus_name = true;
-          // }
-          // this.showPopup_error(json.data);
-          // console.log("Edit customer error:", json);
+          this.closePopup2();
         }
       } catch (error) {
         console.error("Error editing customer:", error);
       } finally {
-        this.isLoading = false; // Reset loading state
+        this.isLoading = false;
       }
     },
     setTabCompany(type) {
@@ -789,11 +648,10 @@ export default {
     },
     validateEmail(email) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/;
-      return emailRegex.test(email); // Return true if email is valid
+      return emailRegex.test(email);
     },
     validateInput(event) {
       const charCode = event.which ? event.which : event.keyCode;
-      // Allow only numbers
       if (charCode < 48 || charCode > 57) {
         event.preventDefault();
       }
@@ -811,11 +669,6 @@ export default {
         this.isEmpty2.company_person_name = true;
         errorMessages.push(this.$t("validation.company_person_name"));
       }
-
-      // if (this.formDataCustomer.company_person_address.trim() === "") {
-      //   this.isEmpty2.company_person_address = true;
-      //   errorMessages.push(this.$t("validation.company_person_address"));
-      // }
 
       if (this.formDataCustomer.company_person_tel.trim() === "") {
         this.isEmpty2.company_person_tel = true;
@@ -911,18 +764,12 @@ export default {
     },
     showPopup_validate(messages) {
       if (Array.isArray(messages)) {
-        this.errorMessages = messages; // เก็บข้อความใน errorMessages
-
-        // this.showErrorPopup = true; // แสดง Popup
+        this.errorMessages = messages;
         this.isPopupVisible_error = true;
-        // setTimeout(() => {
-        //   this.isPopupVisible_error = false; // ซ่อน Popup หลังจากหน่วงเวลา
-        // }, 3000); // หน่วงเวลา 3 วินาที (3000 มิลลิวินาที)
       } else {
         this.showPopup_error(messages);
       }
     },
-    // Open the popup for adding a new customer
     async openPopup() {
       if (this.selectedType === "A") {
         this.isPopupOpen = true;
@@ -930,7 +777,6 @@ export default {
         this.isPopupOpen2 = true;
 
         this.formDataCustomer = {
-          // Data model for customer frm
           company_person_id: "",
           company_person_name: "",
           company_person_address: "",
@@ -947,10 +793,9 @@ export default {
 
         this.CustomerDropown = json.data;
       }
-      this.isAddingMode = true; // Add mode
-      this.isEditMode = false; // Disable edit mode
+      this.isAddingMode = true;
+      this.isEditMode = false;
     },
-    // Close the popup and reset form data
     closePopup2() {
       this.isPopupOpen2 = false;
       this.isPopupVisible_error = false;
@@ -960,7 +805,6 @@ export default {
       this.isAddingMode = false;
       this.isEditMode = false;
       this.formData = {
-        // Reset form data
         cus_id: "",
         cus_name: "",
         cus_address: "",
@@ -977,22 +821,19 @@ export default {
       this.isEmpty.cus_purchase = false;
       this.isEmpty.cus_tax = false;
 
-      this.category_file = ""; // Reset file input
-      this.inputError = false; // Reset validation error state
+      this.category_file = "";
+      this.inputError = false;
       this.isPopupVisible_error = false;
     },
-    // Close the delete confirmation popup
     closeDeleteConfirmPopup() {
       this.isDeleteConfirmPopupOpen = false;
     },
-    // Open the popup in edit mode and pre-fill the form with selected customer data
     handleEdit(item) {
       console.log("Edit item:", item);
       this.isPopupOpen = true;
-      this.isAddingMode = false; // Disable add mode
-      this.isEditMode = true; // Enable edit mode
+      this.isAddingMode = false;
+      this.isEditMode = true;
       this.formData = {
-        // Populate form with selected customer data
         cus_id: item.ID,
         status: item.status,
         cus_name: item["Customer Name"],
@@ -1006,10 +847,9 @@ export default {
     async handleEdit2(item) {
       console.log("Edit item:", item);
       this.isPopupOpen2 = true;
-      this.isAddingMode = false; // Disable add mode
-      this.isEditMode = true; // Enable edit mode
+      this.isAddingMode = false;
+      this.isEditMode = true;
 
-      // หา id จาก CustomerDropown โดยใช้ชื่อ
       const response = await fetch(`${API_CALL}/Quotation/getCustomer`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -1023,7 +863,6 @@ export default {
       );
 
       this.formDataCustomer = {
-        // Data model for customer form
         company_person_id: item.ID,
         company_person_name: item["Customer Name"],
         company_person_address: item["Customer Address"],
@@ -1032,7 +871,6 @@ export default {
         company_person_customer: customer ? customer.cus_id : null,
       };
     },
-    // Open the delete confirmation popup and store the customer ID to be deleted
     handleDelete(item) {
       console.log("Delete button clicked for item:", item);
       this.isDeleteConfirmPopupOpen = true;
@@ -1043,32 +881,28 @@ export default {
         company_person_id: item.ID,
       };
     },
-    // Show success message popup
     showPopup(message) {
       this.popupMessage = message;
       this.isPopupVisible = true;
       setTimeout(() => {
-        this.isPopupVisible = false; // Auto-hide after 2 seconds
+        this.isPopupVisible = false;
       }, 2000);
     },
-    // Show error message popup
     showPopup_error(message) {
       this.popupMessage_error = message;
 
       this.isPopupVisible_error = true;
       setTimeout(() => {
-        this.isPopupVisible_error = false; // Auto-hide after 2 seconds
+        this.isPopupVisible_error = false;
       }, 2000);
     },
-    // Validate email format using regular expression
     validateEmail(email) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/;
       return emailRegex.test(email);
     },
-    // Import customer data from a CSV file
     async importCategory() {
       const accessToken = localStorage.getItem("@accessToken");
-      this.isLoading = true; // Set loading state
+      this.isLoading = true;
       try {
         const formDataFile = new FormData();
         formDataFile.append("file", this.category_file);
@@ -1083,22 +917,21 @@ export default {
         const json = await response.json();
 
         if (json.statusCode === 200) {
-          this.getCustomer(); // Refresh customer list
+          this.getCustomer();
           console.log("Category imported successfully");
-          this.category_file = ""; // Reset file input
+          this.category_file = "";
         } else {
           console.log("Import category error:", json);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
-        this.isLoading = false; // Reset loading state
+        this.isLoading = false;
       }
     },
-    // Fetch the list of customers from the API
     async getCustomer() {
       const accessToken = localStorage.getItem("@accessToken");
-      this.isLoading = true; // Set loading state
+      this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/Quotation/getCustomer`, {
           headers: {
@@ -1109,7 +942,6 @@ export default {
         console.log("json", json);
 
         if (json.statusCode === 200) {
-          // Map API response data to the expected table structure
           if (this.selectedType === "A") {
             this.CompanyPerson = [];
             this.Customers = json.data.map((item) => {
@@ -1137,41 +969,32 @@ export default {
             );
             const json = await response.json();
             console.log(json);
-            this.CompanyPerson = json.data
-              // .filter((item) => item.company_person_status === "active") // กรองเฉพาะสถานะ active
-              .map((item) => {
-                let initialTableData = {
-                  ID: item.company_person_id,
-                  status: item.company_person_status,
-                  "Customer Name": item.company_person_name,
-                  // "Customer Address": item.company_person_address,
-                  "Customer Tel": item.company_person_tel,
-                  "Customer Email": item.company_person_email,
-                  "Customer Company": item.cus_name,
-                };
-                return initialTableData;
-              });
+            this.CompanyPerson = json.data.map((item) => {
+              let initialTableData = {
+                ID: item.company_person_id,
+                status: item.company_person_status,
+                "Customer Name": item.company_person_name,
+                "Customer Tel": item.company_person_tel,
+                "Customer Email": item.company_person_email,
+                "Customer Company": item.cus_name,
+              };
+              return initialTableData;
+            });
           }
         } else {
-          this.showPopup_error(json.data); // Show error message
+          this.showPopup_error(json.data);
           console.log(json);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
-        this.isLoading = false; // Reset loading state
+        this.isLoading = false;
       }
     },
-    // Add a new customer via an API call, with form validation
     async addCustomer2() {
       const accessToken = localStorage.getItem("@accessToken");
-      // await this.validateFormData();
-      // alert(this.errorMessages.length);
 
-      // this.isLoading = true;
-      // this.errorMessages = [];
       if (!(await this.validateFormData2())) return;
-      // this.errorMessages = [];
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/Quotation/addCustomer2`, {
@@ -1186,10 +1009,9 @@ export default {
 
         if (json.statusCode === 200) {
           this.isPopupVisible_error = false;
-          this.getCustomer(); // Refresh customer list
+          this.getCustomer();
           this.showPopup(this.$t("validation.AddSucc"));
           this.formDataCustomer = {
-            // Reset form data
             company_person_id: "",
             company_person_name: "",
             company_person_address: "",
@@ -1197,22 +1019,17 @@ export default {
             company_person_email: "",
             company_person_customer: "",
           };
-          this.isPopupOpen2 = false; // Close the popup
+          this.isPopupOpen2 = false;
         }
       } catch (error) {
         console.error("Error adding customer:", error);
       } finally {
-        this.isLoading = false; // Reset loading state
+        this.isLoading = false;
       }
-      // }
     },
     async addCustomer() {
       const accessToken = localStorage.getItem("@accessToken");
-      // await this.validateFormData();
-      // alert(this.errorMessages.length);
 
-      // this.isLoading = true;
-      // this.errorMessages = [];
       if (!(await this.validateFormData())) return;
       this.isLoading = true;
       try {
@@ -1228,10 +1045,9 @@ export default {
 
         if (json.statusCode === 200) {
           this.isPopupVisible_error = false;
-          this.getCustomer(); // Refresh customer list
+          this.getCustomer();
           this.showPopup(this.$t("validation.AddSucc"));
           this.formData = {
-            // Reset form data
             cus_id: "",
             cus_name: "",
             cus_address: "",
@@ -1241,7 +1057,7 @@ export default {
             cus_purchase: "",
             status: "",
           };
-          this.isPopupOpen = false; // Close the popup
+          this.isPopupOpen = false;
         } else {
           this.errorMessages = [];
           if (json.data.includes("tax")) {
@@ -1260,18 +1076,15 @@ export default {
       } catch (error) {
         console.error("Error adding customer:", error);
       } finally {
-        this.isLoading = false; // Reset loading state
+        this.isLoading = false;
       }
-      // }
     },
-    // Edit an existing customer via an API call, with form validation
     async editCustomer() {
       const accessToken = localStorage.getItem("@accessToken");
-      // Validate if required fields are filled
       if (!(await this.validateFormData())) return;
       this.errorMessages = [];
 
-      this.isLoading = true; // Set loading state
+      this.isLoading = true;
       const cusID = this.formData.cus_id;
       try {
         const response = await fetch(
@@ -1288,9 +1101,9 @@ export default {
         const json = await response.json();
 
         if (json.statusCode === 200) {
-          this.getCustomer(); // Refresh customer list
+          this.getCustomer();
           this.showPopup(this.$t("validation.EditSucc"));
-          this.closePopup(); // Close the popup
+          this.closePopup();
         } else {
           if (json.data.includes("tax")) {
             this.errorMessages.push(this.$t("validation.cus_tax_already"));
@@ -1308,31 +1121,26 @@ export default {
       } catch (error) {
         console.error("Error editing customer:", error);
       } finally {
-        this.isLoading = false; // Reset loading state
+        this.isLoading = false;
       }
-      // }
     },
-    // Delete a customer via an API call
     async deleteCustomer() {
       const accessToken = localStorage.getItem("@accessToken");
       let cusID = null;
       this.isLoading = true;
 
       try {
-        // กำหนด cusID ตามประเภท
         if (this.selectedType === "A") {
           cusID = this.formData.cus_id;
         } else {
           cusID = this.formDataCustomer.company_person_id;
         }
 
-        // สร้าง URL ตามประเภท
         const endpoint =
           this.selectedType === "A"
             ? `${API_CALL}/Quotation/deleteCustomer/${cusID}`
             : `${API_CALL}/Quotation/deleteCustomer2/${cusID}`;
 
-        // ส่งคำขอลบ
         const response = await fetch(endpoint, {
           method: "DELETE",
           headers: {
@@ -1361,11 +1169,10 @@ export default {
         console.error("Error deleting customer:", error);
         this.showPopup(this.$t("validation.ErrorOccurred"));
       } finally {
-        this.isLoading = false; // Reset loading state
+        this.isLoading = false;
       }
     },
   },
-  // Fetch the customer list when the component is created
   created() {
     this.setTabCompany("A");
     this.getCustomer();
