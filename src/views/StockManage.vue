@@ -144,10 +144,10 @@
         />
       </div>
       <div class="modal-footer">
-        <button
+        <Button
           v-if="isAddingMode"
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           @click="producTransaction"
         >
           <span
@@ -157,11 +157,11 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonAdd") }}</span>
-        </button>
-        <button
+        </Button>
+        <Button
           v-if="isEditingMode"
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           @click="editTransaction"
         >
           <span
@@ -171,10 +171,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonSave") }}</span>
-        </button>
-        <button class="btn btn-secondary" @click="closePopup">
+        </Button>
+        <Button customClass="btn btn-secondary" @click="closePopup">
           {{ t("buttonCancel") }}
-        </button>
+        </Button>
       </div>
     </Popup>
     <div v-if="isPopupVisible" class="popup-success">
@@ -192,13 +192,12 @@
     </div> -->
     <div v-if="isPopupVisible_error" class="popup-error2">
       <div class="text-end">
-        <button
+        <Button
           type="button"
-          class="btn-close"
+          customClass="btn-close"
           aria-label="Close"
           @click="closeErrorPopup"
-          style="color: #9f9999"
-        ></button>
+        />
       </div>
       <div class="popup-content-error2">
         <ul>
@@ -218,6 +217,7 @@ import productList from "../components/tableList.vue";
 import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n";
 import { computed, watch, ref } from "vue";
+import Button from "../components/button.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -228,6 +228,7 @@ export default {
     Navigate,
     Popup,
     productList,
+    Button,
   },
   setup() {
     const { t } = useI18n();

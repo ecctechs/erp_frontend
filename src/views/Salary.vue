@@ -56,10 +56,10 @@
           <a class="btn btn-success me-3 size-font-sm me-2" @click="openPopup">
             {{ t("addPaySalary") }}
           </a>
-          <button
-            class="btn btn-outline-secondary mdi mdi-export-variant size-font-sm"
+          <Button
+            customClass="btn btn-outline-secondary mdi mdi-export-variant size-font-sm"
             @click="exportSalary"
-          ></button>
+          ></Button>
         </div>
       </div>
       <!-- <div class="mb-3 d-flex justify-content-between align-items-center">
@@ -250,9 +250,9 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           @click="addPayment"
         >
           <span
@@ -262,10 +262,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonConfirm") }}</span>
-        </button>
-        <button class="btn btn-secondary" @click="closePopup">
+        </Button>
+        <Button customClass="btn btn-secondary" @click="closePopup">
           {{ t("buttonClose") }}
-        </button>
+        </Button>
       </div>
     </Popup>
     <Popup :isOpen="isovertimeopen" :closePopup="closePopupOvertime">
@@ -354,9 +354,9 @@
         />
       </div>
       <div class="modal-footer mb-3">
-        <button
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           @click="AddOvertime"
         >
           <span
@@ -366,10 +366,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonAdd") }}</span>
-        </button>
-        <button class="btn btn-secondary" @click="closePopupOvertime">
+        </Button>
+        <Button customClass="btn btn-secondary" @click="closePopupOvertime">
           {{ t("buttonCancel") }}
-        </button>
+        </Button>
       </div>
     </Popup>
     <div v-if="isPopupVisible" class="popup-success">
@@ -387,13 +387,12 @@
     <div v-if="isPopupVisible_error2" class="popup-error2">
       <div class="text-end">
         fff
-        <button
+        <Button
           type="button"
-          class="btn-close"
+          customClass="btn-close"
           aria-label="Close"
           @click="closeErrorPopup2"
-          style="color: #9f9999"
-        ></button>
+        />
       </div>
       <div class="popup-content-error2">{{ popupMessage_error2 }}</div>
     </div>
@@ -408,13 +407,12 @@
     </div> -->
     <div v-if="isPopupVisible_error" class="popup-error2">
       <div class="text-end">
-        <button
+        <Button
           type="button"
-          class="btn-close"
+          customClass="btn-close"
           aria-label="Close"
           @click="closeErrorPopup"
-          style="color: #9f9999"
-        ></button>
+        />
       </div>
       <div class="popup-content-error2">
         <a v-if="this.popupMessage_error">{{ popupMessage_error }}</a>
@@ -512,9 +510,9 @@
       />
     </div>
     <div class="modal-footer">
-      <button
+      <Button
         :disabled="isLoading"
-        class="btn btn-primary me-3"
+        customClass="btn btn-primary me-3"
         v-if="isAddingMode"
         @click="addDepartment"
       >
@@ -525,10 +523,10 @@
           aria-hidden="true"
         ></span>
         <span v-else>{{ t("buttonAdd") }}</span>
-      </button>
-      <button
+      </Button>
+      <Button
         :disabled="isLoading"
-        class="btn btn-primary me-3"
+        customClass="btn btn-primary me-3"
         v-if="isEditMode"
         @click="editDepartment"
       >
@@ -539,13 +537,13 @@
           aria-hidden="true"
         ></span>
         <span v-else>{{ t("buttonSave") }}</span>
-      </button>
-      <button class="btn btn-primary mr-3" @click="comfrimEditSalary">
+      </Button>
+      <Button customClass="btn btn-primary mr-3" @click="comfrimEditSalary">
         {{ t("buttonSave") }}
-      </button>
-      <button class="btn btn-secondary" @click="closeEditConfirmPopup">
+      </Button>
+      <Button customClass="btn btn-secondary" @click="closeEditConfirmPopup">
         {{ t("buttonCancel") }}
-      </button>
+      </Button>
     </div>
   </Popup>
   <div class="delete-popup">
@@ -554,9 +552,9 @@
         <a>{{ t("deleteConfirmSentence") }}</a>
       </div>
       <div class="modal-footer mb-3">
-        <button
+        <Button
           :disabled="isLoading"
-          class="btn btn-danger me-3"
+          customClass="btn btn-danger me-3"
           @click="deleteSalary"
         >
           <span
@@ -566,10 +564,13 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonDelete") }}</span>
-        </button>
-        <button class="btn btn-secondary" @click="closeDeleteConfirmPopup">
+        </Button>
+        <Button
+          customClass="btn btn-secondary"
+          @click="closeDeleteConfirmPopup"
+        >
           {{ t("buttonCancel") }}
-        </button>
+        </Button>
       </div>
     </Popup>
   </div>
@@ -584,6 +585,7 @@ import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n";
 import DatePicker from "vue-datepicker-next";
 import "vue-datepicker-next/index.css";
+import Button from "../components/button.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -595,6 +597,7 @@ export default {
     tableList,
     Popup,
     DatePicker,
+    Button,
   },
   setup() {
     const { t } = useI18n(); // i18n function for translations

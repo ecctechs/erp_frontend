@@ -760,10 +760,10 @@
                     />
                   </td>
                   <td class="action-column">
-                    <button
-                      class="btn btn-danger mdi mdi-trash-can-outline"
+                    <Button
+                      customClass="btn btn-danger mdi mdi-trash-can-outline"
                       @click="closingProduct(index)"
-                    ></button>
+                    ></Button>
                   </td>
                 </tr>
               </tbody>
@@ -1084,9 +1084,9 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           v-if="isAddingMode"
           @click="addQuotation"
         >
@@ -1097,10 +1097,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonAdd") }}</span>
-        </button>
-        <button
+        </Button>
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           v-if="isEditMode"
           @click="editQuotation"
         >
@@ -1111,18 +1111,18 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonSave") }}</span>
-        </button>
-        <button class="btn btn-secondary" @click="closePopup">
+        </Button>
+        <Button customClass="btn btn-secondary" @click="closePopup">
           {{ t("buttonCancel") }}
-        </button>
+        </Button>
       </div>
     </popup>
     <popup :isOpen="isPopupPDFOpen" :closePopup="ClosePDFview">
       <embed :src="pdfUrl" type="application/pdf" width="100%" height="600px" />
       <div class="modal-footer">
-        <button class="btn btn-secondary" @click="ClosePDFview">
+        <Button customClass="btn btn-secondary" @click="ClosePDFview">
           {{ t("buttonClose") }}
-        </button>
+        </Button>
       </div>
     </popup>
   </div>
@@ -1135,12 +1135,15 @@
         <a>{{ t("deleteConfirmSentence") }}</a>
       </div>
       <div class="modal-footer mb-5">
-        <button class="btn btn-danger me-2" @click="deleteQuotation">
+        <Button customClass="btn btn-danger me-2" @click="deleteQuotation">
           {{ t("buttonDelete") }}
-        </button>
-        <button class="btn btn-secondary" @click="closeDeleteConfirmPopup">
+        </Button>
+        <Button
+          customClass="btn btn-secondary"
+          @click="closeDeleteConfirmPopup"
+        >
           {{ t("buttonCancel") }}
-        </button>
+        </Button>
       </div>
     </Popup>
     <transition name="fade">
@@ -1184,15 +1187,15 @@
         <a>{{ t("AllowConfirmSentence") }}</a>
       </div>
       <div class="modal-footer mb-5">
-        <button class="btn btn-success me-2" @click="editQuotation2">
+        <Button customClass="btn btn-success me-2" @click="editQuotation2">
           {{ t("buttonConfirm") }}
-        </button>
-        <button class="btn btn-warning me-2" @click="editQuotation3">
+        </Button>
+        <Button customClass="btn btn-warning me-2" @click="editQuotation3">
           {{ t("PendingLG") }}
-        </button>
-        <button class="btn btn-secondary" @click="closeAllowConfirmPopup">
+        </Button>
+        <Button customClass="btn btn-secondary" @click="closeAllowConfirmPopup">
           {{ t("buttonCancel") }}
-        </button>
+        </Button>
       </div>
     </Popup>
   </div>
@@ -1212,13 +1215,12 @@
     </div> -->
     <div v-if="isPopupVisible_error" class="popup-error2">
       <div class="text-end">
-        <button
+        <Button
           type="button"
-          class="btn-close"
+          customClass="btn-close"
           aria-label="Close"
           @click="closeErrorPopup"
-          style="color: #9f9999"
-        ></button>
+        />
       </div>
       <div class="popup-content-error2">
         <ul>
@@ -1260,6 +1262,7 @@ import { reactive } from "vue";
 import { computed, watch, ref } from "vue";
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
+import Button from "../components/button.vue";
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -1273,6 +1276,7 @@ export default {
     Popup,
     DatePicker,
     Department,
+    Button,
   },
   setup() {
     const { t } = useI18n();

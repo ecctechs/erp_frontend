@@ -147,9 +147,12 @@
         </div>
         <div class="col-1 col-sm-1 col-md-7 col-lg-7"></div>
         <div class="col-5 col-sm-5 col-md-2 col-lg-2 text-end">
-          <button class="btn btn-primary size-font-sm" @click="openPopupLeave">
+          <Button
+            customClass="btn btn-primary size-font-sm"
+            @click="openPopupLeave"
+          >
             {{ t("manageLeave") }}
-          </button>
+          </Button>
         </div>
       </div>
       <!-- <div class="mb-3 d-flex justify-content-between align-items-center">
@@ -440,9 +443,9 @@
         />
       </div>
       <div class="mb-3 modal-footer">
-        <button
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           v-if="isAddingMode"
           @click="addEmployee"
         >
@@ -453,10 +456,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonAdd") }}</span>
-        </button>
-        <button
+        </Button>
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           v-if="isEditMode"
           @click="editEmployee"
         >
@@ -467,10 +470,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonSave") }}</span>
-        </button>
-        <button class="btn btn-secondary" @click="closePopup">
+        </Button>
+        <Button customClass="btn btn-secondary" @click="closePopup">
           {{ t("buttonCancel") }}
-        </button>
+        </Button>
       </div>
     </Popup>
     <Popup :isOpen="isPopupOpenLeave" :closePopup="closePopupLeave">
@@ -672,9 +675,9 @@
         </v-date-picker> -->
       </div>
       <div class="mb-3 modal-footer">
-        <button
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           @click="AddLeave"
         >
           <span
@@ -684,10 +687,11 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonSave") }}</span>
-        </button>
-        <button class="btn btn-secondary" @click="closePopupLeave">
+        </Button>
+
+        <Button customClass="btn btn-secondary" @click="closePopupLeave">
           {{ t("buttonCancel") }}
-        </button>
+        </Button>
       </div>
     </Popup>
     <!-- <Popup :isOpen="isPopupOpenOvertime" :closePopup="closePopupOvertime">
@@ -774,12 +778,15 @@
           <a>{{ t("deleteConfirmSentence") }}</a>
         </div>
         <div class="modal-footer mb-5">
-          <button class="btn btn-danger me-2" @click="deleteEmployee">
+          <Button customClass="btn btn-danger me-2" @click="deleteEmployee">
             {{ t("buttonDelete") }}
-          </button>
-          <button class="btn btn-secondary" @click="closeDeleteConfirmPopup">
+          </Button>
+          <Button
+            customClass="btn btn-secondary"
+            @click="closeDeleteConfirmPopup"
+          >
             {{ t("buttonCancel") }}
-          </button>
+          </Button>
         </div>
       </Popup>
     </div>
@@ -792,15 +799,15 @@
           <a>{{ t("deleteConfirmSentence") }}</a>
         </div>
         <div class="modal-footer mb-5">
-          <button class="btn btn-danger me-2" @click="deleteLeave">
+          <Button customClass="btn btn-danger me-2" @click="deleteLeave">
             {{ t("buttonDelete") }}
-          </button>
-          <button
-            class="btn btn-secondary"
+          </Button>
+          <Button
+            customClass="btn btn-secondary"
             @click="closeDeleteLeaveConfirmPopup"
           >
             {{ t("buttonCancel") }}
-          </button>
+          </Button>
         </div>
       </Popup>
     </div>
@@ -819,13 +826,12 @@
     </div> -->
     <div v-if="isPopupVisible_error" class="popup-error2">
       <div class="text-end">
-        <button
+        <Button
           type="button"
-          class="btn-close"
+          customClass="btn-close"
           aria-label="Close"
           @click="closeErrorPopup"
-          style="color: #9f9999"
-        ></button>
+        />
       </div>
       <div class="popup-content-error2">
         <ul>
@@ -845,13 +851,12 @@
     </div> -->
     <div v-if="isPopupVisible_error2" class="popup-error2">
       <div class="text-end">
-        <button
+        <Button
           type="button"
-          class="btn-close"
+          customClass="btn-close"
           aria-label="Close"
           @click="closeErrorPopup"
-          style="color: #9f9999"
-        ></button>
+        />
       </div>
       <div class="popup-content-error2">
         <ul>
@@ -875,6 +880,7 @@ import { useI18n } from "vue-i18n";
 import th from "vue-datepicker-next/locale/th.es";
 import en from "vue-datepicker-next/locale/en.es";
 import moment from "moment";
+import Button from "../components/button.vue";
 
 // var today = new Date().toISOString().split('T')[0];
 // document.getElementById("date-input").setAttribute("max", today);
@@ -889,6 +895,7 @@ export default {
     employeeList,
     Popup,
     DatePicker,
+    Button,
   },
   // setup() {
   //   const { t } = useI18n();

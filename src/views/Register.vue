@@ -152,10 +152,10 @@
             </select>
           </div>
           <div style="display: flex; justify-content: flex-end">
-            <button
+            <Button
               v-if="isAddingMode"
               :disabled="isLoading"
-              class="btn btn-primary me-3"
+              customClass="btn btn-primary me-3"
               @click="addUser"
             >
               <span
@@ -165,11 +165,11 @@
                 aria-hidden="true"
               ></span>
               <span v-else>{{ t("buttonAdd") }}</span>
-            </button>
-            <button
+            </Button>
+            <Button
               v-if="isEditMode"
               :disabled="isLoading"
-              class="btn btn-primary me-3"
+              customClass="btn btn-primary me-3"
               @click="editUser"
             >
               <span
@@ -179,10 +179,10 @@
                 aria-hidden="true"
               ></span>
               <span v-else>{{ t("buttonSave") }}</span>
-            </button>
-            <button class="btn btn-outline-secondary" @click="closePopup">
+            </Button>
+            <Button customClass="btn btn-outline-secondary" @click="closePopup">
               {{ t("buttonCancel") }}
-            </button>
+            </Button>
           </div>
         </Popup>
       </div>
@@ -195,9 +195,9 @@
             <a>{{ t("deleteConfirmSentence") }}</a>
           </div>
           <div class="modal-footer">
-            <button
+            <Button
               :disabled="isLoading"
-              class="btn btn-danger me-3"
+              customClass="btn btn-danger me-3"
               @click="deleteUser"
             >
               <span
@@ -207,10 +207,13 @@
                 aria-hidden="true"
               ></span>
               <span v-else>{{ t("buttonDelete") }}</span>
-            </button>
-            <button class="btn btn-secondary" @click="closeDeleteConfirmPopup">
+            </Button>
+            <Button
+              customClass="btn btn-secondary"
+              @click="closeDeleteConfirmPopup"
+            >
               {{ t("buttonCancel") }}
-            </button>
+            </Button>
           </div>
         </Popup>
       </div>
@@ -226,13 +229,12 @@
       </div> -->
       <div v-if="isPopupVisible_error" class="popup-error2">
         <div class="text-end">
-          <button
+          <Button
             type="button"
-            class="btn-close"
+            customClass="btn-close"
             aria-label="Close"
             @click="closeErrorPopup"
-            style="color: #9f9999"
-          ></button>
+          />
         </div>
         <div class="popup-content-error2">
           <a>{{ popupMessage_error }}</a>
@@ -254,6 +256,7 @@ import UserList from "../components/tableList.vue";
 import Popup from "../components/popup.vue";
 import { useI18n } from "vue-i18n";
 import { computed } from "vue";
+import Button from "../components/button.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -263,6 +266,7 @@ export default {
     Navigate, // The navigation bar component used for the page
     UserList, // The component that lists users
     Popup, // The component used for popups like adding/editing users
+    Button,
   },
   setup() {
     const { t } = useI18n(); // Enables internationalization (i18n) for translating text
@@ -355,19 +359,16 @@ export default {
 
         // this.Employees = json.data;
 
-    
-            // Set raw data
-    const allEmployees = json.data;
+        // Set raw data
+        const allEmployees = json.data;
 
-    // Get email list of users
-    const userEmails = this.Users.map(user => user.Email);
+        // Get email list of users
+        const userEmails = this.Users.map((user) => user.Email);
 
-    // Filter employees: remove ones whose email is in userEmails
-    this.Employees = allEmployees.filter(
-      employee => !userEmails.includes(employee.Email)
-    );
-
-
+        // Filter employees: remove ones whose email is in userEmails
+        this.Employees = allEmployees.filter(
+          (employee) => !userEmails.includes(employee.Email)
+        );
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {

@@ -9,20 +9,22 @@
       </div>
       <div style="width: 100%; display: flex; justify-content: center">
         <div class="mb-3 btn-group btn-group-size custome-tab">
-          <button
-            class="btn btn-primary"
-            :class="{ active: selectedType === 'A' }"
+          <Button
+            :customClass="
+              'btn btn-primary' + (selectedType === 'A' ? ' active' : '')
+            "
             @click="setProductType('A')"
           >
             {{ t("product") }}
-          </button>
-          <button
-            class="btn btn-primary"
-            :class="{ active: selectedType === 'B' }"
+          </Button>
+          <Button
+            :customClass="
+              'btn btn-primary' + (selectedType === 'B' ? ' active' : '')
+            "
             @click="setProductType('B')"
           >
             {{ t("service") }}
-          </button>
+          </Button>
         </div>
       </div>
       <div class="row mb-3">
@@ -345,9 +347,9 @@
         </select>
       </div>
       <div class="mb-3 modal-footer">
-        <button
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           v-if="isAddingMode"
           @click="addProduct"
         >
@@ -358,10 +360,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonAdd") }}</span>
-        </button>
-        <button
+        </Button>
+        <Button
           :disabled="isLoading"
-          class="btn btn-primary me-3"
+          customClass="btn btn-primary me-3"
           v-if="isEditMode"
           @click="editProduct"
         >
@@ -372,10 +374,10 @@
             aria-hidden="true"
           ></span>
           <span v-else>{{ t("buttonSave") }}</span>
-        </button>
-        <button class="btn btn-secondary" @click="closePopup">
+        </Button>
+        <Button customClass="btn btn-secondary" @click="closePopup">
           {{ t("buttonCancel") }}
-        </button>
+        </Button>
       </div>
     </Popup>
     <div class="delete-popup">
@@ -387,12 +389,15 @@
           <a>{{ t("deleteConfirmSentence") }}</a>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-danger me-3" @click="deleteProduct">
+          <Button customClass="btn btn-danger me-3" @click="deleteProduct">
             {{ t("buttonDelete") }}
-          </button>
-          <button class="btn btn-secondary" @click="closeDeleteConfirmPopup">
+          </Button>
+          <Button
+            customClass="btn btn-secondary"
+            @click="closeDeleteConfirmPopup"
+          >
             {{ t("buttonCancel") }}
-          </button>
+          </Button>
         </div>
       </Popup>
     </div>
@@ -411,13 +416,12 @@
     </div> -->
     <div v-if="isPopupVisible_error" class="popup-error2">
       <div class="text-end">
-        <button
+        <Button
           type="button"
-          class="btn-close"
+          customClass="btn-close"
           aria-label="Close"
           @click="closeErrorPopup"
-          style="color: #9f9999"
-        ></button>
+        />
       </div>
       <div class="popup-content-error2">
         <ul>
@@ -437,6 +441,7 @@ import Popup from "../components/popup.vue";
 import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n";
 import { computed, watch, ref } from "vue";
+import Button from "../components/button.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -447,6 +452,7 @@ export default {
     Navigate,
     productList,
     Popup,
+    Button,
   },
   setup() {
     const { t } = useI18n();

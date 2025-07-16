@@ -43,9 +43,9 @@
             />
           </div>
           <div class="modal-footer">
-            <button
+            <Button
               :disabled="isLoading"
-              class="btn btn-primary me-3"
+              customClass="btn btn-primary me-3"
               @click="editRole"
             >
               <span
@@ -55,10 +55,10 @@
                 aria-hidden="true"
               ></span>
               <span v-else>Save</span>
-            </button>
-            <button class="btn btn-secondary" @click="closePopup">
+            </Button>
+            <Button customClass="btn btn-secondary" @click="closePopup">
               Cancel
-            </button>
+            </Button>
           </div>
         </Popup>
         <div class="delete-popup">
@@ -70,9 +70,9 @@
               <a>Are you sure? you want to delete.</a>
             </div>
             <div class="modal-footer">
-              <button
+              <Button
                 :disabled="isLoading"
-                class="btn btn-danger me-3"
+                customClass="btn btn-danger me-3"
                 @click="deleteRole"
               >
                 <span
@@ -82,13 +82,13 @@
                   aria-hidden="true"
                 ></span>
                 <span v-else>Delete</span>
-              </button>
-              <button
-                class="btn btn-secondary"
+              </Button>
+              <Button
+                customClass="btn btn-secondary"
                 @click="closeDeleteConfirmPopup"
               >
                 Cancel
-              </button>
+              </Button>
             </div>
           </Popup>
         </div>
@@ -104,13 +104,12 @@
         </div> -->
         <div v-if="isPopupVisible_error" class="popup-error2">
           <div class="text-end">
-            <button
+            <Button
               type="button"
-              class="btn-close"
+              customClass="btn-close"
               aria-label="Close"
               @click="closeErrorPopup"
-              style="color: #9f9999"
-            ></button>
+            />
           </div>
           <div class="popup-content-error2">
             <ul>
@@ -131,6 +130,7 @@ import tableList from "../components/tableList.vue";
 import Popup from "../components/popup.vue";
 import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n";
+import Button from "../components/button.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -139,6 +139,7 @@ export default {
     Navigate, // Component for navigation bar
     tableList, // Component for listing table data
     Popup, // Component for popups (edit/delete confirmation)
+    Button,
   },
   setup() {
     const { t } = useI18n(); // Internationalization setup for translating text

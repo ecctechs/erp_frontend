@@ -49,10 +49,9 @@
             aria-describedby="basic-addon2"
             v-model="formUser.password"
           />
-          <button
-            class="btn btn-outline-secondary"
+          <Button
+            customClass="btn btn-outline-secondary"
             type="button"
-            id="button-addon2"
             @click="togglePassword"
           >
             <span
@@ -60,16 +59,16 @@
                 showPassword ? 'mdi mdi-eye-off-outline' : 'mdi mdi-eye-circle'
               "
             ></span>
-          </button>
+          </Button>
         </div>
       </div>
       <div>
         <!-- <a href="forgetpassword">{{ t("forgetpassword") }}</a> -->
       </div>
       <div class="footer mt-2 mb-2">
-        <button
+        <Button
           type="submit"
-          class="btn btn-primary"
+          customClass="btn btn-primary"
           :disabled="isSubmitDisabled || isLoading"
         >
           <span v-if="!isLoading">{{ t("login") }}</span>
@@ -80,7 +79,7 @@
             aria-hidden="true"
           ></span>
           <span class="visually-hidden">Loading...</span>
-        </button>
+        </Button>
       </div>
       <div>
         <a>{{ t("registersentence") }}</a>
@@ -94,13 +93,12 @@
     </div> -->
     <div v-if="isPopupVisible_error" class="popup-error2">
       <div class="text-end">
-        <button
+        <Button
           type="button"
-          class="btn-close"
+          customClass="btn-close"
           aria-label="Close"
           @click="closeErrorPopup"
-          style="color: #9f9999"
-        ></button>
+        />
       </div>
       <div class="popup-content-error2 text-center">
         {{ popupMessage_error }}
@@ -113,9 +111,13 @@
 import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n"; //for switch language
 import { watchEffect } from "vue";
+import Button from "../components/button.vue";
 
 const API_CALL = config["url"];
 export default {
+  components: {
+    Button,
+  },
   name: "login",
   setup() {
     const { t, locale } = useI18n();

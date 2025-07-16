@@ -1,7 +1,5 @@
 <template>
   <div class="main-page">
-    <!-- call navigate tab -->
-    <!-- <navigate /> -->
     <div class="page-body">
       <div class="row text-center">
         <div class="col-md-12">
@@ -21,17 +19,6 @@
                       v-if="toggleCustomDate"
                     >
                       <div class="mb-3 div-for-formControl form-filter-home">
-                        <!-- <DatePicker
-                          v-model:value="custom_filter_start_date"
-                          format="DD/MM/YYYY"
-                          value-type="date"
-                          placeholder="DD/MM/YYYY"
-                          class="form-control"
-                          :formatter="momentFormat"
-                          :lang="currentLocale"
-                          @change="filterDataByOption"
-                        />
-                        {{ custom_filter_start_date }} -->
                         <v-date-picker
                           v-model="custom_filter_start_date"
                           locale="th-TH"
@@ -52,16 +39,6 @@
                       </div>
                       <span class="mdi mdi-minus" style="padding: 10px"></span>
                       <div class="mb-3 div-for-formControl form-filter-home">
-                        <!-- <DatePicker
-                          v-model:value="custom_filter_end_date"
-                          format="DD/MM/YYYY"
-                          value-type="date"
-                          placeholder="DD/MM/YYYY"
-                          class="form-control"
-                          :formatter="momentFormat"
-                          :lang="currentLocale"
-                          @change="filterDataByOption"
-                        /> -->
                         <v-date-picker
                           v-model="custom_filter_end_date"
                           locale="th-TH"
@@ -123,91 +100,6 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="top-table-for-filter">
-                <p class="card-body-p form-date-home">
-                  {{ t("sentenceSummaryYear") }} {{ startDate }} - {{ endDate }}
-                </p> -->
-              <!-- {{ BusinessJson.TokenCreate }} -->
-              <!-- <div
-                  class="div-for-formControl custome-filter-date"
-                  v-if="toggleCustomDate"
-                >
-                  <div class="mb-3 div-for-formControl form-filter-home">
-                    <DatePicker
-                      v-model:value="custom_filter_start_date"
-                      format="DD/MM/YYYY"
-                      value-type="date"
-                      placeholder="DD/MM/YYYY"
-                      class="form-control"
-                      :formatter="momentFormat"
-                      :lang="currentLocale"
-                      @change="filterDataByOption"
-                    />
-                  </div>
-                  <span class="mdi mdi-minus" style="padding: 10px"></span>
-                  <div class="mb-3 div-for-formControl form-filter-home">
-                    <DatePicker
-                      v-model:value="custom_filter_end_date"
-                      format="DD/MM/YYYY"
-                      value-type="date"
-                      placeholder="DD/MM/YYYY"
-                      class="form-control"
-                      :formatter="momentFormat"
-                      :lang="currentLocale"
-                      @change="filterDataByOption"
-                    />
-                  </div>
-                </div> -->
-
-              <!-- <select
-                    class="form-control col-sm-9 col-md-6 form-select"
-                    @change="filterDataByOption"
-                    v-model="selectedOption"
-                  >
-                    <option value="all">{{ t("all") }}</option>
-                    <option value="thisYear">{{ t("thisyear") }}</option>
-                    <option value="lastYear">{{ t("lastyear") }}</option>
-                  </select> -->
-              <!-- <div class="mb-3 div-for-formControl form-filter-home">
-                  <select
-                    class="form-control col-sm-9 col-md-6 form-select"
-                    @change="filterDataByOption"
-                    v-model="selectedOption"
-                  >
-                    <option value="all">{{ $t("filterDate.all") }}</option>
-                    <option value="last7Days">
-                      {{ t("filterDate.last7Days") }}
-                    </option>
-                    <option value="last14Days">
-                      {{ t("filterDate.last14Days") }}
-                    </option>
-                    <option value="last30Days">
-                      {{ t("filterDate.last30Days") }}
-                    </option>
-                    <option value="thisMonth">
-                      {{ t("filterDate.thisMonth") }}
-                    </option>
-                    <option value="lastMonth">
-                      {{ t("filterDate.lastMonth") }}
-                    </option>
-                    <option value="thisQuarter">
-                      {{ t("filterDate.thisQuarter") }}
-                    </option>
-                    <option value="lastQuarter">
-                      {{ t("filterDate.lastQuarter") }}
-                    </option>
-                    <option value="thisYear">
-                      {{ t("filterDate.thisYear") }}
-                    </option>
-                    <option value="lastYear">
-                      {{ t("filterDate.lastYear") }}
-                    </option>
-                    <option value="customDate">
-                      {{ t("filterDate.customDate") }}
-                    </option>
-                  </select>
-                </div> -->
-              <!-- </div> -->
               <div class="card-body-detail" style="white-space: nowrap">
                 <div class="card-body-left">
                   <div class="card-body-left-sale">
@@ -228,7 +120,6 @@
                       <p>{{ t("costallDash") }}</p>
                     </div>
                     <p>
-                      <!-- {{ totalProductCost + totalSalaryPaid + totalOvertime }} -->
                       {{ ConvertTo2DigitCost }}
                     </p>
                   </div>
@@ -239,7 +130,6 @@
                       <p>{{ t("profitallDAsh") }}</p>
                     </div>
                     <p>
-                      <!-- {{ totalSalescon - (totalProductCost + totalSalaryPaid) }} -->
                       {{ ConvertTo2DigitProfit }}
                     </p>
                   </div>
@@ -324,18 +214,7 @@
                   {{ endDate2 }}
                 </div>
                 <div class="col-1 col-sm-4 col-md-2 col-lg-2"></div>
-                <!-- <div class="col-6 custome-filter-date" v-if="toggleCustomDate"> -->
                 <div class="col-3" v-if="toggleCustomDate2">
-                  <!-- <DatePicker
-                    v-model:value="custom_filter_start_date2"
-                    format="DD/MM/YYYY"
-                    value-type="date"
-                    placeholder="DD/MM/YYYY"
-                    class="form-control"
-                    :formatter="momentFormat"
-                    :lang="currentLocale"
-                    @change="filterDataByOption2"
-                  /> -->
                   <v-date-picker
                     v-model="custom_filter_start_date2"
                     locale="th-TH"
@@ -359,17 +238,6 @@
                   style="padding: 10px; width: 30px"
                 ></span>
                 <div class="col-12 form-filter-home">
-                  <!-- <DatePicker
-                    v-model:value="custom_filter_end_date2"
-                    format="DD/MM/YYYY"
-                    value-type="date"
-                    placeholder="DD/MM/YYYY"
-                    class="form-control"
-                    :formatter="momentFormat"
-                    :lang="currentLocale"
-                    @change="filterDataByOption2"
-                    v-if="toggleCustomDate2"
-                  /> -->
                   <v-date-picker
                     v-if="toggleCustomDate2"
                     v-model="custom_filter_end_date2"
@@ -387,7 +255,6 @@
                     </template>
                   </v-date-picker>
                 </div>
-                <!-- </div> -->
                 <div
                   class="mb-3 col-12 col-sm-12 col-md-3 col-lg-3 form-filter-home"
                 >
@@ -466,20 +333,14 @@
       </div>
       <div class="row text-center"></div>
     </div>
-    <!-- <div v-if="isPopupVisible_error" class="popup-success">
-      <div class="popup-content-error">
-        <a>{{ popupMessage_error }}</a>
-      </div>
-    </div> -->
     <div v-if="isPopupVisible_error" class="popup-error2">
       <div class="text-end">
-        <button
+        <Button
           type="button"
-          class="btn-close"
+          customClass="btn-close"
           aria-label="Close"
           @click="closeErrorPopup"
-          style="color: #9f9999"
-        ></button>
+        />
       </div>
       <div class="popup-content-error2">
         <ul>
@@ -494,6 +355,7 @@
 
 <script>
 import navigate from "../components/Navigation.vue";
+import Button from "../components/button.vue"; // 1. นำเข้า component
 import * as echarts from "echarts";
 import { config } from "../../constant.js";
 
@@ -508,20 +370,15 @@ import { computed, watch, ref } from "vue";
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
 
-// ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
 import en from "vue-datepicker-next/locale/en.es";
-
-// const { t } = useI18n();
-// const lang = computed(() => t("lang"));
-
-// // ✅ watch การเปลี่ยนแปลงของ lang
 
 export default {
   name: "HomePage",
   components: {
     navigate,
     DatePicker,
+    Button, // 2. ลงทะเบียน component
   },
   setup() {
     const { t } = useI18n();
@@ -530,22 +387,20 @@ export default {
 
     const currentLocale = computed(() => {
       return {
-        ...(locale.value === "th" ? th : en), // ✅ ใช้ค่าจาก locale ปัจจุบัน
+        ...(locale.value === "th" ? th : en),
         yearFormat:
-          locale.value === "en" ? moment().year() : moment().year() + 543, // ✅ แปลงปี พ.ศ. หรือ ค.ศ.
+          locale.value === "en" ? moment().year() : moment().year() + 543,
       };
     });
 
-    const date = ref(null); // ✅ ค่าที่เก็บเป็น YYYY-MM-DD (ค.ศ.)
+    const date = ref(null);
 
     const momentFormat = computed(() => ({
-      // 📌 Date → String (แสดงผลเป็น พ.ศ. ถ้าภาษาเป็นไทย)
       stringify: (date) => {
         if (!date) return "";
-        const yearOffset = lang.value === "en" ? 543 : 0; // ✅ ตรวจสอบภาษาผ่าน computed
+        const yearOffset = lang.value === "en" ? 543 : 0;
         return moment(date).add(yearOffset, "years").format("DD/MM/YYYY");
       },
-      // 📌 String → Date (แปลงกลับเป็น ค.ศ. ถ้าภาษาเป็นไทย)
       parse: (value) => {
         if (!value) return null;
         const yearOffset = lang.value === "en" ? 543 : 0;
@@ -553,7 +408,6 @@ export default {
           .subtract(yearOffset, "years")
           .toDate();
       },
-      // 📌 ใช้ moment คำนวณเลขสัปดาห์ (ถ้าจำเป็น)
       getWeek: (date) => {
         return moment(date).week();
       },
@@ -564,10 +418,10 @@ export default {
       momentFormat,
       currentLocale,
       t,
-      lang, // ✅ นำ lang ไปใช้ใน template ได้
+      lang,
     };
   },
-
+  // ... The rest of your script remains unchanged
   data() {
     return {
       date: new Date(),
@@ -608,7 +462,6 @@ export default {
       productTypeA: "",
       productTypeB: "",
       totalSalaryPaid: "",
-      Billings: [],
       Invoices: [],
       Quotations: [],
       pendingQuotationCount: [],
@@ -641,13 +494,13 @@ export default {
         credit_date_number: "",
         credit_expired_date: "",
         sale_discount: 0,
-        sale_totalprice: 0, // total price cal discount and vat
-        sale_price: 0, //total price before cal discount but *qty
-        total_price: 0, ////////////cal all product
-        total_discount: 0, ///////////////
-        Net_price: 0, //cal after cal discount
-        vat: 0, //price not percentage
-        price: "", //price per product
+        sale_totalprice: 0,
+        sale_price: 0,
+        total_price: 0,
+        total_discount: 0,
+        Net_price: 0,
+        vat: 0,
+        price: "",
         remark: "",
         invoice_id: "",
         invoice_number: "",
@@ -674,16 +527,14 @@ export default {
       const month = (d.getMonth() + 1).toString().padStart(2, "0");
       const buddhistYear = d.getFullYear() + 543;
 
-      return `${day}/${month}/${buddhistYear}`; // 🔸 แสดงเป็น พ.ศ.
+      return `${day}/${month}/${buddhistYear}`;
     },
     custom_filter(data) {
       const formattedDate = moment(data)
-        .add(543, "years") // เพิ่มปีเป็น พ.ศ.
+        .add(543, "years")
         .format("D MMMM YYYY");
-      // if (this.custom_filter_start_date) {
       alert(formattedDate);
       this.st;
-      // }
     },
     getDateBusinessCreate() {},
     accessProduct() {
@@ -712,13 +563,10 @@ export default {
     },
     renderChart() {
       const chartDom = this.$refs.donutChart;
-      if (!chartDom) return; // เช็คว่ามีการ mount ของ donutChart แล้วหรือไม่
+      if (!chartDom) return;
       const chart = echarts.init(chartDom);
       const option = {
-        title: {
-          text: this.t("inventoryVolume"),
-          left: "center",
-        },
+        title: { text: this.t("inventoryVolume"), left: "center" },
         series: [
           {
             name: this.t("inventoryVolume"),
@@ -735,7 +583,7 @@ export default {
     },
     renderBarChart(data) {
       const chartDom = this.$refs.barChart;
-      if (!chartDom) return; // เช็คว่ามีการ mount ของ barChart แล้วหรือไม่
+      if (!chartDom) return;
       const chart = echarts.init(chartDom);
       const option = {
         xAxis: {
@@ -756,53 +604,10 @@ export default {
           ],
         },
         yAxis: { type: "value" },
-        series: [
-          {
-            data: data,
-            type: "bar",
-            itemStyle: { color: "#007bff" },
-          },
-        ],
+        series: [{ data: data, type: "bar", itemStyle: { color: "#007bff" } }],
       };
       chart.setOption(option);
     },
-    // calculateMonthlyData() {
-
-    //     let monthlySales = Array(12).fill(0);
-    //     let monthlyTotalSales = Array(12).fill(0);
-    //     let monthlyProfit = Array(12).fill(0);
-
-    //     this.Billings.forEach(billing => {
-
-    //         const BILL = new Date(billing.billing_date);
-    //         const formatDate = { day: '2-digit', month: 'short', year: 'numeric' };
-    //         const BillingDate = BILL.toLocaleDateString('en-GB', formatDate);
-
-    //         const date = new Date(BillingDate);  // แปลงวันที่
-    //         const month = date.getMonth(); // ดึงค่าของเดือน (0 = มกราคม, 11 = ธันวาคม)
-
-    //         if (billing.billing_id) {
-    //             monthlySales[month] += 1;  // นับจำนวนรายการขาย
-    //         }
-    //         monthlyTotalSales[month] += billing.sale_totalprice || 0; // ยอดขายรวม
-    //         const cost = this.totalProductCost || 0;  // สมมติว่ามีต้นทุนของแต่ละ billing
-    //         monthlyProfit[month] += (billing.sale_totalprice - cost);  // คำนวณกำไร
-
-    //         console.log(monthlySales + monthlyTotalSales + monthlyProfit)
-    //     });
-
-    //     this.salesDataMonth = monthlySales;
-    //     this.totalSalesDataMonth = monthlyTotalSales;
-    //     this.profitDataMonth = monthlyProfit;
-
-    //     const totalSales = monthlySales.reduce((sum, val) => sum + val, 0);  // ผลรวมของจำนวนรายการขายทั้งหมด
-    //     const totalSalesAmount = monthlyTotalSales.reduce((sum, val) => sum + val, 0);  // ผลรวมของยอดขายทั้งหมด
-    //     const totalProfit = monthlyProfit.reduce((sum, val) => sum + val, 0);  // ผลรวมของกำไรทั้งหมด
-
-    //     this.salesData = totalSales;
-    //     this.totalSalesData = totalSalesAmount;
-    //     this.profitData = totalProfit;
-    // },
     onMenuClick(type) {
       if (type === "sales") {
         this.renderBarChart(this.salesDataMonth);
@@ -815,27 +620,22 @@ export default {
     destroyCharts() {
       if (this.$refs.donutChart) {
         const donutChart = echarts.getInstanceByDom(this.$refs.donutChart);
-        if (donutChart) donutChart.dispose(); // ทำลาย instance เดิม
+        if (donutChart) donutChart.dispose();
       }
-
       if (this.$refs.barChart) {
         const barChart = echarts.getInstanceByDom(this.$refs.barChart);
-        if (barChart) barChart.dispose(); // ทำลาย instance เดิม
+        if (barChart) barChart.dispose();
       }
     },
     async getBilling() {
       const accessToken = localStorage.getItem("@accessToken");
       try {
         const response = await fetch(`${API_CALL}/quotation/getBilling`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          headers: { Authorization: `Bearer ${accessToken}` },
         });
         const json = await response.json();
-
         if (json.statusCode === 200) {
           console.log(json.data);
-
           this.Billings = json.data.map((item) => {
             const QTDate = new Date(item.quotation_start_date);
             const EXPD = new Date(item.quotation_expired_date);
@@ -853,7 +653,6 @@ export default {
             const ExpiredDate = EXPD.toLocaleDateString("en-GB", formatDate);
             const InvoiceDate = IND.toLocaleDateString("en-GB", formatDate);
             const BillingDate = BILL.toLocaleDateString("en-GB", formatDate);
-
             return {
               billing_number: item.billing_number,
               employeeID: item.employeeID,
@@ -865,7 +664,7 @@ export default {
               cus_email: item.cus_email,
               cus_tax: item.cus_tax,
               cus_purchase: item.cus_purchase,
-              sale_totalprice: item.sale_totalprice, // ตรวจสอบค่าที่ใช้คำนวณ
+              sale_totalprice: item.sale_totalprice,
               invoice_id: item.invoice_id,
               remark: item.remark || "",
               billing_id: item.billing_id,
@@ -897,7 +696,6 @@ export default {
             const ExpiredDate = EXPD.toLocaleDateString("en-GB", formatDate);
             const InvoiceDate = IND.toLocaleDateString("en-GB", formatDate);
             const BillingDate = BILL.toLocaleDateString("en-GB", formatDate);
-
             return {
               billing_number: item.billing_number,
               employeeID: item.employeeID,
@@ -909,7 +707,7 @@ export default {
               cus_email: item.cus_email,
               cus_tax: item.cus_tax,
               cus_purchase: item.cus_purchase,
-              sale_totalprice: item.sale_totalprice, // ตรวจสอบค่าที่ใช้คำนวณ
+              sale_totalprice: item.sale_totalprice,
               invoice_id: item.invoice_id,
               remark: item.remark || "",
               billing_id: item.billing_id,
@@ -924,19 +722,7 @@ export default {
               })),
             };
           });
-          //this.calculateMonthlyData();
-          // this.filterDataByOption();
-          // this.filterDataByOption2();
           this.renderBarChart(this.totalSalesDataMonth);
-          // this.totalSalescon = this.Billings.reduce((sum, item) => {
-          //     return sum + (item.sale_totalprice || 0); // รวมค่า sale_totalprice
-          // }, 0);
-
-          // const paidBills = json.data.filter(item => item.billing_status === 'Complete');
-
-          // this.paidBillCount = paidBills.length;
-
-          // this.paidBillTotal = paidBills.reduce((sum, item) => sum + item.sale_totalprice, 0);
         } else {
           this.showPopup_error(json.data);
           console.log("Error fetching billings:", json);
@@ -950,12 +736,9 @@ export default {
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/product/getProduct`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          headers: { Authorization: `Bearer ${accessToken}` },
         });
         const json = await response.json();
-
         if (json.statusCode === 200) {
           console.log("Product", json.data);
           this.ProductFilter = json.data.map((item) => {
@@ -966,7 +749,6 @@ export default {
               year: "numeric",
             };
             const ProductDate = PD.toLocaleDateString("en-GB", formatDate);
-
             let product = {
               ID: item.ID,
               Category: item.product_category.categoryName,
@@ -982,12 +764,8 @@ export default {
               Amount: item.amount,
             };
             console.log(item.product_type.productTypeName);
-            // if (this.selectedType === 'A') {
-            //     product.Amount = item.amount;
-            // }
             return product;
           });
-
           this.filteredProductData = json.data.map((item) => {
             const PD = new Date(item.product_date);
             const formatDate = {
@@ -996,7 +774,6 @@ export default {
               year: "numeric",
             };
             const ProductDate = PD.toLocaleDateString("en-GB", formatDate);
-
             let product = {
               ID: item.ID,
               Category: item.product_category.categoryName,
@@ -1012,28 +789,17 @@ export default {
               Amount: item.amount,
             };
             console.log(item.product_type.productTypeName);
-            // if (this.selectedType === 'A') {
-            //     product.Amount = item.amount;
-            // }
             return product;
           });
-
-          // this.totalProductCost = this.ProductFilter.reduce((sum, product) => {
-          //     return sum + (product.Cost || 0);  // รวมค่า Cost
-          // }, 0);
-
           this.productTypeA = this.ProductFilter.filter(
             (product) => product.productTypeID === 1
           ).length;
           this.productTypeB = this.ProductFilter.filter(
             (product) => product.productTypeID !== 1
           ).length;
-
           console.log("Product Type A count:", this.productTypeA);
           console.log("Product Type B count:", this.productTypeB);
           this.renderChart();
-          // this.filterDataByOption();
-          //this.calculateMonthlyData();
         } else {
           this.showPopup_error(json.data);
           console.log("ProductByType", json);
@@ -1052,16 +818,12 @@ export default {
       try {
         const response = await fetch(`${API_CALL}/employee/getPayment`, {
           method: "GET",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          headers: { Authorization: `Bearer ${accessToken}` },
         });
-
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
         const json = await response.json();
-
         if (json.statusCode === 200) {
           console.log("++++++++++++++", json.data);
           this.payments = json.data.map((item) => {
@@ -1072,7 +834,6 @@ export default {
               year: "numeric",
             };
             const PaymentDate = PayDate.toLocaleDateString("en-GB", formatDate);
-
             let initialTableData = {
               ID: item.payment_id,
               Date: PaymentDate,
@@ -1084,7 +845,6 @@ export default {
             };
             return initialTableData;
           });
-
           this.filteredPaySalaryData = json.data.map((item) => {
             const PayDate = new Date(item.date);
             const formatDate = {
@@ -1093,7 +853,6 @@ export default {
               year: "numeric",
             };
             const PaymentDate = PayDate.toLocaleDateString("en-GB", formatDate);
-
             let initialTableData = {
               ID: item.payment_id,
               Date: PaymentDate,
@@ -1105,17 +864,6 @@ export default {
             };
             return initialTableData;
           });
-
-          // this.filterDataByOption();
-
-          // const totalSalary = this.payments.reduce((total, payment) => {
-          //     return total + (payment.Salary || 0); // รวม salary แต่ถ้าไม่มีค่าให้ใช้ 0
-          // }, 0);
-
-          //console.log('Total Salary Paid:', totalSalary); // แสดงผลใน console หรือเก็บค่าไว้เพื่อใช้ใน UI
-
-          // เก็บยอดรวมเงินเดือนเพื่อแสดงในหน้าเว็บ
-          // this.totalSalaryPaid = totalSalary;
         } else {
           this.showPopup_error(json.data);
           console.log(json);
@@ -1130,12 +878,9 @@ export default {
       const accessToken = localStorage.getItem("@accessToken");
       try {
         const response = await fetch(`${API_CALL}/quotation/getQuotation`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          headers: { Authorization: `Bearer ${accessToken}` },
         });
         const json = await response.json();
-
         if (json.statusCode === 200) {
           this.Quotations = json.data.map((item) => {
             const QTDate = new Date(item.quotation_start_date);
@@ -1150,7 +895,6 @@ export default {
               formatDate
             );
             const ExpiredDate = EXPD.toLocaleDateString("en-GB", formatDate);
-
             let initialTableData = {
               sale_id: item.sale_id,
               sale_number: item.quotation_num,
@@ -1192,7 +936,6 @@ export default {
               formatDate
             );
             const ExpiredDate = EXPD.toLocaleDateString("en-GB", formatDate);
-
             let initialTableData = {
               sale_id: item.sale_id,
               sale_number: item.quotation_num,
@@ -1221,14 +964,6 @@ export default {
             };
             return initialTableData;
           });
-          // this.filterDataByOption();
-          // const pendingQuotations = json.data.filter(item => item.status === 'pending');
-          // const expiredQuotations = json.data.filter(item => item.status === 'expired');
-
-          // this.pendingQuotationCount = pendingQuotations.length;
-          // this.pendingQuotationTotal = pendingQuotations.reduce((sum, item) => sum + item.sale_totalprice, 0);
-          // this.expiredQuotationCount = expiredQuotations.length;
-          // this.expiredQuotationTotal = expiredQuotations.reduce((sum, item) => sum + item.sale_totalprice, 0);
         } else {
           this.showPopup_error(json.data);
           console.log("Employee ", json);
@@ -1241,12 +976,9 @@ export default {
       const accessToken = localStorage.getItem("@accessToken");
       try {
         const response = await fetch(`${API_CALL}/quotation/getInvoice`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          headers: { Authorization: `Bearer ${accessToken}` },
         });
         const json = await response.json();
-
         if (json.statusCode === 200) {
           this.Invoices = json.data.map((item) => {
             const QTDate = new Date(item.quotation_start_date);
@@ -1263,7 +995,6 @@ export default {
             );
             const ExpiredDate = EXPD.toLocaleDateString("en-GB", formatDate);
             const InvoiceDate = IND.toLocaleDateString("en-GB", formatDate);
-
             let initialTableData = {
               invoice_number: item.invoice_number,
               employeeID: item.employeeID,
@@ -1305,7 +1036,6 @@ export default {
             );
             const ExpiredDate = EXPD.toLocaleDateString("en-GB", formatDate);
             const InvoiceDate = IND.toLocaleDateString("en-GB", formatDate);
-
             let initialTableData = {
               invoice_number: item.invoice_number,
               employeeID: item.employeeID,
@@ -1332,7 +1062,6 @@ export default {
             };
             return initialTableData;
           });
-          // this.filterDataByOption();
         } else {
           this.showPopup_error(json.data);
           console.log("Employee ", json);
@@ -1345,9 +1074,7 @@ export default {
       const accessToken = localStorage.getItem("@accessToken");
       try {
         const response = await fetch(`${API_CALL}/employee/getOvertime`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          headers: { Authorization: `Bearer ${accessToken}` },
         });
         const json = await response.json();
         if (json.statusCode === 200) {
@@ -1363,7 +1090,6 @@ export default {
               formatDate
             );
             const employeeName = `${item.employee.F_name} ${item.employee.L_name}`;
-
             let initialTableData = {
               ID: item.leaving_id,
               Name: employeeName,
@@ -1387,7 +1113,6 @@ export default {
               formatDate
             );
             const employeeName = `${item.employee.F_name} ${item.employee.L_name}`;
-
             let initialTableData = {
               ID: item.leaving_id,
               Name: employeeName,
@@ -1399,7 +1124,6 @@ export default {
             };
             return initialTableData;
           });
-          // this.filterDataByOption();
         } else {
           console.log(json);
           this.showPopup_error(json.data);
@@ -1416,9 +1140,7 @@ export default {
       const lastQuarter = currentQuarter === 1 ? 4 : currentQuarter - 1;
       const lastQuarterYear =
         currentQuarter === 1 ? currentYear - 1 : currentYear;
-
       let startDate, endDate;
-
       switch (this.selectedOption) {
         case "last7Days":
           startDate = new Date();
@@ -1480,13 +1202,10 @@ export default {
           endDate = now;
           this.toggleCustomDate = false;
       }
-
-      // แปลงข้อมูลทั้งหมดในช่วงเวลา
       const isInRange = (date) => {
         const d = new Date(date);
         return d >= startDate && d <= endDate;
       };
-
       this.filteredData = this.Billings.filter((item) =>
         isInRange(item.billing_date)
       );
@@ -1506,75 +1225,31 @@ export default {
       this.filterOvertime = this.Overtimes.filter((item) =>
         isInRange(item.date)
       );
-
       this.startDate = this.formatDate(startDate);
       this.endDate = this.formatDate(endDate);
-
       this.totalSalescon = this.filteredData.reduce((sum, item) => {
-        return sum + (item.sale_totalprice || 0); // รวมค่า sale_totalprice
+        return sum + (item.sale_totalprice || 0);
       }, 0);
-
       this.totalOvertime = this.filterOvertime.reduce((sum, item) => {
-        return sum + (item.total || 0); // รวมค่า sale_totalprice
+        return sum + (item.total || 0);
       }, 0);
-
       this.totalProductCost = this.filteredProductData.reduce(
         (sum, product) => {
           if (product.productTypeID === 1) {
-            // ประเภทที่ 1: คูณ Cost กับ Amount
-            return sum + product.Cost * (product.Amount || 1); // ถ้าไม่มี Amount จะใช้ค่า 1
+            return sum + product.Cost * (product.Amount || 1);
           } else {
-            // ประเภทที่ 2: รวมแค่ Cost
             return sum + (product.Cost || 0);
           }
         },
         0
       );
-
       console.log("test cost: ", this.totalProductCost);
-
       this.totalSalaryPaid = this.filteredPaySalaryData.reduce(
         (total, payment) => {
-          return total + (payment.Salary || 0); // รวม salary แต่ถ้าไม่มีค่าให้ใช้ 0
+          return total + (payment.Salary || 0);
         },
         0
       );
-
-      // const paidBills = this.filteredData.filter(
-      //   (item) => item.billing_status === "Complete"
-      // );
-      // this.paidBillCount = paidBills.length;
-      // this.paidBillTotal = paidBills.reduce(
-      //   (sum, item) => sum + item.sale_totalprice,
-      //   0
-      // );
-
-      // const pendingQuotations = this.filteredQuoData.filter(
-      //   (item) => item.status === "pending" || "Pending"
-      // );
-      // const expiredQuotations = this.filteredQuoData.filter(
-      //   (item) => item.status === "expired"
-      // );
-      // this.pendingQuotationCount = pendingQuotations.length;
-      // this.pendingQuotationTotal = pendingQuotations.reduce(
-      //   (sum, item) => sum + item.sale_totalprice,
-      //   0
-      // );
-      // this.expiredQuotationCount = expiredQuotations.length;
-      // this.expiredQuotationTotal = expiredQuotations.reduce(
-      //   (sum, item) => sum + item.sale_totalprice,
-      //   0
-      // );
-      // console.log("pendingInvoices", this.filteredInvData);
-      // const pendingInvoices = this.filteredInvData.filter(
-      //   (item) => item.invoice_status === "Pending"
-      // );
-
-      // this.pendingInvoiceCount = pendingInvoices.length;
-      // this.pendingInvoiceTotal = pendingInvoices.reduce(
-      //   (sum, item) => sum + item.sale_totalprice,
-      //   0
-      // );
     },
     filterDataByOption2() {
       const now = new Date();
@@ -1584,9 +1259,7 @@ export default {
       const lastQuarter = currentQuarter === 1 ? 4 : currentQuarter - 1;
       const lastQuarterYear =
         currentQuarter === 1 ? currentYear - 1 : currentYear;
-
       let startDate2, endDate2;
-
       switch (this.selectedOption2) {
         case "last7Days":
           startDate2 = new Date();
@@ -1648,13 +1321,10 @@ export default {
           endDate2 = now;
           this.toggleCustomDate2 = false;
       }
-
-      // แปลงข้อมูลทั้งหมดในช่วงเวลา
       const isInRange = (date) => {
         const d = new Date(date);
         return d >= startDate2 && d <= endDate2;
       };
-
       this.filteredData = this.Billings.filter((item) =>
         isInRange(item.billing_date)
       );
@@ -1673,43 +1343,8 @@ export default {
       this.filterOvertime = this.Overtimes.filter((item) =>
         isInRange(item.date)
       );
-
       this.startDate2 = this.formatDate(startDate2);
       this.endDate2 = this.formatDate(endDate2);
-
-      // this.startDate = this.formatDate(startDate);
-      // this.endDate = this.formatDate(endDate);
-
-      // this.totalSalescon = this.filteredData.reduce((sum, item) => {
-      //   return sum + (item.sale_totalprice || 0); // รวมค่า sale_totalprice
-      // }, 0);
-
-      // this.totalOvertime = this.filterOvertime.reduce((sum, item) => {
-      //   return sum + (item.total || 0); // รวมค่า sale_totalprice
-      // }, 0);
-
-      // this.totalProductCost = this.filteredProductData.reduce(
-      //   (sum, product) => {
-      //     if (product.productTypeID === 1) {
-      //       // ประเภทที่ 1: คูณ Cost กับ Amount
-      //       return sum + product.Cost * (product.Amount || 1); // ถ้าไม่มี Amount จะใช้ค่า 1
-      //     } else {
-      //       // ประเภทที่ 2: รวมแค่ Cost
-      //       return sum + (product.Cost || 0);
-      //     }
-      //   },
-      //   0
-      // );
-
-      // console.log("test cost: ", this.totalProductCost);
-
-      // this.totalSalaryPaid = this.filteredPaySalaryData.reduce(
-      //   (total, payment) => {
-      //     return total + (payment.Salary || 0); // รวม salary แต่ถ้าไม่มีค่าให้ใช้ 0
-      //   },
-      //   0
-      // );
-
       const paidBills = this.filteredData.filter(
         (item) => item.billing_status === "Complete"
       );
@@ -1718,7 +1353,6 @@ export default {
         (sum, item) => sum + item.sale_totalprice,
         0
       );
-
       const pendingQuotations = this.filteredQuoData.filter(
         (item) => item.status === "pending" || "Pending"
       );
@@ -1739,7 +1373,6 @@ export default {
       const pendingInvoices = this.filteredInvData.filter(
         (item) => item.invoice_status === "Pending"
       );
-
       this.pendingInvoiceCount = pendingInvoices.length;
       this.pendingInvoiceTotal = pendingInvoices.reduce(
         (sum, item) => sum + item.sale_totalprice,
@@ -1747,36 +1380,24 @@ export default {
       );
     },
     parseThaiDateTime(thaiDateTimeStr) {
-      // แยกวันที่ เวลา
       if (thaiDateTimeStr && thaiDateTimeStr !== null) {
-        const [datePart, timePart] = thaiDateTimeStr.split(" "); // "7/4/2568", "15:46:12"
-        const [day, month, yearBE] = datePart.split("/"); // "7", "4", "2568"
-
-        const year = parseInt(yearBE) - 543; // แปลง พ.ศ. -> ค.ศ.
-
-        // สร้าง string ให้ JS เข้าใจ: "2025-04-07T15:46:12"
+        const [datePart, timePart] = thaiDateTimeStr.split(" ");
+        const [day, month, yearBE] = datePart.split("/");
+        const year = parseInt(yearBE) - 543;
         const isoDateStr = `${year}-${month.padStart(2, "0")}-${day.padStart(
           2,
           "0"
         )}T${timePart}`;
-
         return new Date(isoDateStr);
       }
     },
     formatDate(date) {
-      const monthIndex = date.getMonth(); // ดึงเดือนเป็นตัวเลข
-      const year = date.getFullYear(); // ดึงปี ค.ศ.
-
-      // เรียกชื่อเดือนตามภาษาที่เลือก
+      const monthIndex = date.getMonth();
+      const year = date.getFullYear();
       const monthName = this.t(`months.${this.getMonthKey(monthIndex)}`);
-
-      // แปลงปี ค.ศ. เป็น พ.ศ. ถ้าภาษาไทยถูกเลือก
       const formattedYear = this.$i18n.locale === "th" ? year + 543 : year;
-
-      // แสดงวันที่แบบ "เดือน ปี" พร้อมกับการแปล
       return `${date.getDate()} ${monthName} ${formattedYear}`;
     },
-
     getMonthKey(monthIndex) {
       const monthKeys = [
         "january",
@@ -1801,18 +1422,15 @@ export default {
       setTimeout(() => {
         this.isPopupVisible = false;
         this.isPopupVisible_error = false;
-      }, 2000); // 2 seconds
+      }, 2000);
     },
     async getBusiness() {
       const accessToken = localStorage.getItem("@accessToken");
-      // alert(accessToken);
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/Quotation/getBusinessByID`, {
           method: "GET",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          headers: { Authorization: `Bearer ${accessToken}` },
         });
         const json = await response.json();
         this.BusinessJson = json.data;
@@ -1836,7 +1454,6 @@ export default {
           },
         });
         const json = await response.json();
-        // this.Expenses = json.data;
         this.Expenses = json.data.map((item) => ({
           expense_id: item.expense_id,
           expense_date: item.expense_date,
@@ -1845,8 +1462,7 @@ export default {
           quantity_remark: item.quantity_remark,
         }));
         console.log(json.data);
-        if (json.statusCode === 200) {
-        } else {
+        if (json.statusCode !== 200) {
           this.showPopup_error(json.data);
         }
       } catch (error) {
@@ -1865,7 +1481,6 @@ export default {
       });
     },
     "$i18n.locale"(newLocale, oldLocale) {
-      // เรียกฟังก์ชันกรองข้อมูลหรืออัปเดตวันที่เมื่อภาษามีการเปลี่ยนแปลง
       this.filterDataByOption();
     },
     custom_filter_start_date() {
@@ -1882,7 +1497,6 @@ export default {
     },
   },
   async created() {
-    // this.getBusiness();
     this.getOvertime();
     await this.getBilling();
     await this.getInvoice();
@@ -1898,65 +1512,31 @@ export default {
     });
   },
   computed: {
-    // ConvertTo2DigitCost() {
-    // const totalCost =
-    //   this.totalProductCost + this.totalSalaryPaid + this.totalOvertime;
-
-    // if (totalCost == null || isNaN(totalCost)) {
-    //   return null;
-    // }
-
-    // return totalCost.toLocaleString(undefined, {
-    //   minimumFractionDigits: 2,
-    //   maximumFractionDigits: 2,
-    // });
-    // },
     ConvertTo2DigitCost() {
       if (!Array.isArray(this.Expenses)) {
         return "0.00";
       }
-
       const totalCost = this.Expenses.reduce((sum, item) => {
         const amount = parseFloat(item.expense_amount);
         return sum + (isNaN(amount) ? 0 : amount);
       }, 0);
-
       return totalCost.toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       });
     },
-    // ConvertTo2DigitProfit() {
-    //   const { totalSalescon, totalProductCost, totalSalaryPaid } = this;
-
-    //   const totalProfit = totalSalescon - (totalProductCost + totalSalaryPaid);
-
-    //   if (isNaN(totalProfit)) {
-    //     return "0.00";
-    //   }
-
-    //   return totalProfit.toLocaleString(undefined, {
-    //     minimumFractionDigits: 2,
-    //     maximumFractionDigits: 2,
-    //   });
-    // },
     ConvertTo2DigitProfit() {
       const totalSales = this.totalSalescon || 0;
-
-      // รวมค่าทั้งหมดใน this.Expenses
       const totalExpense = Array.isArray(this.Expenses)
         ? this.Expenses.reduce((sum, item) => {
             const amount = parseFloat(item.expense_amount);
             return sum + (isNaN(amount) ? 0 : amount);
           }, 0)
         : 0;
-
       const profit = totalSales - totalExpense;
-
       if (isNaN(profit)) {
         return "0.00";
       }
-
       return profit.toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
