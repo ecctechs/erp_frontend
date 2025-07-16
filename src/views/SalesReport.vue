@@ -8,7 +8,7 @@
       </div>
       <div class="row text-center">
         <div class="col-md-12">
-          <div class="card bg-light">
+          <Card class="bg-light">
             <div class="card-body">
               <div class="card-body-p header-dash">
                 <p class="date-period-dash">
@@ -172,22 +172,22 @@
                 </div>
               </div>
             </div>
-          </div>
+          </Card>
         </div>
       </div>
       <div class="row text-center">
         <div class="col-md-6 body-dashboard">
-          <div class="card bg-light" style="height: 100%">
+          <Card class="bg-light" style="height: 100%">
             <div class="card-body">
               <p class="card-body-p">{{ t("valueofsales") }}</p>
               <div class="card-body-detail">
                 <div ref="donutChart" style="width: 500px; height: 400px"></div>
               </div>
             </div>
-          </div>
+          </Card>
         </div>
         <div class="col-md-6 body-dashboard">
-          <div class="card bg-light">
+          <Card class="bg-light">
             <div class="card-body">
               <p class="card-body-p">{{ t("summarySaleMonth") }}</p>
               <div class="card-body-barchart-detail">
@@ -202,12 +202,12 @@
                 <div ref="barChart" style="width: 100%; height: 400px"></div>
               </div>
             </div>
-          </div>
+          </Card>
         </div>
       </div>
       <div class="row text-center">
         <div class="col-md-6 body-dashboard">
-          <div class="card bg-light" style="height: 100%">
+          <Card class="bg-light" style="height: 100%">
             <div class="card-body">
               <p class="card-body-p">{{ t("currentstock") }}</p>
               <div class="card-body-detail">
@@ -217,10 +217,10 @@
                 ></div>
               </div>
             </div>
-          </div>
+          </Card>
         </div>
         <div class="col-md-6 body-dashboard">
-          <div class="card bg-light">
+          <Card class="bg-light" style="height: 100%">
             <div class="card-body">
               <p class="card-body-p">{{ t("servicevalue") }}</p>
               <div class="card-body-detail">
@@ -230,7 +230,7 @@
                 ></div>
               </div>
             </div>
-          </div>
+          </Card>
         </div>
       </div>
     </div>
@@ -257,6 +257,7 @@ import moment from "moment";
 moment.locale("th");
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
+import Card from "../components/Card.vue";
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -267,6 +268,7 @@ export default {
   components: {
     navigate,
     DatePicker,
+    Card,
   },
   setup() {
     const { t } = useI18n();

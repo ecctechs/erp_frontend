@@ -8,7 +8,7 @@
       </div>
       <div class="row text-center">
         <div class="col-md-12">
-          <div class="card bg-light">
+          <Card class="bg-light">
             <div class="card-body">
               <div class="card-body-detail">
                 <div class="card-body-left">
@@ -35,12 +35,12 @@
                 </div>
               </div>
             </div>
-          </div>
+          </Card>
         </div>
       </div>
       <div class="row mt-3">
         <div class="col-12 col-md-5 col-lg-5 col-sm-12">
-          <div class="card bg-light">
+          <Card class="bg-light">
             <div class="card-body">
               <p class="card-body-p">{{ t("numberofemp") }}</p>
               <div class="card-body-barchart-detail">
@@ -55,10 +55,10 @@
                 ></div>
               </div>
             </div>
-          </div>
+          </Card>
         </div>
         <div class="col-12 col-md-5 col-lg-5 col-sm-12">
-          <div class="card bg-light">
+          <Card class="bg-light">
             <div class="card-body">
               <p class="card-body-p">{{ t("AbsentRate") }}</p>
               <div class="card-body-detail">
@@ -68,10 +68,10 @@
                 ></div>
               </div>
             </div>
-          </div>
+          </Card>
         </div>
         <div class="col-12 col-md-2 col-lg-2 col-sm-12">
-          <div class="card bg-light" style="height: auto">
+          <Card class="bg-light" style="height: auto">
             <div class="card-body">
               <p class="card-body-p">{{ t("filter") }}</p>
               <div class="card-body-column">
@@ -142,7 +142,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </Card>
         </div>
       </div>
       <div class="row text-center">
@@ -306,6 +306,7 @@ import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n";
 import datepicker from "vue-datepicker-next";
 import "vue-datepicker-next/index.css";
+import Card from "../components/Card.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -315,6 +316,7 @@ export default {
   components: {
     navigate,
     datepicker,
+    Card,
   },
   setup() {
     const { t, locale } = useI18n();

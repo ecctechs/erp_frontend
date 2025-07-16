@@ -6,7 +6,7 @@
       </div>
 
       <div class="col-md-12">
-        <div class="card bg-light">
+        <Card class="bg-light">
           <div class="card-body">
             <div class="card-body-p">
               <div class="row">
@@ -102,7 +102,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </Card>
       </div>
       <div class="row mb-3 mt-3">
         <div class="col-6 col-sm-6 col-md-3 col-lg-3">
@@ -368,6 +368,7 @@ import DatePicker from "vue-datepicker-next";
 import "vue-datepicker-next/index.css";
 import { computed, watch, ref } from "vue";
 import "moment/locale/th";
+import Card from "../components/Card.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -382,7 +383,8 @@ export default {
     Popup,
     tableList,
     DatePicker,
-    Button, // 2. ลงทะเบียน component
+    Button,
+    Card,
   },
   setup() {
     const { t } = useI18n();
