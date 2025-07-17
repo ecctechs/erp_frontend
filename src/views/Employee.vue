@@ -73,7 +73,7 @@
         <label class="col-sm-5 col-md-6"
           ><span style="color: red">*</span>{{ t("title") }}</label
         >
-        <select
+        <!-- <select
           class="form-control col-sm-9 col-md-6 form-select"
           v-model="formData.title"
           required
@@ -82,7 +82,13 @@
           <option value="Mr.">{{ t("mister") }}</option>
           <option value="Mrs.">{{ t("missis") }}</option>
           <option value="Miss">{{ t("miss") }}</option>
-        </select>
+        </select> -->
+        <Dropdown
+          v-model="formData.title"
+          :options="titleOptions"
+          class="col-sm-9 col-md-6"
+          :error="isEmpty.title"
+        />
       </div>
       <div class="mb-3 div-for-formControl">
         <label class="col-sm-5 col-md-6"
@@ -189,7 +195,7 @@
         <label class="col-sm-5 col-md-6"
           ><span style="color: red">*</span>{{ t("empType") }}</label
         >
-        <select
+        <!-- <select
           class="form-control col-sm-9 col-md-6 form-select"
           v-model="formData.employeeType"
           required
@@ -198,14 +204,20 @@
           <option value="Full-time">{{ t("fulltime") }}</option>
           <option value="Part-time">{{ t("parttime") }}</option>
           <option value="Contract">{{ t("contract") }}</option>
-        </select>
+        </select> -->
+        <Dropdown
+          v-model="formData.employeeType"
+          :options="employeeTypeOptions"
+          class="col-sm-9 col-md-6"
+          :error="isEmpty.employeeType"
+        />
       </div>
       <div class="mb-3 div-for-formControl">
         <label class="col-sm-5 col-md-6"
           ><span style="color: red">*</span>{{ t("department") }}</label
         >
         <div class="col-sm-9 col-md-6">
-          <select
+          <!-- <select
             class="form-control form-select"
             v-model="formData.departmentID"
             :disabled="Departments.length === 0"
@@ -219,7 +231,14 @@
             >
               {{ employ.departmentName }}
             </option>
-          </select>
+          </select> -->
+          <Dropdown
+            v-model="formData.departmentID"
+            :options="departmentOptions"
+            :error="isEmpty.departmentID || Departments.length === 0"
+            :disabled="Departments.length === 0"
+            style="width: 100%"
+          />
 
           <div v-if="Departments.length === 0" class="text-danger mt-1">
             {{ t("pleaseDepartment") }}
@@ -231,7 +250,7 @@
           ><span style="color: red">*</span>{{ t("position") }}</label
         >
         <div class="col-sm-9 col-md-6">
-          <select
+          <!-- <select
             class="form-control form-select"
             v-model="formData.PositionID"
             required
@@ -246,7 +265,14 @@
             >
               {{ employ.Position }}
             </option>
-          </select>
+          </select> -->
+          <Dropdown
+            v-model="formData.PositionID"
+            :options="positionOptions"
+            :error="isEmpty.PositionID || Positions.length === 0"
+            :disabled="Positions.length === 0"
+            style="width: 100%"
+          />
           <div v-if="Positions.length === 0" class="text-danger mt-1">
             {{ t("pleasePosition") }}
           </div>
@@ -348,7 +374,7 @@
       </div>
       <div class="mb-3 div-for-formControl">
         <label class="col-sm-5 col-md-6">{{ t("empname") }}</label>
-        <select
+        <!-- <select
           class="form-control col-sm-9 col-md-6 form-select"
           v-model="formDataLeave.employeeID"
           type="text"
@@ -362,11 +388,17 @@
           >
             {{ employ.Name }}
           </option>
-        </select>
+        </select> -->
+        <Dropdown
+          v-model="formDataLeave.employeeID"
+          :options="employeeLeaveOptions"
+          class="col-sm-9 col-md-6"
+          :error="isEmpty.employeeID"
+        />
       </div>
       <div class="mb-3 div-for-formControl">
         <label class="col-sm-5 col-md-6">{{ t("leavetype") }}</label>
-        <select
+        <!-- <select
           class="form-control col-sm-9 col-md-6 form-select"
           v-model="formDataLeave.detail"
           type="text"
@@ -377,7 +409,13 @@
           <option>ลากิจ</option>
           <option>ลาพักร้อน</option>
           <option>ลาครอด</option>
-        </select>
+        </select> -->
+        <Dropdown
+          v-model="formDataLeave.detail"
+          :options="leaveTypeOptions"
+          class="col-sm-9 col-md-6"
+          :error="isEmpty.detail"
+        />
       </div>
       <div class="mb-3 div-for-formControl">
         <label class="col-6 col-sm-6 col-md-6">{{ t("date") }}</label>
@@ -599,6 +637,7 @@ import { useI18n } from "vue-i18n";
 import th from "vue-datepicker-next/locale/th.es";
 import en from "vue-datepicker-next/locale/en.es";
 import moment from "moment";
+import Dropdown from "../components/Dropdown.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -610,6 +649,7 @@ export default {
     Popup,
     DatePicker,
     Button, // 2. ลงทะเบียน component
+    Dropdown,
   },
   setup() {
     const { t } = useI18n();
@@ -772,6 +812,49 @@ export default {
     };
   },
   computed: {
+    titleOptions() {
+      return [
+        { value: "Mr.", text: this.t("mister") },
+        { value: "Mrs.", text: this.t("missis") },
+        { value: "Miss", text: this.t("miss") },
+      ];
+    },
+    employeeTypeOptions() {
+      return [
+        { value: "Full-time", text: this.t("fulltime") },
+        { value: "Part-time", text: this.t("parttime") },
+        { value: "Contract", text: this.t("contract") },
+      ];
+    },
+    departmentOptions() {
+      if (!this.Departments) return [];
+      return this.Departments.map((dep) => ({
+        value: dep.departmentID,
+        text: dep.departmentName,
+      }));
+    },
+    positionOptions() {
+      if (!this.Positions) return [];
+      return this.Positions.map((pos) => ({
+        value: pos.PositionID,
+        text: pos.Position,
+      }));
+    },
+    employeeLeaveOptions() {
+      if (!this.employeesSalaries) return [];
+      return this.employeesSalaries.map((emp) => ({
+        value: emp.ID,
+        text: emp.Name,
+      }));
+    },
+    leaveTypeOptions() {
+      return [
+        { value: "ลาป่วย", text: this.t("SickLeave") },
+        { value: "ลากิจ", text: this.t("BusinessLeave") },
+        { value: "ลาพักร้อน", text: this.t("AnnualLeave") },
+        { value: "ลาคลอด", text: this.t("MaternityLeave") },
+      ];
+    },
     tableHeaders() {
       return [
         { label: this.t("titleHeaderTable"), key: "Title" },

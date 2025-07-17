@@ -97,7 +97,7 @@
       <div class="row mb-3">
         <div class="col-6 col-sm-6 col-md-3 col-lg-3">
           <label class="me-1 size-font-sm">{{ t("month") }}</label>
-          <select
+          <!-- <select
             v-model="selectedMonthFilter"
             class="me-3 form-control form-select size-font-sm"
             :class="{ error: inputError } + ' form-control'"
@@ -105,7 +105,13 @@
             <option v-for="month in months" :value="month" :key="month">
               {{ month }}
             </option>
-          </select>
+          </select> -->
+          <Dropdown
+            v-model="selectedMonthFilter"
+            :options="monthOptions"
+            class="me-3 size-font-sm"
+            :error="inputError"
+          />
         </div>
         <!-- <div class="col-6 col-sm-6 col-md-3 col-lg-3">
           <label class="me-1 size-font-sm">{{ t("year") }}</label>
@@ -122,18 +128,24 @@
         <div class="col-6 col-sm-6 col-md-3 col-lg-3">
           <label class="me-1 size-font-sm">{{ t("year") }}</label>
 
-          <select
+          <!-- <select
             v-model="selectedYearFilter"
             class="me-3 form-control form-select size-font-sm"
             :class="{ error: inputError } + ' form-control'"
-          >
-            <!-- <option v-for="year in years" :key="year" :value="year">
+          > -->
+          <!-- <option v-for="year in years" :key="year" :value="year">
               {{ year }}
             </option> -->
-            <option v-for="year in years" :key="year" :value="year">
+          <!-- <option v-for="year in years" :key="year" :value="year">
               {{ t("lang") === "en" ? year + 543 : year }}
             </option>
-          </select>
+          </select> -->
+          <Dropdown
+            v-model="selectedYearFilter"
+            :options="yearOptions"
+            class="me-3 size-font-sm"
+            :error="inputError"
+          />
         </div>
       </div>
       <div class="row mb-3">
@@ -484,7 +496,7 @@
         <label class="col-sm-5 col-md-6"
           ><span style="color: red">*</span>{{ t("empname") }}</label
         >
-        <select
+        <!-- <select
           class="form-control col-sm-9 col-md-6 form-select"
           v-model="formDataLeave.employeeID"
           type="text"
@@ -498,11 +510,17 @@
           >
             {{ employ.Name }}
           </option>
-        </select>
+        </select> -->
+        <Dropdown
+          v-model="formDataLeave.employeeID"
+          :options="employeeOptions"
+          class="col-sm-9 col-md-6"
+          :error="isEmpty.employeeID"
+        />
       </div>
       <div class="mb-3 div-for-formControl">
         <label class="col-sm-5 col-md-6">{{ t("leavetype") }}</label>
-        <select
+        <!-- <select
           class="form-control col-sm-9 col-md-6 form-select"
           v-model="formDataLeave.detail"
           type="text"
@@ -513,7 +531,13 @@
           <option>{{ t("BusinessLeave") }}</option>
           <option>{{ t("AnnualLeave") }}</option>
           <option>{{ t("MaternityLeave") }}</option>
-        </select>
+        </select> -->
+        <Dropdown
+          v-model="formDataLeave.detail"
+          :options="leaveTypeOptions"
+          class="col-sm-9 col-md-6"
+          :error="isEmpty.detail"
+        />
       </div>
       <!-- <div class="mb-3 div-for-formControl">
         <label class="col-6 col-sm-6 col-md-6">{{ t("date") }}</label>
@@ -881,6 +905,7 @@ import th from "vue-datepicker-next/locale/th.es";
 import en from "vue-datepicker-next/locale/en.es";
 import moment from "moment";
 import Button from "../components/button.vue";
+import Dropdown from "../components/dropdown.vue";
 
 // var today = new Date().toISOString().split('T')[0];
 // document.getElementById("date-input").setAttribute("max", today);
@@ -896,6 +921,7 @@ export default {
     Popup,
     DatePicker,
     Button,
+    Dropdown,
   },
   // setup() {
   //   const { t } = useI18n();
@@ -1174,6 +1200,33 @@ export default {
     };
   },
   computed: {
+    monthOptions() {
+      return this.months.map((month) => ({
+        value: month,
+        text: month,
+      }));
+    },
+    yearOptions() {
+      return this.years.map((year) => ({
+        value: year,
+        text: this.t("lang") === "en" ? year + 543 : year,
+      }));
+    },
+    employeeOptions() {
+      if (!this.employees) return [];
+      return this.employees.map((emp) => ({
+        value: emp.ID,
+        text: emp.Name,
+      }));
+    },
+    leaveTypeOptions() {
+      return [
+        { value: "ลาป่วย", text: this.t("SickLeave") },
+        { value: "ลากิจ", text: this.t("BusinessLeave") },
+        { value: "ลาพักร้อน", text: this.t("AnnualLeave") },
+        { value: "ลาคลอด", text: this.t("MaternityLeave") },
+      ];
+    },
     tableHeaders() {
       return [
         { label: this.t("titleHeaderTable"), key: "Title" },

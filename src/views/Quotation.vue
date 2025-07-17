@@ -712,7 +712,7 @@
 
                   <td class="discount-column">
                     <div class="discount-type">
-                      <select
+                      <!-- <select
                         class="form-control form-select"
                         v-model="form.discounttype"
                         @change="updatePrice2(form, index)"
@@ -729,7 +729,18 @@
                         <option value="percent">
                           {{ t("productDiscountTypePercent") }}
                         </option>
-                      </select>
+                      </select> -->
+                      <Dropdown
+                        v-model="form.discounttype"
+                        :options="discountTypeOptions"
+                        @change="updatePrice2(form, index)"
+                        style="
+                          border-top-right-radius: 0px;
+                          border-bottom-right-radius: 0px;
+                          width: 20px !important;
+                          min-width: 155px;
+                        "
+                      />
 
                       <input
                         style="
@@ -811,7 +822,7 @@
             <label class="col-sm-5 col-md-2">{{ t("creditDate") }}</label>
           </div>
           <div class="col-6 col-sm-6 col-md-6">
-            <select
+            <!-- <select
               v-model="formData.credit_date_number"
               class="form-control form-select"
               @focus="toggleDropdown(true)"
@@ -825,7 +836,12 @@
               >
                 {{ creditday }}
               </option>
-            </select>
+            </select> -->
+            <Dropdown
+              v-model="formData.credit_date_number"
+              :options="creditDayOptions"
+              :error="isEmpty.credit_date_number"
+            />
           </div>
         </div>
         <div class="mb-3 div-for-formControl">
@@ -1263,6 +1279,7 @@ import { computed, watch, ref } from "vue";
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
 import Button from "../components/button.vue";
+import Dropdown from "../components/dropdown.vue";
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -1277,6 +1294,7 @@ export default {
     DatePicker,
     Department,
     Button,
+    Dropdown,
   },
   setup() {
     const { t } = useI18n();
@@ -1477,6 +1495,20 @@ export default {
     };
   },
   computed: {
+    discountTypeOptions() {
+      return [
+        { value: "amount", text: this.t("productDiscountTypeAmount") },
+        { value: "percent", text: this.t("productDiscountTypePercent") },
+      ];
+    },
+    creditDayOptions() {
+      // creditDay เป็น array of strings ["7 Days", "14 Days", ...]
+      if (!this.creditDay) return [];
+      return this.creditDay.map((day) => ({
+        value: day,
+        text: day,
+      }));
+    },
     filteredProducts() {
       return this.Products.filter((item) => item.Status !== "not active");
     },

@@ -348,7 +348,7 @@
       <div class="mb-3 div-for-formControl" v-if="isEditMode">
         <label class="col-sm-6 col-md-6">{{ t("statusInvoice") }}</label>
         <div class="col-6 col-sm-6 col-md-6">
-          <select
+          <!-- <select
             class="form-control dropdown_selector form-select"
             v-model="formData.invoice_status"
             disabled
@@ -361,7 +361,13 @@
             <option style="display: none" value="expired" disabled>
               {{ t("expiredStatus") }}
             </option>
-          </select>
+          </select> -->
+          <Dropdown
+            v-model="formData.invoice_status"
+            :options="invoiceStatusOptions"
+            disabled
+            readonly
+          />
         </div>
       </div>
       <div class="mb-3 div-for-formControl">
@@ -876,6 +882,7 @@ import "jspdf-autotable";
 import { computed, watch, ref } from "vue";
 import moment from "moment";
 import Button from "../components/button.vue";
+import Dropdown from "../components/dropdown.vue";
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -892,6 +899,7 @@ export default {
     Popup,
     DatePicker,
     Button,
+    Dropdown,
   },
   setup() {
     const { t } = useI18n();
@@ -999,6 +1007,13 @@ export default {
     };
   },
   computed: {
+    invoiceStatusOptions() {
+      return [
+        { value: "Issue a receipt", text: this.t("issueReceipt") },
+        { value: "Pending", text: this.t("PendingLG_invoice"), disabled: true },
+        { value: "expired", text: this.t("expiredStatus"), disabled: true },
+      ];
+    },
     allExpanded() {
       return this.expandedItems.size === this.Invoices.length; // ถ้าทั้งหมดขยาย ให้ return true
     },

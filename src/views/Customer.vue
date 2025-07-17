@@ -27,7 +27,7 @@
       </div>
       <div class="row mb-3">
         <div class="col-4 col-sm-4 col-md-2 col-lg-2">
-          <select
+          <!-- <select
             v-if="selectedType === 'A'"
             class="form-control form-select size-font-sm"
             v-model="dropDownStatus"
@@ -46,7 +46,14 @@
             <option value="" selected hidden>ตัวกรอง</option>
             <option value="active">{{ t("statusActive") }}</option>
             <option value="not_active">{{ t("statusNotActive") }}</option>
-          </select>
+          </select> -->
+          <Dropdown
+            v-if="selectedType === 'A' || selectedType === 'B'"
+            v-model="dropDownStatus"
+            :options="statusOptions"
+            :placeholder="t('filter')"
+            class="size-font-sm"
+          />
         </div>
       </div>
       <div class="row mb-3">
@@ -300,7 +307,7 @@
         <label class="col-sm-5 col-md-6"
           ><span style="color: red">*</span>{{ t("cusCompany") }}</label
         >
-        <select
+        <!-- <select
           class="form-control col-sm-7 col-md-6 form-select"
           v-model="formDataCustomer.company_person_customer"
           :class="{ error: isEmpty2.company_person_customer }"
@@ -313,7 +320,18 @@
           >
             {{ CustomerDropown.cus_name }}
           </option>
-        </select>
+        </select> -->
+        <div
+          class="col-sm-7 col-md-6"
+          style="display: inline-block; width: 50%"
+        >
+          <Dropdown
+            id="cus_id"
+            v-model="formDataCustomer.company_person_customer"
+            :options="companyOptions"
+            :error="isEmpty2.company_person_customer"
+          />
+        </div>
       </div>
       <div class="modal-footer">
         <Button
@@ -406,6 +424,7 @@ import Button from "../components/button.vue"; // 1. นำเข้า componen
 import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n";
 import { computed, watch, ref } from "vue";
+import Dropdown from "../components/dropdown.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -417,6 +436,7 @@ export default {
     CategoryList,
     Popup,
     Button, // 2. ลงทะเบียน component
+    Dropdown,
   },
   setup() {
     const { t } = useI18n();
@@ -482,6 +502,19 @@ export default {
     };
   },
   computed: {
+    statusOptions() {
+      return [
+        { value: "active", text: this.t("statusActive") },
+        { value: "not_active", text: this.t("statusNotActive") },
+      ];
+    },
+    companyOptions() {
+      if (!this.CustomerDropown) return [];
+      return this.CustomerDropown.map((customer) => ({
+        value: customer.cus_id,
+        text: customer.cus_name,
+      }));
+    },
     tableHeaders() {
       return [
         { label: this.t("onlystatusHeaderTable"), key: "status" },

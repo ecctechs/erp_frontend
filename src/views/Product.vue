@@ -29,17 +29,13 @@
       </div>
       <div class="row mb-3">
         <div class="col-4 col-sm-4 col-md-2 col-lg-2">
-          <select
+          <Dropdown
             v-if="selectedType === 'A'"
-            class="form-control form-select size-font-sm"
             v-model="dropDownStatus"
-            aria-label="Status select"
-          >
-            <option value="" selected hidden>{{ t("filter") }}</option>
-            <option value="active">{{ t("statusOpenSale") }}</option>
-            <!-- <option value="not_active">{{ t("DiscontinuedLG") }}</option> -->
-            <option value="discon">{{ t("discon") }}</option>
-          </select>
+            :options="statusOptions"
+            :placeholder="t('filter')"
+            class="size-font-sm"
+          />
           <!-- <select
             v-if="selectedType === 'B'"
             class="form-control form-select size-font-sm"
@@ -217,7 +213,7 @@
         <label class="col-sm-3 col-md-6" for="categoryID">{{
           t("productCategory")
         }}</label>
-        <select
+        <!-- <select
           class="form-control col-sm-7 col-md-6 form-select"
           v-model="formData.categoryID"
           id="categoryID"
@@ -230,7 +226,15 @@
           >
             {{ category.categoryName }}
           </option>
-        </select>
+        </select> -->
+        <div class="col-6 col-sm-12 col-md-12">
+          <Dropdown
+            id="categoryID"
+            v-model="formData.categoryID"
+            :options="categoryOptions"
+            :error="isEmpty.categoryID"
+          />
+        </div>
       </div>
       <div class="mb-3 div-for-formControl">
         <label
@@ -442,6 +446,7 @@ import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n";
 import { computed, watch, ref } from "vue";
 import Button from "../components/button.vue";
+import Dropdown from "../components/dropdown.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -453,6 +458,7 @@ export default {
     productList,
     Popup,
     Button,
+    Dropdown,
   },
   setup() {
     const { t } = useI18n();
@@ -518,6 +524,19 @@ export default {
     };
   },
   computed: {
+    categoryOptions() {
+      if (!this.Categories) return [];
+      return this.Categories.map((cat) => ({
+        value: cat.categoryID,
+        text: cat.categoryName,
+      }));
+    },
+    statusOptions() {
+      return [
+        { value: "active", text: this.t("statusOpenSale") },
+        { value: "discon", text: this.t("discon") },
+      ];
+    },
     formattedPrice: {
       get() {
         return this.formData.price

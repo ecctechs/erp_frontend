@@ -14,7 +14,7 @@
       <div class="row mb-3">
         <div class="col-6 col-sm-6 col-md-3 col-lg-3">
           <label class="me-1 size-font-sm">{{ t("month") }}</label>
-          <select
+          <!-- <select
             v-model="selectedMonthFilter"
             class="me-3 form-control form-select size-font-sm"
             :class="{ error: inputError } + ' form-control'"
@@ -22,24 +22,34 @@
             <option v-for="month in months" :value="month" :key="month">
               {{ month }}
             </option>
-          </select>
+          </select> -->
+          <Dropdown
+            v-model="selectedMonthFilter"
+            :options="monthOptions"
+            :error="inputError"
+          />
         </div>
 
         <div class="col-6 col-sm-6 col-md-3 col-lg-3">
           <label class="me-1 size-font-sm">{{ t("year") }}</label>
 
-          <select
+          <!-- <select
             v-model="selectedYearFilter"
             class="me-3 form-control form-select size-font-sm"
             :class="{ error: inputError } + ' form-control'"
-          >
-            <!-- <option v-for="year in years" :key="year" :value="year">
+          > -->
+          <!-- <option v-for="year in years" :key="year" :value="year">
               {{ year }}
             </option> -->
-            <option v-for="year in years" :key="year" :value="year">
+          <!-- <option v-for="year in years" :key="year" :value="year">
               {{ t("lang") === "en" ? year + 543 : year }}
             </option>
-          </select>
+          </select> -->
+          <Dropdown
+            v-model="selectedYearFilter"
+            :options="yearOptions"
+            :error="inputError"
+          />
         </div>
       </div>
       <div class="row mb-3">
@@ -134,7 +144,7 @@
       <div class="row mb-3">
         <div class="col-12 col-sm-4 col-md-4 col-lg-4">
           <label class="me-1">{{ t("month") }}</label>
-          <select
+          <!-- <select
             v-model="selectedMonth"
             class="me-3"
             :class="{ error: isEmpty.selectedMonth, 'form-control': true }"
@@ -142,11 +152,16 @@
             <option v-for="month in months" :value="month" :key="month">
               {{ month }}
             </option>
-          </select>
+          </select> -->
+          <Dropdown
+            v-model="selectedMonth"
+            :options="monthOptions"
+            :error="isEmpty.selectedMonth"
+          />
         </div>
         <div class="col-12 col-sm-4 col-md-4 col-lg-4">
           <label class="me-1">{{ t("year") }}</label>
-          <select
+          <!-- <select
             v-model="selectedYear"
             class="me-3"
             :class="{ error: isEmpty.selectedYear, 'form-control': true }"
@@ -159,7 +174,12 @@
             >
               {{ year }}
             </option>
-          </select>
+          </select> -->
+          <Dropdown
+            v-model="selectedYear"
+            :options="yearOptions"
+            :error="isEmpty.selectedYear"
+          />
         </div>
         <div class="col-12 col-sm-4 col-md-4 col-lg-4">
           <label class="me-1">{{ t("round") }}</label>
@@ -458,14 +478,19 @@
 
     <div class="mb-3">
       <label class="col-sm-5 col-md-6 mb-3">{{ t("roundHeaderTable") }} </label>
-      <select
+      <!-- <select
         v-model="formDataEdit.round"
         :class="{ error: inputError } + ' form-control'"
       >
         <option v-for="round in rounds" :key="round" :value="round">
           {{ round }}
         </option>
-      </select>
+      </select> -->
+      <Dropdown
+        v-model="selectedRound"
+        :options="roundOptions"
+        :error="isEmpty.selectedRound"
+      />
     </div>
     <div class="mb-3">
       <label class="col-sm-5 col-md-6 mb-3">{{ t("monthHeaderTable") }} </label>
@@ -586,6 +611,7 @@ import { useI18n } from "vue-i18n";
 import DatePicker from "vue-datepicker-next";
 import "vue-datepicker-next/index.css";
 import Button from "../components/button.vue";
+import Dropdown from "../components/dropdown.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -598,6 +624,7 @@ export default {
     Popup,
     DatePicker,
     Button,
+    Dropdown,
   },
   setup() {
     const { t } = useI18n(); // i18n function for translations
@@ -725,6 +752,24 @@ export default {
     };
   },
   computed: {
+    monthOptions() {
+      return this.months.map((month) => ({
+        value: month,
+        text: month,
+      }));
+    },
+    yearOptions() {
+      return this.years.map((year) => ({
+        value: year,
+        text: this.t("lang") === "en" ? year + 543 : year,
+      }));
+    },
+    roundOptions() {
+      return this.rounds.map((round) => ({
+        value: round,
+        text: round,
+      }));
+    },
     // set data header
     tableHeaders() {
       return [

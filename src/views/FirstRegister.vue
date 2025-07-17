@@ -24,10 +24,10 @@
         <h5 style="text-decoration: underline">{{ t("userform") }}</h5>
         <form class="row g-3">
           <div class="col-md-2">
-            <label class="form-label"
+            <!-- <label class="form-label"
               ><span style="color: red">*</span>{{ t("title") }}</label
-            >
-            <select
+            > -->
+            <!-- <select
               class="form-control col-sm-9 col-md-6 form-select"
               v-model="formData.user_title"
               required
@@ -36,7 +36,14 @@
               <option value="Mr.">{{ t("mister") }}</option>
               <option value="Mrs.">{{ t("missis") }}</option>
               <option value="Miss">{{ t("miss") }}</option>
-            </select>
+            </select> -->
+            <Dropdown
+              v-model="formData.user_title"
+              :options="titleOptions"
+              :label="t('title')"
+              :error="isEmpty.user_title"
+              :required="true"
+            />
           </div>
           <div class="col-md-4">
             <label class="form-label"
@@ -221,8 +228,14 @@
           </div>
           <div class="col-md-6"></div>
           <div class="col-md-6">
-            <label class="form-label">{{ t("bankname") }}</label>
-            <select
+            <Dropdown
+              v-model="formData.bank_name"
+              :options="bankOptions"
+              :label="t('bankname')"
+              :error="isEmpty.bank_name"
+              placeholder="กรุณาเลือกธนาคาร"
+            />
+            <!-- <select
               class="form-select"
               aria-label="Default select example"
               v-model="formData.bank_name"
@@ -254,7 +267,7 @@
               <option value="ธนาคารไอซีบซี">ธนาคารไอซีบซี (ICBC)</option>
               <option value="ธนาคารไอซีบีซี (ไทย)">ธนาคารไอซีบีซี (ไทย)</option>
               <option value="ธนาคารออมสิน">ธนาคารออมสิน (GSB)</option>
-            </select>
+            </select> -->
           </div>
           <div class="col-md-6">
             <label class="form-label">{{ t("bankAccName") }}</label>
@@ -346,6 +359,7 @@ import Popup from "../components/popup.vue";
 import Button from "../components/button.vue"; // 1. นำเข้า component
 import { useI18n } from "vue-i18n";
 import { watchEffect } from "vue";
+import Dropdown from "../components/dropdown.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -355,6 +369,7 @@ export default {
     UserList,
     Popup,
     Button, // 2. ลงทะเบียน component
+    Dropdown,
   },
   setup() {
     const { t, locale } = useI18n();
@@ -433,6 +448,36 @@ export default {
     };
   },
   computed: {
+    titleOptions() {
+      return [
+        { value: "Mr.", text: this.t("mister") },
+        { value: "Mrs.", text: this.t("missis") },
+        { value: "Miss", text: this.t("miss") },
+      ];
+    },
+    bankOptions() {
+      return [
+        { value: "ธนาคารกรุงเทพ", text: "ธนาคารกรุงเทพ (BBL)" },
+        { value: "ธนาคารกสิกรไทย", text: "ธนาคารกสิกรไทย (KBANK)" },
+        { value: "ธนาคารกรุงไทย", text: "ธนาคารกรุงไทย (KTB)" },
+        { value: "ธนาคารไทยพาณิชย์", text: "ธนาคารไทยพาณิชย์ (SCB)" },
+        { value: "ธนาคารกรุงศรีอยุธยา", text: "ธนาคารกรุงศรีอยุธยา (BAY)" },
+        { value: "ธนาคารทหารไทย", text: "ธนาคารทหารไทย (TMB)" },
+        { value: "ธนาคารธนชาต", text: "ธนาคารธนชาต (TBANK)" },
+        { value: "ธนาคารเกียรตินาคิน", text: "ธนาคารเกียรตินาคิน (KK)" },
+        { value: "ธนาคารทิสโก้", text: "ธนาคารทิสโก้ (TISCO)" },
+        { value: "ธนาคารซีไอเอ็มบีไทย", text: "ธนาคารซีไอเอ็มบีไทย (CIMBT)" },
+        { value: "ธนาคารแลนด์แอนด์เฮ้าส", text: "ธนาคารแลนด์แอนด์เฮ้าส (LH)" },
+        { value: "ธนาคารยูโอบี", text: "ธนาคารยูโอบี (UOB)" },
+        {
+          value: "ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร",
+          text: "ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร (BACC)",
+        },
+        { value: "ธนาคารไอซีบซี", text: "ธนาคารไอซีบซี (ICBC)" },
+        { value: "ธนาคารไอซีบีซี (ไทย)", text: "ธนาคารไอซีบีซี (ไทย)" },
+        { value: "ธนาคารออมสิน", text: "ธนาคารออมสิน (GSB)" },
+      ];
+    },
     tableHeaders() {
       return [
         { label: this.t("firstNameHeaderTable"), key: "First name" },

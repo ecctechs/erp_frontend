@@ -76,8 +76,15 @@
           <div class="mb-3 mt-3 edit_about">
             <label class="col-sm-5 col-md-6">{{ t("bankname") }}</label>
             <a v-if="isShowing">{{ formData.bank_name }}</a>
+            <Dropdown
+              v-if="isEditMode"
+              v-model="formData.bank_name"
+              :options="bankOptions"
+              :error="isEmpty.bank_name"
+              placeholder="กรุณาเลือกธนาคาร"
+            />
 
-            <select
+            <!-- <select
               v-if="isEditMode"
               class="form-select"
               aria-label="Default select example"
@@ -110,7 +117,7 @@
               <option value="ธนาคารไอซีบซี">ธนาคารไอซีบซี (ICBC)</option>
               <option value="ธนาคารไอซีบีซี (ไทย)">ธนาคารไอซีบีซี (ไทย)</option>
               <option value="ธนาคารออมสิน">ธนาคารออมสิน (GSB)</option>
-            </select>
+            </select> -->
           </div>
           <div class="mb-3 mt-3">
             <label class="col-sm-5 col-md-6">{{ t("bankAccName") }}</label>
@@ -218,6 +225,7 @@ import Navigate from "../components/Navigation.vue";
 import Button from "../components/button.vue"; // Changed
 import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n";
+import Dropdown from "../components/dropdown.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -227,6 +235,7 @@ export default {
   components: {
     Navigate,
     Button, // Changed
+    Dropdown,
   },
   setup() {
     const { t } = useI18n();
@@ -273,6 +282,31 @@ export default {
         bank_number: "",
       },
     };
+  },
+  computed: {
+    bankOptions() {
+      return [
+        { value: "ธนาคารกรุงเทพ", text: "ธนาคารกรุงเทพ (BBL)" },
+        { value: "ธนาคารกสิกรไทย", text: "ธนาคารกสิกรไทย (KBANK)" },
+        { value: "ธนาคารกรุงไทย", text: "ธนาคารกรุงไทย (KTB)" },
+        { value: "ธนาคารไทยพาณิชย์", text: "ธนาคารไทยพาณิชย์ (SCB)" },
+        { value: "ธนาคารกรุงศรีอยุธยา", text: "ธนาคารกรุงศรีอยุธยา (BAY)" },
+        { value: "ธนาคารทหารไทย", text: "ธนาคารทหารไทย (TMB)" },
+        { value: "ธนาคารธนชาต", text: "ธนาคารธนชาต (TBANK)" },
+        { value: "ธนาคารเกียรตินาคิน", text: "ธนาคารเกียรตินาคิน (KK)" },
+        { value: "ธนาคารทิสโก้", text: "ธนาคารทิสโก้ (TISCO)" },
+        { value: "ธนาคารซีไอเอ็มบีไทย", text: "ธนาคารซีไอเอ็มบีไทย (CIMBT)" },
+        { value: "ธนาคารแลนด์แอนด์เฮ้าส", text: "ธนาคารแลนด์แอนด์เฮ้าส (LH)" },
+        { value: "ธนาคารยูโอบี", text: "ธนาคารยูโอบี (UOB)" },
+        {
+          value: "ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร",
+          text: "ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร (BACC)",
+        },
+        { value: "ธนาคารไอซีบซี", text: "ธนาคารไอซีบซี (ICBC)" },
+        { value: "ธนาคารไอซีบีซี (ไทย)", text: "ธนาคารไอซีบีซี (ไทย)" },
+        { value: "ธนาคารออมสิน", text: "ธนาคารออมสิน (GSB)" },
+      ];
+    },
   },
   methods: {
     validateInput(event) {
