@@ -1,7 +1,7 @@
 <template>
   <div class="forget-password-body">
     <div class="switch-lang-login">
-      <div class="icon_language_dark me-4"></div>
+      <Icon name="language_dark" class="me-4" />
       <div class="me-3">
         <div style="cursor: pointer" @click="toggleLanguage(t('headerLang'))">
           <a class="text-switch-lang-forgetpassword">{{ t("headerLang") }}</a>
@@ -111,13 +111,11 @@
                 type="button"
                 @click="togglePassword2"
               >
-                <span
-                  :class="
-                    showPassword2
-                      ? 'mdi mdi-eye-off-outline'
-                      : 'mdi mdi-eye-circle'
+                <Icon
+                  :name="
+                    showPassword2 ? 'mdi-eye-off-outline' : 'mdi-eye-circle'
                   "
-                ></span>
+                />
               </Button>
             </div>
           </div>
@@ -360,6 +358,7 @@ import Button from "../components/button.vue"; // 1. นำเข้า componen
 import { useI18n } from "vue-i18n";
 import { watchEffect } from "vue";
 import Dropdown from "../components/dropdown.vue";
+import Icon from "../components/icon.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -370,6 +369,7 @@ export default {
     Popup,
     Button, // 2. ลงทะเบียน component
     Dropdown,
+    Icon,
   },
   setup() {
     const { t, locale } = useI18n();

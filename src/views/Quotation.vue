@@ -74,31 +74,33 @@
                   {{ quotation.status }}
                 </div>
                 <div class="col-1 text-end">
-                  <span
+                  <Icon
                     v-if="
                       quotation.status === 'ยังไม่มีใบวางบิล' ||
                       quotation.status === 'Invoice not Issued'
                     "
-                    class="mdi mdi-check-circle"
+                    name="mdi-check-circle"
                     @click="handleAllow(quotation)"
-                  ></span>
+                    style="cursor: pointer"
+                  ></Icon>
                 </div>
                 <div class="col-1 text-end">
-                  <span
-                    class="mdi mdi-pencil-outline"
+                  <Icon
+                    name="mdi mdi-pencil-outline"
                     @click="handleEdit(quotation)"
-                  ></span>
+                    style="cursor: pointer"
+                  ></Icon>
                 </div>
                 <div class="col-1 text-end">
-                  <span
+                  <Icon
                     v-if="
                       quotation.status === 'ยังไม่มีใบวางบิล' ||
                       quotation.status === 'Invoice not Issued'
                     "
-                    class="mdi mdi-trash-can-outline"
-                    style="color: red"
+                    name="mdi mdi-trash-can-outline"
+                    style="color: red; cursor: pointer"
                     @click="handleDelete(quotation)"
-                  ></span>
+                  ></Icon>
                 </div>
               </div>
               <div class="card-body" style="line-height: 1.75">
@@ -269,17 +271,11 @@
               >
                 <div class="col-7"></div>
                 <div class="col-3 text-end"></div>
-                <div class="col-1 text-end">
-                  <span
-                    class="mdi mdi-eye-outline"
-                    @click="handlePreview(quotation)"
-                  ></span>
+                <div class="col-1 text-end" @click="handlePreview(quotation)">
+                  <Icon name="mdi-eye-outline" style="cursor: pointer" />
                 </div>
-                <div class="col-1 text-end">
-                  <span
-                    class="mdi mdi-tray-arrow-down"
-                    @click="handleDownload(quotation)"
-                  ></span>
+                <div class="col-1 text-end" @click="handleDownload(quotation)">
+                  <Icon name="mdi-tray-arrow-down" style="cursor: pointer" />
                 </div>
               </div>
 
@@ -288,7 +284,7 @@
                 class="card-footer text-center"
                 style="padding-bottom: 0.75rem !important"
               >
-                <span
+                <!-- <span
                   :class="
                     isExpanded(quotation.sale_id)
                       ? 'mdi mdi-chevron-up'
@@ -297,7 +293,17 @@
                   class="icon-toggle"
                   @click="toggleCollapse(quotation.sale_id)"
                 >
-                </span>
+                </span> -->
+                <Icon
+                  :name="
+                    isExpanded(quotation.sale_id)
+                      ? 'mdi-chevron-up'
+                      : 'mdi-chevron-down'
+                  "
+                  class="icon-toggle"
+                  @click="toggleCollapse(quotation.sale_id)"
+                  style="cursor: pointer"
+                />
               </div>
             </div>
           </div>
@@ -1280,6 +1286,7 @@ const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
 import Button from "../components/button.vue";
 import Dropdown from "../components/dropdown.vue";
+import Icon from "../components/icon.vue";
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -1295,6 +1302,7 @@ export default {
     Department,
     Button,
     Dropdown,
+    Icon,
   },
   setup() {
     const { t } = useI18n();

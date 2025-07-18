@@ -264,7 +264,7 @@
                     style="cursor: pointer"
                     @click="accessProduct"
                   >
-                    <div class="icon_product_access"></div>
+                    <Icon name="product_access" />
                     <p>{{ t("headerProduct") }}</p>
                   </div>
                 </div>
@@ -277,7 +277,7 @@
                     style="cursor: pointer"
                     @click="accessProductStock"
                   >
-                    <div class="icon_product_stock_access"></div>
+                    <Icon name="product_stock_access" />
                     <p>{{ t("headerStockManage") }}</p>
                   </div>
                 </div>
@@ -292,7 +292,7 @@
                     style="cursor: pointer"
                     @click="accessQuotation"
                   >
-                    <div class="icon_quotation_access"></div>
+                    <Icon name="quotation_access" />
                     <p>{{ t("headerQuotation") }}</p>
                   </div>
                 </div>
@@ -305,7 +305,7 @@
                     style="cursor: pointer"
                     @click="accessReportSales"
                   >
-                    <div class="icon_sale_report_access"></div>
+                    <Icon name="sale_report_access" />
                     <p>{{ t("salesreport") }}</p>
                   </div>
                 </div>
@@ -504,6 +504,7 @@ import DatePicker from "vue-datepicker-next";
 import "vue-datepicker-next/index.css";
 import { useI18n } from "vue-i18n";
 import { computed, watch, ref } from "vue";
+import Icon from "../components/icon.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -524,6 +525,7 @@ export default {
     navigate,
     DatePicker,
     Card,
+    Icon,
   },
   setup() {
     const { t } = useI18n();
