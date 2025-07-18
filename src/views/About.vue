@@ -9,54 +9,49 @@
           <div class="mb-3 mt-3">
             <label class="col-sm-5 col-md-6">{{ t("customerName") }}</label>
             <a v-if="isShowing">{{ formData.bus_name }}</a>
-            <input
-              class="form-control"
+            <TextField
               v-if="isEditMode"
               v-model="formData.bus_name"
-              :class="{ error: isEmpty.bus_name }"
+              :error="isEmpty.bus_name"
             />
           </div>
           <div class="mb-3 mt-3">
             <label class="col-sm-5 col-md-6">{{ t("address") }}</label>
             <a v-if="isShowing">{{ formData.bus_address }}</a>
-            <input
-              class="form-control"
+            <TextField
               v-if="isEditMode"
               v-model="formData.bus_address"
-              :class="{ error: isEmpty.bus_address }"
+              :error="isEmpty.bus_address"
             />
           </div>
           <div class="mb-3 mt-3">
             <label class="col-sm-5 col-md-6">{{ t("companyWebsite") }}</label>
             <a v-if="isShowing">{{ formData.bus_website }}</a>
-            <input
-              class="form-control"
+            <TextField
               v-if="isEditMode"
               v-model="formData.bus_website"
-              :class="{ error: isEmpty.bus_website }"
+              :error="isEmpty.bus_website"
             />
           </div>
           <div class="mb-3 mt-3">
             <label class="col-sm-5 col-md-6">{{ t("companyPhone") }}</label>
             <a v-if="isShowing">{{ formData.bus_tel }}</a>
-            <input
-              class="form-control"
+            <TextField
               v-if="isEditMode"
               v-model="formData.bus_tel"
-              :class="{ error: isEmpty.bus_tel }"
-              @keypress="validateInput"
+              :error="isEmpty.bus_tel"
+              type="tel"
               maxlength="10"
             />
           </div>
           <div class="mb-3 mt-3">
             <label class="col-sm-5 col-md-6">{{ t("taxID") }}</label>
             <a v-if="isShowing">{{ formData.bus_tax }}</a>
-            <input
-              class="form-control"
+            <TextField
               v-if="isEditMode"
               v-model="formData.bus_tax"
-              :class="{ error: isEmpty.bus_tax }"
-              @keypress="validateInput"
+              :error="isEmpty.bus_tax"
+              type="tel"
               maxlength="13"
             />
           </div>
@@ -122,21 +117,16 @@
           <div class="mb-3 mt-3">
             <label class="col-sm-5 col-md-6">{{ t("bankAccName") }}</label>
             <a v-if="isShowing">{{ formData.bank_account }}</a>
-            <input
-              class="form-control"
-              v-if="isEditMode"
-              v-model="formData.bank_account"
-            />
+            <TextField v-if="isEditMode" v-model="formData.bank_account" />
           </div>
           <div class="mb-3 mt-3">
             <label class="col-sm-5 col-md-6">{{ t("bankaccount") }}</label>
             <a v-if="isShowing">{{ formData.bank_number }}</a>
-            <input
-              class="form-control"
+            <TextField
               v-if="isEditMode"
               v-model="formData.bank_number"
-              :class="{ error: isEmpty.bank_number }"
-              @keypress="validateInput"
+              :error="isEmpty.bank_number"
+              type="tel"
               maxlength="15"
             />
           </div>
@@ -226,6 +216,7 @@ import Button from "../components/button.vue"; // Changed
 import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n";
 import Dropdown from "../components/dropdown.vue";
+import TextField from "../components/textField.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -236,6 +227,7 @@ export default {
     Navigate,
     Button, // Changed
     Dropdown,
+    TextField,
   },
   setup() {
     const { t } = useI18n();
@@ -270,16 +262,16 @@ export default {
         bank_number: "",
       },
       isEmpty: {
-        bus_id: "",
-        bus_name: "",
-        bus_address: "",
-        bus_website: "",
-        bus_tel: "",
-        bus_tax: "",
-        bus_logo: "",
-        bank_name: "",
-        bank_account: "",
-        bank_number: "",
+        bus_id: false,
+        bus_name: false,
+        bus_address: false,
+        bus_website: false,
+        bus_tel: false,
+        bus_tax: false,
+        bus_logo: false,
+        bank_name: false,
+        bank_account: false,
+        bank_number: false,
       },
     };
   },

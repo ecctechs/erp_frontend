@@ -40,16 +40,15 @@
       </div>
 
       <div class="mb-3">
-        <label class="col-sm-5 col-md-6 mb-3"
+        <!-- <label class="col-sm-5 col-md-6 mb-3"
           ><span style="color: red">*</span>{{ t("departName") }}
-        </label>
-        <input
-          class="col-sm-9 col-md-6 form-control"
+        </label> -->
+        <TextField
           v-model="formData.departmentName"
-          type="text"
+          :label="t('departName')"
+          :error="isEmpty.departmentName"
+          :required="true"
           id="input-text"
-          :class="{ error: isEmpty.departmentName }"
-          required
         />
       </div>
       <div class="modal-footer">
@@ -150,6 +149,7 @@ import Button from "../components/button.vue"; // 1. นำเข้า componen
 import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n";
 import { computed } from "vue";
+import TextField from "../components/textField.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -161,6 +161,7 @@ export default {
     Popup,
     tableList,
     Button, // 2. ลงทะเบียน component
+    TextField,
   },
   setup() {
     const { t } = useI18n();
@@ -185,8 +186,8 @@ export default {
         departmentName: "",
       },
       isEmpty: {
-        departmentID: "",
-        departmentName: "",
+        departmentID: false,
+        departmentName: false,
       },
       formPosition: {
         PositionID: "",

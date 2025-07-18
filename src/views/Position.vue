@@ -43,16 +43,15 @@
         <h3 v-if="isEditMode">{{ t("headerPopupEditPosition") }}</h3>
       </div>
       <div class="mb-3">
-        <label class="col-sm-5 col-md-6 mb-3"
+        <!-- <label class="col-sm-5 col-md-6 mb-3"
           ><span style="color: red">*</span>{{ t("positionName") }}</label
-        >
-        <input
-          class="col-sm-9 col-md-6 form-control"
+        > -->
+        <TextField
           v-model="formPosition.Position"
-          type="text"
+          :label="t('positionName')"
+          :error="isEmpty.Position"
+          :required="true"
           id="input-text"
-          :class="{ error: isEmpty.Position }"
-          required
         />
       </div>
       <div class="modal-footer mb-3">
@@ -70,6 +69,20 @@
           ></span>
           <span v-else>{{ t("buttonAdd") }}</span>
         </Button>
+        <!-- <Button
+          :disabled="isLoading"
+          customClass="btn btn-primary me-3"
+          v-if="isAddingMode"
+          @click="addPosition"
+        >
+          <span
+            v-if="isLoading"
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          <span v-else>{{ t("buttonAdd") }}</span>
+        </Button> -->
         <Button
           :disabled="isLoading"
           customClass="btn btn-primary me-3"
@@ -163,6 +176,7 @@ import { useI18n } from "vue-i18n";
 import jsPDF from "jspdf";
 import { computed } from "vue";
 import Button from "../components/button.vue";
+import TextField from "../components/textField.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -174,6 +188,7 @@ export default {
     Popup, // Popup component
     tableList, // Table component to display departments and positions
     Button,
+    TextField,
   },
   setup() {
     const { t } = useI18n(); // Setup translation
@@ -206,8 +221,8 @@ export default {
       },
       isEmpty: {
         // Form data for position
-        PositionID: "",
-        Position: "",
+        PositionID: false,
+        Position: false,
       },
     };
   },
@@ -521,6 +536,7 @@ export default {
     async addPosition() {
       const accessToken = localStorage.getItem("@accessToken");
       if (!(await this.validateFormData())) return;
+      this.isLoading = true;
       // if (this.formPosition.Position === "") {
       //   this.inputError = true;
       //   this.showPopup_error("Please fill data");

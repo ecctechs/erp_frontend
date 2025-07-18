@@ -1,14 +1,3 @@
-<template>
-  <button
-    :class="customClass"
-    :type="type"
-    @click="$emit('click')"
-    :disabled="disabled"
-  >
-    <slot />
-  </button>
-</template>
-
 <script setup>
 const props = defineProps({
   type: {
@@ -17,11 +6,29 @@ const props = defineProps({
   },
   customClass: {
     type: String,
-    default: "", // ให้สามารถส่ง class จากภายนอกได้
+    default: "",
   },
   disabled: {
     type: Boolean,
-    default: false, // เพิ่ม prop สำหรับ disabled
+    default: false,
   },
 });
+
+// ให้ emit ทำงานเฉพาะตอนมี listener จริง
+const emit = defineEmits(["click"]);
+
+function handleClick(event) {
+  emit("click", event); // emit click ตามปกติ
+}
 </script>
+
+<template>
+  <button
+    :class="customClass"
+    :type="type"
+    :disabled="disabled"
+    @click="handleClick"
+  >
+    <slot />
+  </button>
+</template>
