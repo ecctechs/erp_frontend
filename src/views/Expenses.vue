@@ -122,6 +122,7 @@
             <option value="ค่าเช่า">{{ t("expense.rentals") }}</option>
             <option value="อื่นๆ">{{ t("expense.others") }}</option>
           </select>
+          
         </div>
         <div class="col-6 col-sm-6 col-md-9 col-lg-9 text-end">
           <a
@@ -189,7 +190,7 @@
         <label class="col-sm-5 col-md-6 mb-3"
           ><span style="color: red">*</span>{{ t("cateHeaderTable") }}</label
         >
-        <select
+        <!-- <select
           class="form-control form-select size-font-sm"
           v-model="formData.cateExpense"
           aria-label="Expense Category select"
@@ -205,7 +206,13 @@
           <option value="office">{{ t("expense.office") }}</option>
           <option value="rentals">{{ t("expense.rentals") }}</option>
           <option value="others">{{ t("expense.others") }}</option>
-        </select>
+        </select> -->
+        <Dropdown
+          v-model="formData.cateExpense"
+          :options="categoryOptions"
+          :error="isEmpty.cateExpense"
+          :placeholder="t('expense.selectCategory')"
+        />
       </div>
       <div class="mb-3">
         <label class="col-sm-5 col-md-6 mb-3"
@@ -369,6 +376,8 @@ import "vue-datepicker-next/index.css";
 import { computed, watch, ref } from "vue";
 import "moment/locale/th";
 import Card from "../components/Card.vue";
+import TextField from "../components/TextField.vue";
+import Dropdown from "../components/dropdown.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -385,6 +394,8 @@ export default {
     DatePicker,
     Button,
     Card,
+    TextField,
+    Dropdown
   },
   setup() {
     const { t } = useI18n();
@@ -430,9 +441,17 @@ export default {
       documentName,
     };
   },
-  // ... The rest of your script remains unchanged
   data() {
     return {
+      categoryOptions: [
+        { value: "salary", text: this.t("expense.salary") },
+        { value: "stock", text: this.t("expense.stock") },
+        { value: "wages", text: this.t("expense.wages") },
+        { value: "marketing", text: this.t("expense.marketing") },
+        { value: "office", text: this.t("expense.office") },
+        { value: "rentals", text: this.t("expense.rentals") },
+        { value: "others", text: this.t("expense.others") },
+      ],
       fileName: "",
       Image_pd: [],
       imageSrc: null,
@@ -1201,41 +1220,3 @@ export default {
 };
 </script>
 
-<style>
-.expenseTable table thead tr th:nth-child(3),
-.expenseTable table tbody tr td:nth-child(3) {
-  display: none;
-}
-.expenseTable table thead tr th:nth-child(8),
-.expenseTable table tbody tr td:nth-child(8) {
-  display: none;
-}
-.expenseTable table thead tr th:nth-child(9),
-.expenseTable table tbody tr td:nth-child(9) {
-  display: none;
-}
-.expenseTable table thead tr th:nth-child(10),
-.expenseTable table tbody tr td:nth-child(10) {
-  display: none;
-}
-.expenseTable table thead tr th:nth-child(11),
-.expenseTable table tbody tr td:nth-child(11) {
-  display: none;
-}
-.expenseTable table thead tr th:nth-child(12),
-.expenseTable table tbody tr td:nth-child(12) {
-  display: none;
-}
-.expenseTable table thead tr th:nth-child(13),
-.expenseTable table tbody tr td:nth-child(13) {
-  display: none;
-}
-.expenseTable table thead tr th:nth-child(6),
-.expenseTable table tbody tr td:nth-child(6) {
-  display: none;
-}
-.expenseTable table thead tr th:nth-child(15),
-.expenseTable table tbody tr td:nth-child(15) {
-  display: none;
-}
-</style>

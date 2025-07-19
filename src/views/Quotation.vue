@@ -310,7 +310,7 @@
         </div>
       </div>
 
-      <div class="show-only-desktop sale_hide">
+      <div class="quotataion-show-only-desktop sale_hide">
         <QuotationList
           :tableHeaders="tableHeaders"
           :initialTableData="filteredQuo"
@@ -1584,7 +1584,7 @@ export default {
         { label: this.t("netpriceHeaderTable"), key: "net_price" },
         { label: this.t("remarkHeaderTable"), key: "remark" },
         { label: this.t("statusHide"), key: "statusHide" },
-        // { label: this.t("invoiceStatusHeaderTable"), key: "invoice" },
+        { label: this.t("invoiceStatusHeaderTable"), key: "invoice" },
       ];
     },
     // filteredQuo() {
@@ -5314,135 +5314,4 @@ export default {
   },
 };
 </script>
-<style>
-.custom-dropdown {
-  padding-right: 30px; /* เพิ่มพื้นที่ด้านขวาเพื่อใส่ลูกศร */
-  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 8"%3E%3Cpath fill="none" stroke="black" stroke-width="1" d="M1 1l5 5 5-5" /%3E%3C/svg%3E'); /* สัญลักษณ์ลูกศร */
-  background-repeat: no-repeat;
-  background-position: right 10px center; /* กำหนดตำแหน่งของลูกศร */
-  background-size: 12px; /* ขนาดของลูกศร */
-}
-/* ปรับขนาดของแต่ละคอลัมน์ */
-.product-name-column {
-  width: 30%; /* กำหนดพื้นที่มากที่สุดสำหรับชื่อสินค้า */
-  min-width: 150px !important;
-}
-.price-column {
-  width: 15%; /* รองรับข้อมูลยาวสำหรับ Price */
-  min-width: 130px !important;
-}
-.quantity-column {
-  width: 5%;
-  min-width: 100px !important;
-}
-.unit-column {
-  width: 5%;
-  min-width: 120px !important;
-}
-.discount-column {
-  width: auto; /* ให้ขนาดปรับตามเนื้อหา */
-  white-space: nowrap; /* บังคับให้ข้อความอยู่บรรทัดเดียว */
-  text-align: center;
-}
-.total-price-column {
-  width: 15%; /* รองรับข้อมูลยาวสำหรับ Price */
-  min-width: 130px !important;
-}
-.action-column {
-  width: 10%; /* คอลัมน์ปุ่มลบ */
-  min-width: 10px !important;
-}
-h5 {
-  margin-bottom: 25px;
-}
-#app
-  > div
-  > div.main-page
-  > div
-  > div:nth-child(3)
-  > div
-  > div.table-contain.table-responsive.table-form
-  > table
-  > tbody
-  > tr:nth-child(1)
-  > td:nth-child(16)
-  > div {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  width: 160px;
-  white-space: nowrap;
-}
-/* เพิ่ม cursor pointer เพื่อให้ปุ่มดูเหมือนกดได้ */
-button.btn-link {
-  text-decoration: none;
-  font-size: 16px;
-  cursor: pointer;
-}
 
-/* ✅ Overlay background */
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-/* ✅ Popup content */
-.popup-content-custome {
-  max-width: 400px;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-}
-
-/* ✅ Fade transition for background overlay */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-/* ✅ Smooth zoom-in popup effect */
-.popup-enter-active,
-.popup-leave-active {
-  transition: all 0.3s ease;
-}
-.popup-enter-from {
-  opacity: 0;
-  transform: scale(0.8);
-}
-.popup-leave-to {
-  opacity: 0;
-  transform: scale(0.8);
-}
-
-/* สำหรับ Vuetify 3 */
-.v-autocomplete input {
-  box-shadow: none !important;
-  border: none !important;
-}
-
-/* ลดพื้นหลังหรือกรอบที่ดูเหมือนซ้อน */
-.v-field.v-field--variant-outlined {
-  box-shadow: none !important;
-}
-
-/* ซ่อนเส้นขอบล่างหรือ inner box */
-.v-input__control {
-  border: none !important;
-}
-
-.show-only-desktop table thead tr th:nth-child(19),
-.show-only-desktop table tbody tr td:nth-child(19) {
-  display: none;
-}
-</style>

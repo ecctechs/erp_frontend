@@ -195,3 +195,40 @@ a {
 .v-input__details {
   display: none !important;
 }
+
+/* สำหรับ Vuetify 3 */
+.v-autocomplete input {
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* ลดพื้นหลังหรือกรอบที่ดูเหมือนซ้อน */
+.v-field.v-field--variant-outlined {
+  box-shadow: none !important;
+}
+
+/* ซ่อนเส้นขอบล่างหรือ inner box */
+.v-input__control {
+  border: none !important;
+}
+
+h5 {
+  margin-bottom: 25px;
+}
+#app
+  > div
+  > div.main-page
+  > div
+  > div:nth-child(3)
+  > div
+  > div.table-contain.table-responsive.table-form
+  > table
+  > tbody
+  > tr:nth-child(1)
+  > td:nth-child(16)
+  > div {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 160px;
+  white-space: nowrap;
+}

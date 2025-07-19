@@ -151,7 +151,7 @@
           ></a>
         </div>
       </div> -->
-      <div class="show-only-desktop">
+      <div class="product-show-only-desktop">
         <productList
           :tableHeaders="tableHeaders"
           :initialTableData="filteredProducts"
@@ -1661,19 +1661,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.is-invalid {
-  border: 1px solid red;
-}
-
-.show-only-desktop table thead tr th:nth-child(9),
-.show-only-desktop table tbody tr td:nth-child(9) {
-  display: none;
-}
-
-.show-only-desktop table thead tr th:nth-child(7),
-.show-only-desktop table tbody tr td:nth-child(7) {
-  display: none;
-}
-</style>

@@ -295,7 +295,7 @@
         </div>
       </div>
 
-      <div class="show-only-desktop sale_hide">
+      <div class="tax-show-only-desktop sale_hide">
         <InvoiceList
           :initialTableData="filteredIn"
           :tableHeaders="tableHeaders"
@@ -3114,47 +3114,3 @@ export default {
 };
 </script>
 
-<style>
-/* ปรับขนาดของแต่ละคอลัมน์ */
-.product-name-column {
-  width: 30%; /* กำหนดพื้นที่มากที่สุดสำหรับชื่อสินค้า */
-  min-width: 150px !important;
-}
-.price-column {
-  width: 15%; /* รองรับข้อมูลยาวสำหรับ Price */
-  min-width: 130px !important;
-}
-.quantity-column {
-  width: 5%;
-  min-width: 100px !important;
-}
-.unit-column {
-  width: 5%;
-  min-width: 120px !important;
-}
-.discount-column {
-  width: auto; /* ให้ขนาดปรับตามเนื้อหา */
-  white-space: nowrap; /* บังคับให้ข้อความอยู่บรรทัดเดียว */
-  text-align: center;
-}
-.total-price-column {
-  width: 15%; /* รองรับข้อมูลยาวสำหรับ Price */
-  min-width: 130px !important;
-}
-.action-column {
-  width: 10%; /* คอลัมน์ปุ่มลบ */
-  min-width: 10px !important;
-}
-.show-only-desktop table thead tr th:nth-child(20),
-.show-only-desktop table tbody tr td:nth-child(20) {
-  display: none;
-}
-.show-only-desktop table thead tr th:nth-child(21),
-.show-only-desktop table tbody tr td:nth-child(21) {
-  display: none;
-}
-.show-only-desktop table thead tr th:nth-child(7),
-.show-only-desktop table tbody tr td:nth-child(7) {
-  display: block !important;
-}
-</style>

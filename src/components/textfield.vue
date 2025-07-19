@@ -59,13 +59,3 @@ const handleKeyPress = (event) => {
 };
 </script>
 
-<style scoped>
-/* สามารถเพิ่มสไตล์เฉพาะสำหรับ wrapper ได้ที่นี่ */
-.textfield-wrapper {
-  width: 100%;
-}
-.form-label {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-</style>

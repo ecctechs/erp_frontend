@@ -73,3 +73,145 @@ td[color_code="L"] {
 .red-text {
   color: rgb(255, 0, 0);
 }
+
+/* ปรับขนาดของแต่ละคอลัมน์ */
+.product-name-column {
+  width: 30%; /* กำหนดพื้นที่มากที่สุดสำหรับชื่อสินค้า */
+  min-width: 150px !important;
+}
+.price-column {
+  width: 15%; /* รองรับข้อมูลยาวสำหรับ Price */
+  min-width: 130px !important;
+}
+.quantity-column {
+  width: 5%;
+  min-width: 100px !important;
+}
+.unit-column {
+  width: 5%;
+  min-width: 120px !important;
+}
+.discount-column {
+  width: auto; /* ให้ขนาดปรับตามเนื้อหา */
+  white-space: nowrap; /* บังคับให้ข้อความอยู่บรรทัดเดียว */
+  text-align: center;
+}
+.total-price-column {
+  width: 15%; /* รองรับข้อมูลยาวสำหรับ Price */
+  min-width: 130px !important;
+}
+.action-column {
+  width: 10%; /* คอลัมน์ปุ่มลบ */
+  min-width: 10px !important;
+}
+
+// billingnote
+.billing-show-only-desktop table thead tr th:nth-child(7),
+.billing-show-only-desktop table tbody tr td:nth-child(7) {
+  display: block !important;
+}
+
+// employee
+.employee-show-only-desktop table thead tr th:nth-child(17),
+.employee-show-only-desktop table tbody tr td:nth-child(17) {
+  display: none;
+}
+
+.expenseTable table thead tr th:nth-child(3),
+.expenseTable table tbody tr td:nth-child(3) {
+  display: none;
+}
+.expenseTable table thead tr th:nth-child(8),
+.expenseTable table tbody tr td:nth-child(8) {
+  display: none;
+}
+.expenseTable table thead tr th:nth-child(9),
+.expenseTable table tbody tr td:nth-child(9) {
+  display: none;
+}
+.expenseTable table thead tr th:nth-child(10),
+.expenseTable table tbody tr td:nth-child(10) {
+  display: none;
+}
+.expenseTable table thead tr th:nth-child(11),
+.expenseTable table tbody tr td:nth-child(11) {
+  display: none;
+}
+.expenseTable table thead tr th:nth-child(12),
+.expenseTable table tbody tr td:nth-child(12) {
+  display: none;
+}
+.expenseTable table thead tr th:nth-child(13),
+.expenseTable table tbody tr td:nth-child(13) {
+  display: none;
+}
+.expenseTable table thead tr th:nth-child(6),
+.expenseTable table tbody tr td:nth-child(6) {
+  display: none;
+}
+.expenseTable table thead tr th:nth-child(15),
+.expenseTable table tbody tr td:nth-child(15) {
+  display: none;
+}
+
+.invoice-show-only-desktop table thead tr th:nth-child(18),
+.invocie-show-only-desktop table tbody tr td:nth-child(18) {
+  display: none;
+}
+
+.invoice-show-only-desktop th:nth-child(18),
+.invoice-show-only-desktop td:nth-child(18) {
+  display: none;
+}
+
+.invoice-show-only-desktop th:nth-child(19),
+.invoice-show-only-desktop td:nth-child(19) {
+  display: none;
+}
+
+.invoice-show-only-desktop th:nth-child(20),
+.invoice-show-only-desktop td:nth-child(20) {
+  display: none;
+}
+
+.product-show-only-desktop table thead tr th:nth-child(9),
+.product-show-only-desktop table tbody tr td:nth-child(9) {
+  display: none;
+}
+
+.product-show-only-desktop table thead tr th:nth-child(7),
+.product-show-only-desktop table tbody tr td:nth-child(7) {
+  display: none;
+}
+
+.quotataion-show-only-desktop table thead tr th:nth-child(19),
+.quotataion-show-only-desktop table tbody tr td:nth-child(19) {
+  display: none;
+}
+.quotataion-show-only-desktop table thead tr th:nth-child(20),
+.quotataion-show-only-desktop table tbody tr td:nth-child(20) {
+  display: none;
+}
+.tax-show-only-desktop table thead tr th:nth-child(19),
+.tax-show-only-desktop table tbody tr td:nth-child(19) {
+  display: none;
+}
+.tax-show-only-desktop table thead tr th:nth-child(20),
+.tax-show-only-desktop table tbody tr td:nth-child(20) {
+  display: none;
+}
+.tax-show-only-desktop table thead tr th:nth-child(21),
+.tax-show-only-desktop table tbody tr td:nth-child(21) {
+  display: none;
+}
+
+.tax-show-only-desktop table thead tr th:nth-child(7),
+.tax-show-only-desktop table tbody tr td:nth-child(7) {
+  display: block !important;
+}
+
+.billing-show-only-desktop.sale_hide td:nth-child(20),
+.billing-show-only-desktop.sale_hide td:nth-child(21),
+.billing-show-only-desktop.sale_hide td:nth-child(22) {
+  display: none;
+}

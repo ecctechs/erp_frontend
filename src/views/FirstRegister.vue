@@ -770,8 +770,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-button.btn.btn-primary:hover {
-  color: #0d6efd !important;
-}
-</style>

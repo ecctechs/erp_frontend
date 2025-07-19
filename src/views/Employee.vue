@@ -39,7 +39,7 @@
           ></Button>
         </div>
       </div>
-      <div class="show-only-desktop">
+      <div class="employee-show-only-desktop">
         <employeeList
           :initialTableData="filteredEmp"
           :tableHeaders="tableHeaders"
@@ -2141,9 +2141,3 @@ export default {
 };
 </script>
 
-<style>
-.show-only-desktop table thead tr th:nth-child(17),
-.show-only-desktop table tbody tr td:nth-child(17) {
-  display: none;
-}
-</style>

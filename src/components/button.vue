@@ -12,13 +12,18 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-// ให้ emit ทำงานเฉพาะตอนมี listener จริง
 const emit = defineEmits(["click"]);
 
 function handleClick(event) {
-  emit("click", event); // emit click ตามปกติ
+  if (!props.disabled && !props.loading) {
+    emit("click", event);
+  }
 }
 </script>
 
@@ -26,9 +31,16 @@ function handleClick(event) {
   <button
     :class="customClass"
     :type="type"
-    :disabled="disabled"
+    :disabled="disabled || loading"
+    aria-busy="loading"
     @click="handleClick"
   >
+    <span
+      v-if="loading"
+      class="spinner-border spinner-border-sm me-1"
+      role="status"
+      aria-hidden="true"
+    ></span>
     <slot />
   </button>
 </template>

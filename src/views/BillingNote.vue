@@ -235,7 +235,7 @@
           </div>
         </div>
       </div>
-      <div class="show-only-desktop sale_hide">
+      <div class="billing-show-only-desktop sale_hide">
         <BillingList
           :initialTableData="filteredBill"
           :tableHeaders="tableHeaders"
@@ -266,12 +266,17 @@
     <div class="border p-4 mb-3">
       <div class="mb-3 div-for-formControl">
         <label class="col-sm-5 col-md-6">{{ t("numberBilling") }}</label>
-        <input
+        <!-- <input
           class="form-control readonly"
           v-model="formData.billing_number"
           readonly
           disabled
-        />
+        /> -->
+      <TextField
+        v-model="formData.billing_number"
+        :readonly="true"
+        :disabled="true"
+      />
       </div>
       <div class="mb-3 div-for-formControl">
         <label class="col-sm-6 col-md-6">{{ t("dateBilling") }}</label>
@@ -779,6 +784,7 @@ import "jspdf-autotable";
 import { computed, watch, ref } from "vue";
 import moment from "moment";
 import Icon from "../components/icon.vue";
+import TextField from "../components/textField.vue";
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -796,6 +802,7 @@ export default {
     DatePicker,
     Button,
     Icon,
+    TextField
   },
   setup() {
     const { t } = useI18n();
@@ -2378,41 +2385,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-/* ปรับขนาดของแต่ละคอลัมน์ */
-.product-name-column {
-  width: 30%; /* กำหนดพื้นที่มากที่สุดสำหรับชื่อสินค้า */
-  min-width: 150px !important;
-}
-.price-column {
-  width: 15%; /* รองรับข้อมูลยาวสำหรับ Price */
-  min-width: 130px !important;
-}
-.quantity-column {
-  width: 5%;
-  min-width: 100px !important;
-}
-.unit-column {
-  width: 5%;
-  min-width: 120px !important;
-}
-.discount-column {
-  width: auto; /* ให้ขนาดปรับตามเนื้อหา */
-  white-space: nowrap; /* บังคับให้ข้อความอยู่บรรทัดเดียว */
-  text-align: center;
-}
-.total-price-column {
-  width: 15%; /* รองรับข้อมูลยาวสำหรับ Price */
-  min-width: 130px !important;
-}
-.action-column {
-  width: 10%; /* คอลัมน์ปุ่มลบ */
-  min-width: 10px !important;
-}
-
-.show-only-desktop table thead tr th:nth-child(7),
-.show-only-desktop table tbody tr td:nth-child(7) {
-  display: block !important;
-}
-</style>

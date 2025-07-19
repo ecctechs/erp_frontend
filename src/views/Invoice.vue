@@ -294,7 +294,7 @@
         </div>
       </div>
 
-      <div class="show-only-desktop sale_hide">
+      <div class="invoice-show-only-desktop sale_hide">
         <InvoiceList
           :initialTableData="filteredIn"
           :tableHeaders="tableHeaders"
@@ -1078,7 +1078,8 @@ export default {
         { label: this.t("invoiceDateHeaderTable"), key: "invoice_date" },
         { label: this.t("remarkHeaderTable"), key: "remark" },
         { label: this.t("statusHide"), key: "statusHide" },
-        // { label: this.t("billingStatusHeaderTable"), key: "billing" },
+        { label: this.t("billingStatusHeaderTable"), key: "billing" },
+         { label: this.t("billingStatusHeaderTable"), key: "billing" },
       ];
     },
     filteredIn() {
@@ -3200,40 +3201,3 @@ export default {
 };
 </script>
 
-<style>
-/* ปรับขนาดของแต่ละคอลัมน์ */
-.product-name-column {
-  width: 30%; /* กำหนดพื้นที่มากที่สุดสำหรับชื่อสินค้า */
-  min-width: 150px !important;
-}
-.price-column {
-  width: 15%; /* รองรับข้อมูลยาวสำหรับ Price */
-  min-width: 130px !important;
-}
-.quantity-column {
-  width: 5%;
-  min-width: 100px !important;
-}
-.unit-column {
-  width: 5%;
-  min-width: 120px !important;
-}
-.discount-column {
-  width: auto; /* ให้ขนาดปรับตามเนื้อหา */
-  white-space: nowrap; /* บังคับให้ข้อความอยู่บรรทัดเดียว */
-  text-align: center;
-}
-.total-price-column {
-  width: 15%; /* รองรับข้อมูลยาวสำหรับ Price */
-  min-width: 130px !important;
-}
-.action-column {
-  width: 10%; /* คอลัมน์ปุ่มลบ */
-  min-width: 10px !important;
-}
-
-.show-only-desktop table thead tr th:nth-child(18),
-.show-only-desktop table tbody tr td:nth-child(18) {
-  display: none;
-}
-</style>

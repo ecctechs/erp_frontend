@@ -6,129 +6,59 @@
       </div>
       <div class="mt-3">
         <div class="about-business-contain">
-          <div class="mb-3 mt-3">
-            <label class="col-sm-5 col-md-6">{{ t("customerName") }}</label>
-            <a v-if="isShowing">{{ formData.bus_name }}</a>
-            <TextField
-              v-if="isEditMode"
-              v-model="formData.bus_name"
-              :error="isEmpty.bus_name"
-            />
-          </div>
-          <div class="mb-3 mt-3">
-            <label class="col-sm-5 col-md-6">{{ t("address") }}</label>
-            <a v-if="isShowing">{{ formData.bus_address }}</a>
-            <TextField
-              v-if="isEditMode"
-              v-model="formData.bus_address"
-              :error="isEmpty.bus_address"
-            />
-          </div>
-          <div class="mb-3 mt-3">
-            <label class="col-sm-5 col-md-6">{{ t("companyWebsite") }}</label>
-            <a v-if="isShowing">{{ formData.bus_website }}</a>
-            <TextField
-              v-if="isEditMode"
-              v-model="formData.bus_website"
-              :error="isEmpty.bus_website"
-            />
-          </div>
-          <div class="mb-3 mt-3">
-            <label class="col-sm-5 col-md-6">{{ t("companyPhone") }}</label>
-            <a v-if="isShowing">{{ formData.bus_tel }}</a>
-            <TextField
-              v-if="isEditMode"
-              v-model="formData.bus_tel"
-              :error="isEmpty.bus_tel"
-              type="tel"
-              maxlength="10"
-            />
-          </div>
-          <div class="mb-3 mt-3">
-            <label class="col-sm-5 col-md-6">{{ t("taxID") }}</label>
-            <a v-if="isShowing">{{ formData.bus_tax }}</a>
-            <TextField
-              v-if="isEditMode"
-              v-model="formData.bus_tax"
-              :error="isEmpty.bus_tax"
-              type="tel"
-              maxlength="13"
-            />
-          </div>
-          <div class="mb-3 mt-3">
-            <label class="col-sm-5 col-md-6">{{ t("companyLogo") }}</label>
-            <img v-if="isShowing" :src="formData.bus_logo" class="image_exp" />
-            <br />
-            <input v-if="isEditMode" type="file" @change="handleFileUpload" />
-            <br />
-            <img
-              v-if="exp_files != '' || isEditMode"
-              :src="exp_files || formData.bus_logo"
-              alt="Uploaded Image"
-              class="image_exp"
-            />
-          </div>
-          <div class="mb-3 mt-3 edit_about">
-            <label class="col-sm-5 col-md-6">{{ t("bankname") }}</label>
-            <a v-if="isShowing">{{ formData.bank_name }}</a>
-            <Dropdown
-              v-if="isEditMode"
-              v-model="formData.bank_name"
-              :options="bankOptions"
-              :error="isEmpty.bank_name"
-              placeholder="กรุณาเลือกธนาคาร"
-            />
+          <div
+            v-for="(key, index) in fieldConfig.keys"
+            :key="key"
+            class="mb-3 mt-3"
+            :class="key === 'bank_name' ? 'edit_about' : ''"
+          >
+            <label class="col-sm-5 col-md-6">{{
+              t(fieldConfig.labels[index])
+            }}</label>
 
-            <!-- <select
-              v-if="isEditMode"
-              class="form-select"
-              aria-label="Default select example"
-              v-model="formData.bank_name"
-              :class="{ error: isEmpty.bank_name }"
-            >
-              <option value="ธนาคารกรุงเทพ">ธนาคารกรุงเทพ (BBL)</option>
-              <option value="ธนาคารกสิกรไทย">ธนาคารกสิกรไทย (KBANK)</option>
-              <option value="ธนาคารกรุงไทย">ธนาคารกรุงไทย (KTB)</option>
-              <option value="ธนาคารไทยพาณิชย์">ธนาคารไทยพาณิชย์ (SCB)</option>
-              <option value="ธนาคารกรุงศรีอยุธยา">
-                ธนาคารกรุงศรีอยุธยา (BAY)
-              </option>
-              <option value="ธนาคารทหารไทย">ธนาคารทหารไทย (TMB)</option>
-              <option value="ธนาคารธนชาต">ธนาคารธนชาต (TBANK)</option>
-              <option value="ธนาคารเกียรตินาคิน">
-                ธนาคารเกียรตินาคิน (KK)
-              </option>
-              <option value="ธนาคารทิสโก้">ธนาคารทิสโก้ (TISCO)</option>
-              <option value="ธนาคารซีไอเอ็มบีไทย">
-                ธนาคารซีไอเอ็มบีไทย (CIMBT)
-              </option>
-              <option value="ธนาคารแลนด์แอนด์เฮ้าส">
-                ธนาคารแลนด์แอนด์เฮ้าส (LH)
-              </option>
-              <option value="ธนาคารยูโอบี">ธนาคารยูโอบี (UOB)</option>
-              <option value="ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร">
-                ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร (BACC)
-              </option>
-              <option value="ธนาคารไอซีบซี">ธนาคารไอซีบซี (ICBC)</option>
-              <option value="ธนาคารไอซีบีซี (ไทย)">ธนาคารไอซีบีซี (ไทย)</option>
-              <option value="ธนาคารออมสิน">ธนาคารออมสิน (GSB)</option>
-            </select> -->
-          </div>
-          <div class="mb-3 mt-3">
-            <label class="col-sm-5 col-md-6">{{ t("bankAccName") }}</label>
-            <a v-if="isShowing">{{ formData.bank_account }}</a>
-            <TextField v-if="isEditMode" v-model="formData.bank_account" />
-          </div>
-          <div class="mb-3 mt-3">
-            <label class="col-sm-5 col-md-6">{{ t("bankaccount") }}</label>
-            <a v-if="isShowing">{{ formData.bank_number }}</a>
-            <TextField
-              v-if="isEditMode"
-              v-model="formData.bank_number"
-              :error="isEmpty.bank_number"
-              type="tel"
-              maxlength="15"
-            />
+            <!-- โหมดแสดงผล -->
+            <template v-if="isShowing">
+              <!-- กรณีเป็นภาพ -->
+              <img
+                v-if="fieldConfig.types[index] === 'image'"
+                :src="formData[key]"
+                class="image_exp"
+              />
+              <!-- กรณีอื่น ๆ เป็นข้อความ -->
+              <a v-else>{{ formData[key] }}</a>
+            </template>
+
+            <!-- โหมดแก้ไข -->
+            <template v-if="isEditMode">
+              <!-- กรณีเป็น dropdown (bank_name) -->
+              <Dropdown
+                v-if="fieldConfig.componentTypes[index] === 'dropdown'"
+                v-model="formData[key]"
+                :options="bankOptions"
+                :error="isEmpty[key]"
+                placeholder="กรุณาเลือกธนาคาร"
+              />
+
+              <!-- กรณีเป็น upload (รูปภาพ) -->
+              <div v-else-if="fieldConfig.componentTypes[index] === 'upload'">
+                <input type="file" @change="handleFileUpload" />
+                <br />
+                <img
+                  :src="exp_files || formData[key]"
+                  alt="Uploaded Image"
+                  class="image_exp"
+                />
+              </div>
+
+              <!-- กรณีอื่น ๆ ใช้ TextField -->
+              <TextField
+                v-else
+                v-model="formData[key]"
+                :error="isEmpty[key]"
+                :type="fieldConfig.types[index]"
+                :maxlength="key === 'bus_tel' ? 10 : key === 'bus_tax' ? 13 : key === 'bank_number' ? 15 : null"
+              />
+            </template>
           </div>
           <div class="modal-footer">
             <Button
@@ -238,6 +168,20 @@ export default {
   },
   data() {
     return {
+     fieldConfig: {
+        keys: [
+          "bus_name","bus_address","bus_website","bus_tel","bus_tax","bus_logo","bank_name","bank_account","bank_number"
+        ],
+        labels: [
+          "customerName", "address", "companyWebsite", "companyPhone", "taxID", "companyLogo", "bankname", "bankAccName", "bankaccount"
+        ],
+        types: [
+          "text", "text", "text", "tel", "tel", "image", "text", "text", "text"
+        ],
+        componentTypes: [
+          "text", "text", "text", "text", "text", "upload", "dropdown", "text", "text"
+        ]
+      },
       isPopupVisible_error: false,
       Business: [],
       bus_data: [],
