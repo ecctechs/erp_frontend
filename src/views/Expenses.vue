@@ -166,110 +166,90 @@
         <h3 v-if="isAddingMode">{{ t("headerPopupAddExpenses") }}</h3>
         <h3 v-if="isEditMode">{{ t("headerPopupEditExpenses") }}</h3>
       </div>
-      <div class="mb-3">
-        <label class="col-sm-5 col-md-6 mb-3"
-          ><span style="color: red">*</span>{{ t("dateHeaderTable") }}</label
-        >
-        <v-date-picker
-          v-model="formData.DateExpense"
-          locale="th-TH"
-          :format="formatDatePicker"
-        >
-          <template v-slot="{ inputEvents }">
-            <input
-              class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
-              :value="formatDatePicker(formData.DateExpense)"
-              v-on="inputEvents"
-              placeholder="เลือกวันที่"
-              style="width: 100%"
-            />
-          </template>
-        </v-date-picker>
-      </div>
-      <div class="mb-3">
-        <label class="col-sm-5 col-md-6 mb-3"
-          ><span style="color: red">*</span>{{ t("cateHeaderTable") }}</label
-        >
-        <!-- <select
-          class="form-control form-select size-font-sm"
-          v-model="formData.cateExpense"
-          aria-label="Expense Category select"
-          :class="{ error: isEmpty.cateExpense }"
-        >
-          <option value="" selected hidden>
-            {{ t("expense.selectCategory") }}
-          </option>
-          <option value="salary">{{ t("expense.salary") }}</option>
-          <option value="stock">{{ t("expense.stock") }}</option>
-          <option value="wages">{{ t("expense.wages") }}</option>
-          <option value="marketing">{{ t("expense.marketing") }}</option>
-          <option value="office">{{ t("expense.office") }}</option>
-          <option value="rentals">{{ t("expense.rentals") }}</option>
-          <option value="others">{{ t("expense.others") }}</option>
-        </select> -->
-        <Dropdown
-          v-model="formData.cateExpense"
-          :options="categoryOptions"
-          :error="isEmpty.cateExpense"
-          :placeholder="t('expense.selectCategory')"
-        />
-      </div>
-      <div class="mb-3">
-        <label class="col-sm-5 col-md-6 mb-3"
-          ><span style="color: red">*</span
-          >{{ t("amountmoneyHeaderTable") }}</label
-        >
-        <input
-          class="form-control col-sm-7 col-md-6"
-          v-model="formattedPrice"
-          type="text"
-          id="price"
-          @input="updatePrice"
-          @keypress="onlyNumber"
-          :class="{ error: isEmpty.priceExpense }"
-        />
-      </div>
-      <div class="mb-3">
-        <label class="col-sm-5 col-md-6 mb-3">{{
-          t("remarkHeaderTable")
-        }}</label>
-        <textarea
-          v-model="formData.remarkExpense"
-          class="form-control"
-          rows="3"
-          @input="onInput"
-          maxlength="220"
-          :class="{ error: isEmpty.remarkExpense }"
-        ></textarea>
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("FileLabel") }}</label>
-        <div class="input-group input-upload-custom">
-          <label class="input-group-text btn btn-primary">
-            {{ t("SelectImage") }}
-            <input type="file" hidden @change="previewImage" />
-          </label>
-          <input
-            type="text"
-            class="form-control"
-            :value="fileName || t('FileImageName')"
-            ref="fileInput"
-            readonly
-          />
-        </div>
-      </div>
-      <div class="mb-5 div-for-formControl-textarea">
-        <label class="col-sm-5 col-md-6 label-textarea"></label>
-        <div class="text-editor">
-          <div v-if="imageSrc" class="image-preview mt-3">
-            <img
-              :src="imageSrc"
-              alt="Preview"
-              style="max-width: 200px; max-height: 200px"
-            />
-          </div>
-        </div>
-      </div>
+      <div
+  v-for="(key, index) in fieldConfig.keys"
+  :key="key"
+  class="mb-3"
+>
+  <label class="col-sm-5 col-md-6 mb-3">
+    <span v-if="['DateExpense', 'cateExpense', 'priceExpense'].includes(key)" style="color: red">*</span>
+    {{ t(fieldConfig.labels[index]) }}
+  </label>
+
+  <!-- date picker -->
+  <v-date-picker
+    v-if="fieldConfig.componentTypes[index] === 'date'"
+    v-model="formData[key]"
+    locale="th-TH"
+    :format="formatDatePicker"
+  >
+    <template v-slot="{ inputEvents }">
+      <input
+        class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
+        :value="formatDatePicker(formData[key])"
+        v-on="inputEvents"
+        placeholder="เลือกวันที่"
+        style="width: 100%"
+      />
+    </template>
+  </v-date-picker>
+
+  <!-- dropdown -->
+  <Dropdown
+    v-else-if="fieldConfig.componentTypes[index] === 'dropdown'"
+    v-model="formData[key]"
+    :options="categoryOptions"
+    :error="isEmpty[key]"
+    :placeholder="t('expense.selectCategory')"
+  />
+
+  <!-- textarea -->
+  <textarea
+    v-else-if="fieldConfig.componentTypes[index] === 'textarea'"
+    v-model="formData[key]"
+    class="form-control"
+    rows="3"
+    @input="onInput"
+    maxlength="220"
+    :class="{ error: isEmpty[key] }"
+  ></textarea>
+
+  <!-- upload -->
+  <div v-else-if="fieldConfig.componentTypes[index] === 'upload'" class="div-for-formControl">
+    <div class="input-group input-upload-custom">
+      <label class="input-group-text btn btn-primary">
+        {{ t("SelectImage") }}
+        <input type="file" hidden @change="previewImage" />
+      </label>
+      <input
+        type="text"
+        class="form-control"
+        :value="fileName || t('FileImageName')"
+        ref="fileInput"
+        readonly
+      />
+    </div>
+    <div v-if="imageSrc" class="image-preview mt-3">
+      <img
+        :src="imageSrc"
+        alt="Preview"
+        style="max-width: 200px; max-height: 200px"
+      />
+    </div>
+  </div>
+
+  <!-- text input -->
+  <input
+    v-else
+    class="form-control col-sm-7 col-md-6"
+    v-model="formattedPrice"
+    type="text"
+    id="price"
+    @input="updatePrice"
+    @keypress="onlyNumber"
+    :class="{ error: isEmpty[key] }"
+  />
+</div>
       <div class="modal-footer mb-3">
         <Button
           :disabled="isLoading"
@@ -443,6 +423,24 @@ export default {
   },
   data() {
     return {
+        fieldConfig: {
+          keys: [
+            "DateExpense",     "cateExpense",     "priceExpense",
+            "remarkExpense",   "uploadImage"
+          ],
+          labels: [
+            "dateHeaderTable", "cateHeaderTable", "amountmoneyHeaderTable",
+            "remarkHeaderTable", "FileLabel"
+          ],
+          types: [
+            "date",            "dropdown",        "text",
+            "textarea",        "upload"
+          ],
+          componentTypes: [
+            "date",            "dropdown",        "text",
+            "textarea",        "upload"
+          ]
+        },
       categoryOptions: [
         { value: "salary", text: this.t("expense.salary") },
         { value: "stock", text: this.t("expense.stock") },
