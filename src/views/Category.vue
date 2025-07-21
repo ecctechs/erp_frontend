@@ -6,12 +6,11 @@
       </div>
       <div class="row mb-3">
         <div class="col-6 col-sm-6 col-md-3 col-lg-3">
-          <input
-            v-model="searchQuery"
-            type="text"
-            class="form-control me-3 size-font-sm"
-            :placeholder="$t('Search')"
-          />
+        <TextField
+          v-model="searchQuery"
+          :placeholder="$t('Search')"
+          class="me-3 size-font-sm"
+        />
         </div>
         <div class="col-6 col-sm-6 col-md-9 col-lg-9">
           <a
@@ -57,10 +56,7 @@
         />
       </div>
       <div class="mb-3">
-        <label class="col-sm-5 col-md-6 mb-3"
-          ><span style="color: red">*</span>{{ t("categoryName") }}</label
-        >
-        <input
+        <!-- <input
           class="form-control"
           v-model="formData.categoryName"
           type="text"
@@ -68,6 +64,13 @@
           required
           maxlength="30"
           :class="{ error: isEmpty.categoryName }"
+        /> -->
+        <TextField
+          v-model="formData.categoryName"
+          :label="t('categoryName')"
+          :error="isEmpty.categoryName"
+          :required="true"
+          maxlength="30"
         />
       </div>
       <div class="modal-footer">
@@ -167,6 +170,7 @@ import Popup from "../components/popup.vue";
 import Button from "../components/button.vue"; // 1. นำเข้า component
 import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n";
+import TextField from "../components/textField.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -178,6 +182,7 @@ export default {
     CategoryList,
     Popup,
     Button, // 2. ลงทะเบียน component
+    TextField
   },
   setup() {
     const { t } = useI18n();
@@ -201,7 +206,7 @@ export default {
       },
       isEmpty: {
         categoryID: "",
-        categoryName: "",
+        categoryName: false,
       },
       searchQuery: "",
     };

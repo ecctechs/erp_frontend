@@ -106,13 +106,6 @@
         </div>
         <div v-if="isPopupVisible_error" class="popup-error2">
           <div class="text-end">
-            <!-- <button
-              type="button"
-              class="btn-close"
-              aria-label="Close"
-              @click="closeErrorPopup"
-              style="color: #9f9999"
-            ></button> -->
             <Button
               @click="closeErrorPopup"
               type="button"
