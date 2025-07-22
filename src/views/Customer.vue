@@ -27,26 +27,6 @@
       </div>
       <div class="row mb-3">
         <div class="col-4 col-sm-4 col-md-2 col-lg-2">
-          <!-- <select
-            v-if="selectedType === 'A'"
-            class="form-control form-select size-font-sm"
-            v-model="dropDownStatus"
-            aria-label="Status select"
-          >
-            <option value="" selected hidden>{{ t("filter") }}</option>
-            <option value="active">{{ t("statusActive") }}</option>
-            <option value="not_active">{{ t("statusNotActive") }}</option>
-          </select>
-          <select
-            v-if="selectedType === 'B'"
-            class="form-control form-select size-font-sm"
-            v-model="dropDownStatus"
-            aria-label="Status select"
-          >
-            <option value="" selected hidden>ตัวกรอง</option>
-            <option value="active">{{ t("statusActive") }}</option>
-            <option value="not_active">{{ t("statusNotActive") }}</option>
-          </select> -->
           <Dropdown
             v-if="selectedType === 'A' || selectedType === 'B'"
             v-model="dropDownStatus"
@@ -122,6 +102,19 @@
         {{ t("headerPopupAddCustomer") }}
       </h2>
       <h2 v-if="isEditMode">{{ t("headerPopupEditCustomer") }}</h2>
+       <div v-for="(key, index) in companyFieldConfig.keys" :key="key" class="mb-3">
+    <span style="color: red">*</span>
+    <label class="col-sm-5 col-md-6">{{ t(companyFieldConfig.labels[index]) }}</label>
+    
+  <TextField
+    v-model="formData[key]"
+    :type="companyFieldConfig.types[index]"
+    :error="isEmpty[key]"
+    :maxlength="key === 'cus_tel' ? 10 : key === 'cus_tax' ? 13 : null"
+    @keypress="key === 'cus_tel' || key === 'cus_tax' ? validateInput($event) : null"
+  />
+  </div>
+      <!-- <h2 v-if="isEditMode">{{ t("headerPopupEditCustomer") }}</h2>
       <div class="mb-3">
         <span style="color: red">*</span
         ><label class="col-sm-5 col-md-6">{{ t("customerName") }}</label>
@@ -192,7 +185,7 @@
           id="input-text"
           required
         />
-      </div>
+      </div> -->
       <div class="modal-footer">
         <Button
           :disabled="isLoading"
@@ -234,8 +227,30 @@
       <h2 style="padding: 0px" v-if="isEditMode">
         {{ t("headerPopupEditCustomer2") }}
       </h2>
+      <div v-for="(key, index) in customerFieldConfig.keys" :key="key" class="mb-3">
+  <label class="col-sm-5 col-md-6">
+    <span style="color: red">*</span>{{ t(customerFieldConfig.labels[index]) }}
+  </label>
 
-      <div class="mb-3">
+  <TextField
+    v-if="customerFieldConfig.componentTypes[index] === 'text'"
+    v-model="formDataCustomer[key]"
+    :type="customerFieldConfig.types[index]"
+    :error="isEmpty2[key]"
+    :maxlength="key === 'company_person_tel' ? 10 : null"
+    @keypress="key === 'company_person_tel' ? validateInput($event) : null"
+  />
+
+  <div v-if="customerFieldConfig.componentTypes[index] === 'dropdown'" style="display: inline-block; width: 50%;">
+      <Dropdown
+        v-model="formDataCustomer[key]"
+        :options="companyOptions"
+        :error="isEmpty2[key]"
+      />
+  </div>
+</div>
+
+      <!-- <div class="mb-3">
         <label class="col-sm-5 col-md-6"
           ><span style="color: red">*</span
           >{{ t("cusNameHeaderTable2") }}</label
@@ -307,20 +322,6 @@
         <label class="col-sm-5 col-md-6"
           ><span style="color: red">*</span>{{ t("cusCompany") }}</label
         >
-        <!-- <select
-          class="form-control col-sm-7 col-md-6 form-select"
-          v-model="formDataCustomer.company_person_customer"
-          :class="{ error: isEmpty2.company_person_customer }"
-          id="cus_id"
-        >
-          <option
-            v-for="CustomerDropown in CustomerDropown"
-            :key="CustomerDropown.cus_id"
-            :value="CustomerDropown.cus_id"
-          >
-            {{ CustomerDropown.cus_name }}
-          </option>
-        </select> -->
         <div
           class="col-sm-7 col-md-6"
           style="display: inline-block; width: 50%"
@@ -332,7 +333,7 @@
             :error="isEmpty2.company_person_customer"
           />
         </div>
-      </div>
+      </div> -->
       <div class="modal-footer">
         <Button
           v-if="this.isEditMode"
@@ -425,6 +426,7 @@ import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n";
 import { computed, watch, ref } from "vue";
 import Dropdown from "../components/dropdown.vue";
+import TextField from "../components/textField.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -437,6 +439,7 @@ export default {
     Popup,
     Button, // 2. ลงทะเบียน component
     Dropdown,
+    TextField
   },
   setup() {
     const { t } = useI18n();
@@ -447,6 +450,19 @@ export default {
   },
   data() {
     return {
+    companyFieldConfig: {
+      keys: ["cus_name", "cus_address", "cus_tel", "cus_email", "cus_tax", "cus_purchase"],
+      labels: ["customerName", "customerAddress", "phoneNum", "email", "taxID", "customerPurchaseBy"],
+      types: ["text", "text", "text", "email", "text", "text"],
+      componentTypes: ["text", "text", "text", "text", "text", "text"] 
+    },
+
+    customerFieldConfig: {
+      keys: ["company_person_name", "company_person_tel", "company_person_email", "company_person_customer"],
+      labels: ["cusNameHeaderTable2", "cusTelHeaderTable2", "cusEmailHeaderTable2", "cusCompany"],
+      types: ["text", "text", "text", "text"], 
+      componentTypes: ["text", "text", "text", "dropdown"] 
+    },
       dropDownStatus: "",
       CustomerDropown: [],
       CompanyPerson: [],
@@ -482,20 +498,20 @@ export default {
       },
       isEmpty2: {
         company_person_id: "",
-        company_person_name: "",
-        company_person_address: "",
-        company_person_tel: "",
-        company_person_email: "",
-        company_person_customer: "",
+        company_person_name: false,
+        company_person_address: false,
+        company_person_tel: false,
+        company_person_email: false,
+        company_person_customer: false,
       },
       isEmpty: {
         cus_id: "",
-        cus_name: "",
-        cus_address: "",
-        cus_tel: "",
-        cus_email: "",
-        cus_tax: "",
-        cus_purchase: "",
+        cus_name: false,
+        cus_address: false,
+        cus_tel: false,
+        cus_email: false,
+        cus_tax: false,
+        cus_purchase: false,
         status: "active",
       },
       searchQuery: "",

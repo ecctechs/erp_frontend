@@ -6,7 +6,7 @@
     <select
       :id="id"
       class="form-control form-select"
-      :value="modelValue"
+      :class="{ 'error': error }"  :value="modelValue"
       @change="$emit('update:modelValue', $event.target.value)"
       :disabled="disabled"
     >
@@ -25,10 +25,10 @@
 <script setup>
 defineProps({
   id: String,
-  modelValue: [String, Number], // ใช้สำหรับ v-model
+  modelValue: [String, Number],
   options: {
     type: Array,
-    required: true, // รูปแบบ: [{ value: '1', text: 'Option 1' }]
+    required: true,
   },
   label: String,
   placeholder: String,
@@ -40,7 +40,19 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  // 2. เพิ่ม prop 'error' เข้าไป
+  error: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 defineEmits(["update:modelValue"]);
 </script>
+
+<style scoped>
+/* 3. เพิ่ม CSS สำหรับ class 'error' (ถ้ายังไม่มี) */
+.error {
+  border-color: #dc3545 !important; /* สีแดงสำหรับ error */
+}
+</style>

@@ -24,19 +24,6 @@
         <h5 style="text-decoration: underline">{{ t("userform") }}</h5>
         <form class="row g-3">
           <div class="col-md-2">
-            <!-- <label class="form-label"
-              ><span style="color: red">*</span>{{ t("title") }}</label
-            > -->
-            <!-- <select
-              class="form-control col-sm-9 col-md-6 form-select"
-              v-model="formData.user_title"
-              required
-              :class="{ error: isEmpty.user_title }"
-            >
-              <option value="Mr.">{{ t("mister") }}</option>
-              <option value="Mrs.">{{ t("missis") }}</option>
-              <option value="Miss">{{ t("miss") }}</option>
-            </select> -->
             <Dropdown
               v-model="formData.user_title"
               :options="titleOptions"
@@ -233,39 +220,6 @@
               :error="isEmpty.bank_name"
               placeholder="กรุณาเลือกธนาคาร"
             />
-            <!-- <select
-              class="form-select"
-              aria-label="Default select example"
-              v-model="formData.bank_name"
-              :class="{ error: isEmpty.bank_name }"
-            >
-              <option value="ธนาคารกรุงเทพ">ธนาคารกรุงเทพ (BBL)</option>
-              <option value="ธนาคารกสิกรไทย">ธนาคารกสิกรไทย (KBANK)</option>
-              <option value="ธนาคารกรุงไทย">ธนาคารกรุงไทย (KTB)</option>
-              <option value="ธนาคารไทยพาณิชย์">ธนาคารไทยพาณิชย์ (SCB)</option>
-              <option value="ธนาคารกรุงศรีอยุธยา">
-                ธนาคารกรุงศรีอยุธยา (BAY)
-              </option>
-              <option value="ธนาคารทหารไทย">ธนาคารทหารไทย (TMB)</option>
-              <option value="ธนาคารธนชาต">ธนาคารธนชาต (TBANK)</option>
-              <option value="ธนาคารเกียรตินาคิน">
-                ธนาคารเกียรตินาคิน (KK)
-              </option>
-              <option value="ธนาคารทิสโก้">ธนาคารทิสโก้ (TISCO)</option>
-              <option value="ธนาคารซีไอเอ็มบีไทย">
-                ธนาคารซีไอเอ็มบีไทย (CIMBT)
-              </option>
-              <option value="ธนาคารแลนด์แอนด์เฮ้าส">
-                ธนาคารแลนด์แอนด์เฮ้าส (LH)
-              </option>
-              <option value="ธนาคารยูโอบี">ธนาคารยูโอบี (UOB)</option>
-              <option value="ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร">
-                ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร (BACC)
-              </option>
-              <option value="ธนาคารไอซีบซี">ธนาคารไอซีบซี (ICBC)</option>
-              <option value="ธนาคารไอซีบีซี (ไทย)">ธนาคารไอซีบีซี (ไทย)</option>
-              <option value="ธนาคารออมสิน">ธนาคารออมสิน (GSB)</option>
-            </select> -->
           </div>
           <div class="col-md-6">
             <label class="form-label">{{ t("bankAccName") }}</label>

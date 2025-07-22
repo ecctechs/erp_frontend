@@ -1,7 +1,5 @@
 <template>
   <div class="main-page page_product">
-    <!-- call navigate tab -->
-    <!-- <Navigate /> -->
     <div class="page-body">
       <div class="mb-4">
         <h2 v-if="selectedType === 'A'">{{ t("product") }}</h2>
@@ -36,39 +34,6 @@
             :placeholder="t('filter')"
             class="size-font-sm"
           />
-          <!-- <select
-            v-if="selectedType === 'B'"
-            class="form-control form-select size-font-sm"
-            v-model="dropDownStatus"
-            aria-label="Status select"
-          >
-            <option value="" selected hidden>ตัวกรอง22</option>
-            <option value="active">{{ t("statusActive") }}</option>
-            <option value="not_active">{{ t("statusNotActive") }}</option>
-            <option value="discon">{{ t("discon") }}</option>
-          </select> -->
-          <!-- <select
-            class="form-control form-select size-font-sm"
-            v-model="formData.status"
-          >
-            <option
-              v-for="status in [
-                ...new Set(currentTableData.map((pd) => pd.status)),
-              ]"
-              :key="status"
-              :value="status"
-            >
-              {{
-                t(
-                  status === "active"
-                    ? "statusActive"
-                    : status === "Discontinued"
-                    ? "DiscontinuedLG"
-                    : "statusNotActive"
-                )
-              }}
-            </option>
-          </select> -->
         </div>
       </div>
       <div class="row mb-3">
@@ -80,7 +45,6 @@
             :placeholder="$t('Search')"
           />
         </div>
-        <!-- <div class="col-1 col-sm-1 col-md-7 col-lg-7"></div> -->
         <div class="col-6 col-sm-6 col-md-9 col-lg-9 text-end">
           <a
             v-if="selectedType === 'A'"
@@ -100,57 +64,7 @@
           ></a>
         </div>
       </div>
-      <!-- <div class="top-table-for-filter">
-        <div>
-          <select
-            class="form-control form-select custome-search-css-mini mb-3"
-            v-model="formData.status"
-          >
-            <option
-              v-for="status in [
-                ...new Set(currentTableData.map((pd) => pd.status)),
-              ]"
-              :key="status"
-              :value="status"
-            >
-              {{
-                t(
-                  status === "active"
-                    ? "statusActive"
-                    : status === "Discontinued"
-                    ? "DiscontinuedLG"
-                    : "statusNotActive"
-                )
-              }}
-            </option>
-          </select> -->
-      <!-- <select
-            class="form-control form-select"
-            v-model="formData.status"
-            @change="getProductByStatus()"
-          >
-            <option value="active">{{ t("statusActive") }}</option>
-            <option value="not active">{{ t("statusNotActive") }}</option>
-          </select>
-          {{ formData.status }} -->
-      <!-- </div>
-        <div class="add-btn mb-3" style="flex: 1">
-          <input
-            v-model="searchQuery"
-            type="text"
-            class="form-control me-3 custome-search-css"
-            style="width: 20%"
-            :placeholder="$t('Search')"
-          />
-          <a class="btn btn-success me-3" @click="openPopup">{{
-            t("addProduct")
-          }}</a>
-          <a
-            class="btn btn-outline-secondary mdi mdi-export-variant"
-            @click="exportProduct"
-          ></a>
-        </div>
-      </div> -->
+
       <div class="product-show-only-desktop">
         <productList
           :tableHeaders="tableHeaders"
@@ -190,126 +104,55 @@
           {{ t("headerPopupEditService") }}
         </h2>
       </div>
-      <div class="mb-3 div-for-formControl" hidden>
-        <label class="col-sm-3 col-md-6" for="productTypeID">{{
-          t("productType")
-        }}</label>
-        <select
-          class="form-control col-sm-7 col-md-6 form-select"
-          v-model="formData.productTypeID"
-          id="productTypeID"
-          :class="{ error: isEmpty.productTypeID }"
+
+      <div v-for="(key, index) in productFieldConfig.keys" :key="key">
+        <div
+          v-if="key !== 'amount' || (key === 'amount' && formData.productTypeID === 1)"
+          class="mb-3 div-for-formControl"
         >
-          <option
-            v-for="productType in productTypes"
-            :key="productType.productTypeID"
-            :value="productType.productTypeID"
-          >
-            {{ displayProductType(productType.productTypeName) }}
-          </option>
-        </select>
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-3 col-md-6" for="categoryID">{{
-          t("productCategory")
-        }}</label>
-        <!-- <select
-          class="form-control col-sm-7 col-md-6 form-select"
-          v-model="formData.categoryID"
-          id="categoryID"
-          :class="{ error: isEmpty.categoryID }"
-        >
-          <option
-            v-for="category in Categories"
-            :key="category.categoryID"
-            :value="category.categoryID"
-          >
-            {{ category.categoryName }}
-          </option>
-        </select> -->
-        <div class="col-6 col-sm-12 col-md-12">
-          <Dropdown
-            id="categoryID"
-            v-model="formData.categoryID"
-            :options="categoryOptions"
-            :error="isEmpty.categoryID"
-          />
+          <label class="col-sm-3 col-md-6">
+            <span v-if="productFieldConfig.required[index]" style="color: red">*</span>
+            <span v-if="key === 'productname'">
+              {{ selectedType === 'A' ? t("productNameProduct") : t("productNameService") }}
+            </span>
+            <span v-else>
+              {{ t(key === 'categoryID' ? 'productCategory' : key === 'productdetail' ? 'productDetail' : key === 'price' ? 'productPriceSale' : 'productAmount') }}
+            </span>
+          </label>
+
+          <div class="col-sm-7 col-md-6">
+            <Dropdown
+              v-if="productFieldConfig.components[index] === 'dropdown'"
+              v-model="formData[key]"
+              :options="categoryOptions"
+              :error="isEmpty[key]"
+            />
+
+            <TextField
+              v-if="productFieldConfig.components[index] === 'text'"
+              v-model="formData[key]"
+              :error="isEmpty[key]"
+            />
+
+            <input
+              v-if="productFieldConfig.components[index] === 'price'"
+              class="form-control"
+              v-model="formattedPrice"
+              type="text"
+              @input="updatePrice"
+              @keypress="onlyNumber"
+              :class="{ error: isEmpty[key] }"
+            />
+
+            <TextField
+              v-if="productFieldConfig.components[index] === 'number'"
+              v-model="formData[key]"
+              type="number"
+              :error="isEmpty[key]"
+              :disabled="isEditMode"
+            />
+          </div>
         </div>
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label
-          for="productname"
-          class="col-sm-3 col-md-6"
-          v-if="selectedType === 'A'"
-          ><span style="color: red">*</span>{{ t("productNameProduct") }}</label
-        >
-        <label
-          for="productname"
-          class="col-sm-3 col-md-6"
-          v-else-if="selectedType === 'B'"
-          ><span style="color: red">*</span>{{ t("productNameService") }}</label
-        >
-        <input
-          class="form-control col-sm-7 col-md-6"
-          v-model="formData.productname"
-          type="text"
-          id="productname"
-          :class="{ error: isEmpty.productname }"
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-3 col-md-6" for="productdetail">{{
-          t("productDetail")
-        }}</label>
-        <input
-          class="form-control col-sm-7 col-md-6"
-          v-model="formData.productdetail"
-          type="text"
-          id="productdetail"
-          :class="{ error: inputError }"
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-3 col-md-6" for="price"
-          ><span style="color: red">*</span>{{ t("productPriceSale") }}</label
-        >
-        <input
-          class="form-control col-sm-7 col-md-6"
-          v-model="formattedPrice"
-          type="text"
-          id="price"
-          @input="updatePrice"
-          @keypress="onlyNumber"
-          :class="{ error: isEmpty.price }"
-        />
-      </div>
-      <!-- <div class="mb-3 div-for-formControl">
-        <label class="col-sm-3 col-md-6" for="productcost">{{
-          t("productCost")
-        }}</label>
-        <input
-          class="form-control col-sm-7 col-md-6"
-          v-model="formattedCost"
-          type="text"
-          id="productcost"
-          @input="updateCost"
-          @keypress="onlyNumber"
-          :class="{ error: isEmpty.productcost }"
-        />
-      </div> -->
-      <div class="mb-3 div-for-formControl" v-if="formData.productTypeID === 1">
-        <label class="col-sm-3 col-md-6" for="amount">{{
-          t("productAmount")
-        }}</label>
-        <input
-          class="form-control col-sm-7 col-md-6"
-          v-model="formData.amount"
-          type="number"
-          id="amount"
-          :readonly="this.isEditMode"
-          :disabled="this.isEditMode"
-          :class="{ error: isEmpty.amount }"
-        />
       </div>
       <div class="mb-3 div-for-formControl">
         <div class="mb-6 col-6">
@@ -318,38 +161,18 @@
             type="file"
             @change="handleFileUpload"
             accept="image/png, image/gif, image/jpeg"
-            :class="{ error: isEmpty.productImg }"
             ref="fileInput"
             style="width: 100%"
           />
           <a v-if="showError" class="text-danger">{{ errorMessage }}</a>
-          <a v-if="showInfo" class="text-secondary">{{
-            t("warningsizeproductImage")
-          }}</a>
+          <a v-if="showInfo" class="text-secondary">{{ t("warningsizeproductImage") }}</a>
           <a v-if="showApprove" class="text-success">{{ approveMessage }}</a>
         </div>
         <div class="mb-3 col-6">
-          <img
-            v-if="exp_files != ''"
-            :src="exp_files || formData.productImg"
-            alt="Uploaded Image"
-            class="image_exp"
-          />
+          <img v-if="exp_files" :src="exp_files" alt="Uploaded Image" class="image_exp" />
         </div>
       </div>
-      <div
-        class="mb-3 div-for-formControl"
-        v-if="formData.status === 'not active'"
-      >
-        <label class="col-sm-3 col-md-6">{{ t("Status") }}</label>
-        <select
-          class="form-control col-sm-7 col-md-6 form-select"
-          v-model="formData.status"
-        >
-          <option value="active">Active</option>
-          <option value="not active">Not Active</option>
-        </select>
-      </div>
+
       <div class="mb-3 modal-footer">
         <Button
           :disabled="isLoading"
@@ -410,14 +233,6 @@
         <a>{{ popupMessage }}</a>
       </div>
     </div>
-    <!-- <div v-if="isPopupVisible_error" class="popup-success">
-      <div class="popup-content-error">
-        <h3>{{ $t("validate_popupError") }}</h3>
-        <ul>
-          <li v-for="(msg, index) in errorMessages" :key="index">{{ msg }}</li>
-        </ul>
-      </div>
-    </div> -->
     <div v-if="isPopupVisible_error" class="popup-error2">
       <div class="text-end">
         <Button
@@ -447,6 +262,7 @@ import { useI18n } from "vue-i18n";
 import { computed, watch, ref } from "vue";
 import Button from "../components/button.vue";
 import Dropdown from "../components/dropdown.vue";
+import TextField from "../components/textField.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -459,14 +275,12 @@ export default {
     Popup,
     Button,
     Dropdown,
+    TextField,
   },
   setup() {
     const { t } = useI18n();
-
     const documentName = computed(() => t("dontHaveProduct"));
-
     const documentName2 = computed(() => t("dontHaveService"));
-
     return {
       t,
       documentName,
@@ -475,33 +289,35 @@ export default {
   },
   data() {
     return {
+      productFieldConfig: {
+        keys: ['categoryID', 'productname', 'productdetail', 'price', 'amount'],
+        components: ['dropdown', 'text', 'text', 'price', 'number'],
+        required: [true, true, false, true, false]
+      },
       dropDownStatus: "",
       errorMessages: [],
-      // Various state variables for controlling the UI
-      selectedStatus: 1,
       isPopupVisible_error: false,
-      exp_files: [], // Stores selected image file
-      Image_pd: [], // Image upload handler
-      cloudName: "dd65y87uu", // Cloudinary settings for image upload
+      exp_files: [],
+      Image_pd: [],
+      cloudName: "dd65y87uu",
       apiKey: "358619918594822",
       uploadPreset: "product_Img",
-      isPopupOpen: false, // Controls the add/edit popup
-      activeProductTypeID: null, // Active product type ID
-      isDeleteConfirmPopupOpen: false, // Controls delete confirmation popup
-      currentTableData: [], // Stores current table data
-      productTypes: [], // Available product types
-      Categories: [], // Available categories
-      inputError: false, // Input validation flag
-      isLoading: false, // Loading state flag
-      isPopupVisible: false, // Controls success popup
-      selectedType: "", // Selected product type (A or B)
-      showError: false, // Image upload error state
-      showInfo: true, // Image info state
-      showApprove: false, // Image upload approval state
-      approveMessage: "", // Image approval message
-      errorMessage: "", // Error message
+      isPopupOpen: false,
+      activeProductTypeID: null,
+      isDeleteConfirmPopupOpen: false,
+      currentTableData: [],
+      productTypes: [],
+      Categories: [],
+      inputError: false,
+      isLoading: false,
+      isPopupVisible: false,
+      selectedType: "",
+      showError: false,
+      showInfo: true,
+      showApprove: false,
+      approveMessage: "",
+      errorMessage: "",
       formData: {
-        // Form data for product
         productTypeID: "",
         productname: "",
         productdetail: "",
@@ -519,6 +335,7 @@ export default {
         productname: false,
         price: false,
         productcost: false,
+        amount: false,
       },
       searchQuery: "",
     };
@@ -544,7 +361,7 @@ export default {
           : "";
       },
       set(value) {
-        this.formData.price = Number(value.replace(/,/g, "")); // ลบ , ออกก่อนบันทึกค่า
+        this.formData.price = Number(value.replace(/,/g, ""));
       },
     },
     formattedCost: {
@@ -554,10 +371,9 @@ export default {
           : "";
       },
       set(value) {
-        this.formData.productcost = Number(value.replace(/,/g, "")); // ลบ , ออกก่อนบันทึกค่า
+        this.formData.productcost = Number(value.replace(/,/g, ""));
       },
     },
-    // Defines headers for the product table
     tableHeaders() {
       if (this.selectedType === "A") {
         return [
@@ -584,17 +400,7 @@ export default {
     },
     filteredProducts() {
       let filteredProduct = [...this.currentTableData];
-      // ("Discontinued");
-      // ("not active");
 
-      // กรองตามสถานะ
-      // if (this.formData.status) {
-      //   filteredProduct = filteredProduct.filter(
-      //     (emp) =>
-      //       emp.status.toLowerCase() === this.formData.status.toLowerCase()
-      //   );
-      // }
-      // กรองข้อมูล Categories โดยเปรียบเทียบกับ searchQuery
       if (this.searchQuery.trim()) {
         filteredProduct = filteredProduct.filter((prod) =>
           prod["productname"]
@@ -603,79 +409,10 @@ export default {
         );
       }
 
-      // แปลงค่าของ status ถ้าภาษาเป็น TH และ status เป็น "Discontinued"
-      // if (this.t("headerLang") === "TH") {
-      //   filteredProduct = filteredProduct.map((prod) => ({
-      //     ...prod,
-      //     status:
-      //       prod.status === "Discontinued"
-      //         ? this.t("DiscontinuedLG")
-      //         : prod.status === "active"
-      //         ? "เปิดใช้งาน"
-      //         : prod.status === "not active"
-      //         ? "ปิดใช้งาน"
-      //         : prod.status,
-      //   }));
-      // }
-
-      // console.log("filteredProduct", filteredProduct);
-      // filteredProduct.forEach((cus) => {
-      //   const lang = this.t("headerLang");
-      //   if (this.selectedType === "A") {
-      //     if (lang === "TH") {
-      //       if (cus.status === "Active" || cus.status === "active") {
-      //         cus.status = "เปิดใช้งาน";
-      //       } else if (
-      //         cus.status === "Not Active" ||
-      //         cus.status === "not active"
-      //       ) {
-      //         cus.status = "ปิดใช้งาน";
-      //       } else if (cus.status === "Discontinued") {
-      //         cus.status = "หมดสต็อก";
-      //       }
-      //     } else {
-      //       // กรณีภาษาอังกฤษหรือภาษาอื่นๆ อยากแสดงกลับเป็น status เดิม (กรณีมีการแปลงไปแล้ว)
-      //       if (cus.status === "เปิดใช้งาน" || cus.status === "active") {
-      //         cus.status = "Active";
-      //       } else if (
-      //         cus.status === "ปิดใช้งาน" ||
-      //         cus.status === "not active"
-      //       ) {
-      //         cus.status = "Not Active";
-      //       } else if (cus.status === "หมดสต็อก") {
-      //         cus.status = "Out of Stock";
-      //       }
-      //     }
-      //   }
-      // });
-
-      // // if (this.selectedType === "A") {
-      // if (this.dropDownStatus === "active") {
-      //   filteredProduct = filteredProduct.filter(
-      //     (emp) =>
-      //       emp.status.toLowerCase() === "active" ||
-      //       emp.status.toLowerCase() === "เปิดใช้งาน"
-      //   );
-      // } else if (this.dropDownStatus === "not_active") {
-      //   filteredProduct = filteredProduct.filter(
-      //     (emp) =>
-      //       emp.status.toLowerCase() === "not active" ||
-      //       emp.status.toLowerCase() === "ปิดใช้งาน"
-      //   );
-      // } else if (this.dropDownStatus === "discon") {
-      //   // alert("Gg");
-      //   filteredProduct = filteredProduct.filter(
-      //     (emp) =>
-      //       emp.status === "Out of Stock" ||
-      //       emp.status.toLowerCase() === "หมดสต็อก"
-      //   );
-      // }
-      console.log("filteredProduct", filteredProduct);
       filteredProduct.forEach((cus) => {
         const lang = this.t("headerLang");
         if (this.selectedType === "A") {
           if (lang === "TH") {
-            // alert("1");
             if (
               cus.status === "On Sales" ||
               cus.status === "on sales" ||
@@ -695,7 +432,6 @@ export default {
               cus.status = "หมดสต็อก";
             }
           } else {
-            // ภาษาอังกฤษ
             if (
               cus.status === "เปิดขาย" ||
               cus.status === "on sales" ||
@@ -718,7 +454,6 @@ export default {
         }
       });
 
-      // ฟิลเตอร์ตาม dropDownStatus
       if (this.selectedType === "A") {
         if (this.dropDownStatus === "active") {
           filteredProduct = filteredProduct.filter(
@@ -751,10 +486,7 @@ export default {
         );
       }
 
-      console.log("filteredProduct-->>", filteredProduct);
-
-      // }
-      return filteredProduct; // ถ้าไม่มีการค้นหาแสดงทั้งหมด
+      return filteredProduct;
     },
   },
   watch: {
@@ -770,37 +502,67 @@ export default {
     },
   },
   methods: {
+    validateFormData() {
+      this.isEmpty = Object.fromEntries(this.productFieldConfig.keys.map(key => [key, false]));
+      this.errorMessages = [];
+
+      this.productFieldConfig.keys.forEach((key, index) => {
+        const isRequired = this.productFieldConfig.required[index];
+        const value = this.formData[key];
+
+        if (isRequired && (!value || value === 0)) {
+          if (key === 'amount' && this.formData.productTypeID !== 1) {
+              return;
+          }
+          this.isEmpty[key] = true;
+          this.errorMessages.push(this.$t(`validation.${key}`));
+        }
+      });
+
+      const isDuplicateName = this.currentTableData.some(
+        (item) => item.productname.trim() === this.formData.productname.trim() && item.ID !== this.formData.productID
+      );
+      if (this.formData.productname && isDuplicateName) {
+        this.isEmpty.productname = true;
+        this.errorMessages.push(this.$t("validation.duplicateProductName"));
+      }
+
+      if (this.errorMessages.length > 0) {
+        this.showPopup_validate(this.errorMessages);
+        return false;
+      }
+      
+      return true;
+    },
     closeErrorPopup() {
       this.isPopupVisible_error = false;
     },
     onlyNumber(event) {
       if (!/[\d]/.test(event.key)) {
-        event.preventDefault(); // ป้องกันการพิมพ์อักขระที่ไม่ใช่ตัวเลข
+        event.preventDefault();
       }
     },
     updatePrice(event) {
-      const rawValue = event.target.value.replace(/,/g, ""); // ลบ , ออกก่อนแปลงเป็นตัวเลข
-      this.formData.price = Number(rawValue); // แปลงเป็นตัวเลขแล้วบันทึก
+      const rawValue = event.target.value.replace(/,/g, "");
+      this.formData.price = Number(rawValue);
     },
     updateCost(event) {
-      const rawValue = event.target.value.replace(/,/g, ""); // ลบ , ออกก่อนแปลงเป็นตัวเลข
-      this.formData.productcost = Number(rawValue); // แปลงเป็นตัวเลขแล้วบันทึก
+      const rawValue = event.target.value.replace(/,/g, "");
+      this.formData.productcost = Number(rawValue);
     },
     displayProductType(name) {
       if (this.t("headerLang") === "TH") {
         if (name === "product") return "สินค้า";
         if (name === "service") return "เซอร์วิส";
-        return name; // ถ้าไม่มีเงื่อนไขตรงก็คืนค่าปกติ
+        return name;
       } else {
         return name;
       }
     },
-    // Sets the selected product type and refreshes the product list
     setProductType(type) {
       this.selectedType = type;
       this.getProduct();
     },
-    // Opens the popup for adding or editing products
     openPopup() {
       this.isPopupOpen = true;
       this.isAddingMode = true;
@@ -812,11 +574,9 @@ export default {
       } else {
         this.formData.productTypeID = "2";
       }
-      // จัดการทั้งกรณี null และ undefined
       this.Image_pd = [];
       this.exp_files = [];
     },
-    // Closes the popup and resets form data
     closePopup() {
       this.isPopupOpen = false;
       this.isAddingMode = false;
@@ -847,14 +607,11 @@ export default {
       this.formData.status = getCurrentStatus;
       this.isPopupVisible_error = false;
     },
-    // Closes the delete confirmation popup
     closeDeleteConfirmPopup() {
       this.formData.status = "active";
       this.isDeleteConfirmPopupOpen = false;
     },
-    // Opens the edit popup and loads the product data for editing
     handleEdit(item) {
-      // this.getProduct();
       this.isPopupOpen = true;
       this.isAddingMode = false;
       this.isEditMode = true;
@@ -870,28 +627,23 @@ export default {
         productID: item.ID,
         productImg: item.productImg,
         status: item.status,
-      }; // Copy item data to formData
+      };
 
       this.exp_files = this.formData.productImg;
-      // this.formData.status = getCurrentStatus;
       this.getProductType();
       this.getCategory();
 
       if (!item.productImg) {
-        // จัดการทั้งกรณี null และ undefined
         this.Image_pd = [];
         this.exp_files = [];
       } else {
-        // เพิ่มเติม: จัดการกรณีที่ productImg มีค่า
         console.log("กำลังแก้ไขข้อมูลสินค้าที่มีรูปภาพ:", item.productImg);
       }
     },
-    // Opens the delete confirmation popup
     handleDelete(item) {
       this.isDeleteConfirmPopupOpen = true;
       this.formData = { productID: item.ID };
     },
-    // Handles image upload and validates the file size
     handleFileUpload(event) {
       this.errorMessages = [];
       const file = event.target.files[0];
@@ -903,7 +655,7 @@ export default {
       if (!allowedTypes.includes(file.type)) {
         this.errorMessages.push(this.$t("validation.validateImgOnly"));
         this.showPopup_validate(this.errorMessages);
-        this.$refs.fileInput.value = ""; // เคลียร์ค่า input
+        this.$refs.fileInput.value = "";
         this.Image_pd = [];
         this.exp_files = [];
         return;
@@ -913,13 +665,12 @@ export default {
 
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.exp_files = e.target.result; // Stores the image URL
+        this.exp_files = e.target.result;
       };
       reader.readAsDataURL(file);
 
-      this.checkImageFileSize(file); // Validates file size
+      this.checkImageFileSize(file);
     },
-    // Checks image file size and sets appropriate messages
     checkImageFileSize(Image_file) {
       const fileSizeInKB = Image_file.size / 1024;
       if (fileSizeInKB > 5 * 1024) {
@@ -930,98 +681,22 @@ export default {
         this.approveMessage = "File size is within the limit.";
       }
     },
-    // Displays a success popup
     showPopup(message) {
       this.popupMessage = message;
       this.isPopupVisible = true;
       setTimeout(() => {
         this.isPopupVisible = false;
-      }, 2000); // 2 seconds
+      }, 2000);
     },
-    // Displays an error popup
     showPopup_error(message) {
       this.popupMessage_error = message;
       this.isPopupVisible = false;
       this.isPopupVisible_error = true;
-      // setTimeout(() => {
-      //   this.isPopupVisible = false;
-      //   this.isPopupVisible_error = false;
-      // }, 2000);
     },
-    // Exports the product data to a CSV file
-    // async exportProduct() {
-    //   const accessToken = localStorage.getItem("@accessToken");
-    //   this.isLoading = true;
-    //   try {
-    //     const response = await fetch(
-    //       `${API_CALL}/migrate/export-csv/products`,
-    //       {
-    //         headers: { Authorization: `Bearer ${accessToken}` },
-    //       }
-    //     );
-    //     if (!response.ok) throw new Error("Network response was not ok");
-    //     const blob = await response.blob();
-    //     const url = window.URL.createObjectURL(new Blob([blob]));
-    //     const link = document.createElement("a");
-    //     link.href = url;
-    //     link.setAttribute("download", "Products.csv"); // Set the filename for download
-    //     document.body.appendChild(link);
-    //     link.click();
-    //     window.URL.revokeObjectURL(url); // Cleanup the URL
-    //   } catch (error) {
-    //     console.error("Error exporting data:", error);
-    //   } finally {
-    //     this.isLoading = false;
-    //   }
-    // },
-    // async exportProduct() {
-    //   const accessToken = localStorage.getItem("@accessToken");
-    //   this.isLoading = true;
-    //   try {
-    //     const response = await fetch(
-    //       `${API_CALL}/migrate/export-csv/products`,
-    //       {
-    //         headers: { Authorization: `Bearer ${accessToken}` },
-    //       }
-    //     );
-
-    //     if (!response.ok) throw new Error("Network response was not ok");
-
-    //     const blob = await response.blob();
-
-    //     // อ่านข้อมูล CSV เป็น text
-    //     const text = await blob.text();
-
-    //     // เพิ่ม BOM (UTF-8) เพื่อรองรับภาษาไทย
-    //     const bom = "\uFEFF";
-    //     const utf8Blob = new Blob([bom + text], {
-    //       type: "text/csv;charset=utf-8;",
-    //     });
-
-    //     // สร้าง URL และดาวน์โหลดไฟล์
-    //     const url = window.URL.createObjectURL(utf8Blob);
-    //     const link = document.createElement("a");
-    //     link.href = url;
-    //     link.setAttribute("download", "Products.csv"); // กำหนดชื่อไฟล์
-    //     document.body.appendChild(link);
-    //     link.click();
-
-    //     // ทำความสะอาด URL
-    //     window.URL.revokeObjectURL(url);
-    //   } catch (error) {
-    //     console.error("Error exporting data:", error);
-    //   } finally {
-    //     this.isLoading = false;
-    //   }
-    // },
     async exportProduct() {
       this.isLoading = true;
       try {
         const data = this.currentTableData;
-
-        console.log("currentTableData---------------->", this.currentTableData);
-
-        // Map คอลัมน์เป็นภาษาไทย
         let columnMap = [];
         if (this.selectedType === "A") {
           columnMap = {
@@ -1031,7 +706,6 @@ export default {
             price: "ราคาขาย",
             productImg: "รูปภาพ",
             amount: "จำนวนสินค้าในคลัง",
-            // ละ status ไม่ต้องแสดง
           };
         } else {
           columnMap = {
@@ -1040,20 +714,16 @@ export default {
             productdetail: "รายละเอียด",
             price: "ราคาขาย",
             productImg: "รูปภาพ",
-            // ละ status ไม่ต้องแสดง
           };
         }
 
-        // หัวตารางภาษาไทย
         const headers = Object.keys(columnMap);
         const headerRow = headers.map((key) => `"${columnMap[key]}"`).join(",");
 
-        // แปลงข้อมูลแต่ละแถว
         const rows = data.map((item) => {
           return headers
             .map((key) => {
               let value = item[key] ?? "";
-              // Escape เครื่องหมาย " ถ้ามี
               if (typeof value === "string") {
                 value = value.replace(/"/g, '""');
               }
@@ -1063,14 +733,11 @@ export default {
         });
 
         const csvContent = [headerRow, ...rows].join("\n");
-
-        // ใส่ BOM สำหรับภาษาไทย
         const bom = "\uFEFF";
         const utf8Blob = new Blob([bom + csvContent], {
           type: "text/csv;charset=utf-8;",
         });
 
-        // ดาวน์โหลด
         const url = window.URL.createObjectURL(utf8Blob);
         const link = document.createElement("a");
         link.href = url;
@@ -1084,73 +751,6 @@ export default {
         this.isLoading = false;
       }
     },
-
-    // async exportProduct() {
-    //   const accessToken = localStorage.getItem("@accessToken");
-    //   this.isLoading = true;
-    //   try {
-    //     const response = await fetch(
-    //       `${API_CALL}/migrate/export-csv/products`,
-    //       {
-    //         headers: { Authorization: `Bearer ${accessToken}` },
-    //       }
-    //     );
-
-    //     if (!response.ok) throw new Error("Network response was not ok");
-
-    //     const blob = await response.blob();
-    //     console.log("blob",response);
-
-    //     // อ่านข้อมูล CSV เป็น text
-    //     let text = await blob.text();
-
-    //     // แปลงข้อมูล CSV ให้เป็น Array แต่ละบรรทัด
-    //     let lines = text.split("\n");
-
-    //     // หาตำแหน่งของคอลัมน์ "Status"
-    //     let headers = lines[0].split(",");
-    //     let statusIndex = headers.indexOf("Status");
-
-    //     if (statusIndex !== -1) {
-    //       lines = lines.map((line, index) => {
-    //         if (index === 0) return line; // ข้ามบรรทัดแรก (Header)
-
-    //         let cols = line.split(",");
-    //         if (cols[statusIndex]) {
-    //           cols[statusIndex] =
-    //             cols[statusIndex].trim().charAt(0).toUpperCase() +
-    //             cols[statusIndex].trim().slice(1);
-    //         }
-    //         return cols.join(",");
-    //       });
-    //     }
-
-    //     // รวมกลับเป็นข้อความ CSV
-    //     text = lines.join("\n");
-
-    //     // เพิ่ม BOM (UTF-8) เพื่อรองรับภาษาไทย
-    //     const bom = "\uFEFF";
-    //     const utf8Blob = new Blob([bom + text], {
-    //       type: "text/csv;charset=utf-8;",
-    //     });
-
-    //     // สร้าง URL และดาวน์โหลดไฟล์
-    //     const url = window.URL.createObjectURL(utf8Blob);
-    //     const link = document.createElement("a");
-    //     link.href = url;
-    //     link.setAttribute("download", "Products.csv"); // กำหนดชื่อไฟล์
-    //     document.body.appendChild(link);
-    //     link.click();
-
-    //     // ทำความสะอาด URL
-    //     window.URL.revokeObjectURL(url);
-    //   } catch (error) {
-    //     console.error("Error exporting data:", error);
-    //   } finally {
-    //     this.isLoading = false;
-    //   }
-    // },
-    // Fetches the product type list from the API
     async getProductType() {
       const accessToken = localStorage.getItem("@accessToken");
       try {
@@ -1159,7 +759,7 @@ export default {
         });
         const json = await response.json();
         if (json.statusCode === 200) {
-          this.productTypes = json.data; // Load product types into the dropdown
+          this.productTypes = json.data;
         } else {
           this.showPopup_error(json.data);
         }
@@ -1167,7 +767,6 @@ export default {
         console.error("Error fetching product types:", error);
       }
     },
-    // Fetches the list of products filtered by type
     async getProduct() {
       const accessToken = localStorage.getItem("@accessToken");
       this.isLoading = true;
@@ -1184,7 +783,6 @@ export default {
               } else if (this.selectedType === "B") {
                 return item.productTypeID !== 1;
               }
-
               return false;
             })
             .map((item) => {
@@ -1216,7 +814,6 @@ export default {
             });
         } else {
           this.showPopup_error(json.data);
-          console.log("ProductByType", json);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -1225,7 +822,6 @@ export default {
       }
     },
     async getProductByStatus() {
-      // alert("working");
       const accessToken = localStorage.getItem("@accessToken");
       this.isLoading = true;
       try {
@@ -1241,13 +837,11 @@ export default {
               } else if (this.selectedType === "B") {
                 return item.productTypeID !== 1;
               }
-
               if (this.formData.status === "active") {
                 return (item.Status = "active");
               } else {
                 return (item.Status = "not active");
               }
-              // return false;
             })
             .map((item) => {
               let product = {
@@ -1269,7 +863,6 @@ export default {
             });
         } else {
           this.showPopup_error(json.data);
-          console.log("ProductByType", json);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -1277,7 +870,6 @@ export default {
         this.isLoading = false;
       }
     },
-    // Adds a new product to the list
     async addProduct() {
       const accessToken = localStorage.getItem("@accessToken");
       if (!(await this.validateFormData())) return;
@@ -1285,19 +877,16 @@ export default {
       this.isLoading = true;
       try {
         const formDataImage = this.createFormData();
-
         const response = await fetch(`${API_CALL}/product/AddProduct`, {
           method: "POST",
           headers: { Authorization: `Bearer ${accessToken}` },
           body: formDataImage,
         });
         const json = await response.json();
-        console.log(json);
         if (json.statusCode === 200) {
           this.isPopupVisible_error = false;
-          // this.resetFormData();
           this.clearFormData();
-          this.getProduct(); // Refresh product list after adding
+          this.getProduct();
           this.showPopup(this.$t("validation.AddSucc"));
         } else {
           this.showPopup_error(json.data);
@@ -1309,23 +898,6 @@ export default {
         this.isPopupOpen = false;
       }
     },
-    // Fetches available product categories from the API
-    // async getCategory() {
-    //   const accessToken = localStorage.getItem("@accessToken");
-    //   try {
-    //     const response = await fetch(`${API_CALL}/product/getCategory`, {
-    //       headers: { Authorization: `Bearer ${accessToken}` },
-    //     });
-    //     const json = await response.json();
-    //     if (json.statusCode === 200) {
-    //       this.Categories = json.data; // Load categories into dropdown
-    //     } else {
-    //       this.showPopup_error(json.data);
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching categories:", error);
-    //   }
-    // },
     async getCategory() {
       const accessToken = localStorage.getItem("@accessToken");
       try {
@@ -1333,28 +905,18 @@ export default {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         const json = await response.json();
-
         if (json.statusCode === 200) {
-          // Clone and sort categories
           const categories = [...json.data];
-
           categories.sort((a, b) => {
             const nameA = a.categoryName.toLowerCase();
             const nameB = b.categoryName.toLowerCase();
-
-            // จัดอันดับพิเศษ
-            if (nameA === "ไม่มีหมวดหมู่") return 1; // ไปล่างสุด
+            if (nameA === "ไม่มีหมวดหมู่") return 1;
             if (nameB === "ไม่มีหมวดหมู่") return -1;
-
-            if (nameA === "อื่น") return 1; // รองสุดท้าย
+            if (nameA === "อื่น") return 1;
             if (nameB === "อื่น") return -1;
-
             return nameA.localeCompare(nameB);
           });
-
           this.Categories = categories;
-
-          // ตั้งค่า default เป็น "ไม่มีหมวดหมู่"
           if (this.isAddingMode) {
             const noCategory = this.Categories.find(
               (c) => c.categoryName === "ไม่มีหมวดหมู่"
@@ -1370,7 +932,6 @@ export default {
         console.error("Error fetching categories:", error);
       }
     },
-    // Updates product details
     async editProduct() {
       const accessToken = localStorage.getItem("@accessToken");
       if (!(await this.validateFormData())) return;
@@ -1390,7 +951,7 @@ export default {
         const json = await response.json();
         if (json.statusCode === 200) {
           this.isPopupOpen = false;
-          this.getProduct(); // Refresh product list after editing
+          this.getProduct();
           this.showPopup(this.$t("validation.EditSucc"));
           this.closePopup();
         } else {
@@ -1404,7 +965,6 @@ export default {
         this.isPopupOpen = false;
       }
     },
-    // Deletes a product from the list
     async deleteProduct() {
       const accessToken = localStorage.getItem("@accessToken");
       this.isLoading = true;
@@ -1420,9 +980,8 @@ export default {
           }
         );
         const json = await response.json();
-        console.log("----->>", json);
         if (json.statusCode === 200) {
-          this.getProduct(); // Refresh product list after deletion
+          this.getProduct();
           this.showPopup(this.$t("validation.DelateSucc"));
           this.closeDeleteConfirmPopup();
         } else {
@@ -1435,175 +994,14 @@ export default {
         this.isPopupOpen = false;
       }
     },
-    validateFormData() {
-      // ตั้งค่า isEmpty ของทุกฟิลด์เป็น false ก่อนเริ่มการตรวจสอบ
-      this.isEmpty.productTypeID = false;
-      this.isEmpty.categoryID = false;
-      this.isEmpty.productname = false;
-      this.isEmpty.price = false;
-      this.isEmpty.productcost = false;
-      this.isEmpty.amount = false;
-      this.isEmpty.productImg = false;
-
-      const errorMessages = [];
-
-      // ตรวจสอบฟิลด์ productTypeID
-      if (this.formData.productTypeID === "") {
-        this.isEmpty.productTypeID = true;
-        errorMessages.push(this.$t("validation.productTypeID"));
-      }
-      // if (
-      //   (this.formData.productTypeID === 1 && this.formData.amount === "") ||
-      //   (this.formData.productTypeID === 1 && this.formData.amount === 0)
-      // ) {
-      //   this.isEmpty.amount = true;
-      //   errorMessages.push(this.$t("validation.amount"));
-      // }
-
-      // ตรวจสอบฟิลด์ categoryID
-      if (this.formData.categoryID === "") {
-        this.isEmpty.categoryID = true;
-        errorMessages.push(this.$t("validation.categoryID"));
-      }
-
-      // ตรวจสอบฟิลด์ productname
-      if (this.formData.productname.trim() === "") {
-        this.isEmpty.productname = true;
-        errorMessages.push(this.$t("validation.productname"));
-      }
-
-      const isDuplicateName = this.currentTableData.some(
-        (item) =>
-          item.productname.trim() === this.formData.productname.trim() &&
-          item.ID !== this.formData.productID // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
-      );
-      if (isDuplicateName) {
-        this.isEmpty.productname = true;
-        errorMessages.push(this.$t("validation.duplicateProductName"));
-      }
-
-      // ตรวจสอบฟิลด์ price
-      if (this.formData.price === "" || this.formData.price === 0) {
-        this.isEmpty.price = true;
-        errorMessages.push(this.$t("validation.price"));
-      }
-
-      // ตรวจสอบฟิลด์ productcost
-      // if (this.formData.productcost === "" || this.formData.productcost === 0) {
-      //   this.isEmpty.productcost = true;
-      //   errorMessages.push(this.$t("validation.productcost"));
-      // }
-      // ตรวจสอบรูปภาพ
-
-      // if (this.isAddingMode == true) {
-      //   if (this.Image_pd.length === 0) {
-      //     this.isEmpty.productImg = true;
-      //     errorMessages.push(this.$t("validation.productImg"));
-      //   } else {
-      //     const fileExtension = this.Image_pd.name
-      //       .split(".")
-      //       .pop()
-      //       .toLowerCase(); // ดึงนามสกุลไฟล์
-      //     if (!["jpg", "jpeg", "png"].includes(fileExtension)) {
-      //       this.isEmpty.productImg = true;
-      //       errorMessages.push(this.$t("validation.invalidFileType"));
-      //     }
-      //   }
-      // }
-
-      // if (this.isEditMode == true) {
-      //   alert(this.formData.productImg);
-      //   if (!["jpg", "jpeg", "png"].includes(this.formData.productImg)) {
-      //     this.isEmpty.productImg = true;
-      //     errorMessages.push(this.$t("validation.productImg"));
-      //   } else {
-      //     const fileExtension = this.Image_pd.name
-      //       .split(".")
-      //       .pop()
-      //       .toLowerCase(); // ดึงนามสกุลไฟล์
-      //     if (!["jpg", "jpeg", "png"].includes(fileExtension)) {
-      //       this.isEmpty.productImg = true;
-      //       errorMessages.push(this.$t("validation.invalidFileType"));
-      //     }
-      //   }
-      // }
-
-      // if (this.isEditMode) {
-      //   // ตรวจสอบว่ามี productImg หรือไม่
-      //   if (this.formData.productImg || this.Image_pd?.name) {
-      //     // ดึงนามสกุลไฟล์จากชื่อไฟล์ที่เก็บใน database
-      //     const fileExtension1 = this.formData.productImg
-      //       ? this.formData.productImg.split(".").pop().toLowerCase()
-      //       : null;
-
-      //     // ดึงนามสกุลไฟล์จากชื่อไฟล์ใหม่ที่อัพโหลด
-      //     const fileExtension2 = this.Image_pd?.name
-      //       ? this.Image_pd.name.split(".").pop().toLowerCase()
-      //       : null;
-
-      //     // ตรวจสอบนามสกุลไฟล์
-      //     if (
-      //       (fileExtension1 &&
-      //         ["jpg", "jpeg", "png"].includes(fileExtension1)) ||
-      //       (fileExtension2 && ["jpg", "jpeg", "png"].includes(fileExtension2))
-      //     ) {
-      //       // ถ้านามสกุลถูกต้อง ถือว่าแก้ไขสำเร็จ
-      //       // alert("Edit สำเร็จ");
-      //     } else {
-      //       // ถ้านามสกุลไม่ถูกต้อง ให้แจ้งเตือนและอัพโหลดใหม่
-      //       this.isEmpty.productImg = true;
-      //       errorMessages.push(this.$t("validation.invalidFileType"));
-      //     }
-      //   } else {
-      //     // กรณีไม่มีไฟล์ทั้งเก่าและใหม่ ให้แจ้งเตือนให้อัพโหลดใหม่
-      //     this.isEmpty.productImg = true;
-      //     errorMessages.push(this.$t("validation.productImg"));
-      //   }
-      // }
-
-      // if (this.isEditMode == true) {
-      //   if (this.Image_pd.length === 0) {
-      //     this.isEmpty.productImg = true;
-      //     errorMessages.push(this.$t("validation.productImg"));
-      //   } else {
-      //     const fileExtension = this.Image_pd.name
-      //       .split(".")
-      //       .pop()
-      //       .toLowerCase(); // ดึงนามสกุลไฟล์
-      //     if (!["jpg", "jpeg", "png"].includes(fileExtension)) {
-      //       this.isEmpty.productImg = true;
-      //       errorMessages.push(this.$t("validation.invalidFileType"));
-      //     }
-      //   }
-      // }
-
-      // if (this.isEditMode) {
-      //   if (!this.Image_pd?.name && !this.formData.productImg) {
-      //     this.isEmpty.productImg = true;
-      //     errorMessages.push(this.$t("validation.productImg"));
-      //   } else {
-      //   }
-      // }
-      if (errorMessages.length > 0) {
-        this.showPopup_validate(errorMessages);
-        return false;
-      } else {
-        return true;
-      }
-    },
     showPopup_validate(messages) {
       if (Array.isArray(messages)) {
-        this.errorMessages = messages; // เก็บข้อความใน errorMessages
-        // this.showErrorPopup = true; // แสดง Popup
+        this.errorMessages = messages;
         this.isPopupVisible_error = true;
-        // setTimeout(() => {
-        //   this.isPopupVisible_error = false; // ซ่อน Popup หลังจากหน่วงเวลา
-        // }, 3000); // หน่วงเวลา 3 วินาที (3000 มิลลิวินาที)
       } else {
         this.showPopup_error(messages);
       }
     },
-    // Helper function to create FormData for API requests
     createFormData() {
       const formDataImage = new FormData();
       formDataImage.append("file", this.Image_pd);
@@ -1629,12 +1027,10 @@ export default {
         price: 0,
         productcost: 0,
         categoryID: "",
-        status: "", // หรือตั้งค่าเริ่มต้นเป็นค่า default ที่ต้องการ
+        status: "",
       };
       this.Image_pd = null;
     },
-
-    // Resets form data after adding/editing product
     resetFormData() {
       this.formData = {
         productTypeID: "",
@@ -1646,18 +1042,14 @@ export default {
         categoryID: "",
         productImg: "",
       };
-      // this.exp_files.value = "";
       this.exp_files = [];
-      this.$refs.fileInput.value = ""; // รีเซ็ต input file
+      this.$refs.fileInput.value = "";
       this.Image_pd.value = "";
     },
   },
-  // Fetches required data on component creation
   created() {
     this.setProductType("A");
     this.getProductType();
-    // this.getCategory();
-    // this.getProduct();
   },
 };
 </script>

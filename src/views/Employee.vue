@@ -63,34 +63,24 @@
     </div>
   </div>
   <div>
-    <Popup :isOpen="isPopupOpen" :closePopup="closePopup">
+    <!-- <Popup :isOpen="isPopupOpen" :closePopup="closePopup">
       <div class="mb-3">
         <h2 v-if="isAddingMode">{{ t("headerPopupAddEmployee") }}</h2>
         <h2 v-if="isEditMode">{{ t("headerPopupEditEmployee") }}</h2>
       </div>
-      <h5 style="text-decoration: underline">{{ t("employeeInformation") }}</h5>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6"
+      <h5 style="text-decoration: underline">{{ t("employeeInformation") }}</h5> -->
+      <!-- <div class="mb-3 div-for-formControl"> -->
+        <!-- <label class="col-sm-5 col-md-6"
           ><span style="color: red">*</span>{{ t("title") }}</label
         >
-        <!-- <select
-          class="form-control col-sm-9 col-md-6 form-select"
-          v-model="formData.title"
-          required
-          :class="{ error: isEmpty.title }"
-        >
-          <option value="Mr.">{{ t("mister") }}</option>
-          <option value="Mrs.">{{ t("missis") }}</option>
-          <option value="Miss">{{ t("miss") }}</option>
-        </select> -->
         <Dropdown
           v-model="formData.title"
           :options="titleOptions"
           class="col-sm-9 col-md-6"
           :error="isEmpty.title"
         />
-      </div>
-      <div class="mb-3 div-for-formControl">
+      </div> -->
+      <!-- <div class="mb-3 div-for-formControl">
         <label class="col-sm-5 col-md-6"
           ><span style="color: red">*</span>{{ t("firstname") }}</label
         >
@@ -195,16 +185,6 @@
         <label class="col-sm-5 col-md-6"
           ><span style="color: red">*</span>{{ t("empType") }}</label
         >
-        <!-- <select
-          class="form-control col-sm-9 col-md-6 form-select"
-          v-model="formData.employeeType"
-          required
-          :class="{ error: isEmpty.employeeType }"
-        >
-          <option value="Full-time">{{ t("fulltime") }}</option>
-          <option value="Part-time">{{ t("parttime") }}</option>
-          <option value="Contract">{{ t("contract") }}</option>
-        </select> -->
         <Dropdown
           v-model="formData.employeeType"
           :options="employeeTypeOptions"
@@ -217,21 +197,6 @@
           ><span style="color: red">*</span>{{ t("department") }}</label
         >
         <div class="col-sm-9 col-md-6">
-          <!-- <select
-            class="form-control form-select"
-            v-model="formData.departmentID"
-            :disabled="Departments.length === 0"
-            :class="{ error: isEmpty.departmentID || Departments.length === 0 }"
-            style="width: 100%"
-          >
-            <option
-              v-for="employ in Departments"
-              :key="employ.departmentID"
-              :value="employ.departmentID"
-            >
-              {{ employ.departmentName }}
-            </option>
-          </select> -->
           <Dropdown
             v-model="formData.departmentID"
             :options="departmentOptions"
@@ -250,22 +215,6 @@
           ><span style="color: red">*</span>{{ t("position") }}</label
         >
         <div class="col-sm-9 col-md-6">
-          <!-- <select
-            class="form-control form-select"
-            v-model="formData.PositionID"
-            required
-            :disabled="Positions.length === 0"
-            :class="{ error: isEmpty.PositionID || Positions.length === 0 }"
-            style="width: 100%"
-          >
-            <option
-              v-for="employ in Positions"
-              :key="employ.PositionID"
-              :value="employ.PositionID"
-            >
-              {{ employ.Position }}
-            </option>
-          </select> -->
           <Dropdown
             v-model="formData.PositionID"
             :options="positionOptions"
@@ -333,8 +282,8 @@
           maxlength="15"
           @keypress="validateInput"
         />
-      </div>
-      <div class="mb-3 modal-footer">
+      </div> -->
+      <!-- <div class="mb-3 modal-footer">
         <Button
           :disabled="isLoading"
           customClass="btn btn-primary me-3"
@@ -367,7 +316,101 @@
           {{ t("buttonCancel") }}
         </Button>
       </div>
-    </Popup>
+    </Popup> -->
+    <Popup :isOpen="isPopupOpen" :closePopup="closePopup">
+  <div class="mb-3">
+    <h2 v-if="isAddingMode">{{ t("headerPopupAddEmployee") }}</h2>
+    <h2 v-if="isEditMode">{{ t("headerPopupEditEmployee") }}</h2>
+  </div>
+
+  <div v-for="(key, index) in employeeFieldConfig.keys" :key="key">
+    <h5 v-if="employeeFieldConfig.components[index] === 'heading'" style="text-decoration: underline" class="mt-3 mb-3">
+      {{ t(employeeFieldConfig.labels[index]) }}
+    </h5>
+
+    <div v-else class="mb-3 div-for-formControl">
+      <label class="col-sm-5 col-md-6">
+        <span v-if="key !== 'Salary' && key !== 'bankName' && key !== 'bankAccountID' && key !== 'start_working_date'" style="color: red">*</span>
+        {{ t(employeeFieldConfig.labels[index]) }}
+      </label>
+
+      <div class="col-sm-9 col-md-6" style="display: inline-block; width: 50%;">
+        <TextField
+          v-if="employeeFieldConfig.components[index] === 'text' || employeeFieldConfig.components[index] === 'email'"
+          v-model="formData[key]"
+          :type="employeeFieldConfig.components[index]"
+          :error="isEmpty[key]"
+          :maxlength="key === 'Phone_num' ? 10 : key === 'NID_num' ? 13 : key === 'bankAccountID' ? 15 : null"
+          @keypress="['Phone_num', 'NID_num', 'Salary', 'bankAccountID'].includes(key) ? validateInput($event) : null"
+        />
+
+        <Dropdown
+          v-if="employeeFieldConfig.components[index] === 'dropdown'"
+          v-model="formData[key]"
+          :error="isEmpty[key]"
+          :options="getDropdownOptions(key)"
+          style="width: 100%"
+          :disabled="(key === 'departmentID' && Departments.length === 0) || (key === 'PositionID' && Positions.length === 0)"
+        />
+
+        <v-date-picker
+          v-if="employeeFieldConfig.components[index] === 'datepicker'"
+          v-model="formData[key]"
+          locale="th-TH"
+          :format="formatDatePicker"
+        >
+          <template v-slot="{ inputEvents }">
+            <input
+              class="form-control"
+              :value="formatDatePicker(formData[key])"
+              v-on="inputEvents"
+              placeholder="เลือกวันที่"
+              style="width: 100%"
+              :class="{ 'border-danger': isEmpty[key] }"
+            />
+          </template>
+        </v-date-picker>
+
+        <div v-if="(key === 'departmentID' && Departments.length === 0) || (key === 'PositionID' && Positions.length === 0)" class="text-danger mt-1">
+          {{ key === 'departmentID' ? t("pleaseDepartment") : t("pleasePosition") }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mb-3 modal-footer">
+            <Button
+          :disabled="isLoading"
+          customClass="btn btn-primary me-3"
+          v-if="isAddingMode"
+          @click="addEmployee"
+        >
+          <span
+            v-if="isLoading"
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          <span v-else>{{ t("buttonAdd") }}</span>
+        </Button>
+        <Button
+          :disabled="isLoading"
+          customClass="btn btn-primary me-3"
+          v-if="isEditMode"
+          @click="editEmployee"
+        >
+          <span
+            v-if="isLoading"
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          <span v-else>{{ t("buttonSave") }}</span>
+        </Button>
+        <Button customClass="btn btn-secondary" @click="closePopup">
+          {{ t("buttonCancel") }}
+        </Button>
+    </div>
+</Popup>
     <Popup :isOpen="isPopupOpenLeave" :closePopup="closePopupLeave">
       <div class="mb-3">
         <h2>จัดการวันลา</h2>
@@ -638,6 +681,7 @@ import th from "vue-datepicker-next/locale/th.es";
 import en from "vue-datepicker-next/locale/en.es";
 import moment from "moment";
 import Dropdown from "../components/Dropdown.vue";
+import TextField from "../components/textField.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -650,6 +694,7 @@ export default {
     DatePicker,
     Button, // 2. ลงทะเบียน component
     Dropdown,
+    TextField
   },
   setup() {
     const { t } = useI18n();
@@ -727,6 +772,32 @@ export default {
   // ... The rest of your script remains unchanged
   data() {
     return {
+      employeeFieldConfig: {
+        keys: [
+          'HEADING_1', // Key สำหรับหัวข้อ "ข้อมูลพนักงาน"
+          'title', 'F_name', 'L_name', 'Birthdate', 'Address', 'Phone_num', 'NID_num', 'Email',
+          'HEADING_2', // Key สำหรับหัวข้อ "ข้อมูลเกี่ยวกับงาน"
+          'employeeType', 'departmentID', 'PositionID', 'Salary', 'start_working_date',
+          'HEADING_3', // Key สำหรับหัวข้อ "ข้อมูลเกี่ยวกับธนาคาร"
+          'bankName', 'bankAccountID'
+        ],
+        labels: [
+          'employeeInformation',
+          'title', 'firstname', 'lastname', 'birthdate', 'address', 'phoneNum', 'NID', 'email',
+          'headerAboutJob',
+          'empType', 'department', 'position', 'salary', 'startWorking',
+          'headerAboutBank',
+          'bankname', 'bankaccount'
+        ],
+        components: [
+          'heading',
+          'dropdown', 'text', 'text', 'datepicker', 'text', 'text', 'text', 'email',
+          'heading',
+          'dropdown', 'dropdown', 'dropdown', 'text', 'datepicker',
+          'heading',
+          'text', 'text'
+        ],
+      },
       dropDownStatus: "active",
       errorMessages: [],
       errorMessages2: [],
@@ -774,22 +845,22 @@ export default {
       },
       isEmpty: {
         employeeID: "",
-        title: "",
-        F_name: "",
-        L_name: "",
-        Address: "",
-        Birthdate: "",
-        NID_num: "",
-        Phone_num: "",
-        Email: "",
-        departmentID: "",
-        PositionID: "",
-        start_working_date: "",
-        Salary: "",
-        employeeType: "",
-        bankName: "",
-        bankAccountID: "",
-        positions: "",
+        title: false,
+        F_name: false,
+        L_name: false,
+        Address: false,
+        Birthdate: false,
+        NID_num: false,
+        Phone_num: false,
+        Email: false,
+        departmentID: false,
+        PositionID: false,
+        start_working_date: false,
+        Salary: false,
+        employeeType: false,
+        bankName: false,
+        bankAccountID: false,
+        positions: false,
         status: "active",
       },
       formDataLeave: {
@@ -1046,6 +1117,20 @@ export default {
     },
   },
   methods: {
+     getDropdownOptions(key) {
+    switch (key) {
+      case 'title':
+        return this.titleOptions;
+      case 'employeeType':
+        return this.employeeTypeOptions;
+      case 'departmentID':
+        return this.departmentOptions;
+      case 'PositionID':
+        return this.positionOptions;
+      default:
+        return [];
+    }
+  },
     formatDatePicker(date) {
       if (!date) return "";
       const d = new Date(date);
