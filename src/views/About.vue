@@ -41,7 +41,7 @@
 
               <!-- กรณีเป็น upload (รูปภาพ) -->
               <div v-else-if="fieldConfig.componentTypes[index] === 'upload'">
-                <input type="file" @change="handleFileUpload" />
+                <TextField type="file" @change="handleFileUpload" />
                 <br />
                 <img
                   :src="exp_files || formData[key]"

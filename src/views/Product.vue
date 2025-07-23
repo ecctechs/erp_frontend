@@ -134,9 +134,8 @@
               :error="isEmpty[key]"
             />
 
-            <input
+            <TextField
               v-if="productFieldConfig.components[index] === 'price'"
-              class="form-control"
               v-model="formattedPrice"
               type="text"
               @input="updatePrice"
