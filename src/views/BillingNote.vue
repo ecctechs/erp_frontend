@@ -654,24 +654,19 @@ export default {
   },
   data() {
     return {
-fieldConfig: [
-  // Group: 'billing'
-  { key: 'billing_number', label: 'numberBilling', componentType: 'TextField', readonly: true, group: 'billing' },
-  { key: 'billing_date', label: 'dateBilling', componentType: 'DatePicker', readonly: false, group: 'billing' },
-  { key: 'employeeName', label: 'employeeName', componentType: 'TextField', readonly: true, group: 'billing' },
-  
-  // Group: 'customer'
-  { key: 'cus_name', label: 'customerName', componentType: 'TextField', readonly: true, group: 'customer' },
-  { key: 'cus_address', label: 'customerAddress', componentType: 'TextField', readonly: true, group: 'customer' },
-  { key: 'cus_tel', label: 'phoneNum', componentType: 'TextField', readonly: true, group: 'customer' },
-  { key: 'cus_email', label: 'email', componentType: 'TextField', readonly: true, group: 'customer' },
-  { key: 'cus_tax', label: 'taxID', componentType: 'TextField', readonly: true, group: 'customer' },
-  { key: 'cus_purchase', label: 'customerPurchaseBy', componentType: 'TextField', readonly: true, group: 'customer' },
-  
-  // Group: 'summary'
-  { key: 'payments', label: 'payments', componentType: 'Dropdown', readonly: false, group: 'summary' },
-  { key: 'remark', label: 'quotationRemark', componentType: 'Textarea', readonly: false, group: 'summary' }
-],
+    fieldConfig: [
+      { key: 'billing_number', label: 'numberBilling', componentType: 'TextField', readonly: true, group: 'billing' },
+      { key: 'billing_date', label: 'dateBilling', componentType: 'DatePicker', readonly: false, group: 'billing' },
+      { key: 'employeeName', label: 'employeeName', componentType: 'TextField', readonly: true, group: 'billing' },
+      { key: 'cus_name', label: 'customerName', componentType: 'TextField', readonly: true, group: 'customer' },
+      { key: 'cus_address', label: 'customerAddress', componentType: 'TextField', readonly: true, group: 'customer' },
+      { key: 'cus_tel', label: 'phoneNum', componentType: 'TextField', readonly: true, group: 'customer' },
+      { key: 'cus_email', label: 'email', componentType: 'TextField', readonly: true, group: 'customer' },
+      { key: 'cus_tax', label: 'taxID', componentType: 'TextField', readonly: true, group: 'customer' },
+      { key: 'cus_purchase', label: 'customerPurchaseBy', componentType: 'TextField', readonly: true, group: 'customer' },
+      { key: 'payments', label: 'payments', componentType: 'Dropdown', readonly: false, group: 'summary' },
+      { key: 'remark', label: 'quotationRemark', componentType: 'Textarea', readonly: false, group: 'summary' }
+    ],
       openPopupAllow: false,
       errorMessages: [],
       shortcutAllow: false,

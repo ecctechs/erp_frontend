@@ -342,16 +342,15 @@ export default {
       documentName,
     };
   },
-  // ... The rest of your script remains unchanged
   data() {
     return {
       employeeFieldConfig: {
         keys: [
-          'HEADING_1', // Key สำหรับหัวข้อ "ข้อมูลพนักงาน"
+          'HEADING_1', 
           'title', 'F_name', 'L_name', 'Birthdate', 'Address', 'Phone_num', 'NID_num', 'Email',
-          'HEADING_2', // Key สำหรับหัวข้อ "ข้อมูลเกี่ยวกับงาน"
+          'HEADING_2', 
           'employeeType', 'departmentID', 'PositionID', 'Salary', 'start_working_date',
-          'HEADING_3', // Key สำหรับหัวข้อ "ข้อมูลเกี่ยวกับธนาคาร"
+          'HEADING_3', 
           'bankName', 'bankAccountID'
         ],
         labels: [

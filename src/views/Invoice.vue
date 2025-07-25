@@ -643,23 +643,18 @@ export default {
   data() {
     return {
       fieldConfig: [
-  // Group: 'invoice'
-  { key: 'invoice_number', label: 'numberInvoice', componentType: 'TextField', readonly: true, group: 'invoice' },
-  { key: 'invoice_date', label: 'dateInvoice', componentType: 'DatePicker', readonly: false, group: 'invoice' },
-  { key: 'invoice_status', label: 'statusInvoice', componentType: 'Dropdown', readonly: true, group: 'invoice', options: 'invoiceStatusOptions' },
-  { key: 'employeeName', label: 'employeeName', componentType: 'TextField', readonly: true, group: 'invoice' },
-  
-  // Group: 'customer'
-  { key: 'cus_name', label: 'customerName', componentType: 'TextField', readonly: true, group: 'customer' },
-  { key: 'cus_address', label: 'customerAddress', componentType: 'TextField', readonly: true, group: 'customer' },
-  { key: 'cus_tel', label: 'phoneNum', componentType: 'TextField', readonly: true, group: 'customer' },
-  { key: 'cus_email', label: 'email', componentType: 'TextField', readonly: true, group: 'customer' },
-  { key: 'cus_tax', label: 'taxID', componentType: 'TextField', readonly: true, group: 'customer' },
-  { key: 'cus_purchase', label: 'customerPurchaseBy', componentType: 'TextField', readonly: true, group: 'customer' },
-
-  // Group: 'summary' (มีแค่ remark ที่ให้แก้ไขได้)
-  { key: 'remark', label: 'quotationRemark', componentType: 'Textarea', readonly: false, group: 'summary' },
-],
+        { key: 'invoice_number', label: 'numberInvoice', componentType: 'TextField', readonly: true, group: 'invoice' },
+        { key: 'invoice_date', label: 'dateInvoice', componentType: 'DatePicker', readonly: false, group: 'invoice' },
+        { key: 'invoice_status', label: 'statusInvoice', componentType: 'Dropdown', readonly: true, group: 'invoice', options: 'invoiceStatusOptions' },
+        { key: 'employeeName', label: 'employeeName', componentType: 'TextField', readonly: true, group: 'invoice' },
+        { key: 'cus_name', label: 'customerName', componentType: 'TextField', readonly: true, group: 'customer' },
+        { key: 'cus_address', label: 'customerAddress', componentType: 'TextField', readonly: true, group: 'customer' },
+        { key: 'cus_tel', label: 'phoneNum', componentType: 'TextField', readonly: true, group: 'customer' },
+        { key: 'cus_email', label: 'email', componentType: 'TextField', readonly: true, group: 'customer' },
+        { key: 'cus_tax', label: 'taxID', componentType: 'TextField', readonly: true, group: 'customer' },
+        { key: 'cus_purchase', label: 'customerPurchaseBy', componentType: 'TextField', readonly: true, group: 'customer' },
+        { key: 'remark', label: 'quotationRemark', componentType: 'Textarea', readonly: false, group: 'summary' },
+      ],
       openPopupAllow: false,
       shortcutAllow: false,
       isAllowConfirmPopupOpen: false,
