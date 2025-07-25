@@ -320,9 +320,6 @@ export default {
   },
   setup() {
     const { t, locale } = useI18n();
-
-    // Define destroyCharts inside setup
-
     return {
       t,
       locale,
