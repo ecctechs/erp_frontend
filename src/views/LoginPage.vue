@@ -20,8 +20,7 @@
         <label class="col-sm-3 col-md-6" for="email"
           ><b>{{ t("email") }}</b></label
         >
-        <input
-          class="form-control col-sm-9 col-md-6"
+        <TextField
           v-model="formUser.useremail"
           type="text"
           required
@@ -34,12 +33,6 @@
         <label class="col-sm-3 col-md-6" for="psw"
           ><b>{{ t("password") }}</b></label
         >
-        <!-- <input
-          class="form-control col-sm-9 col-md-6"
-          v-model="formUser.password"
-          type="password"
-          required
-        /> -->
         <div class="input-group mb-3">
           <input
             :type="showPassword ? 'text' : 'password'"
@@ -86,11 +79,6 @@
         <a href="register">{{ t("registerlink") }}</a>
       </div>
     </form>
-    <!-- <div v-if="isPopupVisible_error" class="popup-success">
-      <div class="popup-content-error">
-        <a>{{ popupMessage_error }}</a>
-      </div>
-    </div> -->
     <div v-if="isPopupVisible_error" class="popup-error2">
       <div class="text-end">
         <Button
@@ -112,11 +100,13 @@ import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n"; //for switch language
 import { watchEffect } from "vue";
 import Button from "../components/button.vue";
+import TextField from "../components/textField.vue";
 
 const API_CALL = config["url"];
 export default {
   components: {
     Button,
+    TextField
   },
   name: "login",
   setup() {

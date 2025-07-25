@@ -46,25 +46,7 @@
     <Popup :isOpen="isPopupOpen" :closePopup="closePopup">
       <h2 v-if="isAddingMode">{{ t("headerPopupAddCategory") }}</h2>
       <h2 v-if="isEditMode">{{ t("headerPopupEditCategory") }}</h2>
-      <div class="add-btn mb-3">
-        <div>{{ this.category_file.name }}</div>
-        <input
-          type="file"
-          id="fileInput"
-          @change="handleFileUpload"
-          class="hidden"
-        />
-      </div>
       <div class="mb-3">
-        <!-- <input
-          class="form-control"
-          v-model="formData.categoryName"
-          type="text"
-          id="input-text"
-          required
-          maxlength="30"
-          :class="{ error: isEmpty.categoryName }"
-        /> -->
         <TextField
           v-model="formData.categoryName"
           :label="t('categoryName')"
@@ -265,10 +247,6 @@ export default {
       } else {
         this.showPopup_error(messages);
       }
-    },
-    handleFileUpload(event) {
-      this.category_file = event.target.files[0];
-      console.log("Selected file:", this.category_file.name);
     },
     openPopup() {
       this.isPopupOpen = true;

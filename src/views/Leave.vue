@@ -1,111 +1,13 @@
 <template>
   <div class="main-page">
-    <!-- call navigate tab -->
-    <!-- <Navigate /> -->
     <div class="page-body">
-      <!-- <div class="mb-4">
-        <h2>{{ t("headerEmployee") }}</h2>
-      </div>
-      <div class="row mb-3">
-        <div class="col-4 col-sm-4 col-md-2 col-lg-2">
-          <select
-            class="form-control form-select size-font-sm"
-            v-model="formData.status"
-          >
-            <option
-              v-for="status in [...new Set(employees.map((emp) => emp.status))]"
-              :key="status"
-              :value="status"
-            >
-              {{ t(status === "active" ? "statusActive" : "statusNotActive") }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="col-5 col-sm-6 col-md-3 col-lg-3">
-          <input
-            v-model="searchQuery"
-            type="text"
-            class="form-control me-3 size-font-sm"
-            :placeholder="$t('Search')"
-          />
-        </div>
-         <div class="col-1 col-sm-1 col-md-7 col-lg-7"></div> -->
-      <!-- <div class="col-7 col-sm-6 col-md-9 col-lg-9 text-end">
-          <a
-            class="btn btn-success me-3 size-font-sm me-2"
-            @click="openPopup"
-            >{{ t("addEmployee") }}</a
-          >
-          <button
-            class="btn btn-outline-secondary mdi mdi-export-variant size-font-sm"
-            @click="exportEmployee"
-          ></button>
-        </div>
-      </div> -->
-      <!-- <div class="top-table-for-filter">
-        <div class="col-sm-3">
-          <select class="form-control form-select" v-model="formData.status">
-            <option
-              v-for="status in [...new Set(employees.map((emp) => emp.status))]"
-              :key="status"
-              :value="status"
-            >
-              {{ t(status === "active" ? "statusActive" : "statusNotActive") }}
-            </option>
-          </select>
-        </div>
-        <div class="add-btn mb-3" style="flex: 1">
-          <input
-            v-model="searchQuery"
-            type="text"
-            class="form-control me-3"
-            style="width: 20%"
-            :placeholder="$t('Search')"
-          />
-          <a class="btn btn-success me-3" @click="openPopup">{{
-            t("addEmployee")
-          }}</a>
-          <button class="btn btn-outline-secondary" @click="exportEmployee">
-            Export
-          </button>
-        </div>
-      </div> -->
-      <!-- <div>
-        <employeeList
-          :initialTableData="filteredEmp"
-          :tableHeaders="tableHeaders"
-          :columnEditAndDelete="true"
-          @handleEdit="handleEdit"
-          @handleDelete="handleDelete"
-          v-if="employees && employees.length > 0"
-          :isLoading="isLoading"
-        />
-      </div>
-      <div
-        v-if="isLoading"
-        class="d-flex justify-content-center align-items-center"
-      >
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div> -->
       <div class="mb-4">
         <h2>{{ t("manageLeave") }}</h2>
       </div>
       <div class="row mb-3">
         <div class="col-6 col-sm-6 col-md-3 col-lg-3">
           <label class="me-1 size-font-sm">{{ t("month") }}</label>
-          <!-- <select
-            v-model="selectedMonthFilter"
-            class="me-3 form-control form-select size-font-sm"
-            :class="{ error: inputError } + ' form-control'"
-          >
-            <option v-for="month in months" :value="month" :key="month">
-              {{ month }}
-            </option>
-          </select> -->
+
           <Dropdown
             v-model="selectedMonthFilter"
             :options="monthOptions"
@@ -113,33 +15,9 @@
             :error="inputError"
           />
         </div>
-        <!-- <div class="col-6 col-sm-6 col-md-3 col-lg-3">
-          <label class="me-1 size-font-sm">{{ t("year") }}</label>
-          <select
-            v-model="selectedYearFilter"
-            class="me-3 form-control form-select size-font-sm"
-            :class="{ error: inputError } + ' form-control'"
-          >
-            <option v-for="year in years" :key="year" :value="year">
-              {{ year }}
-            </option>
-          </select>
-        </div> -->
         <div class="col-6 col-sm-6 col-md-3 col-lg-3">
           <label class="me-1 size-font-sm">{{ t("year") }}</label>
 
-          <!-- <select
-            v-model="selectedYearFilter"
-            class="me-3 form-control form-select size-font-sm"
-            :class="{ error: inputError } + ' form-control'"
-          > -->
-          <!-- <option v-for="year in years" :key="year" :value="year">
-              {{ year }}
-            </option> -->
-          <!-- <option v-for="year in years" :key="year" :value="year">
-              {{ t("lang") === "en" ? year + 543 : year }}
-            </option>
-          </select> -->
           <Dropdown
             v-model="selectedYearFilter"
             :options="yearOptions"
@@ -167,46 +45,6 @@
           </Button>
         </div>
       </div>
-      <!-- <div class="mb-3 d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center">
-          <label class="me-1">{{ t("month") }}</label>
-          <select
-            v-model="selectedMonthFilter"
-            class="me-3 form-control form-select"
-            :class="{ error: inputError } + ' form-control'"
-          >
-            <option v-for="month in months" :value="month" :key="month">
-              {{ month }}
-            </option>
-          </select>
-          <label class="me-1">{{ t("year") }}</label>
-          <select
-            v-model="selectedYearFilter"
-            class="me-3 form-control form-select"
-            :class="{ error: inputError } + ' form-control'"
-          >
-            <option v-for="year in years" :key="year" :value="year">
-              {{ year }}
-            </option>
-          </select>
-        </div>
-
-        <div class="d-flex align-items-center">
-          <input
-            v-model="searchQueryLeave"
-            type="text"
-            class="form-control me-3"
-            style="width: 200px"
-            placeholder="Search..."
-          /> -->
-      <!-- <button class="btn btn-outline-secondary me-2" @click="exportSalary">
-            Export
-          </button> -->
-      <!-- <button class="btn btn-primary" @click="openPopupLeave">
-            {{ t("manageLeave") }}
-          </button>
-        </div>
-      </div> -->
       <div class="card-body-detail">
         <div style="display: flex; flex-direction: column; width: 100%">
           <div
@@ -235,341 +73,14 @@
     </div>
   </div>
   <div>
-    <Popup :isOpen="isPopupOpen" :closePopup="closePopup">
-      <div class="mb-3">
-        <h2 v-if="isAddingMode">{{ t("headerPopupAddEmployee") }}</h2>
-        <h2 v-if="isEditMode">{{ t("headerPopupEditEmployee") }}</h2>
-      </div>
-      <h6>{{ t("employeeInformation") }}</h6>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("title") }}</label>
-        <select
-          class="form-control col-sm-9 col-md-6 form-select"
-          v-model="formData.title"
-          required
-          :class="{ error: isEmpty.title }"
-        >
-          <option value="Mr.">{{ t("mister") }}</option>
-          <option value="Mrs.">{{ t("missis") }}</option>
-          <option value="Miss">{{ t("miss") }}</option>
-        </select>
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("firstname") }}</label>
-        <input
-          class="form-control col-sm-9 col-md-6"
-          v-model="formData.F_name"
-          type="text"
-          required
-          :class="{ error: isEmpty.F_name }"
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("lastname") }}</label>
-        <input
-          class="form-control col-sm-9 col-md-6"
-          v-model="formData.L_name"
-          type="text"
-          required
-          :class="{ error: isEmpty.L_name }"
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <div class="col-6 col-sm-6 col-md-6">
-          <label class="col-sm-6 col-md-6">{{ t("birthdate") }}</label>
-        </div>
-        <div class="col-6 col-sm-6 col-md-6">
-          <DatePicker
-            v-model:value="formData.Birthdate"
-            format="DD/MM/YYYY"
-            value-type="date"
-            placeholder="DD/MM/YYYY"
-            class="form-control"
-            :formatter="momentFormat"
-            :lang="currentLocale"
-            :disabled-date="disabledBeforeToday"
-            :class="{ error: isEmpty.Birthdate }"
-          />
-        </div>
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("address") }}</label>
-        <input
-          class="form-control col-sm-9 col-md-6"
-          v-model="formData.Address"
-          type="text"
-          required
-          :class="{ error: isEmpty.Address }"
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("phoneNum") }}</label>
-        <input
-          class="form-control col-sm-9 col-md-6"
-          v-model="formData.Phone_num"
-          type="text"
-          required
-          :class="{ error: isEmpty.Phone_num }"
-          @keypress="validateInput"
-          maxlength="10"
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("NID") }}</label>
-        <input
-          class="form-control col-sm-9 col-md-6"
-          v-model="formData.NID_num"
-          type="text"
-          required
-          :class="{ error: isEmpty.NID_num }"
-          @keypress="validateInput"
-          maxlength="13"
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("email") }}</label>
-        <input
-          class="form-control col-sm-9 col-md-6"
-          v-model="formData.Email"
-          type="text"
-          required
-          :class="{ error: isEmpty.Email }"
-        />
-      </div>
-      <h6>{{ t("headerAboutJob") }}</h6>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("empType") }}</label>
-        <select
-          class="form-control col-sm-9 col-md-6 form-select"
-          v-model="formData.employeeType"
-          required
-          :class="{ error: isEmpty.employeeType }"
-        >
-          <option value="Full-time">{{ t("fulltime") }}</option>
-          <option value="Part-time">{{ t("parttime") }}</option>
-          <option value="Contract">{{ t("contract") }}</option>
-        </select>
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("department") }}</label>
-        <select
-          class="form-control col-sm-9 col-md-6 form-select"
-          v-model="formData.departmentID"
-          required
-          :class="{ error: isEmpty.departmentID }"
-        >
-          <option
-            v-for="employ in Departments"
-            :key="employ.departmentID"
-            :value="employ.departmentID"
-          >
-            {{ employ.departmentName }}
-          </option>
-        </select>
-      </div>
-      <div class="mb-3 div-for-formControl" v-if="isAddingMode">
-        <label class="col-sm-5 col-md-6">{{ t("position") }}</label>
-        <select
-          class="form-control col-sm-9 col-md-6 form-select"
-          v-model="formData.PositionID"
-          required
-          :class="{ error: isEmpty.PositionID }"
-        >
-          <option
-            v-for="employ in Positions"
-            :key="employ.PositionID"
-            :value="employ.PositionID"
-          >
-            {{ employ.Position }}
-          </option>
-        </select>
-      </div>
-      <div class="mb-3 div-for-formControl" v-if="isEditMode">
-        <label class="col-sm-5 col-md-6">{{ t("position") }}</label>
-        <select
-          class="form-control col-sm-9 col-md-6 form-select"
-          v-model="formData.PositionID"
-          required
-          :class="{ error: isEmpty.PositionID }"
-        >
-          <option
-            v-for="employ in Positions"
-            :key="employ.PositionID"
-            :value="employ.PositionID"
-          >
-            {{ employ.Position }}
-          </option>
-        </select>
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("salary") }}</label>
-        <input
-          class="form-control col-sm-9 col-md-6"
-          v-model="formData.Salary"
-          type="text"
-          required
-          :class="{ error: isEmpty.Salary }"
-          @keypress="validateInput"
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <div class="col-6 col-sm-6 col-md-6">
-          <label class="col-sm-6 col-md-6">{{ t("startWorking") }}</label>
-        </div>
-        <!-- <input id="date-input" class="form-control col-sm-9 col-md-6" v-model="formData.start_working_date" type="date" required :class="{ 'error': inputError }"> -->
-        <div class="col-6 col-sm-6 col-md-6">
-          <DatePicker
-            v-model:value="formData.start_working_date"
-            format="DD/MM/YYYY"
-            value-type="date"
-            placeholder="DD/MM/YYYY"
-            class="form-control"
-            :formatter="momentFormat"
-            :lang="currentLocale"
-            :disabled-date="disabledBeforeToday"
-            :class="{ error: isEmpty.start_working_date }"
-          ></DatePicker>
-        </div>
-      </div>
-      <h6>{{ t("headerAboutBank") }}</h6>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("bankname") }}</label>
-        <input
-          class="form-control col-sm-9 col-md-6"
-          v-model="formData.bankName"
-          type="text"
-          required
-          :class="{ error: isEmpty.bankName }"
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("bankaccount") }}</label>
-        <input
-          class="form-control col-sm-9 col-md-6"
-          v-model="formData.bankAccountID"
-          type="text"
-          required
-          :class="{ error: isEmpty.bankAccountID }"
-          maxlength="15"
-          @keypress="validateInput"
-        />
-      </div>
-      <div class="mb-3 modal-footer">
-        <Button
-          :disabled="isLoading"
-          customClass="btn btn-primary me-3"
-          v-if="isAddingMode"
-          @click="addEmployee"
-        >
-          <span
-            v-if="isLoading"
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          <span v-else>{{ t("buttonAdd") }}</span>
-        </Button>
-        <Button
-          :disabled="isLoading"
-          customClass="btn btn-primary me-3"
-          v-if="isEditMode"
-          @click="editEmployee"
-        >
-          <span
-            v-if="isLoading"
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          <span v-else>{{ t("buttonSave") }}</span>
-        </Button>
-        <Button customClass="btn btn-secondary" @click="closePopup">
-          {{ t("buttonCancel") }}
-        </Button>
-      </div>
-    </Popup>
     <Popup :isOpen="isPopupOpenLeave" :closePopup="closePopupLeave">
       <div class="mb-3">
         <h2>จัดการวันลา</h2>
       </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6"
-          ><span style="color: red">*</span>{{ t("empname") }}</label
-        >
-        <!-- <select
-          class="form-control col-sm-9 col-md-6 form-select"
-          v-model="formDataLeave.employeeID"
-          type="text"
-          required
-          :class="{ error: isEmpty.employeeID }"
-        >
-          <option
-            v-for="employ in employees"
-            :key="employ.ID"
-            :value="employ.ID"
-          >
-            {{ employ.Name }}
-          </option>
-        </select> -->
-        <Dropdown
-          v-model="formDataLeave.employeeID"
-          :options="employeeOptions"
-          class="col-sm-9 col-md-6"
-          :error="isEmpty.employeeID"
-        />
+      <div v-for="field in leaveFieldConfig" :key="field.key" class="mb-3 div-for-formControl">
+          <label class="col-sm-5 col-md-6"><span v-if="field.required" style="color:red;">*</span>{{ t(field.label) }}</label>
+          <Dropdown v-model="formDataLeave[field.key]" :options="this[field.options]" :error="isEmpty[field.key]" class="col-sm-9 col-md-6"/>
       </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("leavetype") }}</label>
-        <!-- <select
-          class="form-control col-sm-9 col-md-6 form-select"
-          v-model="formDataLeave.detail"
-          type="text"
-          required
-          :class="{ error: isEmpty.detail }"
-        >
-          <option>{{ t("SickLeave") }}</option>
-          <option>{{ t("BusinessLeave") }}</option>
-          <option>{{ t("AnnualLeave") }}</option>
-          <option>{{ t("MaternityLeave") }}</option>
-        </select> -->
-        <Dropdown
-          v-model="formDataLeave.detail"
-          :options="leaveTypeOptions"
-          class="col-sm-9 col-md-6"
-          :error="isEmpty.detail"
-        />
-      </div>
-      <!-- <div class="mb-3 div-for-formControl">
-        <label class="col-6 col-sm-6 col-md-6">{{ t("date") }}</label>
-        <div class="row">
-          <div class="col-md-5">
-            <DatePicker
-              v-model:value="formDataLeave.date"
-              format="DD/MM/YYYY"
-              value-type="date"
-              placeholder="DD/MM/YYYY"
-              class="form-control"
-              :class="{ error: isEmpty.date }"
-              :formatter="momentFormat"
-              :lang="currentLocale"
-            />
-          </div>
-          -
-          <div class="col-md-5">
-            <DatePicker
-              v-model:value="formDataLeave.dateEnd"
-              format="DD/MM/YYYY"
-              value-type="date"
-              placeholder="DD/MM/YYYY"
-              class="form-control"
-              :class="{ error: isEmpty.dateEnd }"
-              :formatter="momentFormat"
-              :lang="currentLocale"
-            />
-          </div>
-        </div>
-      </div> -->
-      <!-- ประเภทการลา -->
       <div class="mb-3">
         <label
           ><strong>{{ t("DurationOfLeave") }}:</strong></label
@@ -591,16 +102,6 @@
       <!-- ลาเต็มวัน -->
       <div v-if="leaveType === 'full'" class="mb-3">
         <label>{{ t("SelectDate") }}:</label>
-        <!-- <DatePicker
-          v-model:value="formDataLeave.date"
-          format="DD/MM/YYYY"
-          value-type="date"
-          placeholder="DD/MM/YYYY"
-          class="form-control"
-          :class="{ error: isEmpty.date }"
-          :formatter="momentFormat"
-          :lang="currentLocale"
-        /> -->
         <v-date-picker
           v-model="formDataLeave.date"
           locale="th-TH"
@@ -621,16 +122,6 @@
       <!-- ลาครึ่งวัน -->
       <div v-if="leaveType === 'half'" class="mb-3">
         <label>{{ t("SelectDate") }}:</label>
-        <!-- <DatePicker
-          v-model:value="formDataLeave.date"
-          format="DD/MM/YYYY"
-          value-type="date"
-          placeholder="DD/MM/YYYY"
-          class="form-control"
-          :class="{ error: isEmpty.date }"
-          :formatter="momentFormat"
-          :lang="currentLocale"
-        /> -->
         <v-date-picker
           v-model="formDataLeave.date"
           locale="th-TH"
@@ -665,38 +156,6 @@
           locale="th-TH"
           :format="formatDatePicker"
         />
-        <!-- {{ formDataLeave.range.start }} {{ formDataLeave.range.end }} -->
-        <!-- <v-date-picker
-          v-model="formDataLeave.date"
-          locale="th-TH"
-          :format="formatDatePicker"
-        >
-          <template v-slot="{ inputEvents }">
-            <input
-              class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
-              :value="formatDatePicker(formDataLeave.date)"
-              v-on="inputEvents"
-              placeholder="เลือกวันที่"
-              style="width: 100%"
-            />
-          </template>
-        </v-date-picker> -->
-        <!-- <label>{{ t("EndDateLeave") }}:</label>
-        <v-date-picker
-          v-model="formDataLeave.dateEnd"
-          locale="th-TH"
-          :format="formatDatePicker"
-        >
-          <template v-slot="{ inputEvents }">
-            <input
-              class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
-              :value="formatDatePicker(formDataLeave.dateEnd)"
-              v-on="inputEvents"
-              placeholder="เลือกวันที่"
-              style="width: 100%"
-            />
-          </template>
-        </v-date-picker> -->
       </div>
       <div class="mb-3 modal-footer">
         <Button
@@ -718,81 +177,6 @@
         </Button>
       </div>
     </Popup>
-    <!-- <Popup :isOpen="isPopupOpenOvertime" :closePopup="closePopupOvertime">
-      <div class="mb-3">
-        <h2>จัดการการทำงานล่วงเวลา</h2>
-      </div>
-
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("empname") }}</label>
-        <select
-          class="form-control col-sm-9 col-md-6 form-select"
-          v-model="formDataOvertime.employeeID"
-          type="text"
-          required
-          :class="{ error: inputError }"
-        >
-          <option
-            v-for="employ in employeesSalaries"
-            :key="employ.ID"
-            :value="employ.ID"
-          >
-            {{ employ.Name }}
-          </option>
-        </select>
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("quotationRemark") }}</label>
-        <textarea
-          class="col-sm-5 col-md-6 label-textarea"
-          v-model="formDataOvertime.detail"
-          type="text"
-          required
-          :class="{ error: inputError }"
-          maxlength="255"
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("date") }}</label>
-        <DatePicker
-          v-model:value="formDataOvertime.date"
-          format="DD/MM/YYYY"
-          value-type="date"
-          placeholder="DD/MM/YYYY"
-          class="form-control"
-          :class="{ error: inputError }"
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">จำนวนชั่วโมง: </label>
-        <input
-          class="form-control col-sm-9 col-md-6"
-          v-model="formDataOvertime.hours"
-          type="text"
-          required
-          :class="{ error: inputError }"
-        />
-      </div>
-
-      <div class="mb-3 modal-footer">
-        <button
-          :disabled="isLoading"
-          class="btn btn-primary me-3"
-          @click="AddOvertime"
-        >
-          <span
-            v-if="isLoading"
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          <span v-else>{{ t("buttonSave") }}</span>
-        </button>
-        <button class="btn btn-secondary" @click="closePopupOvertime">
-          {{ t("buttonCancel") }}
-        </button>
-      </div>
-    </Popup> -->
     <div class="delete-popup">
       <Popup
         :isOpen="isDeleteConfirmPopupOpen"
@@ -840,14 +224,6 @@
         <a>{{ popupMessage }}</a>
       </div>
     </div>
-    <!-- <div v-if="isPopupVisible_error" class="popup-success">
-      <div class="popup-content-error">
-        <h3>{{ $t("validate_popupError") }}</h3>
-        <ul>
-          <li v-for="(msg, index) in errorMessages" :key="index">{{ msg }}</li>
-        </ul>
-      </div>
-    </div> -->
     <div v-if="isPopupVisible_error" class="popup-error2">
       <div class="text-end">
         <Button
@@ -865,14 +241,6 @@
         </ul>
       </div>
     </div>
-    <!-- <div v-if="isPopupVisible_error2" class="popup-success">
-      <div class="popup-content-error">
-        <h3>{{ $t("validate_popupError") }}</h3>
-        <ul>
-          <li v-for="(msg, index) in errorMessages2" :key="index">{{ msg }}</li>
-        </ul>
-      </div>
-    </div> -->
     <div v-if="isPopupVisible_error2" class="popup-error2">
       <div class="text-end">
         <Button
@@ -907,9 +275,6 @@ import moment from "moment";
 import Button from "../components/button.vue";
 import Dropdown from "../components/dropdown.vue";
 
-// var today = new Date().toISOString().split('T')[0];
-// document.getElementById("date-input").setAttribute("max", today);
-
 const API_CALL = config["url"];
 // const API_CALL = 'https://erp-backend-9w1r.onrender.com'
 const accessToken = localStorage.getItem("@accessToken");
@@ -923,86 +288,6 @@ export default {
     Button,
     Dropdown,
   },
-  // setup() {
-  //   const { t } = useI18n();
-  //   const { locale } = useI18n(); // ดึงค่า locale จาก i18n
-  //   const lang = computed(() => t("lang"));
-  //   // const currentLocale = computed(() => (locale.value === "th" ? th : en));
-  //   const currentLocale = computed(() => {
-  //     return {
-  //       ...(locale.value === "th" ? th : en), // ✅ ใช้ค่าจาก locale ปัจจุบัน
-  //       yearFormat:
-  //         locale.value === "en" ? moment().year() : moment().year() + 543, // ✅ แปลงปี พ.ศ. หรือ ค.ศ.
-  //     };
-  //   });
-
-  //   const momentFormat = computed(() => ({
-  //     // 📌 Date → String (แสดงผลเป็น พ.ศ. ถ้าภาษาเป็นไทย)
-  //     stringify: (date) => {
-  //       if (!date) return "";
-  //       const yearOffset = lang.value === "en" ? 543 : 0; // ✅ ตรวจสอบภาษาผ่าน computed
-  //       return moment(date).add(yearOffset, "years").format("DD/MM/YYYY");
-  //     },
-  //     // 📌 String → Date (แปลงกลับเป็น ค.ศ. ถ้าภาษาเป็นไทย)
-  //     parse: (value) => {
-  //       if (!value) return null;
-  //       const yearOffset = lang.value === "en" ? 543 : 0;
-  //       return moment(value, "DD/MM/YYYY")
-  //         .subtract(yearOffset, "years")
-  //         .toDate();
-  //     },
-  //     // 📌 ใช้ moment คำนวณเลขสัปดาห์ (ถ้าจำเป็น)
-  //     getWeek: (date) => {
-  //       return moment(date).week();
-  //     },
-  //   }));
-
-  //   // ✅ รายการเดือนแบบสองภาษา (อังกฤษ - ไทย)
-  //   const monthList = {
-  //     en: [
-  //       "January",
-  //       "February",
-  //       "March",
-  //       "April",
-  //       "May",
-  //       "June",
-  //       "July",
-  //       "August",
-  //       "September",
-  //       "October",
-  //       "November",
-  //       "December",
-  //     ],
-  //     th: [
-  //       "มกราคม",
-  //       "กุมภาพันธ์",
-  //       "มีนาคม",
-  //       "เมษายน",
-  //       "พฤษภาคม",
-  //       "มิถุนายน",
-  //       "กรกฎาคม",
-  //       "สิงหาคม",
-  //       "กันยายน",
-  //       "ตุลาคม",
-  //       "พฤศจิกายน",
-  //       "ธันวาคม",
-  //     ],
-  //   };
-
-  //   // ✅ Computed สำหรับเปลี่ยนรายการเดือนตามภาษาที่เลือก
-  //   const months = computed(() => monthList[locale.value] || monthList.en);
-
-  //   const documentName = computed(() => t("dontHaveLeave"));
-
-  //   return {
-  //     momentFormat,
-  //     currentLocale,
-  //     months,
-  //     t,
-  //     lang,
-  //     documentName,
-  //   };
-  // },
   setup() {
     const { t, locale } = useI18n();
     const lang = computed(() => t("lang"));
@@ -1063,9 +348,6 @@ export default {
 
     const documentName = computed(() => t("dontHaveLeave"));
 
-    // ✅ ไม่มี watch() สำหรับ reset month เมื่อ locale เปลี่ยน
-    // เพราะ selectedMonthIndex จะคงเดิม และ selectedMonthFilter จะอัปเดตชื่ออัตโนมัติ
-
     return {
       documentName,
       t,
@@ -1080,6 +362,10 @@ export default {
 
   data() {
     return {
+      leaveFieldConfig: [
+          { key: 'employeeID', label: 'empname', componentType: 'Dropdown', options: 'employeeOptions', required: true },
+          { key: 'detail', label: 'leavetype', componentType: 'Dropdown', options: 'leaveTypeOptions', required: true },
+      ],
       // ประเภทการลา: 'full', 'half', หรือ 'multi'
       leaveType: "full",
       // ลาเต็มวัน
@@ -1168,10 +454,10 @@ export default {
       },
       isEmpty: {
         ID: "",
-        employeeID: "",
-        detail: "",
-        date: "",
-        dateEnd: "",
+        employeeID: false,
+        detail: false,
+        date: false,
+        dateEnd: false,
       },
       formDataOvertime: {
         ID: "",
@@ -1180,21 +466,6 @@ export default {
         date: "",
         hours: "",
       },
-      // years: this.generateYears(1900, 2100), // Generates a list of years from 1900 to 2100
-      // months: [
-      //   "January",
-      //   "February",
-      //   "March",
-      //   "April",
-      //   "May",
-      //   "June",
-      //   "July",
-      //   "August",
-      //   "September",
-      //   "October",
-      //   "November",
-      //   "December",
-      // ], // List of months for selection
       searchQuery: "",
       searchQueryLeave: "",
     };

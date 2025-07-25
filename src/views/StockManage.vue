@@ -44,7 +44,7 @@
     </div>
   </div>
   <div>
-    <Popup :isOpen="isPopupOpen" :closePopup="closePopup">
+    <!-- <Popup :isOpen="isPopupOpen" :closePopup="closePopup">
       <div class="mb-4">
         <h3>{{ t("manageStock") }}</h3>
       </div>
@@ -68,27 +68,6 @@
           </v-autocomplete>
         </div>
       </div>
-      <!-- <div class="mb-3 div-for-InputDropdown">
-        <label class="col-sm-6 col-md-6">{{ t("productNameProduct") }}</label>
-        <div class="relative-wrapper">
-          <v-autocomplete
-            label=""
-            :items="currentTableData"
-            item-title="productname"
-            item-value="productID"
-            variant="outlined"
-            v-model="formData.productID"
-            :class="{ error: isEmpty.productID }"
-          >
-          </v-autocomplete>
-        </div> -->
-      <!-- <select class=" form-control col-sm-7 col-md-6 form-select" v-model="formData.productID" id="categoryID"
-                    :class="{ 'error': inputError }">
-                    <option v-for="product in currentTableData" :key="product.productID" :value="product.productID">
-                        {{ product.productname }}
-                    </option>
-                </select> -->
-      <!-- </div> -->
       <div class="mb-3 div-for-formControl">
         <label
           ><span style="color: red">*</span>{{ t("manageStockType") }}</label
@@ -176,7 +155,75 @@
           {{ t("buttonCancel") }}
         </Button>
       </div>
-    </Popup>
+    </Popup> -->
+<Popup :isOpen="isPopupOpen" :closePopup="closePopup">
+  <div class="mb-4">
+    <h3>{{ t("manageStock") }}</h3>
+  </div>
+
+  <div v-for="field in fieldConfig" :key="field.key" class="div-for-formControl mb-3">
+    
+    <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+        <label>
+            <span v-if="field.required" style="color: red">*</span>{{ t(field.label) }}
+        </label>
+    </div>
+
+    <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+        <v-autocomplete
+          v-if="field.componentType === 'Autocomplete'"
+          :items="this[field.items]"
+          :item-title="field.itemTitle"
+          :item-value="field.itemValue"
+          variant="outlined"
+          v-model="formData[field.key]"
+          :class="{ error: isEmpty[field.key] }"
+        />
+
+        <Dropdown
+          v-else-if="field.componentType === 'Dropdown'"
+          v-model="formData[field.key]"
+          :options="this[field.options]"
+          :class="{ error: isEmpty[field.key] }"
+        />
+        
+        <TextField
+          v-else
+          v-model="formData[field.key]"
+          :type="field.type"
+          :readonly="field.readonly"
+          :disabled="field.readonly"
+          :min="field.min"
+          @input="field.key === 'quantity' ? checkQuantity() : null"
+          :class="{ error: isEmpty[field.key] }"
+        />
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <Button
+      v-if="isAddingMode"
+      :disabled="isLoading"
+      customClass="btn btn-primary me-3"
+      @click="producTransaction"
+    >
+      <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
+      <span v-else>{{ t("buttonAdd") }}</span>
+    </Button>
+    <Button
+      v-if="isEditingMode"
+      :disabled="isLoading"
+      customClass="btn btn-primary me-3"
+      @click="editTransaction"
+    >
+      <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
+      <span v-else>{{ t("buttonSave") }}</span>
+    </Button>
+    <Button customClass="btn btn-secondary" @click="closePopup">
+      {{ t("buttonCancel") }}
+    </Button>
+  </div>
+</Popup>
     <div v-if="isPopupVisible" class="popup-success">
       <div class="popup-content-success">
         <a>{{ popupMessage }}</a>
@@ -218,6 +265,8 @@ import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n";
 import { computed, watch, ref } from "vue";
 import Button from "../components/button.vue";
+import TextField from "../components/textField.vue";
+import Dropdown from "../components/dropdown.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -229,6 +278,8 @@ export default {
     Popup,
     productList,
     Button,
+    TextField,
+    Dropdown
   },
   setup() {
     const { t } = useI18n();
@@ -238,6 +289,14 @@ export default {
   },
   data() {
     return {
+      fieldConfig: [
+        { key: 'productID', label: 'productNameProduct', componentType: 'Autocomplete', required: true, items: 'currentTableData', itemTitle: 'productname', itemValue: 'productID' },
+        { key: 'transactionType', label: 'manageStockType', componentType: 'Dropdown', required: true, options: 'transactionTypeOptions' },
+        { key: 'current_product_amount', label: 'current_product_amount', componentType: 'TextField', type: 'number', readonly: true },
+        { key: 'quantity', label: 'quantityProduct', componentType: 'TextField', type: 'number', required: true, min: 1 },
+        { key: 'update_product_amount', label: 'update_product_amount', componentType: 'TextField', type: 'number', readonly: true },
+        { key: 'transactionDetail', label: 'productDetail', componentType: 'TextField', type: 'text' },
+      ],
       Product: [],
       errorMessages: [],
       isPopupVisible_error: false,
@@ -268,7 +327,33 @@ export default {
       },
     };
   },
+    watch: {
+"formData.productID"(newId) {
+  if (newId) {
+    const selectedProduct = this.Product.find(p => p.productID === newId);
+    if (selectedProduct) {
+      this.formData.current_product_amount = selectedProduct.amount;
+      this.calculateUpdatedAmount(); // เรียกใช้การคำนวณเมื่อ product เปลี่ยน
+    }
+  } else {
+    this.formData.current_product_amount = '';
+    this.formData.update_product_amount = '';
+  }
+},
+"formData.transactionType"() {
+  this.calculateUpdatedAmount(); // เรียกใช้การคำนวณเมื่อประเภทเปลี่ยน
+},
+"formData.quantity"() {
+  this.calculateUpdatedAmount(); // เรียกใช้การคำนวณเมื่อจำนวนเปลี่ยน
+},
+    },
   computed: {
+    transactionTypeOptions() {
+      return [
+        { value: 'Receive', text: this.t('receive') },
+        { value: 'Issue', text: this.t('issue') },
+      ];
+    },
     tableHeaders() {
       // Defines table headers for product transaction list
       return [
@@ -303,6 +388,18 @@ export default {
     },
   },
   methods: {
+    calculateUpdatedAmount() {
+  const current = parseInt(this.formData.current_product_amount) || 0;
+  const quantity = parseInt(this.formData.quantity) || 0;
+
+  if (this.formData.transactionType === 'Receive') {
+    this.formData.update_product_amount = current + quantity;
+  } else if (this.formData.transactionType === 'Issue') {
+    this.formData.update_product_amount = current - quantity;
+  } else {
+    this.formData.update_product_amount = current;
+  }
+},
     async selectProdcut(id) {
       // สมมุติว่า Product เป็น array และคุณต้องการหา product ที่มี id ตรงกับที่ส่งมา
       const selectedProduct = this.Product.find((p) => p.productID === id);

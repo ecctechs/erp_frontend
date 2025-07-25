@@ -40,9 +40,6 @@
       </div>
 
       <div class="mb-3">
-        <!-- <label class="col-sm-5 col-md-6 mb-3"
-          ><span style="color: red">*</span>{{ t("departName") }}
-        </label> -->
         <TextField
           v-model="formData.departmentName"
           :label="t('departName')"

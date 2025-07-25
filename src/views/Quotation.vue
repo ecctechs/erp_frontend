@@ -340,268 +340,35 @@
   <div>
     <popup :isOpen="isPopupOpen" :closePopup="closePopup">
       <h2 style="margin-top: -30px">{{ t("headerQuotation") }}</h2>
+
       <div class="border p-4 mb-3">
-        <!-- <h2>{{ t("headerQuotation") }}</h2> -->
-        <h5 style="text-decoration-line: underline">
-          {{ t("HeaderPart") }}
-        </h5>
-        <div class="mb-3 div-for-formControl">
-          <label class="col-sm-5 col-md-6">{{ t("numberQuotation") }}</label>
-          <input
-            class="form-control readonly"
-            v-model="formData.sale_number"
-            readonly
-            disabled
-          />
+        <h5 style="text-decoration: underline">{{ t("HeaderPart") }}</h5>
+        <div v-for="field in headerFields" :key="field.key" class="mb-3 div-for-formControl">
+          <label class="col-sm-5 col-md-6">
+            <span v-if="field.required" style="color:red;">*</span>{{ t(field.label) }}
+          </label>
+          <TextField v-if="field.componentType === 'TextField'" v-model="formData[field.key]" :readonly="field.readonly" disabled />
+          <Dropdown v-if="field.componentType === 'Dropdown' && isEditMode" v-model="formData[field.key]" :options="this[field.options]" :disabled="field.readonly" />
+          <v-autocomplete v-if="field.componentType === 'Autocomplete'" :items="this[field.items]" :item-title="field.itemTitle" :item-value="field.itemValue" variant="outlined" v-model="formData[field.key]" :class="{ error: isEmpty[field.key] }" />
         </div>
-        <div class="mb-3 div-for-formControl" v-if="isEditMode">
-          <label class="col-sm-5 col-md-6">{{ t("statusQuotation") }}</label>
-
-          <select
-            class="form-control dropdown_selector form-select"
-            v-model="formData.status"
-            disabled
-            readonly
-          >
-            <option value="Allowed">{{ t("AllowLG") }}</option>
-            <option value="Cancel">{{ t("cancelStatus") }}</option>
-            <option style="display: none" value="Pending" disabled>
-              {{ t("PendingLG") }}
-            </option>
-            <option style="display: none" value="expired" disabled>
-              {{ t("expiredStatus") }}
-            </option>
-          </select>
-        </div>
-
-        <!-- <div class="mb-3 div-for-formControl">
-          <label class="col-sm-6 col-md-6">{{ t("employeeName") }}</label>  -->
-        <!-- <div class="relative-wrapper"> -->
-        <!-- <v-autocomplete
-            label=""
-            :items="Employees"
-            item-title="Name"
-            item-value="employeeID"
-            variant="outlined"
-            v-model="formData.employeeID"
-            :class="{ error: isEmpty.employeeID }"
-          >
-          </v-autocomplete> -->
-        <!-- </div> -->
-        <!-- </div> -->
-        <div class="div-for-formControl">
-          <div class="col-6 col-sm-6 col-md-6">
-            <span style="color: red">*</span
-            ><label class="col-sm-6 col-md-6">{{ t("employeeName") }}</label>
-          </div>
-          <div class="col-6 col-sm-6 col-md-6">
-            <v-autocomplete
-              label=""
-              :items="Employees"
-              item-title="Name"
-              item-value="employeeID"
-              variant="outlined"
-              v-model="formData.employeeID"
-              :class="{ error: isEmpty.employeeID }"
-            >
-            </v-autocomplete>
-          </div>
-
-          <!-- <div class="col-6 col-sm-6 col-md-6">
-  <div style="position: relative;">
-    <input
-      list="employeeList"
-      v-model="formData.employeeID"
-      :class="{ error: isEmpty.employeeID }"
-      class="form-control"
-      style="width: 100%; padding-right: 30px; font-size: 14px;"
-    />
-  <span style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%) scaleX(1.5); font-size: 8px; color: #888;">
-    ▼
-  </span>
-  </div>
-  <datalist id="employeeList">
-    <option v-for="employee in Employees" :key="employee.employeeID" :value="employee.Name"></option>
-  </datalist>
-</div> -->
-        </div>
-        <!-- <select
-          class="form-control dropdown_selector form-select"
-          v-model="formData.employeeID"
-          @change="updateEmployee"
-        >
-          <option
-            v-for="emp in Employees"
-            :key="emp.employeeID"
-            :value="emp.employeeID"
-          >
-            {{ emp.Name }}
-          </option>
-        </select> -->
       </div>
+
       <div class="border p-4 mb-3">
-        <div>
-          <h5 style="text-decoration-line: underline">
-            {{ t("customerPart") }}
-          </h5>
-        </div>
-        <div class="div-for-formControl mb-3">
-          <div class="col-6 col-sm-6 col-md-6">
-            <label class="col-sm-6 col-md-6"
-              ><span style="color: red">*</span>{{ t("customerName") }}</label
-            >
-          </div>
-          <div class="col-6 col-sm-6 col-md-6">
-            <div style="position: relative">
-              <input
-                list="browsers"
-                name="myBrowser"
-                class="form-control"
-                v-model="selectedCusName"
-                @input="getDetailCustomer()"
-                :class="{ error: isEmpty.cus_name }"
-                autoComplete="off"
-                style="width: 100%; padding-right: 30px; font-size: 14px"
-              />
-              <span
-                style="
-                  position: absolute;
-                  right: 16px;
-                  top: 50%;
-                  transform: translateY(-50%) scaleX(1.5);
-                  font-size: 8px;
-                  color: #888;
-                "
-              >
-                ▼
-              </span>
+        <h5 style="text-decoration: underline">{{ t("customerPart") }}</h5>
+        <div v-for="field in customerFields" :key="field.key" class="mb-3 div-for-formControl">
+            <label class="col-sm-5 col-md-6"><span v-if="field.required" style="color:red;">*</span>{{ t(field.label) }}</label>
+            <div v-if="field.componentType === 'Datalist'" style="position: relative; width: 50%;">
+                <input list="browsers" class="form-control" v-model="selectedCusName" @input="getDetailCustomer()" :class="{ error: isEmpty.cus_name }" autoComplete="off" />
+                <datalist id="browsers">
+                    <option v-for="item in Customers" :key="item.cus_id" :value="item.cus_name"></option>
+                </datalist>
             </div>
-            <datalist id="browsers">
-              <option
-                v-for="item in Customers"
-                :key="item.cus_id"
-                :value="item.cus_name"
-              ></option>
-            </datalist>
-          </div>
-        </div>
-        <!-- <div class="mb-3 div-for-InputDropdown">
-          <label class="col-sm-6 col-md-6">{{ t("customerName") }}</label>
-          <div class="relative-wrapper"> -->
-        <!-- <input
-            class="form-control form-select"
-            v-model="formData.cus_name"
-            @input="filterItems"
-            :class="{ error: inputError }"
-          />
-          <ul> -->
-        <!-- <li v-for="cus in filteredItems" :key="cus.cus_name" @click="companySelected(cus)">
-                            {{ cus.cus_name }}
-                        </li> -->
-        <!-- </ul> -->
-        <!-- <v-autocomplete
-              label=""
-              :items="Customers"
-              item-title="cus_name"
-              item-value="cus_id"
-              variant="outlined"
-              v-model="cus_drop_down"
-              :class="{ error: isEmpty.cus_name }"
-            ></v-autocomplete> -->
-        <!-- <label>
-              <input
-                list="browsers"
-                name="myBrowser"
-                class="form-control"
-                v-model="selectedCusName"
-                @input="getDetailCustomer()"
-                :class="{ error: isEmpty.cus_name }"
-                autoComplete="off"
-            /></label>
-            <datalist id="browsers">
-              <option
-                v-for="item in Customers"
-                :key="item.cus_id"
-                :value="item.cus_name"
-              ></option>
-            </datalist>
-          </div>
-        </div> -->
-        <div class="mb-3 div-for-formControl">
-          <label class="col-sm-5 col-md-6"
-            ><span style="color: red">*</span>{{ t("customerAddress") }}</label
-          >
-          <input
-            class="form-control readonly"
-            v-model="formData.cus_address"
-            :readonly="isReadonly"
-            :disabled="isDisabled"
-            :class="{ error: isEmpty.cus_address }"
-            style="color: #212529"
-          />
-        </div>
-        <div class="mb-3 div-for-formControl">
-          <label class="col-sm-5 col-md-6"
-            ><span style="color: red">*</span>{{ t("phoneNum") }}
-          </label>
-          <input
-            class="form-control readonly"
-            v-model="formData.cus_tel"
-            maxlength="10"
-            @keypress="validateInput"
-            :readonly="isReadonly"
-            :disabled="isDisabled"
-            :class="{ error: isEmpty.cus_tel }"
-            style="color: #212529"
-          />
-        </div>
-        <div class="mb-3 div-for-formControl">
-          <label class="col-sm-5 col-md-6"
-            ><span style="color: red">*</span>{{ t("email") }}
-          </label>
-          <input
-            class="form-control readonly"
-            v-model="formData.cus_email"
-            :readonly="isReadonly"
-            :disabled="isDisabled"
-            :class="{ error: isEmpty.cus_email }"
-            style="color: #212529"
-          />
-        </div>
-        <div class="mb-3 div-for-formControl">
-          <label class="col-sm-5 col-md-6"
-            ><span style="color: red">*</span>{{ t("taxID") }}
-          </label>
-          <input
-            class="form-control readonly"
-            v-model="formData.cus_tax"
-            :readonly="isReadonly"
-            :disabled="isDisabled"
-            :class="{ error: isEmpty.cus_tax }"
-            @keypress="validateInput"
-            maxlength="13"
-            style="color: #212529"
-          />
-        </div>
-        <div class="mb-3 div-for-formControl">
-          <label class="col-sm-5 col-md-6"
-            ><span style="color: red">*</span
-            >{{ t("customerPurchaseBy") }}</label
-          >
-          <input
-            class="form-control readonly"
-            v-model="formData.cus_purchase"
-            :readonly="isReadonly"
-            :disabled="isDisabled"
-            :class="{ error: isEmpty.cus_purchase }"
-            style="color: #212529"
-          />
+            <TextField v-else v-model="formData[field.key]" :readonly="isReadonly" :disabled="isDisabled" :maxlength="field.maxlength" @keypress="field.isNumeric ? validateInput($event) : null" :class="{ error: isEmpty[field.key] }" />
         </div>
       </div>
 
-      <!-- <div class="mb-3"> -->
       <div class="border p-4 mb-3">
-        <div
+         <div
           class="Register-contain"
           :class="{ error: isEmpty.productForms }"
           style="padding: 20px; width: unset"
@@ -788,323 +555,40 @@
           </div>
         </div>
       </div>
-      <div class="border p-4 mb-3">
-        <h5 style="text-decoration-line: underline">
-          {{ t("Condition") }}
-        </h5>
-        <div class="mb-3 div-for-formControl">
-          <div class="col-6 col-sm-6 col-md-6">
-            <label class="col-sm-6 col-md-6">{{ t("quotationDate") }}</label>
-          </div>
-          <div class="col-6 col-sm-6 col-md-6">
-            <!-- <DatePicker
-              v-model:value="formData.sale_date"
-              format="DD/MM/YYYY"
-              value-type="date"
-              placeholder="DD/MM/YYYY"
-              :formatter="momentFormat"
-              :lang="currentLocale"
-              :class="{ error: isEmpty.sale_date, 'form-control': true }"
-            /> -->
-            <v-date-picker
-              v-model="formData.sale_date"
-              locale="th-TH"
-              :format="formatDatePicker"
-            >
-              <template v-slot="{ inputEvents }">
-                <input
-                  class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
-                  :value="formatDatePicker(formData.sale_date)"
-                  v-on="inputEvents"
-                  placeholder="เลือกวันที่"
-                  style="width: 100%"
-                />
-              </template>
+
+            <div class="border p-4 mb-3">
+        <h5 style="text-decoration: underline">{{ t("Condition") }}</h5>
+        <div v-for="field in conditionFields" :key="field.key" class="mb-3 div-for-formControl">
+            <label class="col-sm-5 col-md-6">{{ t(field.label) }}</label>
+            <v-date-picker v-if="field.componentType === 'DatePicker'" v-model="formData[field.key]" locale="th-TH" :format="formatDatePicker" :disabled="field.readonly">
+                <template #default="{ inputEvents }">
+                    <input :value="formatDatePicker(formData[field.key])" v-on="inputEvents" class="form-control" />
+                </template>
             </v-date-picker>
-          </div>
+            <Dropdown v-else v-model="formData[field.key]" :options="this[field.options]" :error="isEmpty[field.key]" />
         </div>
-        <div class="mb-3 div-for-formControl">
-          <div class="col-6 col-sm-6 col-md-6">
-            <label class="col-sm-5 col-md-2">{{ t("creditDate") }}</label>
-          </div>
-          <div class="col-6 col-sm-6 col-md-6">
-            <!-- <select
-              v-model="formData.credit_date_number"
-              class="form-control form-select"
-              @focus="toggleDropdown(true)"
-              @blur="toggleDropdown(false)"
-              :class="{ error: isEmpty.credit_date_number }"
-            >
-              <option
-                v-for="creditday in creditDay"
-                :key="creditday"
-                :value="creditday"
-              >
-                {{ creditday }}
-              </option>
-            </select> -->
-            <Dropdown
-              v-model="formData.credit_date_number"
-              :options="creditDayOptions"
-              :error="isEmpty.credit_date_number"
-            />
-          </div>
+        <div v-for="field in summaryFields" :key="field.key" class="mb-3 div-for-formControl">
+            <label class="col-sm-5 col-md-6">{{ t(field.label) }}</label>
+            <TextField v-if="field.componentType === 'TextField'" v-model="formData[field.key]" @input="calculateNat(formData.discount_quotation)" @keypress="field.isNumeric ? validateInput($event) : null" />
+            <textarea v-else-if="field.componentType === 'Textarea'" v-model="formData[field.key]" :maxlength="field.maxlength" class="form-control" rows="3"></textarea>
         </div>
-        <div class="mb-3 div-for-formControl">
-          <div class="col-6 col-sm-6 col-md-6">
-            <label class="col-sm-6 col-md-6">{{ t("expireDate") }}</label>
-          </div>
-          <div class="col-6 col-sm-6 col-md-6">
-            <!-- <DatePicker
-              v-model:value="formData.credit_expired_date"
-              format="DD/MM/YYYY"
-              value-type="date"
-              placeholder="DD/MM/YYYY"
-              :formatter="momentFormat"
-              :lang="currentLocale"
-              class="form-control readonly"
-            /> -->
-            <v-date-picker
-              v-model="formData.credit_expired_date"
-              locale="th-TH"
-              :format="formatDatePicker"
-            >
-              <template v-slot="{ inputEvents }">
-                <input
-                  class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
-                  :value="formatDatePicker(formData.credit_expired_date)"
-                  v-on="inputEvents"
-                  placeholder="เลือกวันที่"
-                  style="width: 100%"
-                />
-              </template>
-            </v-date-picker>
-          </div>
-        </div>
-        <div class="mb-3 div-for-formControl">
-          <label class="col-sm-5 col-md-6">{{ t("totalDiscount") }}</label>
-          <input
-            class="form-control readonly"
-            v-model="formData.discount_quotation"
-            :class="{ error: inputError }"
-            @input="calculateNat(formData.discount_quotation)"
-            @keypress="validatePaste"
-          />
-        </div>
-        <div class="mb-3 div-for-formControl">
-          <!-- <label class="col-sm-5 col-md-6">{{ t("consluPrice") }} </label> -->
-          <label
-            v-if="this.formData.vatType === 'VATincluding'"
-            class="col-sm-5 col-md-6"
-            >{{ t("consluPrice") }}</label
-          >
-          <label v-else class="col-sm-5 col-md-6">{{ t("consluPrice") }}</label>
-          <input
-            v-if="this.formData.vatType === 'VATincluding'"
-            class="form-control readonly"
-            v-model="formData.sale_totalprice"
-            readonly
-            :class="{ error: inputError }"
-            disabled
-          />
-          <input
-            v-else
-            class="form-control readonly"
-            v-model="formData.Net_price"
-            readonly
-            :class="{ error: inputError }"
-            disabled
-          />
-        </div>
-        <div class="row mb-3">
-          <label class="col-sm-5 col-md-6">{{ t("typeVat") }}</label>
-          <div class="col-md-6">
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="radio"
-                value="VATexcluding"
-                v-model="formData.vatType"
-                @change="vatTypeChange()"
-              />
-              <label class="form-check-label" for="inlineCheckbox1">{{
-                t("vatType1")
-              }}</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="radio"
-                value="VATincluding"
-                v-model="formData.vatType"
-                @change="vatTypeChange()"
-              />
-              <label class="form-check-label" for="inlineCheckbox2">{{
-                t("vatType2")
-              }}</label>
-            </div>
-          </div>
         </div>
 
-        <div class="mb-3 div-for-formControl">
-          <label class="col-sm-5 col-md-6">{{ t("vatPrice") }} </label>
-          <input
-            placeholder="vat price 7%"
-            v-model="formData.vat"
-            class="form-control readonly"
-            readonly
-            :class="{ error: inputError }"
-            disabled
-          />
-        </div>
-        <div class="mb-3 div-for-formControl">
-          <label
-            v-if="this.formData.vatType === 'VATincluding'"
-            class="col-sm-5 col-md-6"
-            >{{ t("netPrice") }}</label
-          >
-          <label v-else class="col-sm-5 col-md-6">{{ t("netPrice") }}</label>
-          <input
-            v-if="this.formData.vatType === 'VATincluding'"
-            class="form-control readonly"
-            v-model="formData.Net_price"
-            readonly
-            :class="{ error: inputError }"
-            disabled
-          />
-          <input
-            v-else
-            class="form-control readonly"
-            v-model="formData.sale_totalprice"
-            readonly
-            :class="{ error: inputError }"
-            disabled
-          />
-        </div>
-        <div class="mb-5 div-for-formControl-textarea">
-          <div class="col-6 col-sm-6 col-md-6">
-            <label class="col-sm-6 col-md-6 label-textarea">{{
-              t("quotationRemark")
-            }}</label>
+          <div class="border p-4 mb-3">
+      <h5 style="text-decoration: underline">{{ t("Infernal") }}</h5>
+      <div v-for="field in internalFields" :key="field.key" class="mb-5 div-for-formControl-textarea">
+          <label class="col-sm-5 col-md-6 label-textarea">{{ t(field.label) }}</label>
+          <div v-if="field.componentType === 'Upload'" class="col-6 col-sm-6 col-md-6">
+              <div class="input-group input-upload-custom">
+                  <label class="input-group-text btn btn-primary">{{ t("SelectImage") }}<input type="file" hidden @change="previewImage" /></label>
+                  <input type="text" class="form-control" :value="fileName || t('FileImageName')" readonly />
+              </div>
+              <div v-if="imageSrc" class="image-preview mt-3"><img :src="imageSrc" alt="Preview" style="max-width: 200px;" /></div>
           </div>
-          <div class="col-6 col-sm-6 col-md-6">
-            <div class="text-editor">
-              <textarea
-                v-model="formData.remark"
-                class="form-control"
-                rows="3"
-                @input="onInput"
-                maxlength="220"
-              ></textarea>
-              <!-- <p>
-              {{ 105 - (formData.remark ? formData.remark.length : 0) }}
-              {{ t("characters") }}
-            </p> -->
-            </div>
-          </div>
-          <!-- <input class="form-control" v-model="formData.remark"> -->
-        </div>
-        <!-- <div class="mb-5 div-for-formControl-textarea">
-          <label class="col-sm-5 col-md-6 label-textarea">ไฟล์แนบ</label>
-          <div class="text-editor">
-            <input
-              class="form-control"
-              type="file"
-              id="formFile"
-              @change="previewImage"
-              accept="image/*"
-            />
-          </div>
-          <!-- <input class="form-control" v-model="formData.remark"> -->
-        <!-- </div> -->
-
-        <!-- <div class="mb-5 div-for-formControl-textarea">
-          <label class="col-sm-5 col-md-6 label-textarea"></label>
-          <div class="text-editor">
-            <div v-if="imageSrc" class="image-preview mt-3">
-              <img
-                :src="imageSrc"
-                alt="Preview"
-                style="max-width: 200px; max-height: 200px"
-              />
-            </div>
-          </div>
-        </div> -->
+          <textarea v-else-if="field.componentType === 'Textarea'" v-model="formData[field.key]" :maxlength="field.maxlength" class="form-control" rows="3"></textarea>
       </div>
-      <div class="border p-4 mb-3">
-        <h5 style="text-decoration-line: underline">
-          {{ t("Infernal") }}
-        </h5>
-        <div class="mb-5 div-for-formControl-textarea">
-          +
-          <div class="col-6 col-sm-6 col-md-6">
-            <label class="col-sm-5 col-md-6 label-textarea">{{
-              t("FileLabel")
-            }}</label>
-          </div>
-          <!-- <div class="text-editor">
-            <input
-              class="form-control"
-              type="file"
-              id="formFile"
-              @change="previewImage"
-              accept="image/*"
-            />
-          </div> -->
-          <div class="col-6 col-sm-6 col-md-6">
-            <div class="input-group input-upload-custom">
-              <label class="input-group-text btn btn-primary">
-                {{ t("SelectImage") }}
-                <input type="file" hidden @change="previewImage" />
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                :value="fileName || t('FileImageName')"
-                ref="fileInput"
-                readonly
-              />
-            </div>
-          </div>
-          <!-- <input class="form-control" v-model="formData.remark"> -->
-        </div>
+  </div>
 
-        <div class="mb-5 div-for-formControl-textarea">
-          <label class="col-sm-5 col-md-6 label-textarea"></label>
-          <div class="text-editor">
-            <div v-if="imageSrc" class="image-preview mt-3">
-              <img
-                :src="imageSrc"
-                alt="Preview"
-                style="max-width: 200px; max-height: 200px"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="mb-5 div-for-formControl-textarea">
-          <div class="col-6 col-sm-6 col-md-6">
-            <label class="col-sm-5 col-md-6 label-textarea">{{
-              t("InternalRemark")
-            }}</label>
-          </div>
-          <div class="col-6 col-sm-6 col-md-6">
-            <div class="text-editor">
-              <textarea
-                v-model="formData.remarkInfernal"
-                class="form-control"
-                rows="3"
-                @input="onInput"
-                maxlength="220"
-              ></textarea>
-              <!-- <p>
-              {{ 105 - (formData.remark ? formData.remark.length : 0) }}
-              {{ t("characters") }}
-            </p> -->
-            </div>
-          </div>
-          <!-- <input class="form-control" v-model="formData.remark"> -->
-        </div>
-      </div>
       <div class="modal-footer">
         <Button
           :disabled="isLoading"
@@ -1287,6 +771,7 @@ const accessToken = localStorage.getItem("@accessToken");
 import Button from "../components/button.vue";
 import Dropdown from "../components/dropdown.vue";
 import Icon from "../components/icon.vue";
+import TextField from "../components/textField.vue";
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -1303,6 +788,7 @@ export default {
     Button,
     Dropdown,
     Icon,
+    TextField
   },
   setup() {
     const { t } = useI18n();
@@ -1356,25 +842,41 @@ export default {
   },
   data() {
     return {
+      fieldConfig: [
+        // Group: header
+        { key: 'sale_number', label: 'numberQuotation', componentType: 'TextField', readonly: true, group: 'header' },
+        { key: 'status', label: 'statusQuotation', componentType: 'Dropdown', readonly: true, group: 'header', options: 'statusOptions' },
+        { key: 'employeeID', label: 'employeeName', componentType: 'Autocomplete', required: true, group: 'header', items: 'Employees', itemTitle: 'Name', itemValue: 'employeeID' },
+
+        // Group: customer
+        { key: 'cus_name', label: 'customerName', componentType: 'Datalist', required: true, group: 'customer', items: 'Customers' },
+        { key: 'cus_address', label: 'customerAddress', componentType: 'TextField', required: true, group: 'customer', readonly: true },
+        { key: 'cus_tel', label: 'phoneNum', componentType: 'TextField', required: true, group: 'customer', readonly: true, maxlength: 10, isNumeric: true },
+        { key: 'cus_email', label: 'email', componentType: 'TextField', required: true, group: 'customer', readonly: true },
+        { key: 'cus_tax', label: 'taxID', componentType: 'TextField', required: true, group: 'customer', readonly: true, maxlength: 13, isNumeric: true },
+        { key: 'cus_purchase', label: 'customerPurchaseBy', componentType: 'TextField', required: true, group: 'customer', readonly: true },
+
+        // Group: conditions
+        { key: 'sale_date', label: 'quotationDate', componentType: 'DatePicker', group: 'conditions' },
+        { key: 'credit_date_number', label: 'creditDate', componentType: 'Dropdown', group: 'conditions', options: 'creditDayOptions' },
+        { key: 'credit_expired_date', label: 'expireDate', componentType: 'DatePicker', group: 'conditions', readonly: true },
+        
+        // Group: summary
+        { key: 'discount_quotation', label: 'totalDiscount', componentType: 'TextField', group: 'summary', isNumeric: true },
+        { key: 'remark', label: 'quotationRemark', componentType: 'Textarea', group: 'summary', maxlength: 220 },
+
+        // Group: internal
+        { key: 'file', label: 'FileLabel', componentType: 'Upload', group: 'internal' },
+        { key: 'remarkInfernal', label: 'InternalRemark', componentType: 'Textarea', group: 'internal', maxlength: 220 },
+      ],
       showAllowButton: true,
       openPopupAllow: false,
       shortcutAllow: false,
       Categorys: [],
       CategoryIDFormAddNewProduct: "",
       isAllowConfirmPopupOpen: false,
-
-      // isExpanded: false,
-      expandedItems: new Set(), // ใช้ Set() แทน isExpanded,
+      expandedItems: new Set(), 
       selectedDate: null,
-      // langObject: {
-      //   formatLocale: {
-      //     firstDayOfWeek: 1,
-      //   },
-      //   monthBeforeYear: false,
-      //   buddhistYear: true,
-      // },
-      // langString: "th",
-
       value: null,
       fileName: "",
       number: "",
@@ -1503,6 +1005,29 @@ export default {
     };
   },
   computed: {
+    // ใน computed
+      headerFields() {
+        return this.fieldConfig.filter(f => f.group === 'header');
+      },
+      customerFields() {
+        return this.fieldConfig.filter(f => f.group === 'customer');
+      },
+      conditionFields() {
+        return this.fieldConfig.filter(f => f.group === 'conditions');
+      },
+      summaryFields() {
+        return this.fieldConfig.filter(f => f.group === 'summary');
+      },
+      internalFields() {
+        return this.fieldConfig.filter(f => f.group === 'internal');
+      },
+      // เพิ่ม options สำหรับ dropdown
+      statusOptions() {
+          return [
+              { value: 'Allowed', text: this.t('AllowLG') },
+              { value: 'Cancel', text: this.t('cancelStatus') },
+          ];
+      },
     discountTypeOptions() {
       return [
         { value: "amount", text: this.t("productDiscountTypeAmount") },

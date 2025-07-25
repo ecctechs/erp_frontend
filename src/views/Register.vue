@@ -33,158 +33,57 @@
         </div>
       </div>
       <div>
-        <Popup :isOpen="isPopupOpen" :closePopup="closePopup">
-          <h2 v-if="isAddingMode">{{ t("addNewUser") }}</h2>
-          <h2 v-if="isEditMode">{{ t("editUser") }}</h2>
-          <div v-if="isAddingMode" class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              id="radio-new-user"
-              name="userType"
-              @change="selectUserType('new')"
-              :checked="isNewUser"
-            />
-            <label class="form-check-label" for="radio-new-user">
-              {{ t("NewUser") }}
-            </label>
-          </div>
 
-          <div v-if="isAddingMode" class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              id="radio-existing-user"
-              name="userType"
-              @change="selectUserType('existing')"
-              :checked="isExistingUser"
-            />
-            <label class="form-check-label" for="radio-existing-user">
-              {{ t("UserExitsEmployee") }}
-            </label>
-          </div>
-          <!-- Dropdown: แสดงเฉพาะเมื่อเลือก "พนักงานที่มีอยู่" -->
-          <div v-if="isExistingUser && isAddingMode" class="mt-3">
-            <select
-              id="employeeSelect"
-              v-model="selectedEmployee"
-              class="form-select"
-              @change="selectUser(selectedEmployee)"
-            >
-              <option disabled value="">-- กรุณาเลือกพนักงาน --</option>
-              <option
-                v-for="emp in Employees"
-                :key="emp.employeeID"
-                :value="emp.employeeID"
-              >
-                {{ emp.F_name + " " + emp.L_name }}
-              </option>
-            </select>
-          </div>
-          <div class="mb-3 mt-3 div-for-formControl">
-            <label><span style="color: red">*</span>{{ t("firstname") }}</label>
-            <input
-              v-model="formData.userF_name"
-              type="text"
-              class="form-control"
-              :class="{ error: isEmpty.userF_name }"
-              :disabled="isExistingUser"
-            />
-          </div>
-          <div class="mb-3 div-for-formControl">
-            <label><span style="color: red">*</span>{{ t("lastname") }}</label>
-            <input
-              v-model="formData.userL_name"
-              type="text"
-              class="form-control"
-              :class="{ error: isEmpty.userL_name }"
-              :disabled="isExistingUser"
-            />
-          </div>
-          <div class="mb-3 div-for-formControl">
-            <label><span style="color: red">*</span>{{ t("phoneNum") }}</label>
-            <input
-              v-model="formData.userPhone"
-              type="text"
-              class="form-control"
-              :class="{ error: isEmpty.userPhone }"
-              :disabled="isExistingUser"
-              @keypress="validateInput"
-              maxlength="10"
-            />
-          </div>
-          <div class="mb-3 div-for-formControl">
-            <label><span style="color: red">*</span>{{ t("email") }}</label>
-            <input
-              v-model="formData.userEmail"
-              type="text"
-              class="form-control"
-              :class="{ error: isEmpty.userEmail }"
-              :disabled="isExistingUser"
-            />
-          </div>
-          <div class="mb-3 div-for-formControl">
-            <label><span style="color: red">*</span>{{ t("password") }}</label>
-            <input
-              v-model="formData.userPassword"
-              type="text"
-              class="form-control"
-              :class="{ error: isEmpty.userPassword }"
-            />
-          </div>
-          <div class="mb-3 div-for-formControl">
-            <div class="me-3">
-              <label><span style="color: red">*</span>{{ t("role") }}</label>
-            </div>
-            <select
-              class="form-control col-sm-5 col-md-6 form-select"
-              v-model="formData.RoleID"
-              required
-              :class="{ error: isEmpty.RoleID }"
-            >
-              <option
-                v-for="user in Roles"
-                :key="user.RoleID"
-                :value="user.RoleID"
-              >
-                {{ user.RoleName }}
-              </option>
-            </select>
-          </div>
-          <div style="display: flex; justify-content: flex-end">
-            <Button
-              v-if="isAddingMode"
-              :disabled="isLoading"
-              customClass="btn btn-primary me-3"
-              @click="addUser"
-            >
-              <span
-                v-if="isLoading"
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
-              <span v-else>{{ t("buttonAdd") }}</span>
-            </Button>
-            <Button
-              v-if="isEditMode"
-              :disabled="isLoading"
-              customClass="btn btn-primary me-3"
-              @click="editUser"
-            >
-              <span
-                v-if="isLoading"
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
-              <span v-else>{{ t("buttonSave") }}</span>
-            </Button>
-            <Button customClass="btn btn-outline-secondary" @click="closePopup">
-              {{ t("buttonCancel") }}
-            </Button>
-          </div>
-        </Popup>
+     <Popup :isOpen="isPopupOpen" :closePopup="closePopup">
+        <h2 v-if="isAddingMode">{{ t("addNewUser") }}</h2>
+  <h2 v-if="isEditMode">{{ t("editUser") }}</h2>
+  <form class="row g-3 mt-3">
+    <div v-for="field in fieldConfig" :key="field.key" :class="field.col">
+      <label><span v-if="field.required" style="color: red">*</span>{{ t(field.label) }}</label>
+
+      <Dropdown
+        v-if="field.componentType === 'Dropdown'"
+        v-model="formData[field.key]"
+        :options="this[field.options]"
+        :error="isEmpty[field.key]"
+      />
+
+      <TextField
+        v-else
+        v-model="formData[field.key]"
+        :type="field.type"
+        :class="{ error: isEmpty[field.key] }"
+        :disabled="isExistingUser && field.key !== 'userPassword'"
+        :maxlength="field.maxlength"
+        @keypress="field.isNumeric ? validateInput($event) : null"
+      />
+    </div>
+  </form>
+  
+  <div class="mt-4" style="display: flex; justify-content: flex-end">
+       <Button
+      v-if="isAddingMode"
+      :disabled="isLoading"
+      customClass="btn btn-primary me-3"
+      @click="addUser"
+    >
+      <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
+      <span v-else>{{ t("buttonAdd") }}</span>
+    </Button>
+    <Button
+      v-if="isEditMode"
+      :disabled="isLoading"
+      customClass="btn btn-primary me-3"
+      @click="editUser"
+    >
+      <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
+      <span v-else>{{ t("buttonSave") }}</span>
+    </Button>
+    <Button customClass="btn btn-outline-secondary" @click="closePopup">
+      {{ t("buttonCancel") }}
+    </Button>
+    </div>
+</Popup>
       </div>
       <div class="delete-popup">
         <Popup
@@ -257,6 +156,8 @@ import Popup from "../components/popup.vue";
 import { useI18n } from "vue-i18n";
 import { computed } from "vue";
 import Button from "../components/button.vue";
+import TextField from "../components/textField.vue";
+import Dropdown from "../components/dropdown.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -267,6 +168,8 @@ export default {
     UserList, // The component that lists users
     Popup, // The component used for popups like adding/editing users
     Button,
+    TextField,
+    Dropdown
   },
   setup() {
     const { t } = useI18n(); // Enables internationalization (i18n) for translating text
@@ -279,6 +182,14 @@ export default {
   },
   data() {
     return {
+      fieldConfig: [
+        { key: 'userF_name', label: 'firstname', componentType: 'TextField', type: 'text', required: true, col: 'col-md-12' },
+        { key: 'userL_name', label: 'lastname', componentType: 'TextField', type: 'text', required: true, col: 'col-md-12' },
+        { key: 'userPhone', label: 'phoneNum', componentType: 'TextField', type: 'tel', required: true, maxlength: 10, isNumeric: true, col: 'col-md-12' },
+        { key: 'userEmail', label: 'email', componentType: 'TextField', type: 'email', required: true, col: 'col-md-12' },
+        { key: 'userPassword', label: 'password', componentType: 'TextField', type: 'text', required: true, col: 'col-md-12' },
+        { key: 'RoleID', label: 'role', componentType: 'Dropdown', required: true, options: 'roleOptions', col: 'col-md-12' },
+      ],
       errorMessages: [],
       selectedEmployee: "",
       Employees: [],
@@ -317,6 +228,12 @@ export default {
     };
   },
   computed: {
+      roleOptions() {
+        return this.Roles.map(role => ({
+          value: role.RoleID,
+          text: role.RoleName
+        }));
+      },
     // Defines the table headers for the user list
     tableHeaders() {
       return [

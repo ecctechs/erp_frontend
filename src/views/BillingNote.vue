@@ -261,31 +261,19 @@
       </div>
     </div>
   </div>
-  <popup :isOpen="isPopupOpen" :closePopup="closePopup">
-    <h2>{{ t("headerBilling") }}</h2>
-    <div class="border p-4 mb-3">
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("numberBilling") }}</label>
-        <!-- <input
-          class="form-control readonly"
-          v-model="formData.billing_number"
-          readonly
-          disabled
-        /> -->
-      <TextField
-        v-model="formData.billing_number"
-        :readonly="true"
-        :disabled="true"
-      />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-6 col-md-6">{{ t("dateBilling") }}</label>
-        <v-date-picker
-          v-model="formData.billing_date"
-          locale="th-TH"
-          :format="formatDatePicker"
-        >
-          <template v-slot="{ inputEvents }">
+<popup :isOpen="isPopupOpen" :closePopup="closePopup">
+  <h2>{{ t("headerBilling") }}</h2>
+
+  <div class="border p-4 mb-3">
+    <div v-for="field in billingFields" :key="field.key" class="mb-3 div-for-formControl">
+      <label class="col-sm-5 col-md-6">{{ t(field.label) }}</label>
+          <v-date-picker
+      v-if="field.componentType === 'DatePicker'"
+      v-model="formData[field.key]"
+      locale="th-TH"
+      :format="formatDatePicker"
+    >
+         <template v-slot="{ inputEvents }">
             <input
               class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
               :value="formatDatePicker(formData.billing_date)"
@@ -294,85 +282,26 @@
               style="width: 100%"
             />
           </template>
-        </v-date-picker>
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-2">{{ t("employeeName") }}</label>
-        <input
-          class="form-control dropdown_selector readonly"
-          v-model="formData.employeeName"
-          readonly
-          disabled
-        />
-      </div>
+      </v-date-picker>
+      <TextField v-else v-model="formData[field.key]" :readonly="field.readonly" :disabled="field.readonly"/>
     </div>
-    <div class="border p-4 mb-3">
+  </div>
+
+  <div class="border p-4 mb-3">
+    <div>
+      <h5 style="text-decoration-line: underline">{{ t("customerPart") }}</h5>
+    </div>
+    <div v-for="field in customerFields" :key="field.key" class="mb-3 div-for-formControl">
+      <label class="col-sm-5 col-md-6">{{ t(field.label) }}</label>
+      <TextField v-model="formData[field.key]" :readonly="field.readonly" :disabled="field.readonly"/>
+    </div>
+  </div>
+  
+  <div class="mb-3">
+    <div class="Register-contain" style="padding: 20px; width: unset">
       <div>
-        <h5 style="text-decoration-line: underline">{{ t("customerPart") }}</h5>
-      </div>
-      <div class="mb-3 div-for-InputDropdown">
-        <label class="col-sm-6 col-md-6">{{ t("customerName") }}</label>
-        <div class="relative-wrapper">
-          <input
-            class="form-control readonly"
-            v-model="formData.cus_name"
-            :class="{ error: inputError }"
-            readonly
-            disabled
-          />
-        </div>
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("customerAddress") }}</label>
-        <input
-          class="form-control readonly"
-          v-model="formData.cus_address"
-          readonly
-          disabled
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("phoneNum") }}</label>
-        <input
-          class="form-control readonly"
-          v-model="formData.cus_tel"
-          readonly
-          disabled
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("email") }}</label>
-        <input
-          class="form-control readonly"
-          v-model="formData.cus_email"
-          readonly
-          disabled
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("taxID") }}</label>
-        <input
-          class="form-control readonly"
-          v-model="formData.cus_tax"
-          readonly
-          disabled
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("customerPurchaseBy") }}</label>
-        <input
-          class="form-control readonly"
-          v-model="formData.cus_purchase"
-          readonly
-          disabled
-        />
-      </div>
-    </div>
-    <div class="mb-3">
-      <div class="Register-contain" style="padding: 20px; width: unset">
-        <div>
-          <h5 style="text-decoration-line: underline">{{ t("product") }}</h5>
-          <table class="table">
+        <h5 style="text-decoration-line: underline">{{ t("product") }}</h5>
+        <table class="table">
             <thead>
               <tr>
                 <th class="product-name-column">{{ t("productName") }}</th>
@@ -473,162 +402,37 @@
                 </td>
               </tr>
             </tbody>
+          
           </table>
-        </div>
       </div>
     </div>
-    <div class="border p-4 mb-3">
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("totalDiscount") }}</label>
-        <input
-          class="form-control readonly"
-          v-model="formData.total_discount"
-          readonly
-          disabled
-          :class="{ error: inputError }"
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label
-          v-if="this.formData.vatType === 'VATincluding'"
-          class="col-sm-5 col-md-6"
-          >{{ t("consluPrice") }}</label
-        >
-        <label v-else class="col-sm-5 col-md-6">{{ t("consluPrice") }}</label>
-        <input
-          v-if="this.formData.vatType === 'VATincluding'"
-          class="form-control readonly"
-          v-model="formData.sale_totalprice"
-          readonly
-          :class="{ error: inputError }"
-          disabled
-        />
-        <input
-          v-else
-          class="form-control readonly"
-          v-model="formData.Net_price"
-          readonly
-          :class="{ error: inputError }"
-          disabled
-        />
-      </div>
-      <div class="row mb-3">
-        <label class="col-sm-5 col-md-6">{{ t("typeVat") }}</label>
-        <div class="col-md-6">
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="radio"
-              value="VATexcluding"
-              v-model="formData.vatType"
-              @change="vatTypeChange()"
-              disabled
-            />
-            <label class="form-check-label" for="inlineCheckbox1">{{
-              t("vatType1")
-            }}</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="radio"
-              value="VATincluding"
-              v-model="formData.vatType"
-              @change="vatTypeChange()"
-              disabled
-            />
-            <label class="form-check-label" for="inlineCheckbox2">{{
-              t("vatType2")
-            }}</label>
-          </div>
-        </div>
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("vatPrice") }}</label>
-        <input
-          placeholder="vat price 7%"
-          v-model="formData.vat"
-          class="form-control readonly"
-          readonly
-          disabled
-          :class="{ error: inputError }"
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label
-          v-if="this.formData.vatType === 'VATincluding'"
-          class="col-sm-5 col-md-6"
-          >{{ t("netPrice") }}</label
-        >
-        <label v-else class="col-sm-5 col-md-6">{{ t("netPrice") }}</label>
-        <input
-          v-if="this.formData.vatType === 'VATincluding'"
-          class="form-control readonly"
-          v-model="formData.Net_price"
-          readonly
-          :class="{ error: inputError }"
-          disabled
-        />
-        <input
-          v-else
-          class="form-control readonly"
-          v-model="formData.sale_totalprice"
-          readonly
-          :class="{ error: inputError }"
-          disabled
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label class="col-sm-5 col-md-6">{{ t("payments") }}</label>
-        <select
-          class="form-control form-select"
-          v-model="formData.payments"
-          :class="{ error: inputError }"
-        >
-          <option value="Cash">{{ t("cash") }}</option>
-          <option value="Card">{{ t("credit") }}</option>
-          <option value="MobileBank">{{ t("mobileBanking") }}</option>
-        </select>
-      </div>
-      <div class="mb-5 div-for-formControl-textarea">
-        <label class="col-sm-6 col-md-6 label-textarea">{{
-          t("quotationRemark")
-        }}</label>
-        <div class="text-editor">
-          <textarea
-            v-model="formData.remark"
-            class="form-control"
-            maxlength="105"
-            rows="3"
-            @input="onInput"
-          ></textarea>
-          <p>
-            {{ 105 - (formData.remark ? formData.remark.length : 0) }}
-            {{ t("characters") }}
-          </p>
-        </div>
-      </div>
+  </div>
+
+  <div class="border p-4 mb-3">
+    <div class="mb-3 div-for-formControl">
+        <label>{{ t("totalDiscount") }}</label>
+        <input class="form-control readonly" v-model="formData.total_discount" readonly disabled />
     </div>
-    <div class="modal-footer">
-      <Button
-        :disabled="isLoading"
-        customClass="btn btn-primary me-3"
-        v-if="isEditMode"
-        @click="editBilling"
-      >
-        <span
-          v-if="isLoading"
-          class="spinner-border spinner-border-sm"
-          role="status"
-          aria-hidden="true"
-        ></span>
-        <span v-else>{{ t("buttonSave") }}</span>
+    <div v-for="field in summaryFields" :key="field.key" class="mb-3 div-for-formControl">
+      <label class="col-sm-5 col-md-6">{{ t(field.label) }}</label>
+      <select v-if="field.componentType === 'Dropdown'" class="form-control form-select" v-model="formData[field.key]">
+        <option value="Cash">{{ t("cash") }}</option>
+        <option value="Card">{{ t("credit") }}</option>
+        <option value="MobileBank">{{ t("mobileBanking") }}</option>
+      </select>
+      <textarea v-else-if="field.componentType === 'Textarea'" v-model="formData[field.key]" class="form-control" rows="3"></textarea>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+      <Button :disabled="isLoading" customClass="btn btn-primary me-3" @click="editBilling">
+        <span>{{ t("buttonSave") }}</span>
       </Button>
       <Button customClass="btn btn-secondary" @click="closePopup">
         {{ t("buttonCancel") }}
-      </Button>
+      </Button> 
     </div>
-  </popup>
+</popup>
   <popup :isOpen="isPopupPDFOpen" :closePopup="ClosePDFview">
     <embed :src="pdfUrl" type="application/pdf" width="100%" height="600px" />
     <div class="modal-footer">
@@ -850,6 +654,24 @@ export default {
   },
   data() {
     return {
+fieldConfig: [
+  // Group: 'billing'
+  { key: 'billing_number', label: 'numberBilling', componentType: 'TextField', readonly: true, group: 'billing' },
+  { key: 'billing_date', label: 'dateBilling', componentType: 'DatePicker', readonly: false, group: 'billing' },
+  { key: 'employeeName', label: 'employeeName', componentType: 'TextField', readonly: true, group: 'billing' },
+  
+  // Group: 'customer'
+  { key: 'cus_name', label: 'customerName', componentType: 'TextField', readonly: true, group: 'customer' },
+  { key: 'cus_address', label: 'customerAddress', componentType: 'TextField', readonly: true, group: 'customer' },
+  { key: 'cus_tel', label: 'phoneNum', componentType: 'TextField', readonly: true, group: 'customer' },
+  { key: 'cus_email', label: 'email', componentType: 'TextField', readonly: true, group: 'customer' },
+  { key: 'cus_tax', label: 'taxID', componentType: 'TextField', readonly: true, group: 'customer' },
+  { key: 'cus_purchase', label: 'customerPurchaseBy', componentType: 'TextField', readonly: true, group: 'customer' },
+  
+  // Group: 'summary'
+  { key: 'payments', label: 'payments', componentType: 'Dropdown', readonly: false, group: 'summary' },
+  { key: 'remark', label: 'quotationRemark', componentType: 'Textarea', readonly: false, group: 'summary' }
+],
       openPopupAllow: false,
       errorMessages: [],
       shortcutAllow: false,
@@ -916,6 +738,26 @@ export default {
     };
   },
   computed: {
+    billingFields() {
+  return this.fieldConfig.filter(f => f.group === 'billing');
+},
+customerFields() {
+  return this.fieldConfig.filter(f => f.group === 'customer');
+},
+summaryFields() {
+  return this.fieldConfig.filter(f => f.group === 'summary');
+},
+      fieldsBeforeTable() {
+    const tableInsertionIndex = this.fieldConfig.findIndex(field => field.key === 'cus_purchase');
+    if (tableInsertionIndex === -1) return this.fieldConfig; // ถ้าไม่เจอ field ให้แสดงทั้งหมด
+    return this.fieldConfig.slice(0, tableInsertionIndex + 1);
+  },
+  
+  fieldsAfterTable() {
+    const tableInsertionIndex = this.fieldConfig.findIndex(field => field.key === 'cus_purchase');
+    if (tableInsertionIndex === -1) return []; // ถ้าไม่เจอ field ก็ไม่มีอะไรหลังตาราง
+    return this.fieldConfig.slice(tableInsertionIndex + 1);
+  },
     allExpanded() {
       return this.expandedItems.size === this.Billings.length; // ถ้าทั้งหมดขยาย ให้ return true
     },

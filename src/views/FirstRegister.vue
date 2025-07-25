@@ -20,7 +20,7 @@
     </div>
     <div class="page-body-forgetpassword">
       <h2 style="width: 80%">{{ t("register") }}</h2>
-      <div class="Register-contain">
+      <!-- <div class="Register-contain">
         <h5 style="text-decoration: underline">{{ t("userform") }}</h5>
         <form class="row g-3">
           <div class="col-md-2">
@@ -293,7 +293,153 @@
             <span v-else>{{ t("register") }}</span>
           </Button>
         </div>
+      </div> -->
+      <div class="Register-contain">
+  <h5 style="text-decoration: underline">{{ t("userform") }}</h5>
+  <form class="row g-3">
+    <div v-for="field in userFields" :key="field.key" :class="field.col">
+      
+      <Dropdown
+        v-if="field.componentType === 'Dropdown'"
+        v-model="formData[field.key]"
+        :options="this[field.options]"
+        :label="t(field.label)"
+        :error="isEmpty[field.key]"
+        :required="field.required"
+      />
+      
+      <div v-else-if="field.componentType === 'Password'">
+        <label class="form-label">
+          <span v-if="field.required" style="color: red">*</span>{{ t(field.label) }}
+        </label>
+        <div class="input-group">
+          <TextField
+            :type="field.key === 'userPassword' ? (showPassword2 ? 'text' : 'password') : (showPassword ? 'text' : 'password')"
+            :class="{ error: isEmpty[field.key] }"
+            v-model="formData[field.key]"
+          />
+          <Button
+            customClass="btn btn-outline-secondary"
+            type="button"
+            @click="field.key === 'userPassword' ? togglePassword2() : togglePassword()"
+          >
+            <Icon v-if="field.key === 'userPassword'" :name="showPassword2 ? 'mdi-eye-off-outline' : 'mdi-eye-circle'" />
+            <Icon v-else :name="showPassword ? 'mdi-eye-off-outline' : 'mdi-eye-circle'" />
+          </Button>
+        </div>
       </div>
+
+      <div v-else>
+        <label class="form-label">
+          <span v-if="field.required" style="color: red">*</span>{{ t(field.label) }}
+        </label>
+        <TextField
+          v-model="formData[field.key]"
+          :type="field.type"
+          :maxlength="field.maxlength"
+          :class="{ error: isEmpty[field.key] }"
+          @keypress="field.isNumeric ? validateInput($event) : null"
+        />
+      </div>
+    </div>
+
+    <h5 style="text-decoration: underline; width: 100%; margin-top: 1rem;">{{ t("businessform") }}</h5>
+    
+    <div v-for="field in businessFields" :key="field.key" :class="field.col">
+        
+        <Dropdown
+            v-if="field.componentType === 'Dropdown'"
+            v-model="formData[field.key]"
+            :options="this[field.options]"
+            :label="t(field.label)"
+            :error="isEmpty[field.key]"
+            :required="field.required"
+            :placeholder="field.placeholder"
+        />
+
+        <div v-else-if="field.componentType === 'Upload'">
+            <label class="form-label">{{ t(field.label) }}</label>
+            <TextField
+                type="file"
+                @change="handleFileUpload"
+                ref="fileInput"
+            />
+            <img
+                v-if="exp_files != ''"
+                :src="exp_files"
+                alt="Uploaded Image"
+                class="image_exp"
+            />
+        </div>
+
+        <div v-else>
+            <label class="form-label">
+                <span v-if="field.required" style="color: red">*</span>{{ t(field.label) }}
+            </label>
+            <TextField
+                v-model="formData[field.key]"
+                :type="field.type"
+                :maxlength="field.maxlength"
+                :class="{ error: isEmpty[field.key] }"
+                @keypress="field.isNumeric ? validateInput($event) : null"
+            />
+        </div>
+    </div>
+  </form>
+
+        <div class="mt-3">
+          <div class="row"></div>
+          <div
+            v-if="isLoading"
+            class="d-flex justify-content-center align-items-center"
+          >
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          <div v-if="isPopupVisible" class="popup-success">
+            <div class="popup-content-success">
+              <a>{{ popupMessage }}</a>
+            </div>
+          </div>
+          <div v-if="isPopupVisible_error" class="popup-error2">
+            <div class="text-end">
+              <Button
+                type="button"
+                customClass="btn-close"
+                aria-label="Close"
+                @click="closeErrorPopup"
+              />
+            </div>
+            <div class="popup-content-error2">
+              <ul>
+                <li v-for="(msg, index) in errorMessages" :key="index">
+                  {{ msg }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer top-table-for-filter">
+          <Button customClass="btn btn-secondary" @click="BacktoLogin">
+            {{ t("backtologinbutton") }}
+          </Button>
+
+          <Button
+            :disabled="isLoading"
+            customClass="btn btn-primary me-3"
+            @click="RegisterNewUsers"
+          >
+            <span
+              v-if="isLoading"
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            <span v-else>{{ t("register") }}</span>
+          </Button>
+        </div>
+  </div>
 
       <div v-if="isPopupVisible" class="popup-success">
         <div class="popup-content-success">
@@ -313,6 +459,7 @@ import { useI18n } from "vue-i18n";
 import { watchEffect } from "vue";
 import Dropdown from "../components/dropdown.vue";
 import Icon from "../components/icon.vue";
+import TextField from "../components/textField.vue";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -324,6 +471,7 @@ export default {
     Button, // 2. ลงทะเบียน component
     Dropdown,
     Icon,
+    TextField
   },
   setup() {
     const { t, locale } = useI18n();
@@ -348,6 +496,27 @@ export default {
   },
   data() {
     return {
+            fieldConfig: [
+        // --- Group: User ---
+        { key: 'user_title', label: 'title', group: 'user', componentType: 'Dropdown', required: true, col: 'col-md-2', options: 'titleOptions' },
+        { key: 'userF_name', label: 'firstname', group: 'user', componentType: 'TextField', type: 'text', required: true, col: 'col-md-4', maxlength: 50 },
+        { key: 'userL_name', label: 'lastname', group: 'user', componentType: 'TextField', type: 'text', required: true, col: 'col-md-6' },
+        { key: 'userPhone', label: 'phoneNum', group: 'user', componentType: 'TextField', type: 'tel', required: true, col: 'col-6', maxlength: 10, isNumeric: true },
+        { key: 'userEmail', label: 'email', group: 'user', componentType: 'TextField', type: 'email', required: true, col: 'col-6' },
+        { key: 'userPassword', label: 'password', group: 'user', componentType: 'Password', required: true, col: 'col-md-6' },
+        { key: 'userPassword2', label: 'comfrimpassword', group: 'user', componentType: 'Password', required: true, col: 'col-md-6' },
+
+        // --- Group: Business ---
+        { key: 'bus_name', label: 'customerName', group: 'business', componentType: 'TextField', type: 'text', required: true, col: 'col-md-6' },
+        { key: 'bus_website', label: 'companyWebsite', group: 'business', componentType: 'TextField', type: 'text', required: false, col: 'col-md-6' },
+        { key: 'bus_address', label: 'address', group: 'business', componentType: 'TextField', type: 'text', required: true, col: 'col-md-12' },
+        { key: 'bus_tel', label: 'companyPhone', group: 'business', componentType: 'TextField', type: 'tel', required: true, col: 'col-md-6', maxlength: 10, isNumeric: true },
+        { key: 'bus_tax', label: 'taxID', group: 'business', componentType: 'TextField', type: 'tel', required: false, col: 'col-md-6', maxlength: 13, isNumeric: true },
+        { key: 'bus_logo', label: 'companyLogo', group: 'business', componentType: 'Upload', required: false, col: 'col-md-6' },
+        { key: 'bank_name', label: 'bankname', group: 'business', componentType: 'Dropdown', required: false, col: 'col-md-6', options: 'bankOptions', placeholder: 'กรุณาเลือกธนาคาร' },
+        { key: 'bank_account', label: 'bankAccName', group: 'business', componentType: 'TextField', type: 'text', required: false, col: 'col-md-6' },
+        { key: 'bank_number', label: 'bankaccount', group: 'business', componentType: 'TextField', type: 'tel', required: false, col: 'col-md-6', maxlength: 15, isNumeric: true },
+      ],
       errorMessages: [],
       isPopupVisible_error: false,
       Business: [],
@@ -378,23 +547,23 @@ export default {
         user_title: "",
       },
       isEmpty: {
-        userF_name: "",
-        userL_name: "",
-        userPhone: "",
-        userEmail: "",
-        userPassword: "",
-        bus_id: "",
-        bus_name: "",
-        bus_address: "",
-        bus_website: "",
-        bus_tel: "",
-        bus_tax: "",
-        bus_logo: "",
-        bank_name: "",
-        bank_account: "",
-        bank_number: "",
-        userPassword2: "",
-        user_title: "",
+        userF_name: false,
+        userL_name: false,
+        userPhone:false,
+        userEmail: false,
+        userPassword: false,
+        bus_id: false,
+        bus_name: false,
+        bus_address: false,
+        bus_website: false,
+        bus_tel: false,
+        bus_tax: false,
+        bus_logo: false,
+        bank_name: false,
+        bank_account: false,
+        bank_number: false,
+        userPassword2: false,
+        user_title: false,
       },
       isExpandedLanguage: false,
       showPassword: false,
@@ -402,6 +571,12 @@ export default {
     };
   },
   computed: {
+  userFields() {
+      return this.fieldConfig.filter(f => f.group === 'user');
+    },
+    businessFields() {
+      return this.fieldConfig.filter(f => f.group === 'business');
+    },
     titleOptions() {
       return [
         { value: "Mr.", text: this.t("mister") },

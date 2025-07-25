@@ -69,20 +69,6 @@
           ></span>
           <span v-else>{{ t("buttonAdd") }}</span>
         </Button>
-        <!-- <Button
-          :disabled="isLoading"
-          customClass="btn btn-primary me-3"
-          v-if="isAddingMode"
-          @click="addPosition"
-        >
-          <span
-            v-if="isLoading"
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          <span v-else>{{ t("buttonAdd") }}</span>
-        </Button> -->
         <Button
           :disabled="isLoading"
           customClass="btn btn-primary me-3"

@@ -38,10 +38,9 @@
       </div>
       <div class="row mb-3">
         <div class="col-6 col-sm-6 col-md-3 col-lg-3">
-          <input
+          <TextField
             v-model="searchQuery"
             type="text"
-            class="form-control me-3 size-font-sm"
             :placeholder="$t('Search')"
           />
         </div>
@@ -114,78 +113,6 @@
     @keypress="key === 'cus_tel' || key === 'cus_tax' ? validateInput($event) : null"
   />
   </div>
-      <!-- <h2 v-if="isEditMode">{{ t("headerPopupEditCustomer") }}</h2>
-      <div class="mb-3">
-        <span style="color: red">*</span
-        ><label class="col-sm-5 col-md-6">{{ t("customerName") }}</label>
-        <input
-          v-model="formData.cus_name"
-          type="text"
-          id="input-text"
-          required
-          :class="{ error: isEmpty.cus_name, 'form-control': true }"
-        />
-      </div>
-      <div class="mb-3">
-        <span style="color: red">*</span
-        ><label class="col-sm-5 col-md-6">{{ t("customerAddress") }}</label>
-        <input
-          :class="{ error: isEmpty.cus_address, 'form-control': true }"
-          v-model="formData.cus_address"
-          type="text"
-          id="input-text"
-          required
-        />
-      </div>
-      <div class="mb-3">
-        <span style="color: red">*</span
-        ><label class="col-sm-5 col-md-6">{{ t("phoneNum") }}</label>
-        <input
-          :class="{ error: isEmpty.cus_tel, 'form-control': true }"
-          v-model="formData.cus_tel"
-          type="text"
-          id="input-text"
-          @keypress="validateInput"
-          maxlength="10"
-          required
-        />
-      </div>
-      <div class="mb-3">
-        <span style="color: red">*</span
-        ><label class="col-sm-5 col-md-6">{{ t("email") }}</label>
-        <input
-          :class="{ error: isEmpty.cus_email, 'form-control': true }"
-          v-model="formData.cus_email"
-          type="email"
-          id="input-text"
-          required
-        />
-      </div>
-
-      <div class="mb-3">
-        <span style="color: red">*</span
-        ><label class="col-sm-5 col-md-6">{{ t("taxID") }}</label>
-        <input
-          :class="{ error: isEmpty.cus_tax, 'form-control': true }"
-          v-model="formData.cus_tax"
-          type="text"
-          id="input-text"
-          @keypress="validateInput"
-          maxlength="13"
-          required
-        />
-      </div>
-      <div class="mb-3">
-        <span style="color: red">*</span
-        ><label class="col-sm-5 col-md-6">{{ t("customerPurchaseBy") }}</label>
-        <input
-          :class="{ error: isEmpty.cus_purchase, 'form-control': true }"
-          v-model="formData.cus_purchase"
-          type="text"
-          id="input-text"
-          required
-        />
-      </div> -->
       <div class="modal-footer">
         <Button
           :disabled="isLoading"
@@ -241,99 +168,14 @@
     @keypress="key === 'company_person_tel' ? validateInput($event) : null"
   />
 
-  <div v-if="customerFieldConfig.componentTypes[index] === 'dropdown'" style="display: inline-block; width: 50%;">
-      <Dropdown
-        v-model="formDataCustomer[key]"
-        :options="companyOptions"
-        :error="isEmpty2[key]"
-      />
-  </div>
-</div>
-
-      <!-- <div class="mb-3">
-        <label class="col-sm-5 col-md-6"
-          ><span style="color: red">*</span
-          >{{ t("cusNameHeaderTable2") }}</label
-        >
-        <input
-          v-model="formDataCustomer.company_person_name"
-          type="text"
-          id="input-text"
-          required
-          :class="{ error: isEmpty2.company_person_name, 'form-control': true }"
-        />
-      </div>
-      <div class="mb-3">
-        <label class="col-sm-5 col-md-6" hidden>
-          <span style="color: red">*</span
-          >{{ t("cusAddressHeaderTable2") }}</label
-        >
-        <input
-          :class="{
-            error: isEmpty2.company_person_address,
-            'form-control': true,
-          }"
-          v-model="formDataCustomer.company_person_address"
-          type="text"
-          id="input-text"
-          required
-          hidden
-        />
-      </div>
-      <div class="mb-3">
-        <label class="col-sm-5 col-md-6"
-          ><span style="color: red">*</span>{{ t("cusTelHeaderTable2") }}</label
-        >
-        <input
-          :class="{ error: isEmpty2.company_person_tel, 'form-control': true }"
-          v-model="formDataCustomer.company_person_tel"
-          type="text"
-          id="input-text"
-          maxlength="10"
-          @keypress="validateInput"
-          required
-        />
-      </div>
-      <div class="mb-3">
-        <label class="col-sm-5 col-md-6"
-          ><span style="color: red">*</span
-          >{{ t("cusEmailHeaderTable2") }}</label
-        >
-        <input
-          :class="{
-            error: isEmpty2.company_person_email,
-            'form-control': true,
-          }"
-          v-model="formDataCustomer.company_person_email"
-          type="text"
-          id="input-text"
-          required
-        />
-      </div>
-      <div class="mb-3">
-        <label class="col-sm-5 col-md-6">{{ t("quotationRemark") }}</label>
-        <textarea
-          class="form-control"
-          id="exampleFormControlTextarea1"
-          rows="2"
-        ></textarea>
-      </div>
-      <div class="mb-3">
-        <label class="col-sm-5 col-md-6"
-          ><span style="color: red">*</span>{{ t("cusCompany") }}</label
-        >
-        <div
-          class="col-sm-7 col-md-6"
-          style="display: inline-block; width: 50%"
-        >
-          <Dropdown
-            id="cus_id"
-            v-model="formDataCustomer.company_person_customer"
-            :options="companyOptions"
-            :error="isEmpty2.company_person_customer"
-          />
+        <div v-if="customerFieldConfig.componentTypes[index] === 'dropdown'" style="display: inline-block; width: 50%;">
+            <Dropdown
+              v-model="formDataCustomer[key]"
+              :options="companyOptions"
+              :error="isEmpty2[key]"
+            />
         </div>
-      </div> -->
+      </div>
       <div class="modal-footer">
         <Button
           v-if="this.isEditMode"
@@ -456,7 +298,6 @@ export default {
       types: ["text", "text", "text", "email", "text", "text"],
       componentTypes: ["text", "text", "text", "text", "text", "text"] 
     },
-
     customerFieldConfig: {
       keys: ["company_person_name", "company_person_tel", "company_person_email", "company_person_customer"],
       labels: ["cusNameHeaderTable2", "cusTelHeaderTable2", "cusEmailHeaderTable2", "cusCompany"],
