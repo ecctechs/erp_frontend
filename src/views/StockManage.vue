@@ -44,118 +44,6 @@
     </div>
   </div>
   <div>
-    <!-- <Popup :isOpen="isPopupOpen" :closePopup="closePopup">
-      <div class="mb-4">
-        <h3>{{ t("manageStock") }}</h3>
-      </div>
-      <div class="div-for-formControl mb-3">
-        <div class="col-6 col-sm-6 col-md-6 col-lg-6">
-          <label class="col-sm-6 col-md-6"
-            ><span style="color: red">*</span
-            >{{ t("productNameProduct") }}</label
-          >
-        </div>
-        <div class="col-6 col-sm-6 col-md-6 col-lg-6">
-          <v-autocomplete
-            :items="currentTableData"
-            item-title="productname"
-            item-value="productID"
-            variant="outlined"
-            v-model="formData.productID"
-            :class="{ error: isEmpty.productID }"
-            :change="selectProdcut(formData.productID)"
-          >
-          </v-autocomplete>
-        </div>
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label
-          ><span style="color: red">*</span>{{ t("manageStockType") }}</label
-        >
-        <select
-          class="form-control form-select"
-          v-model="formData.transactionType"
-          :class="{ error: isEmpty.transactionType }"
-        >
-          <option value="Receive">{{ t("receive") }}</option>
-          <option value="Issue">{{ t("issue") }}</option>
-        </select>
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label>{{ t("current_product_amount") }}</label>
-        <input
-          class="form-control"
-          v-model="formData.current_product_amount"
-          type="number"
-          readonly="true"
-          disabled="true"
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label
-          ><span style="color: red">*</span>{{ t("quantityProduct") }}</label
-        >
-        <input
-          class="form-control"
-          v-model="formData.quantity"
-          type="number"
-          min="1"
-          @input="checkQuantity"
-          :class="{ error: isEmpty.quantity }"
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label>{{ t("update_product_amount") }}</label>
-        <input
-          class="form-control"
-          v-model="formData.update_product_amount"
-          type="number"
-          readonly="true"
-          disabled="true"
-        />
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <label>{{ t("productDetail") }}</label>
-        <input
-          class="form-control"
-          v-model="formData.transactionDetail"
-          :class="{ error: inputError }"
-        />
-      </div>
-      <div class="modal-footer">
-        <Button
-          v-if="isAddingMode"
-          :disabled="isLoading"
-          customClass="btn btn-primary me-3"
-          @click="producTransaction"
-        >
-          <span
-            v-if="isLoading"
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          <span v-else>{{ t("buttonAdd") }}</span>
-        </Button>
-        <Button
-          v-if="isEditingMode"
-          :disabled="isLoading"
-          customClass="btn btn-primary me-3"
-          @click="editTransaction"
-        >
-          <span
-            v-if="isLoading"
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          <span v-else>{{ t("buttonSave") }}</span>
-        </Button>
-        <Button customClass="btn btn-secondary" @click="closePopup">
-          {{ t("buttonCancel") }}
-        </Button>
-      </div>
-    </Popup> -->
 <Popup :isOpen="isPopupOpen" :closePopup="closePopup">
   <div class="mb-4">
     <h3>{{ t("manageStock") }}</h3>
@@ -664,20 +552,6 @@ export default {
       if (!(await this.validateFormData())) return;
       this.errorMessage = [];
       this.isLoading = true;
-      // if (
-      //   !this.formData.productID ||
-      //   !this.formData.transactionType ||
-      //   !this.formData.quantity ||
-      //   !this.formData.transactionDetail
-      // ) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Please fill all data");
-      // } else if (this.formData.quantity < 1) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Quantity must be more than 0");
-      // } else {
-      //   this.inputError = false;
-      //   this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/product/AddTransaction`, {
           method: "POST",

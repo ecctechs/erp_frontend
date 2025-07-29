@@ -1090,40 +1090,6 @@ export default {
         this.isPopupVisible_error = false;
       }, 2000); // 2 seconds
     },
-    // async exportEmployee() {
-    //   const accessToken = localStorage.getItem("@accessToken");
-    //   this.isLoading = true;
-    //   // return;
-    //   try {
-    //     const response = await fetch(
-    //       `${API_CALL}/migrate/export-csv/employees`,
-    //       {
-    //         headers: {
-    //           Authorization: `Bearer ${accessToken}`,
-    //         },
-    //       }
-    //     )
-    //       .then((response) => {
-    //         if (!response.ok) {
-    //           throw new Error("Network response was not ok");
-    //         }
-    //         return response.blob();
-    //       })
-    //       .then((blob) => {
-    //         const url = window.URL.createObjectURL(new Blob([blob]));
-    //         const link = document.createElement("a");
-    //         link.href = url;
-    //         link.setAttribute("download", "Employees.csv"); // ตั้งชื่อไฟล์ที่ต้องการดาวน์โหลด
-    //         document.body.appendChild(link);
-    //         link.click();
-    //         window.URL.revokeObjectURL(url);
-    //       });
-    //   } catch (error) {
-    //     console.error("Error fetching data:", error);
-    //   } finally {
-    //     this.isLoading = false;
-    //   }
-    // },
     exportEmployee() {
       this.isLoading = true;
 
@@ -1653,50 +1619,11 @@ export default {
     async addEmployee() {
       const accessToken = localStorage.getItem("@accessToken");
       if (!this.validateFormData()) return;
-      // if (
-      //   this.formData.title === "" ||
-      //   this.formData.F_name === "" ||
-      //   this.formData.L_name === "" ||
-      //   this.formData.Address === "" ||
-      //   this.formData.Birthdate === "" ||
-      //   this.formData.NID_num === "" ||
-      //   this.formData.Phone_num === "" ||
-      //   this.formData.Email === "" ||
-      //   this.formData.departmentID === "" ||
-      //   this.formData.PositionID === "" ||
-      //   this.formData.start_working_date === "" ||
-      //   this.formData.Salary === "" ||
-      //   this.formData.employeeType === "" ||
-      //   this.formData.bankName === "" ||
-      //   this.formData.bankAccountID === ""
-      // ) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Please fill all data");
-      // } else if (!this.validateEmail(this.formData.Email)) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Invalid email format");
-      // } else if (this.formData.NID_num.length !== 13) {
-      //   this.inputError = true;
-      //   this.showPopup_error("National ID must be 13 digits");
-      // } else if (this.formData.Phone_num.length !== 10) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Phone number must be 10 digits");
-      // } else if (this.formData.bankAccountID.length !== 10) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Bank account ID must be 10 digits");
-      // } else {
-      //   this.inputError = false;
       this.isLoading = true;
 
       const date_Birthdate = new Date(this.formData.Birthdate); // ค่าที่ได้
       date_Birthdate.setFullYear(date_Birthdate.getFullYear() - 543); // ลบ 543 ปี
 
-      // const date_start_working_date = new Date(
-      //   this.formData.start_working_date
-      // ); // ค่าที่ได้
-      // date_start_working_date.setFullYear(
-      //   date_start_working_date.getFullYear() - 543
-      // ); // ลบ 543 ปี
       try {
         const response = await fetch(`${API_CALL}/employee/AddEmployee`, {
           method: "POST",
@@ -1710,20 +1637,13 @@ export default {
             L_name: this.formData.L_name,
             Address: this.formData.Address,
             Birthdate: this.formData.Birthdate,
-            // Birthdate:
-            //   this.t("lang") === "en"
-            //     ? date_Birthdate
-            //     : this.formData.Birthdate,
+
             NID_num: this.formData.NID_num,
             Phone_num: this.formData.Phone_num,
             Email: this.formData.Email,
             departmentID: this.formData.departmentID,
             PositionID: this.formData.PositionID,
             start_working_date: this.formData.start_working_date,
-            // start_working_date:
-            //   this.t("lang") === "en"
-            //     ? date_start_working_date
-            //     : this.formData.start_working_date,
             Salary: this.formData.Salary,
             employeeType: this.formData.employeeType,
             bankName: this.formData.bankName,
@@ -1772,24 +1692,6 @@ export default {
       const accessToken = localStorage.getItem("@accessToken");
       if (!(await this.validateLeave())) return;
       this.isLoading = true;
-      // const dataStart = new Date(this.formDataLeave.date); // ค่าที่ได้
-      // dataStart.setFullYear(dataStart.getFullYear() - 543); // ลบ 543 ปี
-      // const dateEnd = new Date(this.formDataLeave.dateEnd); // ค่าที่ได้
-      // dateEnd.setFullYear(dateEnd.getFullYear() - 543); // ลบ 543 ปี
-      // if (
-      //   this.formDataLeave.employeeID === "" ||
-      //   this.formDataLeave.date === "" ||
-      //   this.formDataLeave.detail === ""
-      // ) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Please fill data");
-      // } else {
-      // this.inputError = false;
-      // this.isLoading = true;
-      // if (this.leaveType === "full" && this.leaveType === "half") {
-      //   this.formDataLeave.date = this.formDataLeave.date;
-      //   this.formDataLeave.dateEnd = this.formDataLeave.date;
-      // }
       if (this.leaveType === "full") {
         const startDate = new Date(this.formDataLeave.date); // คัดลอก date
         const endDate = new Date(startDate);
@@ -1817,11 +1719,6 @@ export default {
               detail: this.formDataLeave.detail,
               date: this.formDataLeave.date,
               dateEnd: this.formDataLeave.dateEnd,
-              // date:
-              //   this.t("lang") === "en" ? dataStart : this.formDataLeave.date,
-              // // dateEnd: this.formDataLeave.dateEnd,
-              // dateEnd:
-              //   this.t("lang") === "en" ? dateEnd : this.formDataLeave.dateEnd,
             }),
           });
           const json = await response.json();
@@ -1865,13 +1762,7 @@ export default {
                 employeeID: this.formDataLeave.employeeID,
                 detail: this.formDataLeave.detail,
                 date: this.formDataLeave.date,
-                // date:
-                // this.t("lang") === "en" ? dataStart : this.formDataLeave.date,
                 dateEnd: this.formDataLeave.dateEnd,
-                // dateEnd:
-                // this.t("lang") === "en"
-                //   ? dateEnd
-                //   : this.formDataLeave.dateEnd,
               }),
             }
           );
@@ -1954,43 +1845,8 @@ export default {
     async editEmployee() {
       if (!this.validateFormData()) return;
       this.isLoading = true;
-      // console.log("==========",this.formData.departmentID)
       const accessToken = localStorage.getItem("@accessToken");
-      // if (
-      //   this.formData.title === "" ||
-      //   this.formData.F_name === "" ||
-      //   this.formData.L_name === "" ||
-      //   this.formData.Address === "" ||
-      //   this.formData.Birthdate === "" ||
-      //   this.formData.NID_num === "" ||
-      //   this.formData.Phone_num === "" ||
-      //   this.formData.Email === "" ||
-      //   this.formData.departmentID === "" ||
-      //   this.formData.PositionID === "" ||
-      //   this.formData.start_working_date === "" ||
-      //   this.formData.Salary === "" ||
-      //   this.formData.employeeType === "" ||
-      //   this.formData.bankName === "" ||
-      //   this.formData.bankAccountID === ""
-      // ) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Please fill all data");
-      // } else if (!this.validateEmail(this.formData.Email)) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Invalid email format");
-      // } else if (this.formData.NID_num.length !== 13) {
-      //   this.inputError = true;
-      //   this.showPopup_error("National ID must be 13 digits");
-      // } else if (this.formData.Phone_num.length !== 10) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Phone number must be 10 digits");
-      // } else if (this.formData.bankAccountID.length < 10) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Bank account ID must be 10-13 digits");
-      // } else {
-      //   this.inputError = false;
-      //   this.isLoading = true;
-
+ 
       function parseSalary(salaryString) {
         if (salaryString !== null && typeof salaryString !== "undefined") {
           return parseFloat(salaryString.replace(/,/g, ""));
@@ -2023,21 +1879,13 @@ export default {
               F_name: this.formData.F_name,
               L_name: this.formData.L_name,
               Address: this.formData.Address,
-              Birthdate: this.formData.Birthdate,
-              // Birthdate:
-              //   this.t("lang") === "en"
-              //     ? date_Birthdate
-              //     : this.formData.Birthdate,
+              Birthdate: this.formData.Birthdate,         
               NID_num: this.formData.NID_num,
               Phone_num: this.formData.Phone_num,
               Email: this.formData.Email,
               departmentID: this.formData.departmentID,
               PositionID: this.formData.PositionID,
               start_working_date: this.formData.start_working_date,
-              // start_working_date:
-              //   this.t("lang") === "en"
-              //     ? date_start_working_date
-              //     : this.formData.start_working_date,
               Salary: parseSalary(this.formData.Salary),
               employeeType: this.formData.employeeType,
               bankName: this.formData.bankName,
@@ -2140,7 +1988,6 @@ export default {
     this.getPosition();
     this.getDepartment();
     this.getEmployee();
-    // this.getemployeesSalary();
     this.getOvertime();
   },
 };

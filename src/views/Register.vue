@@ -1,7 +1,5 @@
 <template>
   <div class="bg-img-Register main-page">
-    <!-- call navigate tab -->
-    <!-- <Navigate /> -->
     <div class="page-body">
       <div class="header-center-page mb-3">
         <h2>{{ t("headerManageUSer") }}</h2>
@@ -121,11 +119,6 @@
           <a>{{ popupMessage }}</a>
         </div>
       </div>
-      <!-- <div v-if="isPopupVisible_error" class="popup-success">
-        <div class="popup-content-error">
-          <a>{{ popupMessage_error }}</a>
-        </div>
-      </div> -->
       <div v-if="isPopupVisible_error" class="popup-error2">
         <div class="text-end">
           <Button
@@ -274,8 +267,6 @@ export default {
         });
         const json = await response.json();
 
-        // this.Employees = json.data;
-
         // Set raw data
         const allEmployees = json.data;
 
@@ -331,9 +322,6 @@ export default {
     showPopup_error(message) {
       this.popupMessage_error = message;
       this.isPopupVisible_error = true;
-      // setTimeout(() => {
-      //   this.isPopupVisible_error = false; // Hides the popup after 2 seconds
-      // }, 2000);
     },
     // Opens the add user popup
     openPopup() {
@@ -424,7 +412,6 @@ export default {
               "Last name": item.userL_name,
               "Phone number": item.userPhone,
               Email: item.userEmail,
-              // Password: item.userPassword,
               Role: item.role.RoleName,
             };
           });
@@ -438,23 +425,6 @@ export default {
     // Sends an API request to update the user data
     async editUser() {
       const accessToken = localStorage.getItem("@accessToken");
-      // if (
-      //   this.formData.userF_name === "" ||
-      //   this.formData.userL_name === "" ||
-      //   this.formData.userPhone === "" ||
-      //   this.formData.userEmail === "" ||
-      //   this.formData.userPassword === "" ||
-      //   this.formData.RoleID === ""
-      // ) {
-      //   this.inputError = true; // Triggers input validation error if any field is empty
-      //   this.showPopup_error("Please fill all fields");
-      // } else if (!this.validateEmail(this.formData.userEmail)) {
-      //   this.inputError = true; // Triggers if the email format is invalid
-      //   this.showPopup_error("Invalid email format");
-      // } else if (this.formData.userPhone.length !== 10) {
-      //   this.inputError = true; // Triggers if the phone number is not 10 digits
-      //   this.showPopup_error("Phone number must be 10 digits");
-      // } else {
       if (!(await this.validateFormData())) return;
       this.inputError = false; // Resets the input error flag
       this.isLoading = true; // Sets the loading state
@@ -526,23 +496,6 @@ export default {
     // Sends an API request to add a new user
     async addUser() {
       const accessToken = localStorage.getItem("@accessToken");
-      // if (
-      //   this.formData.userF_name === "" ||
-      //   this.formData.userL_name === "" ||
-      //   this.formData.userPhone === "" ||
-      //   this.formData.userEmail === "" ||
-      //   this.formData.userPassword === "" ||
-      //   this.formData.RoleID === ""
-      // ) {
-      //   this.inputError = true; // Validation for empty fields
-      //   this.showPopup_error("Please all fill data");
-      // } else if (!this.validateEmail(this.formData.userEmail)) {
-      //   this.inputError = true; // Validation for email format
-      //   this.showPopup_error("Invalid email format");
-      // } else if (this.formData.userPhone.length !== 10) {
-      //   this.inputError = true; // Validation for phone number length
-      //   this.showPopup_error("Phone number must be 10 digits");
-      // } else {
       if (!(await this.validateFormData())) return;
       this.inputError = false; // No validation errors
       this.isLoading = true; // Starts the loading indicator
@@ -581,7 +534,6 @@ export default {
       } finally {
         this.isLoading = false; // Resets the loading state
       }
-      // }
     },
     async validateFormData() {
       const errorMessages = [];

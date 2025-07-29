@@ -21,17 +21,6 @@
                       v-if="toggleCustomDate"
                     >
                       <div class="mb-3 div-for-formControl form-filter-home">
-                        <!-- <DatePicker
-                          v-model:value="custom_filter_start_date"
-                          format="DD/MM/YYYY"
-                          value-type="date"
-                          placeholder="DD/MM/YYYY"
-                          class="form-control"
-                          :formatter="momentFormat"
-                          :lang="currentLocale"
-                          @change="filterDataByOption"
-                        />
-                        {{ custom_filter_start_date }} -->
                         <v-date-picker
                           v-model="custom_filter_start_date"
                           locale="th-TH"
@@ -123,91 +112,6 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="top-table-for-filter">
-                <p class="card-body-p form-date-home">
-                  {{ t("sentenceSummaryYear") }} {{ startDate }} - {{ endDate }}
-                </p> -->
-              <!-- {{ BusinessJson.TokenCreate }} -->
-              <!-- <div
-                  class="div-for-formControl custome-filter-date"
-                  v-if="toggleCustomDate"
-                >
-                  <div class="mb-3 div-for-formControl form-filter-home">
-                    <DatePicker
-                      v-model:value="custom_filter_start_date"
-                      format="DD/MM/YYYY"
-                      value-type="date"
-                      placeholder="DD/MM/YYYY"
-                      class="form-control"
-                      :formatter="momentFormat"
-                      :lang="currentLocale"
-                      @change="filterDataByOption"
-                    />
-                  </div>
-                  <span class="mdi mdi-minus" style="padding: 10px"></span>
-                  <div class="mb-3 div-for-formControl form-filter-home">
-                    <DatePicker
-                      v-model:value="custom_filter_end_date"
-                      format="DD/MM/YYYY"
-                      value-type="date"
-                      placeholder="DD/MM/YYYY"
-                      class="form-control"
-                      :formatter="momentFormat"
-                      :lang="currentLocale"
-                      @change="filterDataByOption"
-                    />
-                  </div>
-                </div> -->
-
-              <!-- <select
-                    class="form-control col-sm-9 col-md-6 form-select"
-                    @change="filterDataByOption"
-                    v-model="selectedOption"
-                  >
-                    <option value="all">{{ t("all") }}</option>
-                    <option value="thisYear">{{ t("thisyear") }}</option>
-                    <option value="lastYear">{{ t("lastyear") }}</option>
-                  </select> -->
-              <!-- <div class="mb-3 div-for-formControl form-filter-home">
-                  <select
-                    class="form-control col-sm-9 col-md-6 form-select"
-                    @change="filterDataByOption"
-                    v-model="selectedOption"
-                  >
-                    <option value="all">{{ $t("filterDate.all") }}</option>
-                    <option value="last7Days">
-                      {{ t("filterDate.last7Days") }}
-                    </option>
-                    <option value="last14Days">
-                      {{ t("filterDate.last14Days") }}
-                    </option>
-                    <option value="last30Days">
-                      {{ t("filterDate.last30Days") }}
-                    </option>
-                    <option value="thisMonth">
-                      {{ t("filterDate.thisMonth") }}
-                    </option>
-                    <option value="lastMonth">
-                      {{ t("filterDate.lastMonth") }}
-                    </option>
-                    <option value="thisQuarter">
-                      {{ t("filterDate.thisQuarter") }}
-                    </option>
-                    <option value="lastQuarter">
-                      {{ t("filterDate.lastQuarter") }}
-                    </option>
-                    <option value="thisYear">
-                      {{ t("filterDate.thisYear") }}
-                    </option>
-                    <option value="lastYear">
-                      {{ t("filterDate.lastYear") }}
-                    </option>
-                    <option value="customDate">
-                      {{ t("filterDate.customDate") }}
-                    </option>
-                  </select>
-                </div> -->
-              <!-- </div> -->
               <div class="card-body-detail" style="white-space: nowrap">
                 <div class="card-body-left">
                   <div class="card-body-left-sale">
@@ -228,7 +132,6 @@
                       <p>{{ t("costallDash") }}</p>
                     </div>
                     <p>
-                      <!-- {{ totalProductCost + totalSalaryPaid + totalOvertime }} -->
                       {{ ConvertTo2DigitCost }}
                     </p>
                   </div>
@@ -239,7 +142,6 @@
                       <p>{{ t("profitallDAsh") }}</p>
                     </div>
                     <p>
-                      <!-- {{ totalSalescon - (totalProductCost + totalSalaryPaid) }} -->
                       {{ ConvertTo2DigitProfit }}
                     </p>
                   </div>
@@ -324,18 +226,7 @@
                   {{ endDate2 }}
                 </div>
                 <div class="col-1 col-sm-4 col-md-2 col-lg-2"></div>
-                <!-- <div class="col-6 custome-filter-date" v-if="toggleCustomDate"> -->
                 <div class="col-3" v-if="toggleCustomDate2">
-                  <!-- <DatePicker
-                    v-model:value="custom_filter_start_date2"
-                    format="DD/MM/YYYY"
-                    value-type="date"
-                    placeholder="DD/MM/YYYY"
-                    class="form-control"
-                    :formatter="momentFormat"
-                    :lang="currentLocale"
-                    @change="filterDataByOption2"
-                  /> -->
                   <v-date-picker
                     v-model="custom_filter_start_date2"
                     locale="th-TH"
@@ -359,17 +250,6 @@
                   style="padding: 10px; width: 30px"
                 ></span>
                 <div class="col-12 form-filter-home">
-                  <!-- <DatePicker
-                    v-model:value="custom_filter_end_date2"
-                    format="DD/MM/YYYY"
-                    value-type="date"
-                    placeholder="DD/MM/YYYY"
-                    class="form-control"
-                    :formatter="momentFormat"
-                    :lang="currentLocale"
-                    @change="filterDataByOption2"
-                    v-if="toggleCustomDate2"
-                  /> -->
                   <v-date-picker
                     v-if="toggleCustomDate2"
                     v-model="custom_filter_end_date2"
@@ -387,7 +267,6 @@
                     </template>
                   </v-date-picker>
                 </div>
-                <!-- </div> -->
                 <div
                   class="mb-3 col-12 col-sm-12 col-md-3 col-lg-3 form-filter-home"
                 >
@@ -466,11 +345,6 @@
       </div>
       <div class="row text-center"></div>
     </div>
-    <!-- <div v-if="isPopupVisible_error" class="popup-success">
-      <div class="popup-content-error">
-        <a>{{ popupMessage_error }}</a>
-      </div>
-    </div> -->
     <div v-if="isPopupVisible_error" class="popup-error2">
       <div class="text-end">
         <button
@@ -513,12 +387,6 @@ const accessToken = localStorage.getItem("@accessToken");
 import th from "vue-datepicker-next/locale/th.es";
 import en from "vue-datepicker-next/locale/en.es";
 import Card from "../components/card.vue";
-
-
-// const { t } = useI18n();
-// const lang = computed(() => t("lang"));
-
-// // ✅ watch การเปลี่ยนแปลงของ lang
 
 export default {
   name: "HomePage",

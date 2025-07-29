@@ -97,11 +97,6 @@
             <a>{{ popupMessage }}</a>
           </div>
         </div>
-        <!-- <div v-if="isPopupVisible_error" class="popup-success">
-          <div class="popup-content-error">
-            <a>{{ popupMessage_error }}</a>
-          </div>
-        </div> -->
         <div v-if="isPopupVisible_error" class="popup-error2">
           <div class="text-end">
             <Button

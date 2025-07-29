@@ -213,10 +213,6 @@ export default {
       this.popupMessage_error = message;
       this.isPopupVisible = false;
       this.isPopupVisible_error = true;
-      // setTimeout(() => {
-      //   this.isPopupVisible = false;
-      //   this.isPopupVisible_error = false;
-      // }, 2000); // Hide popup after 2 seconds
     },
     // Login method to authenticate user
     async login() {

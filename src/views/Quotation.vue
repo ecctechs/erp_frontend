@@ -2211,60 +2211,6 @@ export default {
         lineHeight
       );
     },
-    // drawTable(doc, data, startY, margin, lineHeight) {
-    //   const startX = margin;
-
-    //   let y = startY + 5;
-    //   doc.setFontSize(10);
-
-    //   const cellWidths = data[0].map((_, index) => {
-    //     if (index === 0) {
-    //       return 10; // กำหนดความยาวเซลล์สำหรับ column แรกเป็น 10
-    //     } else if (index === 1) {
-    //       return 30;
-    //     } else if (index === 2) {
-    //       return (doc.internal.pageSize.width - margin * 2) * 0.3;
-    //     } else {
-    //       return (
-    //         (doc.internal.pageSize.width -
-    //           margin * 2 -
-    //           (doc.internal.pageSize.width - margin * 2) * 0.4 -
-    //           20) /
-    //         (data[0].length - 3)
-    //       );
-    //     }
-    //   });
-    //   data.forEach((row) => {
-    //     let x = startX;
-    //     row.forEach((cell, index) => {
-    //       const currentCellWidth = cellWidths[index];
-    //       doc.rect(x, y, currentCellWidth, lineHeight, "S");
-
-    //       if (index === 1 && cell) {
-    //         // ถ้าเป็น cell ที่ index เท่ากับ 1 (คอลัมน์ที่เป็น productImg) และมีรูปภาพใน cell
-
-    //         const imgHeight = lineHeight * 0.5; // ความสูงของรูปภาพจะเท่ากับความสูงของบรรทัด
-    //         const imgWidth = imgHeight * 2; // กำหนดความกว้างของรูปภาพให้เล็กกว่า cellWidth เพื่อไม่ให้รูปภาพเกินขอบเขตของเซลล์
-    //         doc.addImage(
-    //           cell,
-    //           x + (currentCellWidth - imgWidth) / 2,
-    //           y + (lineHeight - imgHeight) / 2 + 2,
-    //           imgWidth,
-    //           imgHeight
-    //         );
-    //       } else {
-    //         doc.text(
-    //           String(cell),
-    //           x + currentCellWidth / 2,
-    //           y + lineHeight / 2 + 2,
-    //           { align: "center", valign: "middle" }
-    //         );
-    //       }
-    //       x += currentCellWidth;
-    //     });
-    //     y += lineHeight;
-    //   });
-    // },
     drawTable(doc, data, startY, margin, lineHeight) {
       const startX = margin;
       let y = startY + 5;
@@ -2361,116 +2307,6 @@ export default {
         y += maxRowHeight;
       });
     },
-    // drawTable(doc, data, startY, margin, lineHeight) {
-    //   const startX = margin;
-    //   let y = startY + 5;
-    //   doc.setFontSize(10);
-
-    //   const cellWidths = data[0].map((_, index) => {
-    //     if (index === 0) return 10;
-    //     else if (index === 1) return 30;
-    //     else if (index === 2)
-    //       return (doc.internal.pageSize.width - margin * 2) * 0.3;
-    //     else {
-    //       return (
-    //         (doc.internal.pageSize.width -
-    //           margin * 2 -
-    //           (doc.internal.pageSize.width - margin * 2) * 0.4 -
-    //           20) /
-    //         (data[0].length - 3)
-    //       );
-    //     }
-    //   });
-
-    //   data.forEach((row) => {
-    //     let x = startX;
-
-    //     row.forEach((cell, index) => {
-    //       const currentCellWidth = cellWidths[index];
-    //       doc.rect(x, y, currentCellWidth, lineHeight, "S");
-
-    //       if (index === 1 && cell) {
-    //         try {
-    //           // ให้รูปเต็มเซลล์ โดยเหลือ margin เล็กน้อย
-    //           const padding = 1; // ความเว้นขอบรูปเล็กน้อย
-    //           const imgWidth = currentCellWidth - padding * 2;
-    //           const imgHeight = lineHeight - padding * 2;
-
-    //           doc.addImage(
-    //             cell,
-    //             x + padding,
-    //             y + padding,
-    //             imgWidth,
-    //             imgHeight,
-    //             undefined,
-    //             "FAST"
-    //           );
-    //         } catch (e) {
-    //           console.warn("ไม่สามารถโหลดรูปภาพ:", e);
-    //         }
-    //       } else if (index === 2 && typeof cell === "string") {
-    //         // กรณีคอลัมน์ชื่อสินค้า + รายละเอียด
-    //         const [productName, productDetail] = cell.split("\n");
-    //         if (productDetail !== "") {
-    //           const [productName, productDetail] = cell.split("\n");
-
-    //           doc.setFontSize(10);
-    //           doc.setTextColor(0, 0, 0);
-    //           doc.text(
-    //             productName,
-    //             x + currentCellWidth / 2,
-    //             y + lineHeight / 2 - 1,
-    //             {
-    //               align: "center",
-    //             }
-    //           );
-
-    //           if (productDetail && productDetail.trim() !== "") {
-    //             doc.setFontSize(8);
-    //             doc.setTextColor(150, 150, 150);
-    //             doc.text(
-    //               productDetail,
-    //               x + currentCellWidth / 2,
-    //               y + lineHeight / 2 + 3,
-    //               {
-    //                 align: "center",
-    //               }
-    //             );
-    //           }
-    //           //  alert(productDetail);
-    //         } else {
-    //           // ถ้าไม่มี \n หรือ product_detail ว่าง
-    //           doc.setFontSize(10);
-    //           doc.setTextColor(0, 0, 0);
-    //           doc.text(cell, x + currentCellWidth / 2, y + lineHeight / 2 + 2, {
-    //             align: "center",
-    //           });
-    //         }
-
-    //         // รีเซ็ตค่าหลังใช้
-    //         doc.setFontSize(10);
-    //         doc.setTextColor(0, 0, 0);
-    //       } else {
-    //         doc.setFontSize(10);
-    //         doc.setTextColor(0, 0, 0);
-    //         doc.text(
-    //           String(cell),
-    //           x + currentCellWidth / 2,
-    //           y + lineHeight / 2 + 2,
-    //           {
-    //             align: "center",
-    //             valign: "middle",
-    //           }
-    //         );
-    //       }
-
-    //       x += currentCellWidth;
-    //     });
-
-    //     y += lineHeight;
-    //   });
-    // },
-
     ClosePDFview() {
       this.isPopupPDFOpen = false;
     },
@@ -3623,35 +3459,6 @@ export default {
         this.isLoading = false;
       }
     },
-    // async checkLastestQuotationNumber() {
-    //   const accessToken = localStorage.getItem("@accessToken");
-    //   try {
-    //     const response = await fetch(
-    //       `${API_CALL}/quotation/checkLastestQuotation`,
-    //       {
-    //         headers: {
-    //           Authorization: `Bearer ${accessToken}`,
-    //         },
-    //       }
-    //     );
-    //     const json = await response.json();
-    //     if (json.statusCode === 200) {
-    //       this.currentCode = json.data.sale_number;
-    //       console.log("currentCode:", this.currentCode.sale_number);
-    //       let currentNumber = parseInt(this.currentCode.slice(3));
-    //       let nextNumber = currentNumber + 1;
-    //       let nextNumberStr = nextNumber.toString().padStart(8, "0");
-
-    //       this.formData.sale_number = `QT-${nextNumberStr}`;
-    //     } else if (json.statusCode === 400) {
-    //       this.formData.sale_number = `QT-00000001`;
-    //     } else {
-    //       console.log(json);
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching data:", error);
-    //   }
-    // },
     async checkLastestQuotationNumber() {
       const accessToken = localStorage.getItem("@accessToken");
 
@@ -4458,37 +4265,6 @@ export default {
       this.vat_price();
       this.total_pricesale();
       this.total_priceBeforeDiscount();
-
-      // if (this.formData.vatType === "VATincluding") {
-      //   this.formData.sale_totalprice = this.formatDecimal(
-      //     parseFloat(this.formData.Net_price.replace(/,/g, "")) / 1.07
-      //   );
-      // }
-      // if (this.formData.vatType === "VATincluding") {
-      //   this.formData.sale_totalprice = this.formatDecimal(
-      //     parseFloat(this.formData.Net_price.replace(/,/g, "")) * 1.07
-      //   );
-      //   this.formData.vat = this.formatDecimal(
-      //     parseFloat(
-      //       this.formData.sale_totalprice.replace(/,/g, "") -
-      //         parseFloat(this.formData.total_price.replace(/,/g, ""))
-      //     )
-      //   );
-      //   this.formData.vat = this.formatDecimal(
-      //     parseFloat(this.formData.Net_price.replace(/,/g, "")) * 1.07 -
-      //       parseFloat(this.formData.Net_price.replace(/,/g, ""))
-      //   );
-      //   // this.formData.vat = "555";
-      // } else {
-      //   this.formData.vat = this.formatDecimal(
-      //     parseFloat(this.formData.Net_price.replace(/,/g, "")) * 0.07
-      //   );
-      //   this.formData.sale_totalprice = this.formatDecimal(
-      //     parseFloat(this.formData.Net_price.replace(/,/g, "")) +
-      //       parseFloat(this.formData.vat)
-      //   );
-      // }
-
       if (this.formData.vatType === "VATincluding") {
         this.formData.sale_totalprice = this.formatDecimal(
           parseFloat(this.formData.Net_price.replace(/,/g, "")) / 1.07

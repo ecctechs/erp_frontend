@@ -1,7 +1,5 @@
 <template>
   <div class="main-page">
-    <!-- call navigate tab -->
-    <!-- <navigate /> -->
     <div class="page-body">
       <div class="mb-3">
         <h2>{{ t("employeereport") }}</h2>
