@@ -5,58 +5,46 @@
         <h2>{{ t("headerAbout") }}</h2>
       </div>
       <div class="mt-3">
-        <div class="about-business-contain">
+    <div class="about-business-contain">
           <div
-            v-for="(key, index) in fieldConfig.keys"
-            :key="key"
+            v-for="field in fieldConfig"
+            :key="field.key"
             class="mb-3 mt-3"
-            :class="key === 'bank_name' ? 'edit_about' : ''"
+            :class="field.key === 'bank_name' ? 'edit_about' : ''"
           >
-            <label class="col-sm-5 col-md-6">{{
-              t(fieldConfig.labels[index])
-            }}</label>
+            <label class="col-sm-5 col-md-6">{{ t(field.label) }}</label>
 
-            <!-- โหมดแสดงผล -->
             <template v-if="isShowing">
-              <!-- กรณีเป็นภาพ -->
               <img
-                v-if="fieldConfig.types[index] === 'image'"
-                :src="formData[key]"
+                v-if="field.type === 'image'"
+                :src="formData[field.key]"
                 class="image_exp"
               />
-              <!-- กรณีอื่น ๆ เป็นข้อความ -->
-              <a v-else>{{ formData[key] }}</a>
+              <a v-else>{{ formData[field.key] }}</a>
             </template>
 
-            <!-- โหมดแก้ไข -->
             <template v-if="isEditMode">
-              <!-- กรณีเป็น dropdown (bank_name) -->
               <Dropdown
-                v-if="fieldConfig.componentTypes[index] === 'dropdown'"
-                v-model="formData[key]"
+                v-if="field.componentType === 'dropdown'"
+                v-model="formData[field.key]"
                 :options="bankOptions"
-                :error="isEmpty[key]"
-                placeholder="กรุณาเลือกธนาคาร"
+                :error="isEmpty[field.key]"
               />
-
-              <!-- กรณีเป็น upload (รูปภาพ) -->
-              <div v-else-if="fieldConfig.componentTypes[index] === 'upload'">
+              <div v-else-if="field.componentType === 'upload'">
                 <TextField type="file" @change="handleFileUpload" />
                 <br />
                 <img
-                  :src="exp_files || formData[key]"
+                  :src="exp_files || formData[field.key]"
                   alt="Uploaded Image"
                   class="image_exp"
                 />
               </div>
-
-              <!-- กรณีอื่น ๆ ใช้ TextField -->
               <TextField
                 v-else
-                v-model="formData[key]"
-                :error="isEmpty[key]"
-                :type="fieldConfig.types[index]"
-                :maxlength="key === 'bus_tel' ? 10 : key === 'bus_tax' ? 13 : key === 'bank_number' ? 15 : null"
+                v-model="formData[field.key]"
+                :error="isEmpty[field.key]"
+                :type="field.type"
+                :maxlength="field.key === 'bus_tel' ? 10 : field.key === 'bus_tax' ? 13 : field.key === 'bank_number' ? 15 : null"
               />
             </template>
           </div>
@@ -89,8 +77,9 @@
             >
               {{ t("buttonCancel") }}
             </Button>
-          </div>
+            </div>
         </div>
+        
         <div
           v-if="isLoading"
           class="d-flex justify-content-center align-items-center"
@@ -140,6 +129,7 @@ import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n";
 import Dropdown from "../components/dropdown.vue";
 import TextField from "../components/textField.vue";
+import formConfig from "../config/field_config/about/form_about_business.json";
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -151,6 +141,7 @@ export default {
     Button, // Changed
     Dropdown,
     TextField,
+    formConfig
   },
   setup() {
     const { t } = useI18n();
@@ -161,20 +152,7 @@ export default {
   },
   data() {
     return {
-     fieldConfig: {
-        keys: [
-          "bus_name","bus_address","bus_website","bus_tel","bus_tax","bus_logo","bank_name","bank_account","bank_number"
-        ],
-        labels: [
-          "customerName", "address", "companyWebsite", "companyPhone", "taxID", "companyLogo", "bankname", "bankAccName", "bankaccount"
-        ],
-        types: [
-          "text", "text", "text", "tel", "tel", "image", "text", "text", "text"
-        ],
-        componentTypes: [
-          "text", "text", "text", "text", "text", "upload", "dropdown", "text", "text"
-        ]
-      },
+      fieldConfig: formConfig, // กำหนดค่าที่ import มา
       isPopupVisible_error: false,
       Business: [],
       bus_data: [],

@@ -267,28 +267,22 @@
   <div class="border p-4 mb-3">
     <div v-for="field in billingFields" :key="field.key" class="mb-3 div-for-formControl">
       <label class="col-sm-5 col-md-6">{{ t(field.label) }}</label>
-          <v-date-picker
-      v-if="field.componentType === 'DatePicker'"
-      v-model="formData[field.key]"
-      locale="th-TH"
-      :format="formatDatePicker"
-    >
-         <template v-slot="{ inputEvents }">
-            <input
-              class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
-              :value="formatDatePicker(formData.billing_date)"
-              v-on="inputEvents"
-              placeholder="เลือกวันที่"
-              style="width: 100%"
-            />
-          </template>
+      <v-date-picker
+        v-if="field.componentType === 'DatePicker'"
+        v-model="formData[field.key]"
+        locale="th-TH"
+        :format="formatDatePicker"
+      >
+        <template #default="{ inputEvents }">
+          <input :value="formatDatePicker(formData[field.key])" v-on="inputEvents" class="form-control" />
+        </template>
       </v-date-picker>
       <TextField v-else v-model="formData[field.key]" :readonly="field.readonly" :disabled="field.readonly"/>
     </div>
   </div>
 
   <div class="border p-4 mb-3">
-    <div>
+   <div>
       <h5 style="text-decoration-line: underline">{{ t("customerPart") }}</h5>
     </div>
     <div v-for="field in customerFields" :key="field.key" class="mb-3 div-for-formControl">
@@ -589,6 +583,7 @@ import { computed, watch, ref } from "vue";
 import moment from "moment";
 import Icon from "../components/icon.vue";
 import TextField from "../components/textField.vue";
+import formConfig from "../config/field_config/about/form_billing_note.json";
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -606,7 +601,8 @@ export default {
     DatePicker,
     Button,
     Icon,
-    TextField
+    TextField,
+    formConfig
   },
   setup() {
     const { t } = useI18n();
@@ -654,19 +650,20 @@ export default {
   },
   data() {
     return {
-    fieldConfig: [
-      { key: 'billing_number', label: 'numberBilling', componentType: 'TextField', readonly: true, group: 'billing' },
-      { key: 'billing_date', label: 'dateBilling', componentType: 'DatePicker', readonly: false, group: 'billing' },
-      { key: 'employeeName', label: 'employeeName', componentType: 'TextField', readonly: true, group: 'billing' },
-      { key: 'cus_name', label: 'customerName', componentType: 'TextField', readonly: true, group: 'customer' },
-      { key: 'cus_address', label: 'customerAddress', componentType: 'TextField', readonly: true, group: 'customer' },
-      { key: 'cus_tel', label: 'phoneNum', componentType: 'TextField', readonly: true, group: 'customer' },
-      { key: 'cus_email', label: 'email', componentType: 'TextField', readonly: true, group: 'customer' },
-      { key: 'cus_tax', label: 'taxID', componentType: 'TextField', readonly: true, group: 'customer' },
-      { key: 'cus_purchase', label: 'customerPurchaseBy', componentType: 'TextField', readonly: true, group: 'customer' },
-      { key: 'payments', label: 'payments', componentType: 'Dropdown', readonly: false, group: 'summary' },
-      { key: 'remark', label: 'quotationRemark', componentType: 'Textarea', readonly: false, group: 'summary' }
-    ],
+    // fieldConfig: [
+    //   { key: 'billing_number', label: 'numberBilling', componentType: 'TextField', readonly: true, group: 'billing' },
+    //   { key: 'billing_date', label: 'dateBilling', componentType: 'DatePicker', readonly: false, group: 'billing' },
+    //   { key: 'employeeName', label: 'employeeName', componentType: 'TextField', readonly: true, group: 'billing' },
+    //   { key: 'cus_name', label: 'customerName', componentType: 'TextField', readonly: true, group: 'customer' },
+    //   { key: 'cus_address', label: 'customerAddress', componentType: 'TextField', readonly: true, group: 'customer' },
+    //   { key: 'cus_tel', label: 'phoneNum', componentType: 'TextField', readonly: true, group: 'customer' },
+    //   { key: 'cus_email', label: 'email', componentType: 'TextField', readonly: true, group: 'customer' },
+    //   { key: 'cus_tax', label: 'taxID', componentType: 'TextField', readonly: true, group: 'customer' },
+    //   { key: 'cus_purchase', label: 'customerPurchaseBy', componentType: 'TextField', readonly: true, group: 'customer' },
+    //   { key: 'payments', label: 'payments', componentType: 'Dropdown', readonly: false, group: 'summary' },
+    //   { key: 'remark', label: 'quotationRemark', componentType: 'Textarea', readonly: false, group: 'summary' }
+    // ],
+      fieldConfig:formConfig,
       openPopupAllow: false,
       errorMessages: [],
       shortcutAllow: false,

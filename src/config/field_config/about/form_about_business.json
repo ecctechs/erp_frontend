@@ -1,126 +1,56 @@
 [
   {
-    "key": "sale_number",
-    "label": "numberQuotation",
-    "componentType": "TextField",
-    "readonly": true,
-    "group": "header"
-  },
-  {
-    "key": "status",
-    "label": "statusQuotation",
-    "componentType": "Dropdown",
-    "readonly": true,
-    "group": "header",
-    "options": "statusOptions"
-  },
-  {
-    "key": "employeeID",
-    "label": "employeeName",
-    "componentType": "Autocomplete",
-    "required": true,
-    "group": "header",
-    "items": "Employees",
-    "itemTitle": "Name",
-    "itemValue": "employeeID"
-  },
-  {
-    "key": "cus_name",
+    "key": "bus_name",
     "label": "customerName",
-    "componentType": "Datalist",
-    "required": true,
-    "group": "customer",
-    "items": "Customers"
+    "type": "text",
+    "componentType": "text"
   },
   {
-    "key": "cus_address",
-    "label": "customerAddress",
-    "componentType": "TextField",
-    "required": true,
-    "group": "customer",
-    "readonly": true
+    "key": "bus_address",
+    "label": "address",
+    "type": "text",
+    "componentType": "text"
   },
   {
-    "key": "cus_tel",
-    "label": "phoneNum",
-    "componentType": "TextField",
-    "required": true,
-    "group": "customer",
-    "readonly": true,
-    "maxlength": 10,
-    "isNumeric": true
+    "key": "bus_website",
+    "label": "companyWebsite",
+    "type": "text",
+    "componentType": "text"
   },
   {
-    "key": "cus_email",
-    "label": "email",
-    "componentType": "TextField",
-    "required": true,
-    "group": "customer",
-    "readonly": true
+    "key": "bus_tel",
+    "label": "companyPhone",
+    "type": "tel",
+    "componentType": "text"
   },
   {
-    "key": "cus_tax",
+    "key": "bus_tax",
     "label": "taxID",
-    "componentType": "TextField",
-    "required": true,
-    "group": "customer",
-    "readonly": true,
-    "maxlength": 13,
-    "isNumeric": true
+    "type": "tel",
+    "componentType": "text"
   },
   {
-    "key": "cus_purchase",
-    "label": "customerPurchaseBy",
-    "componentType": "TextField",
-    "required": true,
-    "group": "customer",
-    "readonly": true
+    "key": "bus_logo",
+    "label": "companyLogo",
+    "type": "image",
+    "componentType": "upload"
   },
   {
-    "key": "sale_date",
-    "label": "quotationDate",
-    "componentType": "DatePicker",
-    "group": "conditions"
+    "key": "bank_name",
+    "label": "bankname",
+    "type": "text",
+    "componentType": "dropdown"
   },
   {
-    "key": "credit_date_number",
-    "label": "creditDate",
-    "componentType": "Dropdown",
-    "group": "conditions",
-    "options": "creditDayOptions"
+    "key": "bank_account",
+    "label": "bankAccName",
+    "type": "text",
+    "componentType": "text"
   },
   {
-    "key": "credit_expired_date",
-    "label": "expireDate",
-    "componentType": "DatePicker",
-    "group": "conditions",
-    "readonly": true
-  },
-  {
-    "key": "discount_quotation",
-    "label": "totalDiscount",
-    "componentType": "TextField",
-    "group": "summary",
-    "isNumeric": true
-  },
-  {
-    "key": "remark",
-    "label": "quotationRemark",
-    "componentType": "Textarea",
-    "group": "summary",
-    "maxlength": 220
-  },
-  {
-    "key": "file",
-    "label": "FileLabel",
-    "componentType": "Upload",
-    "group": "internal"
-  },
-  {
-    "key": "remarkInfernal",
-    "label": "InternalRemark",
-    "componentType": "Textarea",
-    "group": "internal",
-    "maxlength": 220
+    "key": "bank_number",
+    "label": "bankaccount",
+    "type": "text",
+    "componentType": "text"
   }
 ]
