@@ -161,129 +161,79 @@
     </div>
   </div>
   <div>
-    <Popup :isOpen="isPopupOpen" :closePopup="closePopup">
-      <div class="mb-4">
-        <h3 v-if="isAddingMode">{{ t("headerPopupAddExpenses") }}</h3>
-        <h3 v-if="isEditMode">{{ t("headerPopupEditExpenses") }}</h3>
-      </div>
-      <div
-  v-for="(key, index) in fieldConfig.keys"
-  :key="key"
-  class="mb-3"
->
-  <label class="col-sm-5 col-md-6 mb-3">
-    <span v-if="['DateExpense', 'cateExpense', 'priceExpense'].includes(key)" style="color: red">*</span>
-    {{ t(fieldConfig.labels[index]) }}
-  </label>
+   <Popup :isOpen="isPopupOpen" :closePopup="closePopup">
+  <div class="mb-4">
+    <h3 v-if="isAddingMode">{{ t("headerPopupAddExpenses") }}</h3>
+    <h3 v-if="isEditMode">{{ t("headerPopupEditExpenses") }}</h3>
+  </div>
 
-  <!-- date picker -->
-  <v-date-picker
-    v-if="fieldConfig.componentTypes[index] === 'date'"
-    v-model="formData[key]"
-    locale="th-TH"
-    :format="formatDatePicker"
-  >
-    <template v-slot="{ inputEvents }">
-      <input
-        class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
-        :value="formatDatePicker(formData[key])"
-        v-on="inputEvents"
-        placeholder="เลือกวันที่"
-        style="width: 100%"
+  <div v-for="field in fieldConfig" :key="field.key" class="mb-3 div-for-formControl">
+    <label class="col-sm-5 col-md-6">
+      <span v-if="field.required" style="color: red">*</span>
+      {{ t(field.label) }}
+    </label>
+
+    <div class="col-sm-9 col-md-6" style="display: inline-block; width: 50%;">
+      <v-date-picker
+        v-if="field.componentType === 'DatePicker'"
+        v-model="formData[field.key]"
+        locale="th-TH"
+        :format="formatDatePicker"
+      >
+        <template #default="{ inputEvents }">
+          <input class="form-control" :value="formatDatePicker(formData[field.key])" v-on="inputEvents" :class="{ 'border-danger': isEmpty[field.key] }" />
+        </template>
+      </v-date-picker>
+
+      <Dropdown
+        v-else-if="field.componentType === 'Dropdown'"
+        v-model="formData[field.key]"
+        :options="this[field.optionsKey]"
+        :error="isEmpty[field.key]"
+        :placeholder="t(field.placeholder)"
       />
-    </template>
-  </v-date-picker>
 
-  <!-- dropdown -->
-  <Dropdown
-    v-else-if="fieldConfig.componentTypes[index] === 'dropdown'"
-    v-model="formData[key]"
-    :options="categoryOptions"
-    :error="isEmpty[key]"
-    :placeholder="t('expense.selectCategory')"
-  />
-
-  <!-- textarea -->
-  <textarea
-    v-else-if="fieldConfig.componentTypes[index] === 'textarea'"
-    v-model="formData[key]"
-    class="form-control"
-    rows="3"
-    @input="onInput"
-    maxlength="220"
-    :class="{ error: isEmpty[key] }"
-  ></textarea>
-
-  <!-- upload -->
-  <div v-else-if="fieldConfig.componentTypes[index] === 'upload'" class="div-for-formControl">
-    <div class="input-group input-upload-custom">
-      <label class="input-group-text btn btn-primary">
-        {{ t("SelectImage") }}
-        <input type="file" hidden @change="previewImage" />
-      </label>
-      <input
-        type="text"
+      <textarea
+        v-else-if="field.componentType === 'Textarea'"
+        v-model="formData[field.key]"
         class="form-control"
-        :value="fileName || t('FileImageName')"
-        ref="fileInput"
-        readonly
-      />
-    </div>
-    <div v-if="imageSrc" class="image-preview mt-3">
-      <img
-        :src="imageSrc"
-        alt="Preview"
-        style="max-width: 200px; max-height: 200px"
+        rows="3"
+        :maxlength="field.maxlength"
+        :class="{ error: isEmpty[field.key] }"
+      ></textarea>
+
+      <div v-else-if="field.componentType === 'Upload'">
+        <div class="input-group input-upload-custom">
+          <label class="input-group-text btn btn-primary">
+            {{ t("SelectImage") }}
+            <input type="file" hidden @change="previewImage" />
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            :value="fileName || t('FileImageName')"
+            readonly
+          />
+        </div>
+        <div v-if="imageSrc" class="image-preview mt-3">
+          <img :src="imageSrc" alt="Preview" style="max-width: 200px; max-height: 200px" />
+        </div>
+      </div>
+
+      <TextField
+        v-else
+        v-model="formattedPrice"
+        :type="field.type"
+        @input="updatePrice"
+        @keypress="field.isNumeric ? onlyNumber($event) : null"
+        :class="{ error: isEmpty[field.key] }"
       />
     </div>
   </div>
 
-  <!-- text input -->
-  <input
-    v-else
-    class="form-control col-sm-7 col-md-6"
-    v-model="formattedPrice"
-    type="text"
-    id="price"
-    @input="updatePrice"
-    @keypress="onlyNumber"
-    :class="{ error: isEmpty[key] }"
-  />
-</div>
-      <div class="modal-footer mb-3">
-        <Button
-          :disabled="isLoading"
-          customClass="btn btn-primary me-3"
-          v-if="isAddingMode"
-          @click="addExpense"
-        >
-          <span
-            v-if="isLoading"
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          <span v-else>{{ t("buttonAdd") }}</span>
-        </Button>
-        <Button
-          :disabled="isLoading"
-          customClass="btn btn-primary me-3"
-          v-if="isEditMode"
-          @click="editExpense"
-        >
-          <span
-            v-if="isLoading"
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          <span v-else>{{ t("buttonSave") }}</span>
-        </Button>
-        <Button customClass="btn btn-secondary" @click="closePopup">
-          {{ t("buttonCancel") }}
-        </Button>
-      </div>
-    </Popup>
+  <div class="modal-footer mb-3">
+    </div>
+</Popup>
     <div class="delete-popup">
       <Popup
         :isOpen="isDeleteConfirmPopupOpen"
@@ -358,6 +308,7 @@ import "moment/locale/th";
 import Card from "../components/Card.vue";
 import TextField from "../components/TextField.vue";
 import Dropdown from "../components/dropdown.vue";
+import formConfig from '../config/field_config/expenses/form_empenses.json';
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -423,24 +374,25 @@ export default {
   },
   data() {
     return {
-        fieldConfig: {
-          keys: [
-            "DateExpense",     "cateExpense",     "priceExpense",
-            "remarkExpense",   "uploadImage"
-          ],
-          labels: [
-            "dateHeaderTable", "cateHeaderTable", "amountmoneyHeaderTable",
-            "remarkHeaderTable", "FileLabel"
-          ],
-          types: [
-            "date",            "dropdown",        "text",
-            "textarea",        "upload"
-          ],
-          componentTypes: [
-            "date",            "dropdown",        "text",
-            "textarea",        "upload"
-          ]
-        },
+      fieldConfig: formConfig,
+        // fieldConfig: {
+        //   keys: [
+        //     "DateExpense",     "cateExpense",     "priceExpense",
+        //     "remarkExpense",   "uploadImage"
+        //   ],
+        //   labels: [
+        //     "dateHeaderTable", "cateHeaderTable", "amountmoneyHeaderTable",
+        //     "remarkHeaderTable", "FileLabel"
+        //   ],
+        //   types: [
+        //     "date",            "dropdown",        "text",
+        //     "textarea",        "upload"
+        //   ],
+        //   componentTypes: [
+        //     "date",            "dropdown",        "text",
+        //     "textarea",        "upload"
+        //   ]
+        // },
       categoryOptions: [
         { value: "salary", text: this.t("expense.salary") },
         { value: "stock", text: this.t("expense.stock") },

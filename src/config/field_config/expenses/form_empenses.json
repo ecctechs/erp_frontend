@@ -1,0 +1,35 @@
+[
+  {
+    "key": "DateExpense",
+    "label": "dateHeaderTable",
+    "componentType": "DatePicker",
+    "required": true
+  },
+  {
+    "key": "cateExpense",
+    "label": "cateHeaderTable",
+    "componentType": "Dropdown",
+    "required": true,
+    "optionsKey": "categoryOptions",
+    "placeholder": "expense.selectCategory"
+  },
+  {
+    "key": "priceExpense",
+    "label": "amountmoneyHeaderTable",
+    "componentType": "TextField",
+    "type": "text",
+    "required": true,
+    "isNumeric": true
+  },
+  {
+    "key": "remarkExpense",
+    "label": "remarkHeaderTable",
+    "componentType": "Textarea",
+    "maxlength": 220
+  },
+  {
+    "key": "uploadImage",
+    "label": "FileLabel",
+    "componentType": "Upload"
+  }
+]
