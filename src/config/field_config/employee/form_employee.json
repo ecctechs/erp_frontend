@@ -1,0 +1,127 @@
+[
+  {
+    "key": "HEADING_1",
+    "label": "employeeInformation",
+    "componentType": "heading"
+  },
+  {
+    "key": "title",
+    "label": "title",
+    "componentType": "Dropdown",
+    "required": true,
+    "optionsKey": "titleOptions"
+  },
+  {
+    "key": "F_name",
+    "label": "firstname",
+    "componentType": "TextField",
+    "type": "text",
+    "required": true
+  },
+  {
+    "key": "L_name",
+    "label": "lastname",
+    "componentType": "TextField",
+    "type": "text",
+    "required": true
+  },
+  {
+    "key": "Birthdate",
+    "label": "birthdate",
+    "componentType": "DatePicker",
+    "required": true
+  },
+  {
+    "key": "Address",
+    "label": "address",
+    "componentType": "TextField",
+    "type": "text",
+    "required": true
+  },
+  {
+    "key": "Phone_num",
+    "label": "phoneNum",
+    "componentType": "TextField",
+    "type": "tel",
+    "required": true,
+    "maxlength": 10,
+    "isNumeric": true
+  },
+  {
+    "key": "NID_num",
+    "label": "NID",
+    "componentType": "TextField",
+    "type": "tel",
+    "required": true,
+    "maxlength": 13,
+    "isNumeric": true
+  },
+  {
+    "key": "Email",
+    "label": "email",
+    "componentType": "TextField",
+    "type": "email",
+    "required": true
+  },
+  {
+    "key": "HEADING_2",
+    "label": "headerAboutJob",
+    "componentType": "heading"
+  },
+  {
+    "key": "employeeType",
+    "label": "empType",
+    "componentType": "Dropdown",
+    "required": true,
+    "optionsKey": "employeeTypeOptions"
+  },
+  {
+    "key": "departmentID",
+    "label": "department",
+    "componentType": "Dropdown",
+    "required": true,
+    "optionsKey": "departmentOptions"
+  },
+  {
+    "key": "PositionID",
+    "label": "position",
+    "componentType": "Dropdown",
+    "required": true,
+    "optionsKey": "positionOptions"
+  },
+  {
+    "key": "Salary",
+    "label": "salary",
+    "componentType": "TextField",
+    "type": "tel",
+    "required": false,
+    "isNumeric": true
+  },
+  {
+    "key": "start_working_date",
+    "label": "startWorking",
+    "componentType": "DatePicker",
+    "required": true
+  },
+  {
+    "key": "HEADING_3",
+    "label": "headerAboutBank",
+    "componentType": "heading"
+  },
+  {
+    "key": "bankName",
+    "label": "bankname",
+    "componentType": "TextField",
+    "type": "text",
+    "required": false
+  },
+  {
+    "key": "bankAccountID",
+    "label": "bankaccount",
+    "componentType": "TextField",
+    "type": "tel",
+    "required": false,
+    "maxlength": 15,
+    "isNumeric": true
+  }
+]

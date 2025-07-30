@@ -293,20 +293,8 @@ export default {
   },
   data() {
     return {
-            companyFieldConfig: customerForms.company,
+      companyFieldConfig: customerForms.company,
       customerFieldConfig: customerForms.contactPerson,
-    // companyFieldConfig: {
-    //   keys: ["cus_name", "cus_address", "cus_tel", "cus_email", "cus_tax", "cus_purchase"],
-    //   labels: ["customerName", "customerAddress", "phoneNum", "email", "taxID", "customerPurchaseBy"],
-    //   types: ["text", "text", "text", "email", "text", "text"],
-    //   componentTypes: ["text", "text", "text", "text", "text", "text"] 
-    // },
-    // customerFieldConfig: {
-    //   keys: ["company_person_name", "company_person_tel", "company_person_email", "company_person_customer"],
-    //   labels: ["cusNameHeaderTable2", "cusTelHeaderTable2", "cusEmailHeaderTable2", "cusCompany"],
-    //   types: ["text", "text", "text", "text"], 
-    //   componentTypes: ["text", "text", "text", "dropdown"] 
-    // },
       dropDownStatus: "",
       CustomerDropown: [],
       CompanyPerson: [],
