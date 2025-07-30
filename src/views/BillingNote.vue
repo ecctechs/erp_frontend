@@ -583,7 +583,7 @@ import { computed, watch, ref } from "vue";
 import moment from "moment";
 import Icon from "../components/icon.vue";
 import TextField from "../components/textField.vue";
-import formConfig from "../config/field_config/about/form_billing_note.json";
+import formConfig from "../config/field_config/billing/form_billing.json";
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";

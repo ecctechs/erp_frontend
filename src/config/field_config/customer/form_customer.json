@@ -1,0 +1,76 @@
+{
+  "company": [
+    {
+      "key": "cus_name",
+      "label": "customerName",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "cus_address",
+      "label": "customerAddress",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "cus_tel",
+      "label": "phoneNum",
+      "type": "tel",
+      "required": true,
+      "maxlength": 10,
+      "isNumeric": true
+    },
+    {
+      "key": "cus_email",
+      "label": "email",
+      "type": "email",
+      "required": true
+    },
+    {
+      "key": "cus_tax",
+      "label": "taxID",
+      "type": "tel",
+      "required": true,
+      "maxlength": 13,
+      "isNumeric": true
+    },
+    {
+      "key": "cus_purchase",
+      "label": "customerPurchaseBy",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "contactPerson": [
+    {
+      "key": "company_person_name",
+      "label": "cusNameHeaderTable2",
+      "componentType": "TextField",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "company_person_tel",
+      "label": "cusTelHeaderTable2",
+      "componentType": "TextField",
+      "type": "tel",
+      "required": true,
+      "maxlength": 10,
+      "isNumeric": true
+    },
+    {
+      "key": "company_person_email",
+      "label": "cusEmailHeaderTable2",
+      "componentType": "TextField",
+      "type": "email",
+      "required": true
+    },
+    {
+      "key": "company_person_customer",
+      "label": "cusCompany",
+      "componentType": "Dropdown",
+      "required": true,
+      "options": "companyOptions"
+    }
+  ]
+}
