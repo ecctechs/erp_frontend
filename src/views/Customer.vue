@@ -101,17 +101,17 @@
         {{ t("headerPopupAddCustomer") }}
       </h2>
       <h2 v-if="isEditMode">{{ t("headerPopupEditCustomer") }}</h2>
-       <div v-for="(key, index) in companyFieldConfig.keys" :key="key" class="mb-3">
-    <span style="color: red">*</span>
-    <label class="col-sm-5 col-md-6">{{ t(companyFieldConfig.labels[index]) }}</label>
-    
-  <TextField
-    v-model="formData[key]"
-    :type="companyFieldConfig.types[index]"
-    :error="isEmpty[key]"
-    :maxlength="key === 'cus_tel' ? 10 : key === 'cus_tax' ? 13 : null"
-    @keypress="key === 'cus_tel' || key === 'cus_tax' ? validateInput($event) : null"
-  />
+   <div v-for="field in companyFieldConfig" :key="field.key" class="mb-3">
+    <label class="col-sm-5 col-md-6">
+        <span v-if="field.required" style="color: red">*</span>{{ t(field.label) }}
+    </label>
+    <TextField
+        v-model="formData[field.key]"
+        :type="field.type"
+        :error="isEmpty[field.key]"
+        :maxlength="field.maxlength"
+        @keypress="field.isNumeric ? validateInput($event) : null"
+    />
   </div>
       <div class="modal-footer">
         <Button
@@ -154,28 +154,27 @@
       <h2 style="padding: 0px" v-if="isEditMode">
         {{ t("headerPopupEditCustomer2") }}
       </h2>
-      <div v-for="(key, index) in customerFieldConfig.keys" :key="key" class="mb-3">
-  <label class="col-sm-5 col-md-6">
-    <span style="color: red">*</span>{{ t(customerFieldConfig.labels[index]) }}
-  </label>
-
-  <TextField
-    v-if="customerFieldConfig.componentTypes[index] === 'text'"
-    v-model="formDataCustomer[key]"
-    :type="customerFieldConfig.types[index]"
-    :error="isEmpty2[key]"
-    :maxlength="key === 'company_person_tel' ? 10 : null"
-    @keypress="key === 'company_person_tel' ? validateInput($event) : null"
-  />
-
-        <div v-if="customerFieldConfig.componentTypes[index] === 'dropdown'" style="display: inline-block; width: 50%;">
-            <Dropdown
-              v-model="formDataCustomer[key]"
-              :options="companyOptions"
-              :error="isEmpty2[key]"
-            />
-        </div>
-      </div>
+   <div v-for="field in customerFieldConfig" :key="field.key" class="mb-3">
+    <label class="col-sm-5 col-md-6">
+        <span v-if="field.required" style="color: red">*</span>{{ t(field.label) }}
+    </label>
+    <div style="display: inline-block; width: 50%;">
+      <Dropdown
+          v-if="field.componentType === 'Dropdown'"
+          v-model="formDataCustomer[field.key]"
+          :options="companyOptions"
+          :error="isEmpty2[field.key]"
+      />
+      <TextField
+          v-else
+          v-model="formDataCustomer[field.key]"
+          :type="field.type"
+          :error="isEmpty2[field.key]"
+          :maxlength="field.maxlength"
+          @keypress="field.isNumeric ? validateInput($event) : null"
+      />
+    </div>
+  </div>
       <div class="modal-footer">
         <Button
           v-if="this.isEditMode"
@@ -269,6 +268,8 @@ import { useI18n } from "vue-i18n";
 import { computed, watch, ref } from "vue";
 import Dropdown from "../components/dropdown.vue";
 import TextField from "../components/textField.vue";
+import customerForms from '../config/field_config/customer/form_customer.json';
+
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -292,18 +293,20 @@ export default {
   },
   data() {
     return {
-    companyFieldConfig: {
-      keys: ["cus_name", "cus_address", "cus_tel", "cus_email", "cus_tax", "cus_purchase"],
-      labels: ["customerName", "customerAddress", "phoneNum", "email", "taxID", "customerPurchaseBy"],
-      types: ["text", "text", "text", "email", "text", "text"],
-      componentTypes: ["text", "text", "text", "text", "text", "text"] 
-    },
-    customerFieldConfig: {
-      keys: ["company_person_name", "company_person_tel", "company_person_email", "company_person_customer"],
-      labels: ["cusNameHeaderTable2", "cusTelHeaderTable2", "cusEmailHeaderTable2", "cusCompany"],
-      types: ["text", "text", "text", "text"], 
-      componentTypes: ["text", "text", "text", "dropdown"] 
-    },
+            companyFieldConfig: customerForms.company,
+      customerFieldConfig: customerForms.contactPerson,
+    // companyFieldConfig: {
+    //   keys: ["cus_name", "cus_address", "cus_tel", "cus_email", "cus_tax", "cus_purchase"],
+    //   labels: ["customerName", "customerAddress", "phoneNum", "email", "taxID", "customerPurchaseBy"],
+    //   types: ["text", "text", "text", "email", "text", "text"],
+    //   componentTypes: ["text", "text", "text", "text", "text", "text"] 
+    // },
+    // customerFieldConfig: {
+    //   keys: ["company_person_name", "company_person_tel", "company_person_email", "company_person_customer"],
+    //   labels: ["cusNameHeaderTable2", "cusTelHeaderTable2", "cusEmailHeaderTable2", "cusCompany"],
+    //   types: ["text", "text", "text", "text"], 
+    //   componentTypes: ["text", "text", "text", "dropdown"] 
+    // },
       dropDownStatus: "",
       CustomerDropown: [],
       CompanyPerson: [],
