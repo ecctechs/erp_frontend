@@ -584,6 +584,7 @@ import moment from "moment";
 import Icon from "../components/icon.vue";
 import TextField from "../components/textField.vue";
 import formConfig from "../config/field_config/billing/form_billing.json";
+import monthMappings from '../config/global/month_mapping.json';
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -650,19 +651,6 @@ export default {
   },
   data() {
     return {
-    // fieldConfig: [
-    //   { key: 'billing_number', label: 'numberBilling', componentType: 'TextField', readonly: true, group: 'billing' },
-    //   { key: 'billing_date', label: 'dateBilling', componentType: 'DatePicker', readonly: false, group: 'billing' },
-    //   { key: 'employeeName', label: 'employeeName', componentType: 'TextField', readonly: true, group: 'billing' },
-    //   { key: 'cus_name', label: 'customerName', componentType: 'TextField', readonly: true, group: 'customer' },
-    //   { key: 'cus_address', label: 'customerAddress', componentType: 'TextField', readonly: true, group: 'customer' },
-    //   { key: 'cus_tel', label: 'phoneNum', componentType: 'TextField', readonly: true, group: 'customer' },
-    //   { key: 'cus_email', label: 'email', componentType: 'TextField', readonly: true, group: 'customer' },
-    //   { key: 'cus_tax', label: 'taxID', componentType: 'TextField', readonly: true, group: 'customer' },
-    //   { key: 'cus_purchase', label: 'customerPurchaseBy', componentType: 'TextField', readonly: true, group: 'customer' },
-    //   { key: 'payments', label: 'payments', componentType: 'Dropdown', readonly: false, group: 'summary' },
-    //   { key: 'remark', label: 'quotationRemark', componentType: 'Textarea', readonly: false, group: 'summary' }
-    // ],
       fieldConfig:formConfig,
       openPopupAllow: false,
       errorMessages: [],
@@ -834,20 +822,7 @@ summaryFields() {
               : inv.payments, // ถ้าไม่ตรงเงื่อนไขใด ๆ ใช้ค่าเดิม
         }));
 
-        const monthMapping = {
-          Jan: "ม.ค.",
-          Feb: "ก.พ.",
-          Mar: "มี.ค.",
-          Apr: "เม.ย.",
-          May: "พ.ค.",
-          Jun: "มิ.ย.",
-          Jul: "ก.ค.",
-          Aug: "ส.ค.",
-          Sep: "ก.ย.",
-          Oct: "ต.ค.",
-          Nov: "พ.ย.",
-          Dec: "ธ.ค.",
-        };
+        const monthMapping = monthMappings.eng_to_th;
 
         // แปลง invoice_date ให้เป็นชื่อเดือนภาษาไทย
         filteredInvoices = filteredInvoices.map((sale) => ({
@@ -1107,20 +1082,7 @@ summaryFields() {
       let formattedBill; // ประกาศตัวแปรก่อน
 
       if (this.t("headerLang") === "TH") {
-        const monthMapping = {
-          "ม.ค.": 0,
-          "ก.พ.": 1,
-          "มี.ค.": 2,
-          "เม.ย.": 3,
-          "พ.ค.": 4,
-          "มิ.ย.": 5,
-          "ก.ค.": 6,
-          "ส.ค.": 7,
-          "ก.ย.": 8,
-          "ต.ค.": 9,
-          "พ.ย.": 10,
-          "ธ.ค.": 11,
-        };
+        const monthMapping = monthMappings.eng_to_th;
 
         // ตรวจสอบว่า row.invoice_date มีค่า และเป็น string หรือไม่
         if (row.billing_date && typeof row.billing_date === "string") {

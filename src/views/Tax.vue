@@ -1,20 +1,9 @@
 <template>
   <div class="main-page">
-    <!-- call navigate tab -->
-    <!-- <Navigate /> -->
     <div class="page-body" :isLoading="isLoading">
       <div class="mb-3">
         <h2>{{ t("taxinvoice") }}</h2>
       </div>
-      <!-- <div class="add-btn mb-3">
-        <input
-          v-model="searchQuery"
-          type="text"
-          class="form-control custome-search-css"
-          style="width: 20%"
-          :placeholder="$t('Search')"
-        />
-      </div> -->
       <div class="row mb-3">
         <div class="col-6 col-sm-6 col-md-6 col-lg-3">
           <input
@@ -495,6 +484,7 @@ import Icon from "../components/icon.vue";
 import TextField from "../components/textField.vue";
 import Dropdown from "../components/dropdown.vue";
 import formConfig from '../config/field_config/tax/form_tax.json';
+import monthMappings from '../config/global/month_mapping.json';
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -703,35 +693,7 @@ export default {
         );
       }
 
-      const monthMapping = {
-        Jan: "ม.ค.",
-        Feb: "ก.พ.",
-        Mar: "มี.ค.",
-        Apr: "เม.ย.",
-        May: "พ.ค.",
-        Jun: "มิ.ย.",
-        Jul: "ก.ค.",
-        Aug: "ส.ค.",
-        Sep: "ก.ย.",
-        Oct: "ต.ค.",
-        Nov: "พ.ย.",
-        Dec: "ธ.ค.",
-      };
-
-      const monthMappingTHtoEN = {
-        "ม.ค.": "Jan",
-        "ก.พ.": "Feb",
-        "มี.ค.": "Mar",
-        "เม.ย.": "Apr",
-        "พ.ค.": "May",
-        "มิ.ย.": "Jun",
-        "ก.ค.": "Jul",
-        "ส.ค.": "Aug",
-        "ก.ย.": "Sep",
-        "ต.ค.": "Oct",
-        "พ.ย.": "Nov",
-        "ธ.ค.": "Dec",
-      };
+      const monthMapping = monthMappings.eng_to_th;
 
       console.log("filteredInvoices", filteredInvoices);
       // แปลงค่าของ billing ถ้าภาษาเป็น TH
@@ -971,20 +933,7 @@ export default {
       let formattedInvoice; // ประกาศตัวแปรก่อน
 
       if (this.t("headerLang") === "TH") {
-        const monthMapping = {
-          "ม.ค.": 0,
-          "ก.พ.": 1,
-          "มี.ค.": 2,
-          "เม.ย.": 3,
-          "พ.ค.": 4,
-          "มิ.ย.": 5,
-          "ก.ค.": 6,
-          "ส.ค.": 7,
-          "ก.ย.": 8,
-          "ต.ค.": 9,
-          "พ.ย.": 10,
-          "ธ.ค.": 11,
-        };
+         const monthMapping = monthMappings.eng_to_th;
 
         // ตรวจสอบว่า row.invoice_date มีค่า และเป็น string หรือไม่
         if (row.invoice_date && typeof row.invoice_date === "string") {
@@ -1136,9 +1085,7 @@ export default {
       );
     },
     vat_price() {
-      // this.formData.vat = this.formatDecimal(
-      //   (7 / 100) * parseFloat(this.formData.Net_price.replace(/,/g, ""))
-      // );
+
     },
     total_priceBeforeDiscount() {
       const totalNet = this.productForms.reduce((total, form) => {

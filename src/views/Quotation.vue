@@ -726,6 +726,7 @@ import Dropdown from "../components/dropdown.vue";
 import Icon from "../components/icon.vue";
 import TextField from "../components/textField.vue";
 import formConfig from '../config/field_config/quotation/form_quotation.json';
+import monthMappings from '../config/global/month_mapping.json';
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -1064,35 +1065,9 @@ export default {
         );
       }
 
-      const monthMapping = {
-        Jan: "ม.ค.",
-        Feb: "ก.พ.",
-        Mar: "มี.ค.",
-        Apr: "เม.ย.",
-        May: "พ.ค.",
-        Jun: "มิ.ย.",
-        Jul: "ก.ค.",
-        Aug: "ส.ค.",
-        Sep: "ก.ย.",
-        Oct: "ต.ค.",
-        Nov: "พ.ย.",
-        Dec: "ธ.ค.",
-      };
+      const monthMapping = monthMappings.eng_to_th;
 
-      const monthMappingTHtoEN = {
-        "ม.ค.": "Jan",
-        "ก.พ.": "Feb",
-        "มี.ค.": "Mar",
-        "เม.ย.": "Apr",
-        "พ.ค.": "May",
-        "มิ.ย.": "Jun",
-        "ก.ค.": "Jul",
-        "ส.ค.": "Aug",
-        "ก.ย.": "Sep",
-        "ต.ค.": "Oct",
-        "พ.ย.": "Nov",
-        "ธ.ค.": "Dec",
-      };
+      const monthMappingTHtoEN = monthMappings.th_to_eng;
 
       if (this.t("headerLang") === "EN") {
         data = data

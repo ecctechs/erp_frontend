@@ -248,6 +248,7 @@ import moment from "moment";
 import Dropdown from "../components/Dropdown.vue";
 import TextField from "../components/textField.vue";
 import formConfig from '../config/field_config/employee/form_employee.json';
+import monthMappings from '../config/global/month_mapping.json';
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -292,44 +293,11 @@ export default {
       },
     }));
 
-    const monthList = {
-      en: [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ],
-      th: [
-        "มกราคม",
-        "กุมภาพันธ์",
-        "มีนาคม",
-        "เมษายน",
-        "พฤษภาคม",
-        "มิถุนายน",
-        "กรกฎาคม",
-        "สิงหาคม",
-        "กันยายน",
-        "ตุลาคม",
-        "พฤศจิกายน",
-        "ธันวาคม",
-      ],
-    };
-
-    const months = computed(() => monthList[locale.value] || monthList.en);
     const documentName = computed(() => t("dontHaveEmployee"));
 
     return {
       momentFormat,
       currentLocale,
-      months,
       t,
       lang,
       documentName,
@@ -338,32 +306,6 @@ export default {
   data() {
     return {
       fieldConfig: formConfig,
-      // employeeFieldConfig: {
-      //   keys: [
-      //     'HEADING_1', 
-      //     'title', 'F_name', 'L_name', 'Birthdate', 'Address', 'Phone_num', 'NID_num', 'Email',
-      //     'HEADING_2', 
-      //     'employeeType', 'departmentID', 'PositionID', 'Salary', 'start_working_date',
-      //     'HEADING_3', 
-      //     'bankName', 'bankAccountID'
-      //   ],
-      //   labels: [
-      //     'employeeInformation',
-      //     'title', 'firstname', 'lastname', 'birthdate', 'address', 'phoneNum', 'NID', 'email',
-      //     'headerAboutJob',
-      //     'empType', 'department', 'position', 'salary', 'startWorking',
-      //     'headerAboutBank',
-      //     'bankname', 'bankaccount'
-      //   ],
-      //   components: [
-      //     'heading',
-      //     'dropdown', 'text', 'text', 'datepicker', 'text', 'text', 'text', 'email',
-      //     'heading',
-      //     'dropdown', 'dropdown', 'dropdown', 'text', 'datepicker',
-      //     'heading',
-      //     'text', 'text'
-      //   ],
-      // },
       dropDownStatus: "active",
       errorMessages: [],
       errorMessages2: [],
@@ -538,20 +480,7 @@ export default {
       console.log("filteredEmployees");
       console.log(filteredEmployees);
 
-      const monthMapping = {
-        Jan: "ม.ค.",
-        Feb: "ก.พ.",
-        Mar: "มี.ค.",
-        Apr: "เม.ย.",
-        May: "พ.ค.",
-        Jun: "มิ.ย.",
-        Jul: "ก.ค.",
-        Aug: "ส.ค.",
-        Sep: "ก.ย.",
-        Oct: "ต.ค.",
-        Nov: "พ.ย.",
-        Dec: "ธ.ค.",
-      };
+      const monthMapping = monthMappings.eng_to_th;
 
       const titleMapping = {
         Miss: "นางสาว",
@@ -647,20 +576,8 @@ export default {
       }
 
       if (this.t("headerLang") === "TH") {
-        const monthMapping = {
-          Jan: "ม.ค.",
-          Feb: "ก.พ.",
-          Mar: "มี.ค.",
-          Apr: "เม.ย.",
-          May: "พ.ค.",
-          Jun: "มิ.ย.",
-          Jul: "ก.ค.",
-          Aug: "ส.ค.",
-          Sep: "ก.ย.",
-          Oct: "ต.ค.",
-          Nov: "พ.ย.",
-          Dec: "ธ.ค.",
-        };
+        const monthMapping = monthMappings.eng_to_th;
+
         filteredLeaving = filteredLeaving.map((sale) => ({
           ...sale,
           date: String(sale.date)

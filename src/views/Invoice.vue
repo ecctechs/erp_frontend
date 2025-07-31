@@ -514,6 +514,7 @@ import Dropdown from "../components/dropdown.vue";
 import Icon from "../components/icon.vue";
 import TextField from "../components/textField.vue";
 import formConfig from '../config/field_config/invoice/form_invoice.json';
+import monthMappings from '../config/global/month_mapping.json';
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -718,38 +719,8 @@ summaryFields() {
         );
       }
 
-      const monthMapping = {
-        Jan: "ม.ค.",
-        Feb: "ก.พ.",
-        Mar: "มี.ค.",
-        Apr: "เม.ย.",
-        May: "พ.ค.",
-        Jun: "มิ.ย.",
-        Jul: "ก.ค.",
-        Aug: "ส.ค.",
-        Sep: "ก.ย.",
-        Oct: "ต.ค.",
-        Nov: "พ.ย.",
-        Dec: "ธ.ค.",
-      };
+      const monthMapping = monthMappings.eng_to_th;
 
-      const monthMappingTHtoEN = {
-        "ม.ค.": "Jan",
-        "ก.พ.": "Feb",
-        "มี.ค.": "Mar",
-        "เม.ย.": "Apr",
-        "พ.ค.": "May",
-        "มิ.ย.": "Jun",
-        "ก.ค.": "Jul",
-        "ส.ค.": "Aug",
-        "ก.ย.": "Sep",
-        "ต.ค.": "Oct",
-        "พ.ย.": "Nov",
-        "ธ.ค.": "Dec",
-      };
-      console.log("filteredInvoices ----", filteredInvoices);
-
-      // แปลงค่าของ billing ถ้าภาษาเป็น TH
       if (this.t("headerLang") === "TH") {
         filteredInvoices = filteredInvoices.map((inv) => ({
           ...inv,
@@ -760,9 +731,6 @@ summaryFields() {
               : inv.invoice_status === "Issue a receipt"
               ? this.t("issueReceipt_invoice")
               : inv.invoice_status, // ถ้าไม่ตรงเงื่อนไขใด ๆ ใช้ค่าเดิม
-
-          // billing:
-          //   inv.billing === "Pending" ? this.t("PendingLG") : inv.billing, // แปลงค่า billing ด้วย
         }));
 
         // แปลง invoice_date ให้เป็นชื่อเดือนภาษาไทย
@@ -785,8 +753,6 @@ summaryFields() {
               : inv.invoice_status === "Issue a receipt"
               ? this.t("issueReceipt_invoice")
               : inv.invoice_status, // ถ้าไม่ตรงเงื่อนไขใด ๆ ใช้ค่าเดิม
-
-          // billing: inv.billing === "Pending" ? "PendingLG" : inv.billing,
         }));
       }
       return filteredInvoices; // ถ้าไม่มีการค้นหาแสดงทั้งหมด
@@ -944,20 +910,7 @@ summaryFields() {
       let formattedInvoice; // ประกาศตัวแปรก่อน
 
       if (this.t("headerLang") === "TH") {
-        const monthMapping = {
-          "ม.ค.": 0,
-          "ก.พ.": 1,
-          "มี.ค.": 2,
-          "เม.ย.": 3,
-          "พ.ค.": 4,
-          "มิ.ย.": 5,
-          "ก.ค.": 6,
-          "ส.ค.": 7,
-          "ก.ย.": 8,
-          "ต.ค.": 9,
-          "พ.ย.": 10,
-          "ธ.ค.": 11,
-        };
+        const monthMapping = monthMappings.eng_to_th;
 
         // ตรวจสอบว่า row.invoice_date มีค่า และเป็น string หรือไม่
         if (row.invoice_date && typeof row.invoice_date === "string") {

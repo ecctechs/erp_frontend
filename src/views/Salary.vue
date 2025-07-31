@@ -458,6 +458,7 @@ import DatePicker from "vue-datepicker-next";
 import "vue-datepicker-next/index.css";
 import Button from "../components/button.vue";
 import Dropdown from "../components/dropdown.vue";
+import monthMappings from '../config/global/month_mapping.json';
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -640,34 +641,8 @@ export default {
         );
       }
 
-      const monthMapping = {
-        January: "มกราคม",
-        February: "กุมภาพันธ์",
-        March: "มีนาคม",
-        April: "เมษายน",
-        May: "พฤษภาคม",
-        June: "มิถุนายน",
-        July: "กรกฎาคม",
-        August: "สิงหาคม",
-        September: "กันยายน",
-        October: "ตุลาคม",
-        November: "พฤศจิกายน",
-        December: "ธันวาคม",
-      };
-      const monthMappingshort = {
-        Jan: "ม.ค.",
-        Feb: "ก.พ.",
-        Mar: "มี.ค.",
-        Apr: "เม.ย.",
-        May: "พ.ค.",
-        Jun: "มิ.ย.",
-        Jul: "ก.ค.",
-        Aug: "ส.ค.",
-        Sep: "ก.ย.",
-        Oct: "ต.ค.",
-        Nov: "พ.ย.",
-        Dec: "ธ.ค.",
-      };
+      const monthMapping = monthMappings.eng_to_th;
+      const monthMappingshort = monthMappings.eng_to_th;
       // แผนที่ชื่อเดือนภาษาอังกฤษเป็นไทย
       if (this.t("headerLang") === "TH") {
         // แปลงเดือนเป็นภาษาไทยและปี ค.ศ. เป็น พ.ศ.

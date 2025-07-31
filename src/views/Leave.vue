@@ -275,6 +275,7 @@ import moment from "moment";
 import Button from "../components/button.vue";
 import Dropdown from "../components/dropdown.vue";
 import formConfig from '../config/field_config/leave/form_leave.json';
+import monthMappings from '../config/global/month_mapping.json';
 
 const API_CALL = config["url"];
 // const API_CALL = 'https://erp-backend-9w1r.onrender.com'
@@ -542,20 +543,7 @@ export default {
       console.log("filteredEmployees");
       console.log(filteredEmployees);
 
-      const monthMapping = {
-        Jan: "ม.ค.",
-        Feb: "ก.พ.",
-        Mar: "มี.ค.",
-        Apr: "เม.ย.",
-        May: "พ.ค.",
-        Jun: "มิ.ย.",
-        Jul: "ก.ค.",
-        Aug: "ส.ค.",
-        Sep: "ก.ย.",
-        Oct: "ต.ค.",
-        Nov: "พ.ย.",
-        Dec: "ธ.ค.",
-      };
+      const monthMapping = monthMappings.eng_to_th;
       // กรองตามสถานะ
       if (this.formData.status) {
         filteredEmployees = filteredEmployees.filter(
@@ -564,22 +552,6 @@ export default {
         );
       }
       if (this.t("headerLang") === "TH") {
-        // แปลง invoice_date ให้เป็นชื่อเดือนภาษาไทย
-        // filteredEmployees = filteredEmployees.map((emp) => ({
-        //   ...emp,
-        //   Birthdate: String(emp.Birthdate)
-        //     .replace(
-        //       /\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b/g,
-        //       (match) => monthMapping[match] // ✅ แปลงชื่อเดือนเป็นไทย
-        //     )
-        //     .replace(/(\d{4})/, (match) => (parseInt(match) + 543).toString()), // ✅ เพิ่มปี ค.ศ. + 543 (เป็น พ.ศ.)
-        //   ["Start Working Date"]: String(emp["Start Working Date"])
-        //     .replace(
-        //       /\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b/g,
-        //       (match) => monthMapping[match] // ✅ แปลงชื่อเดือนเป็นไทย
-        //     )
-        //     .replace(/(\d{4})/, (match) => (parseInt(match) + 543).toString()), // ✅ เพิ่มปี ค.ศ. + 543 (เป็น พ.ศ.)
-        // }));
       }
 
       // กรองตามการค้นหาชื่อ
@@ -610,20 +582,7 @@ export default {
       }
 
       if (this.t("headerLang") === "TH") {
-        const monthMapping = {
-          Jan: "ม.ค.",
-          Feb: "ก.พ.",
-          Mar: "มี.ค.",
-          Apr: "เม.ย.",
-          May: "พ.ค.",
-          Jun: "มิ.ย.",
-          Jul: "ก.ค.",
-          Aug: "ส.ค.",
-          Sep: "ก.ย.",
-          Oct: "ต.ค.",
-          Nov: "พ.ย.",
-          Dec: "ธ.ค.",
-        };
+        const monthMapping = monthMappings.eng_to_th;
         // แปลง invoice_date ให้เป็นชื่อเดือนภาษาไทย
         filteredLeaving = filteredLeaving.map((sale) => ({
           ...sale,
