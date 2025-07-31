@@ -186,6 +186,7 @@ import { watchEffect } from "vue";
 import Dropdown from "../components/dropdown.vue";
 import Icon from "../components/icon.vue";
 import TextField from "../components/textField.vue";
+import formConfig from '../config/field_config/first_register/form_first_register.json';
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -222,24 +223,7 @@ export default {
   },
   data() {
     return {
-      fieldConfig: [
-        { key: 'user_title', label: 'title', group: 'user', componentType: 'Dropdown', required: true, col: 'col-md-2', options: 'titleOptions' },
-        { key: 'userF_name', label: 'firstname', group: 'user', componentType: 'TextField', type: 'text', required: true, col: 'col-md-4', maxlength: 50 },
-        { key: 'userL_name', label: 'lastname', group: 'user', componentType: 'TextField', type: 'text', required: true, col: 'col-md-6' },
-        { key: 'userPhone', label: 'phoneNum', group: 'user', componentType: 'TextField', type: 'tel', required: true, col: 'col-6', maxlength: 10, isNumeric: true },
-        { key: 'userEmail', label: 'email', group: 'user', componentType: 'TextField', type: 'email', required: true, col: 'col-6' },
-        { key: 'userPassword', label: 'password', group: 'user', componentType: 'Password', required: true, col: 'col-md-6' },
-        { key: 'userPassword2', label: 'comfrimpassword', group: 'user', componentType: 'Password', required: true, col: 'col-md-6' },
-        { key: 'bus_name', label: 'customerName', group: 'business', componentType: 'TextField', type: 'text', required: true, col: 'col-md-6' },
-        { key: 'bus_website', label: 'companyWebsite', group: 'business', componentType: 'TextField', type: 'text', required: false, col: 'col-md-6' },
-        { key: 'bus_address', label: 'address', group: 'business', componentType: 'TextField', type: 'text', required: true, col: 'col-md-12' },
-        { key: 'bus_tel', label: 'companyPhone', group: 'business', componentType: 'TextField', type: 'tel', required: true, col: 'col-md-6', maxlength: 10, isNumeric: true },
-        { key: 'bus_tax', label: 'taxID', group: 'business', componentType: 'TextField', type: 'tel', required: false, col: 'col-md-6', maxlength: 13, isNumeric: true },
-        { key: 'bus_logo', label: 'companyLogo', group: 'business', componentType: 'Upload', required: false, col: 'col-md-6' },
-        { key: 'bank_name', label: 'bankname', group: 'business', componentType: 'Dropdown', required: false, col: 'col-md-6', options: 'bankOptions', placeholder: 'กรุณาเลือกธนาคาร' },
-        { key: 'bank_account', label: 'bankAccName', group: 'business', componentType: 'TextField', type: 'text', required: false, col: 'col-md-6' },
-        { key: 'bank_number', label: 'bankaccount', group: 'business', componentType: 'TextField', type: 'tel', required: false, col: 'col-md-6', maxlength: 15, isNumeric: true },
-      ],
+      fieldConfig: formConfig,
       errorMessages: [],
       isPopupVisible_error: false,
       Business: [],

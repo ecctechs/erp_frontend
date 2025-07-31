@@ -1,0 +1,36 @@
+[
+  {
+    "key": "categoryID",
+    "label": "productCategory",
+    "componentType": "Dropdown",
+    "required": true,
+    "optionsKey": "categoryOptions"
+  },
+  {
+    "key": "productname",
+    "labelDynamic": true, 
+    "componentType": "TextField",
+    "type": "text",
+    "required": true
+  },
+  {
+    "key": "productdetail",
+    "label": "productDetail",
+    "componentType": "TextField",
+    "type": "text"
+  },
+  {
+    "key": "price",
+    "label": "productPriceSale",
+    "componentType": "PriceField",
+    "required": true
+  },
+  {
+    "key": "amount",
+    "label": "productAmount",
+    "componentType": "TextField",
+    "type": "number",
+    "required": false,
+    "condition": "isProduct"
+  }
+]

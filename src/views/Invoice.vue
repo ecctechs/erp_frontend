@@ -513,6 +513,7 @@ import Button from "../components/button.vue";
 import Dropdown from "../components/dropdown.vue";
 import Icon from "../components/icon.vue";
 import TextField from "../components/textField.vue";
+import formConfig from '../config/field_config/invoice/form_invoice.json';
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -580,19 +581,7 @@ export default {
   },
   data() {
     return {
-      fieldConfig: [
-        { key: 'invoice_number', label: 'numberInvoice', componentType: 'TextField', readonly: true, group: 'invoice' },
-        { key: 'invoice_date', label: 'dateInvoice', componentType: 'DatePicker', readonly: false, group: 'invoice' },
-        { key: 'invoice_status', label: 'statusInvoice', componentType: 'Dropdown', readonly: true, group: 'invoice', options: 'invoiceStatusOptions' },
-        { key: 'employeeName', label: 'employeeName', componentType: 'TextField', readonly: true, group: 'invoice' },
-        { key: 'cus_name', label: 'customerName', componentType: 'TextField', readonly: true, group: 'customer' },
-        { key: 'cus_address', label: 'customerAddress', componentType: 'TextField', readonly: true, group: 'customer' },
-        { key: 'cus_tel', label: 'phoneNum', componentType: 'TextField', readonly: true, group: 'customer' },
-        { key: 'cus_email', label: 'email', componentType: 'TextField', readonly: true, group: 'customer' },
-        { key: 'cus_tax', label: 'taxID', componentType: 'TextField', readonly: true, group: 'customer' },
-        { key: 'cus_purchase', label: 'customerPurchaseBy', componentType: 'TextField', readonly: true, group: 'customer' },
-        { key: 'remark', label: 'quotationRemark', componentType: 'Textarea', readonly: false, group: 'summary' },
-      ],
+      fieldConfig: formConfig,
       openPopupAllow: false,
       shortcutAllow: false,
       isAllowConfirmPopupOpen: false,
@@ -2237,11 +2226,7 @@ summaryFields() {
 
         const json = await response.json();
 
-        const saleNumber = this.formData.invoice_id; // "QT-2505080001"
-        // alert(saleNumber);
-
-        // const response_delte = await this.deleteTaxInvoice(saleNumber);
-        // console.log("response_delte", response_delte);
+        const saleNumber = this.formData.invoice_id; 
 
         if (json.statusCode === 200) {
           this.getInvoice();

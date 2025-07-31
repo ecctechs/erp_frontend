@@ -1,0 +1,16 @@
+[
+  {
+    "key": "employeeID",
+    "label": "empname",
+    "componentType": "Dropdown",
+    "options": "employeeOptions",
+    "required": true
+  },
+  {
+    "key": "detail",
+    "label": "leavetype",
+    "componentType": "Dropdown",
+    "options": "leaveTypeOptions",
+    "required": true
+  }
+]

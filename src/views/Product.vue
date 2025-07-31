@@ -89,123 +89,98 @@
     </div>
   </div>
   <div>
-    <Popup :isOpen="isPopupOpen" :closePopup="closePopup" :formData="formData">
-      <div class="mb-3" style="margin-left: -10px; margin-top: -25px">
-        <h2 v-if="isAddingMode && selectedType === 'A'">
-          {{ t("headerPopupAddProduct") }}
-        </h2>
-        <h2 v-if="isAddingMode && selectedType === 'B'">
-          {{ t("headerPopupAddService") }}
-        </h2>
-        <h2 v-if="isEditMode && selectedType === 'A'">
-          {{ t("headerPopupEditProduct") }}
-        </h2>
-        <h2 v-if="isEditMode && selectedType === 'B'">
-          {{ t("headerPopupEditService") }}
-        </h2>
+  <Popup :isOpen="isPopupOpen" :closePopup="closePopup" :formData="formData">
+  <div class="mb-3" style="margin-left: -10px; margin-top: -25px">
+    <h2 v-if="isAddingMode && selectedType === 'A'">{{ t("headerPopupAddProduct") }}</h2>
+    <h2 v-if="isAddingMode && selectedType === 'B'">{{ t("headerPopupAddService") }}</h2>
+    <h2 v-if="isEditMode && selectedType === 'A'">{{ t("headerPopupEditProduct") }}</h2>
+    <h2 v-if="isEditMode && selectedType === 'B'">{{ t("headerPopupEditService") }}</h2>
+  </div>
+
+  <div v-for="field in fieldConfig" :key="field.key">
+    <div v-if="!field.condition || (field.condition === 'isProduct' && formData.productTypeID === 1)" class="mb-3 div-for-formControl">
+      <label class="col-sm-3 col-md-6">
+        <span v-if="field.required" style="color: red">*</span>
+        <span v-if="field.labelDynamic">
+          {{ selectedType === 'A' ? t("productNameProduct") : t("productNameService") }}
+        </span>
+        <span v-else>{{ t(field.label) }}</span>
+      </label>
+
+      <div class="col-sm-7 col-md-6">
+        <Dropdown
+          v-if="field.componentType === 'Dropdown'"
+          v-model="formData[field.key]"
+          :options="this[field.optionsKey]"
+          :error="isEmpty[field.key]"
+        />
+
+        <TextField
+          v-else-if="field.componentType === 'PriceField'"
+          v-model="formattedPrice"
+          type="text"
+          @input="updatePrice"
+          @keypress="onlyNumber"
+          :class="{ error: isEmpty[field.key] }"
+        />
+
+        <TextField
+          v-else-if="field.componentType === 'TextField'"
+          v-model="formData[field.key]"
+          :type="field.type"
+          :error="isEmpty[field.key]"
+          :disabled="field.key === 'amount' && isEditMode"
+        />
       </div>
+    </div>
+  </div>
 
-      <div v-for="(key, index) in productFieldConfig.keys" :key="key">
-        <div
-          v-if="key !== 'amount' || (key === 'amount' && formData.productTypeID === 1)"
-          class="mb-3 div-for-formControl"
-        >
-          <label class="col-sm-3 col-md-6">
-            <span v-if="productFieldConfig.required[index]" style="color: red">*</span>
-            <span v-if="key === 'productname'">
-              {{ selectedType === 'A' ? t("productNameProduct") : t("productNameService") }}
-            </span>
-            <span v-else>
-              {{ t(key === 'categoryID' ? 'productCategory' : key === 'productdetail' ? 'productDetail' : key === 'price' ? 'productPriceSale' : 'productAmount') }}
-            </span>
-          </label>
+  <div class="mb-3 div-for-formControl">
+    <div class="mb-6 col-6">
+      <input class="form-control" type="file" @change="handleFileUpload" accept="image/png, image/gif, image/jpeg" ref="fileInput" style="width: 100%" />
+      <a v-if="showError" class="text-danger">{{ errorMessage }}</a>
+      <a v-if="showInfo" class="text-secondary">{{ t("warningsizeproductImage") }}</a>
+      <a v-if="showApprove" class="text-success">{{ approveMessage }}</a>
+    </div>
+    <div class="mb-3 col-6">
+      <img v-if="exp_files" :src="exp_files" alt="Uploaded Image" class="image_exp" />
+    </div>
+  </div>
 
-          <div class="col-sm-7 col-md-6">
-            <Dropdown
-              v-if="productFieldConfig.components[index] === 'dropdown'"
-              v-model="formData[key]"
-              :options="categoryOptions"
-              :error="isEmpty[key]"
-            />
-
-            <TextField
-              v-if="productFieldConfig.components[index] === 'text'"
-              v-model="formData[key]"
-              :error="isEmpty[key]"
-            />
-
-            <TextField
-              v-if="productFieldConfig.components[index] === 'price'"
-              v-model="formattedPrice"
-              type="text"
-              @input="updatePrice"
-              @keypress="onlyNumber"
-              :class="{ error: isEmpty[key] }"
-            />
-
-            <TextField
-              v-if="productFieldConfig.components[index] === 'number'"
-              v-model="formData[key]"
-              type="number"
-              :error="isEmpty[key]"
-              :disabled="isEditMode"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="mb-3 div-for-formControl">
-        <div class="mb-6 col-6">
-          <input
-            class="form-control"
-            type="file"
-            @change="handleFileUpload"
-            accept="image/png, image/gif, image/jpeg"
-            ref="fileInput"
-            style="width: 100%"
-          />
-          <a v-if="showError" class="text-danger">{{ errorMessage }}</a>
-          <a v-if="showInfo" class="text-secondary">{{ t("warningsizeproductImage") }}</a>
-          <a v-if="showApprove" class="text-success">{{ approveMessage }}</a>
-        </div>
-        <div class="mb-3 col-6">
-          <img v-if="exp_files" :src="exp_files" alt="Uploaded Image" class="image_exp" />
-        </div>
-      </div>
-
-      <div class="mb-3 modal-footer">
-        <Button
-          :disabled="isLoading"
-          customClass="btn btn-primary me-3"
-          v-if="isAddingMode"
-          @click="addProduct"
-        >
-          <span
-            v-if="isLoading"
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          <span v-else>{{ t("buttonAdd") }}</span>
-        </Button>
-        <Button
-          :disabled="isLoading"
-          customClass="btn btn-primary me-3"
-          v-if="isEditMode"
-          @click="editProduct"
-        >
-          <span
-            v-if="isLoading"
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          <span v-else>{{ t("buttonSave") }}</span>
-        </Button>
-        <Button customClass="btn btn-secondary" @click="closePopup">
-          {{ t("buttonCancel") }}
-        </Button>
-      </div>
-    </Popup>
+  <div class="mb-3 modal-footer">
+      <Button
+    :disabled="isLoading"
+    customClass="btn btn-primary me-3"
+    v-if="isAddingMode"
+    @click="addProduct"
+  >
+    <span
+      v-if="isLoading"
+      class="spinner-border spinner-border-sm"
+      role="status"
+      aria-hidden="true"
+    ></span>
+    <span v-else>{{ t("buttonAdd") }}</span>
+  </Button>
+  <Button
+    :disabled="isLoading"
+    customClass="btn btn-primary me-3"
+    v-if="isEditMode"
+    @click="editProduct"
+  >
+    <span
+      v-if="isLoading"
+      class="spinner-border spinner-border-sm"
+      role="status"
+      aria-hidden="true"
+    ></span>
+    <span v-else>{{ t("buttonSave") }}</span>
+  </Button>
+  <Button customClass="btn btn-secondary" @click="closePopup">
+    {{ t("buttonCancel") }}
+  </Button>
+    </div>
+</Popup>
     <div class="delete-popup">
       <Popup
         :isOpen="isDeleteConfirmPopupOpen"
@@ -262,6 +237,7 @@ import { computed, watch, ref } from "vue";
 import Button from "../components/button.vue";
 import Dropdown from "../components/dropdown.vue";
 import TextField from "../components/textField.vue";
+import formConfig from '../config/field_config/product/form_product.json';
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -288,11 +264,12 @@ export default {
   },
   data() {
     return {
-      productFieldConfig: {
-        keys: ['categoryID', 'productname', 'productdetail', 'price', 'amount'],
-        components: ['dropdown', 'text', 'text', 'price', 'number'],
-        required: [true, true, false, true, false]
-      },
+      fieldConfig: formConfig,
+      // productFieldConfig: {
+      //   keys: ['categoryID', 'productname', 'productdetail', 'price', 'amount'],
+      //   components: ['dropdown', 'text', 'text', 'price', 'number'],
+      //   required: [true, true, false, true, false]
+      // },
       dropDownStatus: "",
       errorMessages: [],
       isPopupVisible_error: false,
@@ -502,36 +479,45 @@ export default {
   },
   methods: {
     validateFormData() {
-      this.isEmpty = Object.fromEntries(this.productFieldConfig.keys.map(key => [key, false]));
-      this.errorMessages = [];
+            // รีเซ็ตค่า isEmpty ทั้งหมด
+        this.isEmpty = Object.fromEntries(
+          this.fieldConfig.map(field => [field.key, false])
+        );
+        this.errorMessages = [];
 
-      this.productFieldConfig.keys.forEach((key, index) => {
-        const isRequired = this.productFieldConfig.required[index];
-        const value = this.formData[key];
+        // วนลูป fieldConfig รูปแบบใหม่ (Array of Objects)
+        for (const field of this.fieldConfig) {
+          const value = this.formData[field.key];
 
-        if (isRequired && (!value || value === 0)) {
-          if (key === 'amount' && this.formData.productTypeID !== 1) {
-              return;
+          // ตรวจสอบฟิลด์ที่จำเป็น (required)
+          if (field.required && (!value || value === 0)) {
+            // เงื่อนไขพิเศษ: ไม่ต้อง validate 'amount' ถ้าเป็น Service
+            if (field.key === 'amount' && this.formData.productTypeID !== 1) {
+              continue; // ข้ามไป field ถัดไป
+            }
+            this.isEmpty[field.key] = true;
+            this.errorMessages.push(this.$t(`validation.${field.key}`));
           }
-          this.isEmpty[key] = true;
-          this.errorMessages.push(this.$t(`validation.${key}`));
         }
-      });
 
-      const isDuplicateName = this.currentTableData.some(
-        (item) => item.productname.trim() === this.formData.productname.trim() && item.ID !== this.formData.productID
-      );
-      if (this.formData.productname && isDuplicateName) {
-        this.isEmpty.productname = true;
-        this.errorMessages.push(this.$t("validation.duplicateProductName"));
-      }
+        // ตรวจสอบชื่อซ้ำ (เหมือนเดิม)
+        const isDuplicateName = this.currentTableData.some(
+          (item) => 
+            item.productname.trim() === this.formData.productname.trim() && 
+            item.ID !== this.formData.productID
+        );
+        if (this.formData.productname && isDuplicateName) {
+          this.isEmpty.productname = true;
+          this.errorMessages.push(this.$t("validation.duplicateProductName"));
+        }
 
-      if (this.errorMessages.length > 0) {
-        this.showPopup_validate(this.errorMessages);
-        return false;
-      }
-      
-      return true;
+        // แสดง popup ถ้ามี error
+        if (this.errorMessages.length > 0) {
+          this.showPopup_validate(this.errorMessages);
+          return false; // คืนค่าว่า validate ไม่ผ่าน
+        }
+        
+        return true; // คืนค่าว่า validate ผ่าน
     },
     closeErrorPopup() {
       this.isPopupVisible_error = false;

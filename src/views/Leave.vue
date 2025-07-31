@@ -274,6 +274,7 @@ import en from "vue-datepicker-next/locale/en.es";
 import moment from "moment";
 import Button from "../components/button.vue";
 import Dropdown from "../components/dropdown.vue";
+import formConfig from '../config/field_config/leave/form_leave.json';
 
 const API_CALL = config["url"];
 // const API_CALL = 'https://erp-backend-9w1r.onrender.com'
@@ -362,10 +363,7 @@ export default {
 
   data() {
     return {
-      leaveFieldConfig: [
-          { key: 'employeeID', label: 'empname', componentType: 'Dropdown', options: 'employeeOptions', required: true },
-          { key: 'detail', label: 'leavetype', componentType: 'Dropdown', options: 'leaveTypeOptions', required: true },
-      ],
+       leaveFieldConfig: formConfig,
       // ประเภทการลา: 'full', 'half', หรือ 'multi'
       leaveType: "full",
       // ลาเต็มวัน

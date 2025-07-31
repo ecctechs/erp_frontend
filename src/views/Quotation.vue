@@ -1,25 +1,9 @@
 <template>
   <div class="main-page">
-    <!-- call navigate tab -->
-    <!-- <Navigate /> -->
     <div class="page-body" :isLoading="isLoading">
       <div class="mb-3">
         <h2>{{ t("headerQuotation") }}</h2>
       </div>
-      <!-- <div class="add-btn mb-3" style="flex: 1">
-        <input
-          v-model="searchQuery"
-          type="text"
-          class="form-control me-3 col-sm-4"
-          style="width: 20%"
-          :placeholder="$t('Search')"
-        />
-
-        <a class="btn btn-success" @click="openPopup">{{
-          t("addQuotation")
-        }}</a>
-      </div> -->
-
       <div class="row mb-3">
         <div class="col-6 col-sm-6 col-md-6 col-lg-3">
           <input
@@ -445,19 +429,6 @@
                         rows="3"
                       ></textarea>
                     </div>
-                    <!-- <select
-                      class="form-control form-select"
-                      v-model="form.productID"
-                      @change="updatePrice(form)"
-                    >
-                      <option
-                        v-for="product in Products"
-                        :key="product.productID"
-                        :value="product.productID"
-                      >
-                        {{ product.productname }}
-                      </option>
-                    </select> -->
                   </td>
                   <td class="price-column">
                     <input
@@ -485,24 +456,6 @@
 
                   <td class="discount-column">
                     <div class="discount-type">
-                      <!-- <select
-                        class="form-control form-select"
-                        v-model="form.discounttype"
-                        @change="updatePrice2(form, index)"
-                        style="
-                          border-top-right-radius: 0px;
-                          border-bottom-right-radius: 0px;
-                          width: 20px !important;
-                          min-width: 125px;
-                        "
-                      >
-                        <option value="amount">
-                          {{ t("productDiscountTypeAmount") }}
-                        </option>
-                        <option value="percent">
-                          {{ t("productDiscountTypePercent") }}
-                        </option>
-                      </select> -->
                       <Dropdown
                         v-model="form.discounttype"
                         :options="discountTypeOptions"
@@ -772,6 +725,7 @@ import Button from "../components/button.vue";
 import Dropdown from "../components/dropdown.vue";
 import Icon from "../components/icon.vue";
 import TextField from "../components/textField.vue";
+import formConfig from '../config/field_config/quotation/form_quotation.json';
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -842,24 +796,7 @@ export default {
   },
   data() {
     return {
-      fieldConfig: [
-        { key: 'sale_number',         label: 'numberQuotation',   componentType: 'TextField',    readonly: true, group: 'header' },
-        { key: 'status',              label: 'statusQuotation',   componentType: 'Dropdown',     readonly: true, group: 'header',   options: 'statusOptions' },
-        { key: 'employeeID',          label: 'employeeName',      componentType: 'Autocomplete', required: true, group: 'header',   items: 'Employees', itemTitle: 'Name', itemValue: 'employeeID' },
-        { key: 'cus_name',            label: 'customerName',      componentType: 'Datalist',     required: true, group: 'customer', items: 'Customers' },
-        { key: 'cus_address',         label: 'customerAddress',   componentType: 'TextField',    required: true, group: 'customer', readonly: true },
-        { key: 'cus_tel',             label: 'phoneNum',          componentType: 'TextField',    required: true, group: 'customer', readonly: true, maxlength: 10, isNumeric: true },
-        { key: 'cus_email',           label: 'email',             componentType: 'TextField',    required: true, group: 'customer', readonly: true },
-        { key: 'cus_tax',             label: 'taxID',             componentType: 'TextField',    required: true, group: 'customer', readonly: true, maxlength: 13, isNumeric: true },
-        { key: 'cus_purchase',        label: 'customerPurchaseBy',componentType: 'TextField',    required: true, group: 'customer', readonly: true },
-        { key: 'sale_date',           label: 'quotationDate',     componentType: 'DatePicker',                   group: 'conditions' },
-        { key: 'credit_date_number',  label: 'creditDate',        componentType: 'Dropdown',                     group: 'conditions', options: 'creditDayOptions' },
-        { key: 'credit_expired_date', label: 'expireDate',        componentType: 'DatePicker',                   group: 'conditions', readonly: true },
-        { key: 'discount_quotation',  label: 'totalDiscount',     componentType: 'TextField',                    group: 'summary', isNumeric: true },
-        { key: 'remark',              label: 'quotationRemark',   componentType: 'Textarea',                     group: 'summary', maxlength: 220 },
-        { key: 'file',                label: 'FileLabel',         componentType: 'Upload',                       group: 'internal' },
-        { key: 'remarkInfernal',      label: 'InternalRemark',    componentType: 'Textarea',                     group: 'internal', maxlength: 220 },
-      ],
+      fieldConfig: formConfig,
       showAllowButton: true,
       openPopupAllow: false,
       shortcutAllow: false,
@@ -1103,18 +1040,6 @@ export default {
         { label: this.t("invoiceStatusHeaderTable"), key: "invoice" },
       ];
     },
-    // filteredQuo() {
-    //   // กรองข้อมูล Categories โดยเปรียบเทียบกับ searchQuery
-    //   if (this.searchQuery.trim()) {
-
-    //     return this.Quotations.filter((sale) =>
-    //       sale["sale_number"]
-    //         .toLowerCase()
-    //         .includes(this.searchQuery.toLowerCase())
-    //     );
-    //   }
-    //   return this.Quotations; // ถ้าไม่มีการค้นหาแสดงทั้งหมด
-    // },
     filteredQuo() {
       const { t } = useI18n();
 
@@ -1129,13 +1054,6 @@ export default {
             : sale.status === "Cancel"
             ? t("CancelLG")
             : sale.status,
-
-        // invoice:
-        //   sale.invoice === "Pending"
-        //     ? t("PendingLG")
-        //     : sale.invoice === "Cancel"
-        //     ? t("CancelLG")
-        //     : sale.invoice,
       }));
 
       if (this.searchQuery.trim()) {
@@ -1526,29 +1444,6 @@ export default {
           parseFloat(this.formData.Net_price.replace(/,/g, "")) +
             parseFloat(this.formData.vat.replace(/,/g, ""))
         );
-        // if (this.formData.vatType === "VATincluding") {
-        //   this.formData.sale_totalprice = this.formatDecimal(
-        //     parseFloat(this.formData.Net_price.replace(/,/g, "")) * 1.07
-        //   );
-        //   this.formData.vat = this.formatDecimal(
-        //     parseFloat(
-        //       this.formData.sale_totalprice.replace(/,/g, "") -
-        //         parseFloat(this.formData.total_price.replace(/,/g, ""))
-        //     )
-        //   );
-        //   this.formData.vat = this.formatDecimal(
-        //     parseFloat(this.formData.Net_price.replace(/,/g, "")) * 1.07 -
-        //       parseFloat(this.formData.Net_price.replace(/,/g, ""))
-        //   );
-        //   // this.formData.vat = "555";
-        // } else {
-        //   this.formData.vat = this.formatDecimal(
-        //     parseFloat(this.formData.Net_price.replace(/,/g, "")) * 0.07
-        //   );
-        //   this.formData.sale_totalprice = this.formatDecimal(
-        //     parseFloat(this.formData.Net_price.replace(/,/g, "")) +
-        //       parseFloat(this.formData.vat)
-        //   );
       }
     },
     calculateNat(discount) {
@@ -1948,18 +1843,6 @@ export default {
         doc.text(`Contact No.: `, 10, 265);
         doc.text(employ.Phone_num, 40, 265);
         doc.text(`Remark: `, 10, 215);
-
-        // const FormEmployee_sale = [
-        //   `${row.employeeName}`,
-        //   // `${employ.Email}`,
-        //   // `${employ.Phone_num}`,
-        // ];
-        // doc.text(FormEmployee_sale, 40, 255, {
-        //   align: "left",
-        //   valign: "middle",
-        //   lineGap: 5,
-        // });
-
         doc.text(`Total Before Discount: `, 130, 215);
         doc.text(`Total Before VAT: `, 130, 220);
         doc.text(`Discount: `, 130, 225);
@@ -1978,22 +1861,10 @@ export default {
 
         const vat = (7 / 100) * net_price;
 
-        // const discount_pdf =
-        //   parseFloat(net_price) - parseFloat(row.discount_quotation);
-        // alert(discount_pdf);
         let netCal = this.formatDecimal(total_price * 0.07);
         let sale_data = this.formatDecimal(total_price + netCal);
-        // alert(netCal);
-        // const FormTotalprice = [];
 
         if (quotationData.vatType === "VATincluding") {
-          //           this.formData.sale_totalprice = this.formatDecimal(
-          //   parseFloat(this.formData.Net_price.replace(/,/g, "")) / 1.07
-          // );
-          // this.formData.vat = this.formatDecimal(
-          //   parseFloat(this.formData.total_price.replace(/,/g, "")) -
-          //     parseFloat(this.formData.sale_totalprice.replace(/,/g, ""))
-          // );
 
           let FormTotalprice = [
             `${this.formatDecimal(total_price)}`,
@@ -2008,11 +1879,6 @@ export default {
               total_price - quotationData.discount_quotation
             )}`,
           ];
-          // doc.text(FormTotalprice, 200, 215, {
-          //   align: "right",
-          //   valign: "middle",
-          //   lineGap: 5,
-          // });
           let startY = 215;
           const lineSpacing = 5; // ระยะห่างระหว่างบรรทัด
 
@@ -2039,11 +1905,6 @@ export default {
                 (total_price - quotationData.discount_quotation) * 0.07
             )}`,
           ];
-          // doc.text(FormTotalprice, 200, 215, {
-          //   align: "right",
-          //   valign: "middle",
-          //   lineGap: 7,
-          // });
 
           let startY = 215;
           const lineSpacing = 5; // ระยะห่างระหว่างบรรทัด
@@ -2056,20 +1917,9 @@ export default {
             startY += lineSpacing; // เพิ่มพิกัด Y สำหรับแต่ละบรรทัด
           });
         }
-
-        // doc.setFont("helvetica", "bold");
-        // doc.addFileToVFS("Prompt-Bold.ttf", PromptBold);
-        // doc.addFont("Prompt-Bold.ttf", "PromptBold", "bold");
         doc.addFileToVFS("Prompt-Regular.ttf", PromptRegular);
         doc.addFont("Prompt-Regular.ttf", "PromptRegular", "normal");
         doc.setFontSize(16);
-
-        // //line width
-        // doc.setLineWidth(0.2);
-        // //[start(x,y), end(x,y)]
-        // doc.line(130, 265, 200, 265);
-        // doc.line(130, 275, 200, 275);
-        // doc.line(130, 285, 200, 285);
 
         doc.setLineWidth(0.5);
         doc.line(10, 210, 200, 210);
@@ -2132,15 +1982,7 @@ export default {
           doc.addImage(img, "JPEG", imgX, imgY, scaledWidth, scaledHeight);
         }
 
-        // doc.addImage(`${this.Business.bus_logo}`, "JPEG", 165, 12, 20, 20);
-
         doc.setFont("helvetica", "normal");
-        // เพิ่มฟอนต์
-        // doc.addFileToVFS("THSarabunNew-normal.ttf", thSarabunFont);
-        // doc.addFont("THSarabunNew-normal.ttf", "THSarabunNew", "normal");
-
-        // // ตั้งค่าฟอนต์ที่ต้องการ
-        // doc.setFont("THSarabunNew", "normal");
         doc.addFileToVFS("Prompt-RegularLight.ttf", PromptRegularLight);
         doc.addFont("Prompt-RegularLight.ttf", "PromptRegularLight", "normal");
         doc.setFontSize(10);
@@ -4452,145 +4294,6 @@ export default {
       }
       this.shortcutAllow = false;
       return false;
-      // this.isAllowConfirmPopupOpen = true;
-
-      this.getQuotation();
-      console.log("Edit item:", row);
-      const formatDateForPicker = (date) => {
-        if (!date) return null;
-        const d = new Date(date);
-        if (isNaN(d.getTime())) return null; // ตรวจสอบว่าเป็นวันที่ถูกต้อง
-
-        // 🔹 ถ้าภาษาเป็น "th" (ไทย) ให้เพิ่ม 543 ปี
-        if (this.t("lang") === "en") {
-          d.setFullYear(d.getFullYear());
-        }
-
-        return d;
-      };
-
-      const quotationData = await this.getQuotationByID(row.sale_id);
-      const quotation_img = await this.getQuotationImg(row.sale_number);
-
-      console.log("quotationData", quotationData);
-
-      if (quotation_img !== "") {
-        this.imageSrc = quotation_img;
-      }
-
-      // const formattedStart = formatDateForPicker(row.sale_date);
-      // const formattedExpired = formatDateForPicker(row.credit_expired_date);
-
-      const formattedStart = formatDateForPicker(
-        quotationData.quotation_start_date
-      );
-      const formattedExpired = formatDateForPicker(
-        quotationData.quotation_expired_date
-      );
-
-      this.cus_drop_down = row.cus_id;
-      this.selectedCusName = row.cus_name;
-      this.formData = {
-        sale_id: row.sale_id,
-        sale_number: row.sale_number,
-        status: quotationData.status,
-        employeeID: row.employeeID,
-        employeeName: row.employee_name,
-        cus_id: row.cus_id,
-        cus_name: row.cus_name,
-        cus_address: row.cus_address,
-        cus_tel: row.cus_tel,
-        cus_email: row.cus_email,
-        cus_tax: row.cus_tax,
-        cus_purchase: row.cus_purchase,
-        sale_date: formattedStart,
-        credit_date_number: row.credit_date_number,
-        credit_expired_date: formattedExpired,
-        sale_totalprice: row.sale_totalprice,
-        remark: row.remark || "", // จัดการค่า remark ให้เป็น string ว่างถ้าเป็น null
-        remarkInfernal: row.remarkInfernal || "", // จัดการค่า remark ให้เป็น string ว่างถ้าเป็น null
-        discount_quotation: quotationData.discount_quotation,
-        vatType: quotationData.vatType,
-        remarkInfernal: quotationData.remarkInfernal,
-      };
-
-      if (this.t("lang") === "en") {
-        this.creditDay = ["7  วัน", "14 วัน", "30 วัน", "60 วัน", "90 วัน"];
-        this.formData.credit_date_number = row.credit_date_number.replace(
-          "Days",
-          "วัน"
-        );
-      } else {
-        this.creditDay = [
-          "7  Days",
-          "14 Days",
-          "30 Days",
-          "60 Days",
-          "90 Days",
-        ];
-        this.formData.credit_date_number = row.credit_date_number.replace(
-          "วัน",
-          "Days"
-        );
-      }
-      this.productForms = (row.productForms || []).map((detail) => {
-        const selectedProduct = this.Products.find(
-          (product) => product.productname === detail.productID
-        );
-        let price = 0;
-
-        if (selectedProduct) {
-          price = this.formatDecimal(
-            parseFloat(selectedProduct.price.toFixed(2))
-          );
-        }
-
-        const salePrice = detail.sale_qty * parseFloat(price.replace(/,/g, ""));
-        let saleDiscount = detail.sale_discount;
-        if (detail.discounttype === "percent") {
-          // sale_price = (detail.sale_discount / 100) * salePrice;
-          saleDiscount = (detail.sale_discount / 100) * salePrice;
-        }
-        if (detail.product_detail !== "") {
-          // detail.showDetails = true;
-        }
-        return {
-          productID: detail.productID,
-          price: price,
-          sale_qty: detail.sale_qty,
-          sale_price: this.formatDecimal(salePrice - saleDiscount),
-          sale_discount: detail.sale_discount,
-          discounttype: detail.discounttype,
-          product_detail: detail.product_detail,
-          pro_unti: detail.pro_unti,
-        };
-      });
-
-      this.updateTotalDiscount();
-      this.totalNetPrice();
-      this.vat_price();
-      this.total_pricesale();
-      this.total_priceBeforeDiscount();
-
-      if (this.formData.vatType === "VATincluding") {
-        this.formData.sale_totalprice = this.formatDecimal(
-          parseFloat(this.formData.Net_price.replace(/,/g, "")) / 1.07
-        );
-        this.formData.vat = this.formatDecimal(
-          parseFloat(this.formData.Net_price.replace(/,/g, "")) -
-            parseFloat(this.formData.sale_totalprice.replace(/,/g, ""))
-        );
-      } else {
-        this.formData.vat = this.formatDecimal(
-          parseFloat(this.formData.Net_price.replace(/,/g, "")) * 0.07
-        );
-        this.formData.sale_totalprice = this.formatDecimal(
-          parseFloat(this.formData.Net_price.replace(/,/g, "")) +
-            parseFloat(this.formData.vat.replace(/,/g, ""))
-        );
-      }
-
-      await this.editQuotation2();
     },
     closeAllowConfirmPopup() {
       this.isAllowConfirmPopupOpen = false;
