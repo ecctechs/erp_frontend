@@ -1,28 +1,12 @@
 <template>
   <div class="main-page">
-    <!-- call navigate tab -->
-    <!-- <Navigate /> -->
     <div class="page-body">
       <div class="mb-3">
         <h2>{{ t("headerSalary") }}</h2>
       </div>
-      <!-- <div class="add-btn mb-3">
-        <a class="btn btn-success" @click="openPopup">{{
-          t("addPaySalary")
-        }}</a>
-      </div> -->
       <div class="row mb-3">
         <div class="col-6 col-sm-6 col-md-3 col-lg-3">
           <label class="me-1 size-font-sm">{{ t("month") }}</label>
-          <!-- <select
-            v-model="selectedMonthFilter"
-            class="me-3 form-control form-select size-font-sm"
-            :class="{ error: inputError } + ' form-control'"
-          >
-            <option v-for="month in months" :value="month" :key="month">
-              {{ month }}
-            </option>
-          </select> -->
           <Dropdown
             v-model="selectedMonthFilter"
             :options="monthOptions"
@@ -32,19 +16,6 @@
 
         <div class="col-6 col-sm-6 col-md-3 col-lg-3">
           <label class="me-1 size-font-sm">{{ t("year") }}</label>
-
-          <!-- <select
-            v-model="selectedYearFilter"
-            class="me-3 form-control form-select size-font-sm"
-            :class="{ error: inputError } + ' form-control'"
-          > -->
-          <!-- <option v-for="year in years" :key="year" :value="year">
-              {{ year }}
-            </option> -->
-          <!-- <option v-for="year in years" :key="year" :value="year">
-              {{ t("lang") === "en" ? year + 543 : year }}
-            </option>
-          </select> -->
           <Dropdown
             v-model="selectedYearFilter"
             :options="yearOptions"
@@ -61,7 +32,6 @@
             :placeholder="$t('Search')"
           />
         </div>
-        <!-- <div class="col-1 col-sm-1 col-md-7 col-lg-7"></div> -->
         <div class="col-6 col-sm-6 col-md-9 col-lg-9 text-end">
           <a class="btn btn-success me-3 size-font-sm me-2" @click="openPopup">
             {{ t("addPaySalary") }}
@@ -72,46 +42,6 @@
           ></Button>
         </div>
       </div>
-      <!-- <div class="mb-3 d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center">
-          <label class="me-1">{{ t("month") }}</label>
-          <select
-            v-model="selectedMonthFilter"
-            class="me-3 form-control form-select"
-            :class="{ error: inputError } + ' form-control'"
-          >
-            <option v-for="month in months" :value="month" :key="month">
-              {{ month }}
-            </option>
-          </select>
-          <label class="me-1">{{ t("year") }}</label>
-          <select
-            v-model="selectedYearFilter"
-            class="me-3 form-control form-select"
-            :class="{ error: inputError } + ' form-control'"
-          >
-            <option v-for="year in years" :key="year" :value="year">
-              {{ year }}
-            </option>
-          </select>
-        </div>
-
-        <div class="d-flex align-items-center">
-          <input
-            v-model="searchQuery"
-            type="text"
-            class="form-control me-3"
-            style="width: 200px"
-            :placeholder="$t('Search')"
-          />
-          <button class="btn btn-outline-secondary me-2" @click="exportSalary">
-            Export
-          </button>
-          <a class="btn btn-success" @click="openPopup">{{
-            t("addPaySalary")
-          }}</a>
-        </div>
-      </div> -->
       <div>
         <tableList
           :tableHeaders="tableHeaders"
@@ -144,15 +74,6 @@
       <div class="row mb-3">
         <div class="col-12 col-sm-4 col-md-4 col-lg-4">
           <label class="me-1">{{ t("month") }}</label>
-          <!-- <select
-            v-model="selectedMonth"
-            class="me-3"
-            :class="{ error: isEmpty.selectedMonth, 'form-control': true }"
-          >
-            <option v-for="month in months" :value="month" :key="month">
-              {{ month }}
-            </option>
-          </select> -->
           <Dropdown
             v-model="selectedMonth"
             :options="monthOptions"
@@ -161,20 +82,7 @@
         </div>
         <div class="col-12 col-sm-4 col-md-4 col-lg-4">
           <label class="me-1">{{ t("year") }}</label>
-          <!-- <select
-            v-model="selectedYear"
-            class="me-3"
-            :class="{ error: isEmpty.selectedYear, 'form-control': true }"
-          >
-            <option
-              v-for="year in years"
-              :key="year"
-              :value="year"
-              :disabled="year !== currentYear"
-            >
-              {{ year }}
-            </option>
-          </select> -->
+       
           <Dropdown
             v-model="selectedYear"
             :options="yearOptions"
@@ -204,53 +112,6 @@
           />
         </div>
       </div>
-      <!-- <div class="mb-3 d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center">
-          <label class="me-1">{{ t("month") }}</label>
-          <select
-            v-model="selectedMonth"
-            class="me-3"
-            :class="{ error: isEmpty.selectedMonth, 'form-control': true }"
-          >
-            <option v-for="month in months" :value="month" :key="month">
-              {{ month }}
-            </option>
-          </select>
-          <label class="me-1">{{ t("year") }}</label>
-          <select
-            v-model="selectedYear"
-            class="me-3"
-            :class="{ error: isEmpty.selectedYear, 'form-control': true }"
-          >
-            <option
-              v-for="year in years"
-              :key="year"
-              :value="year"
-              :disabled="year !== currentYear"
-            >
-              {{ year }}
-            </option>
-          </select>
-          <label class="me-1">{{ t("round") }}</label>
-          <select
-            v-model="selectedRound"
-            :class="{ error: isEmpty.selectedRound, 'form-control': true }"
-          >
-            <option v-for="round in rounds" :key="round" :value="round">
-              {{ round }}
-            </option>
-          </select>
-        </div>
-        <div class="d-flex align-items-center">
-          <input
-            v-model="searchQuery2"
-            type="text"
-            class="form-control me-3"
-            style="width: 200px"
-            :placeholder="$t('Search')"
-          />
-        </div>
-      </div> -->
       <div>
         <tableList
           :initialTableData="filteredEmployee"
@@ -397,13 +258,6 @@
         <a>{{ popupMessage }}</a>
       </div>
     </div>
-    <!-- <div v-if="isPopupVisible_error2" class="popup-success">
-      <div class="popup-content-error">
-        <h3>{{ $t("validate_popupError") }}</h3> -->
-    <!-- <a v-if="this.popupMessage_error">{{ popupMessage_error }}</a> -->
-    <!-- <a>{{ popupMessage_error2 }}</a>
-      </div>
-    </div> -->
     <div v-if="isPopupVisible_error2" class="popup-error2">
       <div class="text-end">
         fff
@@ -416,15 +270,7 @@
       </div>
       <div class="popup-content-error2">{{ popupMessage_error2 }}</div>
     </div>
-    <!-- <div v-if="isPopupVisible_error" class="popup-success">
-      <div class="popup-content-error">
-        <h3>{{ $t("validate_popupError") }}</h3> -->
-    <!-- <a v-if="this.popupMessage_error">{{ popupMessage_error }}</a> -->
-    <!-- <ul>
-          <li v-for="(msg, index) in errorMessages" :key="index">{{ msg }}</li>
-        </ul>
-      </div>
-    </div> -->
+
     <div v-if="isPopupVisible_error" class="popup-error2">
       <div class="text-end">
         <Button
@@ -720,20 +566,6 @@ export default {
       },
       currentYear: new Date().getFullYear(), // Current year
       formEmployee: [], // Holds selected employee data for payment submission
-      // months: [
-      //   "January",
-      //   "February",
-      //   "March",
-      //   "April",
-      //   "May",
-      //   "June",
-      //   "July",
-      //   "August",
-      //   "September",
-      //   "October",
-      //   "November",
-      //   "December",
-      // ], // List of months for selection
       years: this.generateYears(1900, 2100), // Generates a list of years from 1900 to 2100
       rounds: this.generateYears(1, 12), // Generates a list of rounds from 1 to 12
       formDataOvertime: {

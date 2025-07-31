@@ -1,0 +1,46 @@
+[
+  {
+    "key": "productID",
+    "label": "productNameProduct",
+    "componentType": "Autocomplete",
+    "required": true,
+    "items": "currentTableData",
+    "itemTitle": "productname",
+    "itemValue": "productID"
+  },
+  {
+    "key": "transactionType",
+    "label": "manageStockType",
+    "componentType": "Dropdown",
+    "required": true,
+    "options": "transactionTypeOptions"
+  },
+  {
+    "key": "current_product_amount",
+    "label": "current_product_amount",
+    "componentType": "TextField",
+    "type": "number",
+    "readonly": true
+  },
+  {
+    "key": "quantity",
+    "label": "quantityProduct",
+    "componentType": "TextField",
+    "type": "number",
+    "required": true,
+    "min": 1
+  },
+  {
+    "key": "update_product_amount",
+    "label": "update_product_amount",
+    "componentType": "TextField",
+    "type": "number",
+    "readonly": true
+  },
+  {
+    "key": "transactionDetail",
+    "label": "productDetail",
+    "componentType": "TextField",
+    "type": "text"
+  }
+]

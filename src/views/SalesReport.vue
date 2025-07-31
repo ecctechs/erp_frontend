@@ -38,16 +38,6 @@
                   </div>
                   <span class="mdi mdi-minus" style="padding: 10px"></span>
                   <div class="mb-3 div-for-formControl form-filter-home">
-                    <!-- <DatePicker
-                      v-model:value="custom_filter_end_date"
-                      format="DD/MM/YYYY"
-                      value-type="date"
-                      placeholder="DD/MM/YYYY"
-                      class="form-control"
-                      :formatter="momentFormat"
-                      :lang="currentLocale"
-                      @change="filterDataByOption"
-                    /> -->
                     <v-date-picker
                       v-model="custom_filter_end_date"
                       locale="th-TH"
@@ -668,20 +658,6 @@ export default {
           }
         );
         console.log("---->", response);
-        // const response = await fetch(
-        //   `${API_CALL}/Quotation/get_sale_report_product_type`,
-        //   {
-        //     method: "POST",
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //       Authorization: `Bearer ${accessToken}`,
-        //     },
-        //     body: JSON.stringify({
-        //       startDate: this.startDate,
-        //       endDate: this.endDate,
-        //     }),
-        //   }
-        // );
 
         if (!response.ok) {
           throw new Error("Failed to fetch data from the API");
@@ -1112,17 +1088,6 @@ export default {
         (sum, item) => sum + (item.sale_totalprice || 0),
         0
       );
-
-      // this.totalProductCost = this.filteredProductData.reduce(
-      //   (sum, product) => {
-      //     if (product.productTypeID === 1) {
-      //       return sum + product.Cost * (product.Amount || 1);
-      //     } else {
-      //       return sum + (product.Cost || 0);
-      //     }
-      //   },
-      //   0
-      // );
 
       this.startDateFilter = this.formatToThaiDate(startDate);
       this.endDateFilter = this.formatToThaiDate(endDate);

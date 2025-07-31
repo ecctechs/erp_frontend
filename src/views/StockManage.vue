@@ -50,81 +50,70 @@
   </div>
 
   <div v-for="field in fieldConfig" :key="field.key" class="div-for-formControl mb-3">
-    
     <div class="col-6 col-sm-6 col-md-6 col-lg-6">
-        <label>
-            <span v-if="field.required" style="color: red">*</span>{{ t(field.label) }}
-        </label>
+      <label>
+        <span v-if="field.required" style="color: red">*</span>{{ t(field.label) }}
+      </label>
     </div>
-
     <div class="col-6 col-sm-6 col-md-6 col-lg-6">
-        <v-autocomplete
-          v-if="field.componentType === 'Autocomplete'"
-          :items="this[field.items]"
-          :item-title="field.itemTitle"
-          :item-value="field.itemValue"
-          variant="outlined"
-          v-model="formData[field.key]"
-          :class="{ error: isEmpty[field.key] }"
-        />
-
-        <Dropdown
-          v-else-if="field.componentType === 'Dropdown'"
-          v-model="formData[field.key]"
-          :options="this[field.options]"
-          :class="{ error: isEmpty[field.key] }"
-        />
-        
-        <TextField
-          v-else
-          v-model="formData[field.key]"
-          :type="field.type"
-          :readonly="field.readonly"
-          :disabled="field.readonly"
-          :min="field.min"
-          @input="field.key === 'quantity' ? checkQuantity() : null"
-          :class="{ error: isEmpty[field.key] }"
-        />
+      <v-autocomplete
+        v-if="field.componentType === 'Autocomplete'"
+        :items="this[field.items]"
+        :item-title="field.itemTitle"
+        :item-value="field.itemValue"
+        variant="outlined"
+        v-model="formData[field.key]"
+        :class="{ error: isEmpty[field.key] }"
+      />
+      <Dropdown
+        v-else-if="field.componentType === 'Dropdown'"
+        v-model="formData[field.key]"
+        :options="this[field.options]"
+        :class="{ error: isEmpty[field.key] }"
+      />
+      <TextField
+        v-else
+        v-model="formData[field.key]"
+        :type="field.type"
+        :readonly="field.readonly"
+        :disabled="field.readonly"
+        :min="field.min"
+        @input="field.key === 'quantity' ? checkQuantity() : null"
+        :class="{ error: isEmpty[field.key] }"
+      />
     </div>
   </div>
 
   <div class="modal-footer">
-    <Button
-      v-if="isAddingMode"
-      :disabled="isLoading"
-      customClass="btn btn-primary me-3"
-      @click="producTransaction"
-    >
-      <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
-      <span v-else>{{ t("buttonAdd") }}</span>
-    </Button>
-    <Button
-      v-if="isEditingMode"
-      :disabled="isLoading"
-      customClass="btn btn-primary me-3"
-      @click="editTransaction"
-    >
-      <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
-      <span v-else>{{ t("buttonSave") }}</span>
-    </Button>
-    <Button customClass="btn btn-secondary" @click="closePopup">
-      {{ t("buttonCancel") }}
-    </Button>
-  </div>
+      <Button
+    v-if="isAddingMode"
+    :disabled="isLoading"
+    customClass="btn btn-primary me-3"
+    @click="producTransaction"
+  >
+    <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
+    <span v-else>{{ t("buttonAdd") }}</span>
+  </Button>
+  <Button
+    v-if="isEditingMode"
+    :disabled="isLoading"
+    customClass="btn btn-primary me-3"
+    @click="editTransaction"
+  >
+    <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
+    <span v-else>{{ t("buttonSave") }}</span>
+  </Button>
+  <Button customClass="btn btn-secondary" @click="closePopup">
+    {{ t("buttonCancel") }}
+  </Button>
+    </div>
 </Popup>
     <div v-if="isPopupVisible" class="popup-success">
       <div class="popup-content-success">
         <a>{{ popupMessage }}</a>
       </div>
     </div>
-    <!-- <div v-if="isPopupVisible_error" class="popup-success">
-      <div class="popup-content-error">
-        <h3>{{ $t("validate_popupError") }}</h3>
-        <ul>
-          <li v-for="(msg, index) in errorMessages" :key="index">{{ msg }}</li>
-        </ul>
-      </div>
-    </div> -->
+
     <div v-if="isPopupVisible_error" class="popup-error2">
       <div class="text-end">
         <Button
@@ -155,6 +144,7 @@ import { computed, watch, ref } from "vue";
 import Button from "../components/button.vue";
 import TextField from "../components/textField.vue";
 import Dropdown from "../components/dropdown.vue";
+import formConfig from '../config/field_config/stock/form_stock_manage.json';
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -177,14 +167,7 @@ export default {
   },
   data() {
     return {
-      fieldConfig: [
-        { key: 'productID', label: 'productNameProduct', componentType: 'Autocomplete', required: true, items: 'currentTableData', itemTitle: 'productname', itemValue: 'productID' },
-        { key: 'transactionType', label: 'manageStockType', componentType: 'Dropdown', required: true, options: 'transactionTypeOptions' },
-        { key: 'current_product_amount', label: 'current_product_amount', componentType: 'TextField', type: 'number', readonly: true },
-        { key: 'quantity', label: 'quantityProduct', componentType: 'TextField', type: 'number', required: true, min: 1 },
-        { key: 'update_product_amount', label: 'update_product_amount', componentType: 'TextField', type: 'number', readonly: true },
-        { key: 'transactionDetail', label: 'productDetail', componentType: 'TextField', type: 'text' },
-      ],
+      fieldConfig: formConfig,
       Product: [],
       errorMessages: [],
       isPopupVisible_error: false,
@@ -595,16 +578,7 @@ export default {
 
       this.errorMessage = [];
       this.isLoading = true;
-      // if (
-      //   this.formData.productID === "" ||
-      //   this.formData.transactionType === "" ||
-      //   this.formData.quantity === ""
-      // ) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Please fill all data");
-      // } else {
-      //   this.inputError = false;
-      //   this.isLoading = true;
+
       const tranID = this.formData.ID;
       try {
         const response = await fetch(
@@ -632,10 +606,7 @@ export default {
           this.showPopup(this.$t("validation.EditSucc"));
           this.closePopup();
         } else {
-          // let errorMessages = [];
-          // errorMessages.push(json.data);
-          // this.showPopup_validate(errorMessages);
-          // this.showPopup_error(json.data);
+
           let errorMessages = [];
           errorMessages.push(json.data);
           this.showPopup_validate(errorMessages);
