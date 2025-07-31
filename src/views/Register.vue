@@ -32,9 +32,29 @@
       </div>
       <div>
 
-     <Popup :isOpen="isPopupOpen" :closePopup="closePopup">
-        <h2 v-if="isAddingMode">{{ t("addNewUser") }}</h2>
+<Popup :isOpen="isPopupOpen" :closePopup="closePopup">
+  <h2 v-if="isAddingMode">{{ t("addNewUser") }}</h2>
   <h2 v-if="isEditMode">{{ t("editUser") }}</h2>
+
+  <div v-if="isAddingMode">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" id="radio-new-user" name="userType" @change="selectUserType('new')" :checked="isNewUser"/>
+        <label class="form-check-label" for="radio-new-user">{{ t("NewUser") }}</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" id="radio-existing-user" name="userType" @change="selectUserType('existing')" :checked="isExistingUser"/>
+        <label class="form-check-label" for="radio-existing-user">{{ t("UserExitsEmployee") }}</label>
+      </div>
+  </div>
+  <div v-if="isExistingUser && isAddingMode" class="mt-3">
+    <select id="employeeSelect" v-model="selectedEmployee" class="form-select" @change="selectUser(selectedEmployee)">
+      <option disabled value="">-- กรุณาเลือกพนักงาน --</option>
+      <option v-for="emp in Employees" :key="emp.employeeID" :value="emp.employeeID">
+        {{ emp.F_name + " " + emp.L_name }}
+      </option>
+    </select>
+  </div>
+
   <form class="row g-3 mt-3">
     <div v-for="field in fieldConfig" :key="field.key" :class="field.col">
       <label><span v-if="field.required" style="color: red">*</span>{{ t(field.label) }}</label>
@@ -59,7 +79,7 @@
   </form>
   
   <div class="mt-4" style="display: flex; justify-content: flex-end">
-       <Button
+    <Button
       v-if="isAddingMode"
       :disabled="isLoading"
       customClass="btn btn-primary me-3"
@@ -80,7 +100,7 @@
     <Button customClass="btn btn-outline-secondary" @click="closePopup">
       {{ t("buttonCancel") }}
     </Button>
-    </div>
+  </div>
 </Popup>
       </div>
       <div class="delete-popup">
@@ -151,6 +171,7 @@ import { computed } from "vue";
 import Button from "../components/button.vue";
 import TextField from "../components/textField.vue";
 import Dropdown from "../components/dropdown.vue";
+import formConfig from '../config/field_config/register/form_user.json';
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -175,14 +196,7 @@ export default {
   },
   data() {
     return {
-      fieldConfig: [
-        { key: 'userF_name', label: 'firstname', componentType: 'TextField', type: 'text', required: true, col: 'col-md-12' },
-        { key: 'userL_name', label: 'lastname', componentType: 'TextField', type: 'text', required: true, col: 'col-md-12' },
-        { key: 'userPhone', label: 'phoneNum', componentType: 'TextField', type: 'tel', required: true, maxlength: 10, isNumeric: true, col: 'col-md-12' },
-        { key: 'userEmail', label: 'email', componentType: 'TextField', type: 'email', required: true, col: 'col-md-12' },
-        { key: 'userPassword', label: 'password', componentType: 'TextField', type: 'text', required: true, col: 'col-md-12' },
-        { key: 'RoleID', label: 'role', componentType: 'Dropdown', required: true, options: 'roleOptions', col: 'col-md-12' },
-      ],
+      fieldConfig: formConfig,
       errorMessages: [],
       selectedEmployee: "",
       Employees: [],

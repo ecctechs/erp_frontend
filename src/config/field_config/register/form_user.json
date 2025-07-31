@@ -1,0 +1,52 @@
+[
+  {
+    "key": "userF_name",
+    "label": "firstname",
+    "componentType": "TextField",
+    "type": "text",
+    "required": true,
+    "col": "col-md-6"
+  },
+  {
+    "key": "userL_name",
+    "label": "lastname",
+    "componentType": "TextField",
+    "type": "text",
+    "required": true,
+    "col": "col-md-6"
+  },
+  {
+    "key": "userPhone",
+    "label": "phoneNum",
+    "componentType": "TextField",
+    "type": "tel",
+    "required": true,
+    "maxlength": 10,
+    "isNumeric": true,
+    "col": "col-md-6"
+  },
+  {
+    "key": "userEmail",
+    "label": "email",
+    "componentType": "TextField",
+    "type": "email",
+    "required": true,
+    "col": "col-md-6"
+  },
+  {
+    "key": "userPassword",
+    "label": "password",
+    "componentType": "TextField",
+    "type": "password",
+    "required": true,
+    "col": "col-md-6"
+  },
+  {
+    "key": "RoleID",
+    "label": "role",
+    "componentType": "Dropdown",
+    "required": true,
+    "options": "roleOptions",
+    "col": "col-md-6"
+  }
+]
