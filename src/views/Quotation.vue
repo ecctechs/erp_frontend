@@ -228,23 +228,6 @@
                     <div class="col-6" v-if="isExpanded(quotation.sale_id)">
                       <p class="card-text"></p>
                     </div>
-                    <!-- <div
-                      class="col-6 text-end"
-                      v-if="isExpanded(quotation.sale_id)"
-                    >
-                      <div class="icon-table d-flex justify-content-end">
-                        <div class="icon-table">
-                          <div
-                            class="icon-preview me-4"
-                            @click="handlePreview(quotation)"
-                          ></div>
-                          <div
-                            class="icon-download"
-                            @click="handleDownload(quotation)"
-                          ></div>
-                        </div>
-                      </div>
-                    </div> -->
                   </div>
                 </div>
               </div>
@@ -268,16 +251,6 @@
                 class="card-footer text-center"
                 style="padding-bottom: 0.75rem !important"
               >
-                <!-- <span
-                  :class="
-                    isExpanded(quotation.sale_id)
-                      ? 'mdi mdi-chevron-up'
-                      : 'mdi mdi-chevron-down'
-                  "
-                  class="icon-toggle"
-                  @click="toggleCollapse(quotation.sale_id)"
-                >
-                </span> -->
                 <Icon
                   :name="
                     isExpanded(quotation.sale_id)
@@ -402,18 +375,6 @@
                           :value="item.productname"
                         ></option>
                       </datalist>
-                      <!-- <v-autocomplete
-                        label=""
-                        :items="Products"
-                        item-title="productname"
-                        item-value="productID"
-                        variant="outlined"
-                        v-model="form.productID"
-                        :class="{ error: inputError }"
-                        @update:modelValue="updatePrice(form, index)"
-                      >
-                      </v-autocomplete> -->
-
                       <a
                         class="text-muted ng-star-inserted text-start"
                         href="javascript:void(0)"
@@ -617,25 +578,6 @@
         </div>
       </div>
     </transition>
-
-    <!-- <div v-if="openPopupAllow"> -->
-    <!-- <div class="text-end">
-        <button
-          type="button"
-          class="btn-close"
-          aria-label="Close"
-          @click="closePopupAllow"
-          style="color: #9f9999"
-        ></button>
-      </div>
-      <div class="popup-content-error2">
-        <ul>
-          <li v-for="(msg, index) in errorMessages" :key="index">
-            {{ msg }}
-          </li>
-        </ul>
-      </div> -->
-    <!-- </div> -->
   </div>
   <div class="delete-popup">
     <Popup
@@ -664,14 +606,6 @@
         <a>{{ popupMessage }}</a>
       </div>
     </div>
-    <!-- <div v-if="isPopupVisible_error" class="popup-success">
-      <div class="popup-content-error">
-        <h3>{{ $t("validate_popupError") }}</h3>
-        <ul>
-          <li v-for="(msg, index) in errorMessages" :key="index">{{ msg }}</li>
-        </ul>
-      </div>
-    </div> -->
     <div v-if="isPopupVisible_error" class="popup-error2">
       <div class="text-end">
         <Button
@@ -1791,14 +1725,6 @@ export default {
           valueX_header + 1,
           startY_header + lineHeight_header * 5
         );
-        // doc.text(`Number:             ${row.sale_number}`, 140, 50);
-        // doc.text(`    Date:                ${Quo_date}`, 140, 55);
-        // doc.text(
-        //   ` Payment:                  ${row.credit_date_number}`,
-        //   140,
-        //   70
-        // );
-        // doc.text(`Valid until:            ${ExpiredDate}`, 140, 75);
 
         doc.addFileToVFS("Prompt-RegularLight.ttf", PromptRegularLight);
         doc.addFont("Prompt-RegularLight.ttf", "PromptRegularLight", "normal");
@@ -2393,9 +2319,6 @@ export default {
         this.errorMessages = messages; // เก็บข้อความใน errorMessages
         // this.showErrorPopup = true; // แสดง Popup
         this.isPopupVisible_error = true;
-        // setTimeout(() => {
-        //   this.isPopupVisible_error = false; // ซ่อน Popup หลังจากหน่วงเวลา
-        // }, 3000); // หน่วงเวลา 3 วินาที (3000 มิลลิวินาที)
       } else {
         this.showPopup_error(messages);
       }
@@ -2751,18 +2674,7 @@ export default {
             body: JSON.stringify({
               sale_number: this.formData.sale_number,
               sale_date: this.formData.sale_date,
-              // sale_date:
-              //   this.t("lang") === "en"
-              //     ? toYYYYMMDD(sale_date_originalDate)
-              //     : this.formData.sale_date,
               credit_date_number: this.formData.credit_date_number,
-              // credit_expired_date:
-              //   this.t("lang") === "en"
-              //     ? date_exp
-              //     : this.formData.credit_expired_date,
-              // sale_totalprice: parseFloat(
-              //   this.formData.sale_totalprice.replace(/,/g, "")
-              // ),
               credit_expired_date: this.formData.credit_expired_date,
               sale_totalprice:
                 this.formData.vatType !== "VATexcluding"
@@ -2938,18 +2850,7 @@ export default {
             body: JSON.stringify({
               sale_number: this.formData.sale_number,
               sale_date: this.formData.sale_date,
-              // sale_date:
-              //   this.t("lang") === "en"
-              //     ? toYYYYMMDD(sale_date_originalDate)
-              //     : this.formData.sale_date,
               credit_date_number: this.formData.credit_date_number,
-              // credit_expired_date:
-              //   this.t("lang") === "en"
-              //     ? date_exp
-              //     : this.formData.credit_expired_date,
-              // sale_totalprice: parseFloat(
-              //   this.formData.sale_totalprice.replace(/,/g, "")
-              // ),
               credit_expired_date: this.formData.credit_expired_date,
               sale_totalprice:
                 this.formData.vatType !== "VATexcluding"
@@ -3103,18 +3004,7 @@ export default {
             body: JSON.stringify({
               sale_number: this.formData.sale_number,
               sale_date: this.formData.sale_date,
-              // sale_date:
-              //   this.t("lang") === "en"
-              //     ? toYYYYMMDD(sale_date_originalDate)
-              //     : this.formData.sale_date,
               credit_date_number: this.formData.credit_date_number,
-              // credit_expired_date:
-              //   this.t("lang") === "en"
-              //     ? date_exp
-              //     : this.formData.credit_expired_date,
-              // sale_totalprice: parseFloat(
-              //   this.formData.sale_totalprice.replace(/,/g, "")
-              // ),
               credit_expired_date: this.formData.credit_expired_date,
               sale_totalprice:
                 this.formData.vatType !== "VATexcluding"
@@ -3610,10 +3500,6 @@ export default {
       this.popupMessage_error = message;
       this.isPopupVisible = false;
       this.isPopupVisible_error = true;
-      // setTimeout(() => {
-      //   this.isPopupVisible = false;
-      //   this.isPopupVisible_error = false;
-      // }, 2000); // 2 seconds
     },
     showPopup(message) {
       this.popupMessage = message;
@@ -3772,11 +3658,6 @@ export default {
             );
           }
         }
-        // this.updateTotalDiscount();
-        // this.totalNetPrice();
-        // this.vat_price();
-        // this.total_pricesale();
-        // this.total_priceBeforeDiscount();
 
         if (this.formData.vatType === "VATincluding") {
           this.formData.sale_totalprice = this.formatDecimal(
