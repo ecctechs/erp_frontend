@@ -1,0 +1,13 @@
+[
+  { "label": "cusNameHeaderTable", "key": "cus_name" },
+  { "label": "employeeNameHeaderTable", "key": "employeeName" },
+  { "label": "saleTotalpriceHeaderTable", "key": "sale_totalprice" },
+  { "label": "netpriceHeaderTable", "key": "net_price", "expanded": true },
+  { "label": "cusAddressHeaderTable", "key": "cus_address", "expanded": true },
+  { "label": "cusTelHeaderTable", "key": "cus_tel", "expanded": true },
+  { "label": "cusEmailHeaderTable", "key": "cus_email", "expanded": true },
+  { "label": "cusTaxHeaderTable", "key": "cus_tax", "expanded": true },
+  { "label": "cusPurchaseHeaderTable", "key": "cus_purchase", "expanded": true },
+  { "label": "billingDateHeaderTable", "key": "billing_date", "expanded": true },
+  { "label": "paymentsHeaderTable", "key": "payments", "expanded": true }
+]
