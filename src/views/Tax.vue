@@ -16,7 +16,7 @@
         <div class="col-6 col-sm-6 col-md-6 col-lg-9"></div>
       </div>
 
-      <div class="card-view-customs" style="display: none">
+      <div  v-if="isMobile" class="card-view-customs">
         <!-- ปุ่ม Expand/Collapse All -->
         <div class="container">
           <div class="text-start">
@@ -83,121 +83,20 @@
                 </div>
               </div>
               <div class="card-body" style="line-height: 1.75">
-                <div class="container">
-                  <div class="row">
-                    <div class="col-6">
-                      <p class="card-text">{{ t("cusNameHeaderTable") }}</p>
-                    </div>
-                    <div class="col-6 text-end">
-                      <p class="card-text">{{ quotation.cus_name }}</p>
-                    </div>
-                    <div class="col-6">
-                      <p class="card-text">
-                        {{ t("employeeNameHeaderTable") }}
-                      </p>
-                    </div>
-                    <div class="col-6 text-end">
-                      <p class="card-text">{{ quotation.employeeName }}</p>
-                    </div>
-                    <div class="col-6">
-                      <p class="card-text">
-                        {{ t("saleTotalpriceHeaderTable") }}
-                      </p>
-                    </div>
-                    <div class="col-6 text-end">
-                      <p class="card-text">{{ quotation.sale_totalprice }}</p>
-                    </div>
-
-                    <div class="col-6" v-if="isExpanded(quotation.sale_id)">
-                      <p class="card-text">{{ t("netpriceHeaderTable") }}</p>
-                    </div>
-                    <div
-                      class="col-6 text-end"
-                      v-if="isExpanded(quotation.sale_id)"
-                    >
-                      <p class="card-text">{{ quotation.net_price }}</p>
-                    </div>
-                    <div class="col-6" v-if="isExpanded(quotation.sale_id)">
-                      <p class="card-text">
-                        {{ t("cusAddressHeaderTable") }}
-                      </p>
-                    </div>
-                    <div
-                      class="col-6 text-end"
-                      v-if="isExpanded(quotation.sale_id)"
-                    >
-                      <p class="card-text">{{ quotation.cus_address }}</p>
-                    </div>
-                    <div class="col-6" v-if="isExpanded(quotation.sale_id)">
-                      <p class="card-text">
-                        {{ t("cusTelHeaderTable") }}
-                      </p>
-                    </div>
-                    <div
-                      class="col-6 text-end"
-                      v-if="isExpanded(quotation.sale_id)"
-                    >
-                      <p class="card-text">{{ quotation.cus_tel }}</p>
-                    </div>
-                    <div class="col-5" v-if="isExpanded(quotation.sale_id)">
-                      <p class="card-text">
-                        {{ t("cusEmailHeaderTable") }}
-                      </p>
-                    </div>
-                    <div
-                      class="col-7 text-end"
-                      v-if="isExpanded(quotation.sale_id)"
-                    >
-                      <p class="card-text">{{ quotation.cus_email }}</p>
-                    </div>
-                    <div class="col-6" v-if="isExpanded(quotation.sale_id)">
-                      <p class="card-text">
-                        {{ t("cusTaxHeaderTable") }}
-                      </p>
-                    </div>
-                    <div
-                      class="col-6 text-end"
-                      v-if="isExpanded(quotation.sale_id)"
-                    >
-                      <p class="card-text">{{ quotation.cus_tax }}</p>
-                    </div>
-                    <div class="col-6" v-if="isExpanded(quotation.sale_id)">
-                      <p class="card-text">
-                        {{ t("cusPurchaseHeaderTable") }}
-                      </p>
-                    </div>
-                    <div
-                      class="col-6 text-end"
-                      v-if="isExpanded(quotation.sale_id)"
-                    >
-                      <p class="card-text">{{ quotation.cus_purchase }}</p>
-                    </div>
-                    <div class="col-6" v-if="isExpanded(quotation.sale_id)">
-                      <p class="card-text">
-                        {{ t("saleDateHeaderTable") }}
-                      </p>
-                    </div>
-                    <div
-                      class="col-6 text-end"
-                      v-if="isExpanded(quotation.sale_id)"
-                    >
-                      <p class="card-text">{{ quotation.invoice_date }}</p>
-                    </div>
-                    <div class="col-6" v-if="isExpanded(quotation.sale_id)">
-                      <p class="card-text">
-                        {{ t("billingStatusHeaderTable") }}
-                      </p>
-                    </div>
-                    <div
-                      class="col-6 text-end"
-                      v-if="isExpanded(quotation.sale_id)"
-                    >
-                      <p class="card-text">
-                        {{ quotation.billing }}
-                      </p>
+                  <div class="container">
+                    <div class="row">
+                      <template v-for="field in cardFieldConfig" :key="field.key">
+                        <template v-if="!field.expanded || isExpanded(quotation.sale_id)">
+                          <div class="col-6">
+                            <p class="card-text">{{ t(field.label) }}</p>
+                          </div>
+                          <div class="col-6 text-end">
+                            <p class="card-text">{{ quotation[field.key] }}</p>
+                          </div>
+                        </template>
+                      </template>
                     </div>
                   </div>
-                </div>
               </div>
               <div
                 class="card-header d-flex"
@@ -235,7 +134,7 @@
         </div>
       </div>
 
-      <div class="tax-show-only-desktop sale_hide">
+      <div v-else class="tax-show-only-desktop">
         <InvoiceList
           :initialTableData="filteredIn"
           :tableHeaders="tableHeaders"
@@ -485,6 +384,7 @@ import TextField from "../components/textField.vue";
 import Dropdown from "../components/dropdown.vue";
 import formConfig from '../config/field_config/tax/form_tax.json';
 import monthMappings from '../config/global/month_mapping.json';
+import cardConfig from '@/config/field_config/tax/card_tax.json';
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -552,6 +452,7 @@ export default {
   },
   data() {
     return {
+      cardFieldConfig: cardConfig,
       fieldConfig: formConfig,
       openPopupAllow: false,
       shortcutAllow: false,
@@ -612,6 +513,9 @@ export default {
     };
   },
   computed: {
+    isMobile() {
+    return window.innerWidth <= 767;
+    },
     taxFields() {
       return this.fieldConfig.filter(f => f.group === 'tax');
     },
