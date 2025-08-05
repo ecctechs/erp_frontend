@@ -129,6 +129,24 @@
         </div>
       </div>
       <div class="row text-center">
+  <div class="col-md-6 body-dashboard">
+    <ChartCard ref="donutChartCard" :title="t('valueofsales')" chartWidth="500px" />
+  </div>
+
+  <div class="col-md-6 body-dashboard">
+    <ChartCard ref="barChartCard" :title="t('summarySaleMonth')" />
+  </div>
+</div>
+<div class="row text-center">
+  <div class="col-md-6 body-dashboard">
+    <ChartCard ref="donutAmountCard" :title="t('currentstock')" chartWidth="500px" />
+  </div>
+
+  <div class="col-md-6 body-dashboard">
+    <ChartCard ref="barServiceCard" :title="t('servicevalue')" />
+  </div>
+</div>
+      <!-- <div class="row text-center">
         <div class="col-md-6 body-dashboard">
           <Card class="bg-light" style="height: 100%">
             <div class="card-body">
@@ -153,8 +171,8 @@
             </div>
           </Card>
         </div>
-      </div>
-      <div class="row text-center">
+      </div> -->
+      <!-- <div class="row text-center">
         <div class="col-md-6 body-dashboard">
           <Card class="bg-light" style="height: 100%">
             <div class="card-body">
@@ -167,8 +185,8 @@
               </div>
             </div>
           </Card>
-        </div>
-        <div class="col-md-6 body-dashboard">
+        </div> -->
+        <!-- <div class="col-md-6 body-dashboard">
           <Card class="bg-light" style="height: 100%">
             <div class="card-body">
               <p class="card-body-p">{{ t("servicevalue") }}</p>
@@ -180,8 +198,8 @@
               </div>
             </div>
           </Card>
-        </div>
-      </div>
+        </div> -->
+      <!-- </div> -->
     </div>
     <div
       v-if="isLoading"
@@ -619,7 +637,7 @@ export default {
     },
     async renderChart() {
       // ตรวจสอบว่ามีการ mount ของ donutChart แล้วหรือไม่
-      const chartDom = this.$refs.donutChart;
+      const chartDom = this.$refs.donutChartCard.chartContainer;
       if (!chartDom) return;
 
       // ตรวจสอบและทำลาย instance เก่าของกราฟ
@@ -710,7 +728,7 @@ export default {
     },
     async renderAmountProductChart() {
       try {
-        const chartDom = this.$refs.donutChartAmountProduct; // ตรวจสอบว่า element ถูก mount แล้วหรือไม่
+        const chartDom = this.$refs.donutAmountCard.chartContainer; // ตรวจสอบว่า element ถูก mount แล้วหรือไม่
         if (!chartDom) return;
 
         let chart = echarts.getInstanceByDom(chartDom);
@@ -815,7 +833,7 @@ export default {
     },
     async renderServiceBarChart() {
       try {
-        const chartDom = this.$refs.barChartService; // ตรวจสอบว่า DOM มีอยู่หรือไม่
+        const chartDom = this.$refs.barServiceCard.chartContainer; // ตรวจสอบว่า DOM มีอยู่หรือไม่
         if (!chartDom) return;
 
         let chart = echarts.getInstanceByDom(chartDom);
@@ -886,7 +904,7 @@ export default {
     },
     async renderBarChart() {
       try {
-        const chartDom = this.$refs.barChart; // ตรวจสอบว่า barChart มีอยู่หรือไม่
+        const chartDom = this.$refs.barChartCard.chartContainer; // ตรวจสอบว่า barChart มีอยู่หรือไม่
         if (!chartDom) return;
 
         // ทำลาย instance ก่อนหน้า หากมี
