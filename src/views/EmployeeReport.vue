@@ -38,6 +38,94 @@
       </div>
       <div class="row mt-3">
         <div class="col-12 col-md-5 col-lg-5 col-sm-12">
+          <ChartCard
+            ref="hiringRateCard"
+            :title="t('numberofemp')"
+          />
+        </div>
+
+        <div class="col-12 col-md-5 col-lg-5 col-sm-12">
+          <ChartCard
+            ref="leaveDonutCard"
+            :title="t('AbsentRate')"
+            chartWidth="500px" 
+          />
+        </div>
+
+        <div class="col-12 col-md-2 col-lg-2 col-sm-12">
+          <Card class="bg-light" style="height: auto">
+            <div class="card-body">
+              <p class="card-body-p">{{ t("filter") }}</p>
+              <div class="card-body-column">
+                 <div class="filter-box-content" style="padding-top: 0px !important">
+          <div>{{ t("years") }}</div>
+          <select
+            class="form-control form-select"
+            v-model="selectedYear"
+            @change="filterEmployees"
+          >
+            <option value="all">{{ t("all") }}</option>
+            <option value="thisyear">{{ t("thisyear") }}</option>
+            <option value="lastyear">{{ t("lastyear") }}</option>
+            <option v-for="year in years" :value="year" :key="year">
+              {{ year }}
+            </option>
+          </select>
+        </div>
+        <div class="filter-box-content">
+          <div>{{ t("departs") }}</div>
+          <select
+            class="form-control form-select"
+            v-model="selectedDepartment"
+            @change="filterEmployees"
+          >
+            <option value="all">{{ t("all") }}</option>
+            <option
+              v-for="department in Departments"
+              :value="department.departmentID"
+              :key="department.departmentID"
+            >
+              {{ department.departmentName }}
+            </option>
+          </select>
+        </div>
+        <div class="filter-box-content">
+          <div>{{ t("posis") }}</div>
+          <select
+            class="form-control form-select"
+            v-model="selectedPosition"
+            @change="filterEmployees"
+          >
+            <option value="all">{{ t("all") }}</option>
+            <option
+              v-for="position in Positions"
+              :value="position.positionID"
+              :key="position.positionID"
+            >
+              {{ position.Position }}
+            </option>
+          </select>
+        </div>
+        <div class="filter-box-content">
+          <div>{{ t("empTypes") }}</div>
+          <select
+            class="form-control form-select"
+            v-model="selectedEmployeeType"
+            @change="filterEmployees"
+          >
+            <option value="all">{{ t("all") }}</option>
+            <option value="Full-time">{{ t("fulltime") }}</option>
+            <option value="Part-time">{{ t("parttime") }}</option>
+            <option value="Contract">{{ t("contract") }}</option>
+          </select>
+        </div>
+                </div>
+            </div>
+          </Card>
+        </div>
+      </div>
+      <!-- <div class="row mt-3">
+        <div class="col-12 col-md-5 col-lg-5 col-sm-12">
           <Card class="bg-light">
             <div class="card-body">
               <p class="card-body-p">{{ t("numberofemp") }}</p>
@@ -141,8 +229,8 @@
               </div>
             </div>
           </Card>
-        </div>
-      </div>
+        </div> -->
+      <!-- </div> -->
       <div class="row text-center">
         <div class="col-md-5 body-dashboard">
         </div>
@@ -169,6 +257,7 @@ import { useI18n } from "vue-i18n";
 import datepicker from "vue-datepicker-next";
 import "vue-datepicker-next/index.css";
 import Card from "../components/Card.vue";
+import ChartCard from '../components/chart_card.vue';
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -179,6 +268,7 @@ export default {
     navigate,
     datepicker,
     Card,
+    ChartCard
   },
   setup() {
     const { t, locale } = useI18n();
@@ -617,7 +707,8 @@ export default {
       const months = Object.keys(hiringData); // รายชื่อเดือน
       const hiringRates = Object.values(hiringData); // จำนวนพนักงานในแต่ละเดือน
 
-      const chartDom = this.$refs.hiringRateChart;
+      // const chartDom = this.$refs.hiringRateChart;
+      const chartDom = this.$refs.hiringRateCard.chartContainer;
       if (!chartDom) return;
 
       let chart = echarts.getInstanceByDom(chartDom);
@@ -662,76 +753,11 @@ export default {
 
       chart.setOption(option);
     },
-    // createLeaveDonutChart() {
-    //  // ฉันต้องการ filter ตามแผนกพนักงาน
-    //   console.log(this.selectedDepartment); // ข้อมูลที่ได้จาก filter รับ department ID มา
-    //   console.log("this.Employees", this.Employees[0].departmentID); // ข้อมูลไอดีแผนกพนักงาน
-
-    //   console.log("createLeaveDonutChart", this.filteredLeaves);
-    //   if (!this.filteredLeaves || this.filteredLeaves.length === 0) return;
-    //   const leaveTypes = {};
-    //   this.filteredLeaves.forEach((leave) => {
-    //     const detail = leave.detail;
-    //     if (!leaveTypes[detail]) {
-    //       leaveTypes[detail] = 0;
-    //     }
-    //     leaveTypes[detail]++;
-    //   });
-    //   const leaveData = Object.keys(leaveTypes).map((type) => ({
-    //     name: type,
-    //     value: leaveTypes[type],
-    //   }));
-
-    //   const chartDom = this.$refs.leaveDonutChart;
-    //   if (!chartDom) return;
-
-    //   let chart = echarts.getInstanceByDom(chartDom);
-    //   if (chart) {
-    //     chart.dispose(); // ทำลาย instance เก่า
-    //   }
-
-    //   chart = echarts.init(chartDom);
-    //   const option = {
-    //     title: {
-    //       text: this.t("detailLeave"),
-    //       left: "center",
-    //     },
-    //     tooltip: {
-    //       trigger: "item",
-    //     },
-    //     legend: {
-    //       top: "bottom",
-    //     },
-    //     series: [
-    //       {
-    //         name: this.t("leave"),
-    //         type: "pie",
-    //         radius: ["50%", "70%"], // ทำให้เป็นกราฟโดนัท
-    //         avoidLabelOverlap: false,
-    //         label: {
-    //           show: false,
-    //           position: "center",
-    //         },
-    //         emphasis: {
-    //           label: {
-    //             show: true,
-    //             fontSize: "20",
-    //             fontWeight: "bold",
-    //           },
-    //         },
-    //         labelLine: {
-    //           show: false,
-    //         },
-    //         data: leaveData, // ข้อมูลการลา
-    //       },
-    //     ],
-    //   };
-    //   chart.setOption(option);
-    // },
     createLeaveDonutChart() {
       if (!this.filteredLeaves || this.filteredLeaves.length === 0) return;
 
-      const chartDom = this.$refs.leaveDonutChart;
+      // const chartDom = this.$refs.leaveDonutChart;
+      const chartDom = this.$refs.leaveDonutCard.chartContainer;
       if (!chartDom) return;
 
       // ทำลายกราฟเก่า

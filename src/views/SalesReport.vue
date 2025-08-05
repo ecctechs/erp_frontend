@@ -1,7 +1,5 @@
 <template>
   <div class="main-page">
-    <!-- call navigate tab -->
-    <!-- <navigate /> -->
     <div class="page-body">
       <div class="mb-3">
         <h2>{{ t("salesreport") }}</h2>
@@ -147,10 +145,6 @@
               <p class="card-body-p">{{ t("summarySaleMonth") }}</p>
               <div class="card-body-barchart-detail">
                 <div class="menu-barchart">
-                  <!-- <div class="">
-                                        <p>{{ t('totalbillDash') }}</p>
-                                    </div> -->
-                  <!-- <p>{{ salesData }}</p> -->
                 </div>
               </div>
               <div class="card-body-detail">
@@ -213,6 +207,7 @@ moment.locale("th");
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
 import Card from "../components/Card.vue";
+import ChartCard from '../components/chart_card.vue';
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -224,6 +219,7 @@ export default {
     navigate,
     DatePicker,
     Card,
+    ChartCard
   },
   setup() {
     const { t } = useI18n();

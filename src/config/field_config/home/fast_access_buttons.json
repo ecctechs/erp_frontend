@@ -1,0 +1,26 @@
+[
+  {
+    "icon": "product_access",
+    "label": "headerProduct",
+    "action": "accessProduct",
+    "row": 1
+  },
+  {
+    "icon": "product_stock_access",
+    "label": "headerStockManage",
+    "action": "accessProductStock",
+    "row": 1
+  },
+  {
+    "icon": "quotation_access",
+    "label": "headerQuotation",
+    "action": "accessQuotation",
+    "row": 2
+  },
+  {
+    "icon": "sale_report_access",
+    "label": "salesreport",
+    "action": "accessReportSales",
+    "row": 2
+  }
+]

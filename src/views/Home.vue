@@ -41,16 +41,6 @@
                       </div>
                       <span class="mdi mdi-minus" style="padding: 10px"></span>
                       <div class="mb-3 div-for-formControl form-filter-home">
-                        <!-- <DatePicker
-                          v-model:value="custom_filter_end_date"
-                          format="DD/MM/YYYY"
-                          value-type="date"
-                          placeholder="DD/MM/YYYY"
-                          class="form-control"
-                          :formatter="momentFormat"
-                          :lang="currentLocale"
-                          @change="filterDataByOption"
-                        /> -->
                         <v-date-picker
                           v-model="custom_filter_end_date"
                           locale="th-TH"
@@ -156,62 +146,43 @@
           <Card class="bg-light" style="height: 100%">
             <div class="card-body">
               <p class="card-body-p">{{ t("fastaccess") }}</p>
+
               <div class="card-body-access">
                 <div
+                  v-for="button in fastAccessRow1"
+                  :key="button.action"
                   class="custom-card-home"
                   style="display: flex; flex-direction: column"
                 >
                   <div
                     class="fast-access-button"
                     style="cursor: pointer"
-                    @click="accessProduct"
+                    @click="callAction(button.action)"
                   >
-                    <Icon name="product_access" />
-                    <p>{{ t("headerProduct") }}</p>
-                  </div>
-                </div>
-                <div
-                  class="custom-card-home"
-                  style="display: flex; flex-direction: column"
-                >
-                  <div
-                    class="fast-access-button"
-                    style="cursor: pointer"
-                    @click="accessProductStock"
-                  >
-                    <Icon name="product_stock_access" />
-                    <p>{{ t("headerStockManage") }}</p>
+                    <Icon :name="button.icon" />
+                    <p>{{ t(button.label) }}</p>
                   </div>
                 </div>
               </div>
+
               <div class="card-body-access">
                 <div
+                  v-for="button in fastAccessRow2"
+                  :key="button.action"
                   class="custom-card-home"
                   style="display: flex; flex-direction: column"
                 >
                   <div
                     class="fast-access-button"
                     style="cursor: pointer"
-                    @click="accessQuotation"
+                    @click="callAction(button.action)"
                   >
-                    <Icon name="quotation_access" />
-                    <p>{{ t("headerQuotation") }}</p>
-                  </div>
-                </div>
-                <div
-                  class="custom-card-home"
-                  style="display: flex; flex-direction: column"
-                >
-                  <div
-                    class="fast-access-button"
-                    style="cursor: pointer"
-                    @click="accessReportSales"
-                  >
-                    <Icon name="sale_report_access" />
-                    <p>{{ t("salesreport") }}</p>
+                    <Icon :name="button.icon" />
+                    <p>{{ t(button.label) }}</p>
                   </div>
                 </div>
               </div>
+              
             </div>
           </Card>
         </div>
@@ -379,6 +350,7 @@ import "vue-datepicker-next/index.css";
 import { useI18n } from "vue-i18n";
 import { computed, watch, ref } from "vue";
 import Icon from "../components/icon.vue";
+import fastAccessConfig from '../config/field_config/home/fast_access_buttons.json';
 
 const API_CALL = config["url"];
 const accessToken = localStorage.getItem("@accessToken");
@@ -443,6 +415,7 @@ export default {
 
   data() {
     return {
+      fastAccessConfig: fastAccessConfig,
       date: new Date(),
       date2: new Date(),
       Expenses: [],
@@ -540,6 +513,13 @@ export default {
     };
   },
   methods: {
+  callAction(actionName) {
+    if (typeof this[actionName] === 'function') {
+      this[actionName]();
+    } else {
+      console.error(`Action "${actionName}" is not a function.`);
+    }
+  },
     formatDatePicker(date) {
       if (!date) return "";
       const d = new Date(date);
@@ -639,43 +619,6 @@ export default {
       };
       chart.setOption(option);
     },
-    // calculateMonthlyData() {
-
-    //     let monthlySales = Array(12).fill(0);
-    //     let monthlyTotalSales = Array(12).fill(0);
-    //     let monthlyProfit = Array(12).fill(0);
-
-    //     this.Billings.forEach(billing => {
-
-    //         const BILL = new Date(billing.billing_date);
-    //         const formatDate = { day: '2-digit', month: 'short', year: 'numeric' };
-    //         const BillingDate = BILL.toLocaleDateString('en-GB', formatDate);
-
-    //         const date = new Date(BillingDate);  // แปลงวันที่
-    //         const month = date.getMonth(); // ดึงค่าของเดือน (0 = มกราคม, 11 = ธันวาคม)
-
-    //         if (billing.billing_id) {
-    //             monthlySales[month] += 1;  // นับจำนวนรายการขาย
-    //         }
-    //         monthlyTotalSales[month] += billing.sale_totalprice || 0; // ยอดขายรวม
-    //         const cost = this.totalProductCost || 0;  // สมมติว่ามีต้นทุนของแต่ละ billing
-    //         monthlyProfit[month] += (billing.sale_totalprice - cost);  // คำนวณกำไร
-
-    //         console.log(monthlySales + monthlyTotalSales + monthlyProfit)
-    //     });
-
-    //     this.salesDataMonth = monthlySales;
-    //     this.totalSalesDataMonth = monthlyTotalSales;
-    //     this.profitDataMonth = monthlyProfit;
-
-    //     const totalSales = monthlySales.reduce((sum, val) => sum + val, 0);  // ผลรวมของจำนวนรายการขายทั้งหมด
-    //     const totalSalesAmount = monthlyTotalSales.reduce((sum, val) => sum + val, 0);  // ผลรวมของยอดขายทั้งหมด
-    //     const totalProfit = monthlyProfit.reduce((sum, val) => sum + val, 0);  // ผลรวมของกำไรทั้งหมด
-
-    //     this.salesData = totalSales;
-    //     this.totalSalesData = totalSalesAmount;
-    //     this.profitData = totalProfit;
-    // },
     onMenuClick(type) {
       if (type === "sales") {
         this.renderBarChart(this.salesDataMonth);
@@ -797,19 +740,7 @@ export default {
               })),
             };
           });
-          //this.calculateMonthlyData();
-          // this.filterDataByOption();
-          // this.filterDataByOption2();
           this.renderBarChart(this.totalSalesDataMonth);
-          // this.totalSalescon = this.Billings.reduce((sum, item) => {
-          //     return sum + (item.sale_totalprice || 0); // รวมค่า sale_totalprice
-          // }, 0);
-
-          // const paidBills = json.data.filter(item => item.billing_status === 'Complete');
-
-          // this.paidBillCount = paidBills.length;
-
-          // this.paidBillTotal = paidBills.reduce((sum, item) => sum + item.sale_totalprice, 0);
         } else {
           this.showPopup_error(json.data);
           console.log("Error fetching billings:", json);
@@ -855,9 +786,6 @@ export default {
               Amount: item.amount,
             };
             console.log(item.product_type.productTypeName);
-            // if (this.selectedType === 'A') {
-            //     product.Amount = item.amount;
-            // }
             return product;
           });
 
@@ -885,15 +813,8 @@ export default {
               Amount: item.amount,
             };
             console.log(item.product_type.productTypeName);
-            // if (this.selectedType === 'A') {
-            //     product.Amount = item.amount;
-            // }
             return product;
           });
-
-          // this.totalProductCost = this.ProductFilter.reduce((sum, product) => {
-          //     return sum + (product.Cost || 0);  // รวมค่า Cost
-          // }, 0);
 
           this.productTypeA = this.ProductFilter.filter(
             (product) => product.productTypeID === 1
@@ -979,16 +900,6 @@ export default {
             return initialTableData;
           });
 
-          // this.filterDataByOption();
-
-          // const totalSalary = this.payments.reduce((total, payment) => {
-          //     return total + (payment.Salary || 0); // รวม salary แต่ถ้าไม่มีค่าให้ใช้ 0
-          // }, 0);
-
-          //console.log('Total Salary Paid:', totalSalary); // แสดงผลใน console หรือเก็บค่าไว้เพื่อใช้ใน UI
-
-          // เก็บยอดรวมเงินเดือนเพื่อแสดงในหน้าเว็บ
-          // this.totalSalaryPaid = totalSalary;
         } else {
           this.showPopup_error(json.data);
           console.log(json);
@@ -1094,14 +1005,6 @@ export default {
             };
             return initialTableData;
           });
-          // this.filterDataByOption();
-          // const pendingQuotations = json.data.filter(item => item.status === 'pending');
-          // const expiredQuotations = json.data.filter(item => item.status === 'expired');
-
-          // this.pendingQuotationCount = pendingQuotations.length;
-          // this.pendingQuotationTotal = pendingQuotations.reduce((sum, item) => sum + item.sale_totalprice, 0);
-          // this.expiredQuotationCount = expiredQuotations.length;
-          // this.expiredQuotationTotal = expiredQuotations.reduce((sum, item) => sum + item.sale_totalprice, 0);
         } else {
           this.showPopup_error(json.data);
           console.log("Employee ", json);
@@ -1412,42 +1315,6 @@ export default {
         },
         0
       );
-
-      // const paidBills = this.filteredData.filter(
-      //   (item) => item.billing_status === "Complete"
-      // );
-      // this.paidBillCount = paidBills.length;
-      // this.paidBillTotal = paidBills.reduce(
-      //   (sum, item) => sum + item.sale_totalprice,
-      //   0
-      // );
-
-      // const pendingQuotations = this.filteredQuoData.filter(
-      //   (item) => item.status === "pending" || "Pending"
-      // );
-      // const expiredQuotations = this.filteredQuoData.filter(
-      //   (item) => item.status === "expired"
-      // );
-      // this.pendingQuotationCount = pendingQuotations.length;
-      // this.pendingQuotationTotal = pendingQuotations.reduce(
-      //   (sum, item) => sum + item.sale_totalprice,
-      //   0
-      // );
-      // this.expiredQuotationCount = expiredQuotations.length;
-      // this.expiredQuotationTotal = expiredQuotations.reduce(
-      //   (sum, item) => sum + item.sale_totalprice,
-      //   0
-      // );
-      // console.log("pendingInvoices", this.filteredInvData);
-      // const pendingInvoices = this.filteredInvData.filter(
-      //   (item) => item.invoice_status === "Pending"
-      // );
-
-      // this.pendingInvoiceCount = pendingInvoices.length;
-      // this.pendingInvoiceTotal = pendingInvoices.reduce(
-      //   (sum, item) => sum + item.sale_totalprice,
-      //   0
-      // );
     },
     filterDataByOption2() {
       const now = new Date();
@@ -1549,39 +1416,6 @@ export default {
 
       this.startDate2 = this.formatDate(startDate2);
       this.endDate2 = this.formatDate(endDate2);
-
-      // this.startDate = this.formatDate(startDate);
-      // this.endDate = this.formatDate(endDate);
-
-      // this.totalSalescon = this.filteredData.reduce((sum, item) => {
-      //   return sum + (item.sale_totalprice || 0); // รวมค่า sale_totalprice
-      // }, 0);
-
-      // this.totalOvertime = this.filterOvertime.reduce((sum, item) => {
-      //   return sum + (item.total || 0); // รวมค่า sale_totalprice
-      // }, 0);
-
-      // this.totalProductCost = this.filteredProductData.reduce(
-      //   (sum, product) => {
-      //     if (product.productTypeID === 1) {
-      //       // ประเภทที่ 1: คูณ Cost กับ Amount
-      //       return sum + product.Cost * (product.Amount || 1); // ถ้าไม่มี Amount จะใช้ค่า 1
-      //     } else {
-      //       // ประเภทที่ 2: รวมแค่ Cost
-      //       return sum + (product.Cost || 0);
-      //     }
-      //   },
-      //   0
-      // );
-
-      // console.log("test cost: ", this.totalProductCost);
-
-      // this.totalSalaryPaid = this.filteredPaySalaryData.reduce(
-      //   (total, payment) => {
-      //     return total + (payment.Salary || 0); // รวม salary แต่ถ้าไม่มีค่าให้ใช้ 0
-      //   },
-      //   0
-      // );
 
       const paidBills = this.filteredData.filter(
         (item) => item.billing_status === "Complete"
@@ -1771,19 +1605,6 @@ export default {
     });
   },
   computed: {
-    // ConvertTo2DigitCost() {
-    // const totalCost =
-    //   this.totalProductCost + this.totalSalaryPaid + this.totalOvertime;
-
-    // if (totalCost == null || isNaN(totalCost)) {
-    //   return null;
-    // }
-
-    // return totalCost.toLocaleString(undefined, {
-    //   minimumFractionDigits: 2,
-    //   maximumFractionDigits: 2,
-    // });
-    // },
     ConvertTo2DigitCost() {
       if (!Array.isArray(this.Expenses)) {
         return "0.00";
@@ -1799,20 +1620,6 @@ export default {
         maximumFractionDigits: 2,
       });
     },
-    // ConvertTo2DigitProfit() {
-    //   const { totalSalescon, totalProductCost, totalSalaryPaid } = this;
-
-    //   const totalProfit = totalSalescon - (totalProductCost + totalSalaryPaid);
-
-    //   if (isNaN(totalProfit)) {
-    //     return "0.00";
-    //   }
-
-    //   return totalProfit.toLocaleString(undefined, {
-    //     minimumFractionDigits: 2,
-    //     maximumFractionDigits: 2,
-    //   });
-    // },
     ConvertTo2DigitProfit() {
       const totalSales = this.totalSalescon || 0;
 
@@ -1835,6 +1642,12 @@ export default {
         maximumFractionDigits: 2,
       });
     },
+      fastAccessRow1() {
+        return this.fastAccessConfig.filter(button => button.row === 1);
+      },
+      fastAccessRow2() {
+        return this.fastAccessConfig.filter(button => button.row === 2);
+      },
   },
 };
 </script>
