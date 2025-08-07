@@ -204,48 +204,12 @@
       <TextField v-model="formData[field.key]" :readonly="field.readonly" :disabled="field.readonly"/>
     </div>
   </div>
-  
-  <div class="mb-3">
-    <div class="Register-contain" style="padding: 20px; width: unset">
-      <div>
-        <h5 style="text-decoration-line: underline">{{ t("product") }}</h5>
-        <table class="table">
-          <thead>
-            <tr>
-              <th class="product-name-column">{{ t("productName") }}</th>
-              <th class="price-column">{{ t("price") }}</th>
-              <th class="quantity-column">{{ t("quantity") }}</th>
-              <th class="unit-column">{{ t("pro_unit") }}</th>
-              <th class="discount-column">{{ t("discount") }}</th>
-              <th class="total-price-column">{{ t("totalPrice") }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(form, index) in productForms" :key="index">
-              <td>
-                <input class="form-control readonly" v-model="form.productname" readonly disabled />
-                <textarea v-if="form.showDetails || form.product_detail !== ''" class="form-control" v-model="form.product_detail" rows="3" readonly disabled></textarea>
-              </td>
-              <td><input class="form-control readonly" v-model="form.price" readonly disabled /></td>
-              <td><input class="form-control readonly" v-model="form.sale_qty" readonly disabled /></td>
-              <td><input class="form-control" v-model="form.pro_unti" readonly disabled /></td>
-              <td>
-                <div class="discount-type">
-                  <select class="form-control form-select" v-model="form.discountType" :disabled="true">
-                    <option value="amount">{{ t("productDiscountTypeAmount") }}</option>
-                    <option value="percent">{{ t("productDiscountTypePercent") }}</option>
-                  </select>
-                  <input class="form-control" v-model="form.sale_discount" readonly disabled />
-                </div>
-              </td>
-              <td><input class="form-control readonly" v-model="form.sale_price" readonly disabled /></td>
-            </tr>
-          </tbody>
-          </table>
-      </div>
-    </div>
-  </div>
 
+  <ProductTable
+  v-model="productForms"
+  :isEditable="false"
+  />
+  
   <div class="border p-4 mb-3">
     <div class="mb-3 div-for-formControl">
         <label>{{ t("totalDiscount") }}</label>
@@ -385,6 +349,7 @@ import Dropdown from "../components/dropdown.vue";
 import formConfig from '../config/field_config/tax/form_tax.json';
 import monthMappings from '../config/global/month_mapping.json';
 import cardConfig from '@/config/field_config/tax/card_tax.json';
+import ProductTable from '../components/product_table.vue';
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -403,7 +368,8 @@ export default {
     Button,
     Icon,
     TextField,
-    Dropdown
+    Dropdown,
+    ProductTable
   },
   setup() {
     const { t } = useI18n();
@@ -695,9 +661,6 @@ export default {
       }
       this.shortcutAllow = false;
       return false;
-      // this.isAllowConfirmPopupOpen = true;
-      // this.handleEdit(row);
-      // this.isPopupOpen = false;
     },
     async deleteBilling(qty_id) {
       const accessToken = localStorage.getItem("@accessToken");
@@ -886,18 +849,17 @@ export default {
         vatType: quotationData.vatType,
       };
 
-      this.productForms = (row.productForms || []).map((detail) => {
+        this.productForms = (row.productForms || []).map((detail) => {
         const selectedProduct = this.Products.find(
           (product) => product.productID === detail.productID
         );
         let price = 0;
-        let productname = "";
-        console.log("selectedProduct", detail);
+        let productName = ""; // เปลี่ยนชื่อตัวแปรเพื่อความชัดเจน
         if (selectedProduct) {
           price = this.formatDecimal(
             parseFloat(selectedProduct.price.toFixed(2))
           );
-          productname = selectedProduct.productname;
+          productName = selectedProduct.productname;
         }
 
         const salePrice = detail.sale_qty * parseFloat(price.replace(/,/g, ""));
@@ -908,11 +870,11 @@ export default {
         return {
           productID: detail.productID,
           price: price,
-          productname: productname,
+          productName: productName, 
           sale_qty: detail.sale_qty,
           sale_price: this.formatDecimal(salePrice - saleDiscount),
           sale_discount: detail.sale_discount,
-          discountType: detail.discounttype,
+          discounttype: detail.discounttype, 
           product_detail: detail.product_detail,
           pro_unti: detail.pro_unti,
         };

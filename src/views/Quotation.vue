@@ -23,7 +23,6 @@
       </div>
 
       <div v-if="isMobile" class="card-view-customs">
-        <!-- ปุ่ม Expand/Collapse All -->
         <div class="container">
           <div class="text-start">
             {{ allExpanded ? t("CollapseItemsAll") : t("expandedItemsAll") }}
@@ -117,8 +116,6 @@
                   <Icon name="mdi-tray-arrow-down" style="cursor: pointer" />
                 </div>
               </div>
-
-              <!-- Footer (กดแล้วขยายเฉพาะ Card ที่กด) -->
               <div
                 class="card-footer text-center"
                 style="padding-bottom: 0.75rem !important"
@@ -196,153 +193,14 @@
         </div>
       </div>
 
+      <ProductTable
+        v-model="productForms"
+        :productsList="filteredProducts"
+        :isEditable="true"
+        @product-change="getDetailProduct"
+      />
+
       <div class="border p-4 mb-3">
-         <div
-          class="Register-contain"
-          :class="{ error: isEmpty.productForms }"
-          style="padding: 20px; width: unset"
-        >
-          <h5 style="text-decoration-line: underline">
-            <span style="color: red">*</span>{{ t("product") }}
-          </h5>
-          <div class="mb-3">
-            <button
-              class="round-button btn btn-primary"
-              @click="showingAddProduct"
-            >
-              +
-            </button>
-          </div>
-          <div>
-            <table class="table" style="width: 100%">
-              <thead>
-                <tr>
-                  <th class="product-name-column">{{ t("productName") }}</th>
-                  <th class="price-column">{{ t("price") }}</th>
-                  <th class="quantity-column">{{ t("quantity") }}</th>
-                  <th class="unit-column">{{ t("pro_unit") }}</th>
-                  <th class="discount-column">{{ t("discount") }}</th>
-                  <th class="total-price-column">{{ t("totalPrice") }}</th>
-                  <th class="action-column"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(form, index) in productForms" :key="index">
-                  <td class="product-name-column">
-                    <div class="relative-wrapper">
-                      <label>
-                        <input
-                          list="browsers2"
-                          name="myBrowser2"
-                          class="form-control"
-                          v-model="form.productName"
-                          @input="getDetailProduct(form, index)"
-                          :class="{ error: inputError }"
-                          autoComplete="off"
-                      /></label>
-                      <datalist id="browsers2">
-                        <option
-                          v-for="item in filteredProducts"
-                          :key="item.productID"
-                          :value="item.productname"
-                        ></option>
-                      </datalist>
-                      <a
-                        class="text-muted ng-star-inserted text-start"
-                        href="javascript:void(0)"
-                        @click="toggleProductDetail(form, index)"
-                        ><div _ngcontent-vfm-c67="" class="description-row">
-                          เพิ่มรายละเอียดสินค้า
-                        </div></a
-                      >
-                      <textarea
-                        v-if="form.showDetails || form.product_detail !== ''"
-                        class="form-control"
-                        v-model="form.product_detail"
-                        rows="3"
-                      ></textarea>
-                    </div>
-                  </td>
-                  <td class="price-column">
-                    <input
-                      class="form-control readonly"
-                      v-model="form.price"
-                      :readonly="form.isReadonly2"
-                      :disabled="form.isDisabled2"
-                    />
-                  </td>
-                  <td class="quantity-column">
-                    <input
-                      class="form-control"
-                      v-model="form.sale_qty"
-                      @keypress="validatePaste"
-                      @input="updatePrice(form, index)"
-                    />
-                  </td>
-                  <td class="unit-column">
-                    <input
-                      class="form-control"
-                      v-model="form.pro_unti"
-                      maxlength="30"
-                    />
-                  </td>
-
-                  <td class="discount-column">
-                    <div class="discount-type">
-                      <Dropdown
-                        v-model="form.discounttype"
-                        :options="discountTypeOptions"
-                        @change="updatePrice2(form, index)"
-                        style="
-                          border-top-right-radius: 0px;
-                          border-bottom-right-radius: 0px;
-                          width: 20px !important;
-                          min-width: 155px;
-                        "
-                      />
-
-                      <input
-                        style="
-                          min-width: 100px;
-                          border-top-left-radius: 0px;
-                          border-bottom-left-radius: 0px;
-                          border-left: 1px solid rgba(0, 0, 0, 0) !important;
-                        "
-                        class="form-control"
-                        v-model="form.sale_discount"
-                        min="0"
-                        @input="
-                          (event) => {
-                            limitDiscount(form);
-                            updatePrice(form, index);
-                          }
-                        "
-                        @keypress="validatePaste"
-                      />
-                    </div>
-                  </td>
-                  <td class="total-price-column">
-                    <input
-                      class="form-control readonly"
-                      v-model="form.sale_price"
-                      readonly
-                      disabled
-                    />
-                  </td>
-                  <td class="action-column">
-                    <Button
-                      customClass="btn btn-danger mdi mdi-trash-can-outline"
-                      @click="closingProduct(index)"
-                    ></Button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-            <div class="border p-4 mb-3">
         <h5 style="text-decoration: underline">{{ t("Condition") }}</h5>
         <div v-for="field in conditionFields" :key="field.key" class="mb-3 div-for-formControl">
             <label class="col-sm-5 col-md-6">{{ t(field.label) }}</label>
@@ -358,9 +216,9 @@
             <TextField v-if="field.componentType === 'TextField'" v-model="formData[field.key]" @input="calculateNat(formData.discount_quotation)" @keypress="field.isNumeric ? validateInput($event) : null" />
             <textarea v-else-if="field.componentType === 'Textarea'" v-model="formData[field.key]" :maxlength="field.maxlength" class="form-control" rows="3"></textarea>
         </div>
-        </div>
+      </div>
 
-          <div class="border p-4 mb-3">
+  <div class="border p-4 mb-3">
       <h5 style="text-decoration: underline">{{ t("Infernal") }}</h5>
       <div v-for="field in internalFields" :key="field.key" class="mb-5 div-for-formControl-textarea">
           <label class="col-sm-5 col-md-6 label-textarea">{{ t(field.label) }}</label>
@@ -534,6 +392,7 @@ import TextField from "../components/textField.vue";
 import formConfig from '../config/field_config/quotation/form_quotation.json';
 import monthMappings from '../config/global/month_mapping.json';
 import cardConfig from '@/config/field_config/quotation/card_quotation.json';
+import ProductTable from '../components/product_table.vue';
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -550,7 +409,8 @@ export default {
     Button,
     Dropdown,
     Icon,
-    TextField
+    TextField,
+    ProductTable
   },
   setup() {
     const { t } = useI18n();
@@ -1029,125 +889,173 @@ export default {
       // this.form.sale_discount =
       //   this.form.sale_discoun.replace(/^0+/, "") || "0";
     },
-
     getDetailProduct(form, index) {
-      // const selectedProductId = form.productID;
-      const selectedProductName = form.productName;
+  const selectedProduct = this.Products.find(
+    (product) => product.productname === form.productName
+  );
 
-      const selectedProduct = this.Products.find(
-        (product) => product.productname === selectedProductName
-      );
+  if (selectedProduct) {
+    // ✅ อัปเดตข้อมูลด้วยตัวเลขดิบ (raw number)
+    form.productID = selectedProduct.productID;
+    form.price = parseFloat(selectedProduct.price.toFixed(2)); // ใช้ parseFloat แทน formatDecimal
+    form.productImg = selectedProduct.productImg;
+    form.isReadonly2 = true; // (Optional: ถ้ายังต้องการใช้)
+    form.isDisabled2 = true; // (Optional: ถ้ายังต้องการใช้)
+  } else {
+    // กรณีเป็นสินค้าใหม่ (ไม่มีในลิสต์)
+    form.productID = "";
+    form.isReadonly2 = false; // (Optional)
+    form.isDisabled2 = false; // (Optional)
+  }
+  
+  // เรียกใช้ฟังก์ชันคำนวณราคารวม (สำคัญ)
+  this.calculateRowTotal(form);
+},
 
-      console.log("=====================>>", form);
+    // getDetailProduct(form, index) {
+    //   // const selectedProductId = form.productID;
+    //   const selectedProductName = form.productName;
 
-      // form.productID = selectedProduct.productID;
-      if (selectedProduct !== undefined) {
-        form.productID = selectedProduct.productID;
-        form.price = this.formatDecimal(
-          parseFloat(selectedProduct.price.toFixed(2))
-        );
-        form.sale_price = this.formatDecimal(
-          form.sale_qty * parseFloat(form.price.replace(/,/g, ""))
-        );
-        form.productname = selectedProduct.productname;
-        form.productImg = selectedProduct.productImg;
-        if (form.discounttype === "percent") {
-          // const salePriceValue =
-          //   parseFloat(form.sale_price.replace(/,/g, "")) || 0;
-          let discountPercent = parseFloat(form.sale_discount) || 0;
-          discountPercent = Math.max(0, Math.min(discountPercent, 100));
-          // alert(discountPercent);
+    //   const selectedProduct = this.Products.find(
+    //     (product) => product.productname === selectedProductName
+    //   );
 
-          form.sale_price = this.formatDecimal(
-            parseFloat(form.sale_qty * parseFloat(form.price.replace(/,/g, "")))
-          );
+    //   console.log("=====================>>", form);
 
-          if (discountPercent > 0) {
-            form.sale_price = this.formatDecimal(
-              form.sale_qty * parseFloat(form.price.replace(/,/g, "")) -
-                form.sale_qty *
-                  parseFloat(form.price.replace(/,/g, "")) *
-                  (discountPercent / 100)
-            );
-          }
-        } else {
-          form.sale_discount = parseFloat(form.sale_discount) || 0;
+    //   // form.productID = selectedProduct.productID;
+    //   if (selectedProduct !== undefined) {
+    //     form.productID = selectedProduct.productID;
+    //     form.price = this.formatDecimal(
+    //       parseFloat(selectedProduct.price.toFixed(2))
+    //     );
+    //     form.sale_price = this.formatDecimal(
+    //       form.sale_qty * parseFloat(form.price.replace(/,/g, ""))
+    //     );
+    //     form.productname = selectedProduct.productname;
+    //     form.productImg = selectedProduct.productImg;
+    //     if (form.discounttype === "percent") {
+    //       // const salePriceValue =
+    //       //   parseFloat(form.sale_price.replace(/,/g, "")) || 0;
+    //       let discountPercent = parseFloat(form.sale_discount) || 0;
+    //       discountPercent = Math.max(0, Math.min(discountPercent, 100));
+    //       // alert(discountPercent);
 
-          form.sale_price = this.formatDecimal(
-            parseFloat(
-              form.sale_price.replace(/,/g, "") - parseFloat(form.sale_discount)
-            )
-          );
+    //       form.sale_price = this.formatDecimal(
+    //         parseFloat(form.sale_qty * parseFloat(form.price.replace(/,/g, "")))
+    //       );
 
-          if (form.sale_price.replace(/,/g, "") < 0) {
-            form.sale_discount = this.formatDecimal(
-              form.sale_qty * parseFloat(form.price.replace(/,/g, ""))
-            );
-            form.sale_price = "0.00";
-          } else {
-            form.sale_price = this.formatDecimal(
-              parseFloat(
-                form.sale_qty * parseFloat(form.price.replace(/,/g, "")) -
-                  parseFloat(form.sale_discount)
-              )
-            );
-          }
-        }
-        this.updateTotalDiscount();
-        this.totalNetPrice();
-        this.vat_price();
-        this.total_pricesale();
-        this.total_priceBeforeDiscount();
+    //       if (discountPercent > 0) {
+    //         form.sale_price = this.formatDecimal(
+    //           form.sale_qty * parseFloat(form.price.replace(/,/g, "")) -
+    //             form.sale_qty *
+    //               parseFloat(form.price.replace(/,/g, "")) *
+    //               (discountPercent / 100)
+    //         );
+    //       }
+    //     } else {
+    //       form.sale_discount = parseFloat(form.sale_discount) || 0;
 
-        if (this.formData.vatType === "VATincluding") {
-          this.formData.sale_totalprice = this.formatDecimal(
-            parseFloat(this.formData.Net_price.replace(/,/g, "")) / 1.07
-          );
-          this.formData.vat = this.formatDecimal(
-            parseFloat(this.formData.Net_price.replace(/,/g, "")) -
-              parseFloat(this.formData.sale_totalprice.replace(/,/g, ""))
-          );
-        } else {
-          this.formData.vat = this.formatDecimal(
-            parseFloat(this.formData.Net_price.replace(/,/g, "")) * 0.07
-          );
-          this.formData.sale_totalprice = this.formatDecimal(
-            parseFloat(this.formData.Net_price.replace(/,/g, "")) +
-              parseFloat(this.formData.vat.replace(/,/g, ""))
-          );
-        }
-        // this.isReadonly2 = true;
-        // this.isDisabled2 = true;
-        form.isReadonly2 = true;
-        form.isDisabled2 = true;
-      } else {
-        // this.isReadonly2 = false;
-        // this.isDisabled2 = false;
-        form.isReadonly2 = false;
-        form.isDisabled2 = false;
-        form.sale_price = "0.00";
-        form.sale_qty = "0";
-        form.price = "0";
+    //       form.sale_price = this.formatDecimal(
+    //         parseFloat(
+    //           form.sale_price.replace(/,/g, "") - parseFloat(form.sale_discount)
+    //         )
+    //       );
+
+    //       if (form.sale_price.replace(/,/g, "") < 0) {
+    //         form.sale_discount = this.formatDecimal(
+    //           form.sale_qty * parseFloat(form.price.replace(/,/g, ""))
+    //         );
+    //         form.sale_price = "0.00";
+    //       } else {
+    //         form.sale_price = this.formatDecimal(
+    //           parseFloat(
+    //             form.sale_qty * parseFloat(form.price.replace(/,/g, "")) -
+    //               parseFloat(form.sale_discount)
+    //           )
+    //         );
+    //       }
+    //     }
+    //     this.updateTotalDiscount();
+    //     this.totalNetPrice();
+    //     this.vat_price();
+    //     this.total_pricesale();
+    //     this.total_priceBeforeDiscount();
+
+    //     if (this.formData.vatType === "VATincluding") {
+    //       this.formData.sale_totalprice = this.formatDecimal(
+    //         parseFloat(this.formData.Net_price.replace(/,/g, "")) / 1.07
+    //       );
+    //       this.formData.vat = this.formatDecimal(
+    //         parseFloat(this.formData.Net_price.replace(/,/g, "")) -
+    //           parseFloat(this.formData.sale_totalprice.replace(/,/g, ""))
+    //       );
+    //     } else {
+    //       this.formData.vat = this.formatDecimal(
+    //         parseFloat(this.formData.Net_price.replace(/,/g, "")) * 0.07
+    //       );
+    //       this.formData.sale_totalprice = this.formatDecimal(
+    //         parseFloat(this.formData.Net_price.replace(/,/g, "")) +
+    //           parseFloat(this.formData.vat.replace(/,/g, ""))
+    //       );
+    //     }
+    //     // this.isReadonly2 = true;
+    //     // this.isDisabled2 = true;
+    //     form.isReadonly2 = true;
+    //     form.isDisabled2 = true;
+    //   } else {
+    //     // this.isReadonly2 = false;
+    //     // this.isDisabled2 = false;
+    //     form.isReadonly2 = false;
+    //     form.isDisabled2 = false;
+    //     form.sale_price = "0.00";
+    //     form.sale_qty = "0";
+    //     form.price = "0";
+    //   }
+    //   if (form.productName.trim() === "") {
+    //     form.productID = "";
+    //     form.productName = "";
+    //     form.price = "";
+    //     form.sale_qty = 0;
+    //     form.sale_price = 0.0;
+    //     form.sale_discount = 0;
+    //     form.discounttype = "amount"; // ค่าเริ่มต้น
+    //     form.productImg = null;
+    //     form.product_detail = "";
+    //     form.pro_unit = "";
+    //     form.showDetails = false;
+    //     form.isReadonly2 = false;
+    //     form.isDisabled2 = false;
+    //   }
+
+    //   if (selectedProduct === undefined) {
+    //     form.productID = "";
+    //   }
+    // },
+    calculateRowTotal(form) {
+      const price = parseFloat(form.price) || 0;
+      const quantity = parseInt(form.sale_qty) || 0;
+      let discount = parseFloat(form.sale_discount) || 0;
+      const totalBeforeDiscount = price * quantity;
+
+      if (form.discounttype === 'percent') {
+        if (discount > 100) discount = 100;
+        form.sale_price = this.formatDecimal(totalBeforeDiscount * (1 - (discount / 100)));
+      } else { // amount
+        if (discount > totalBeforeDiscount) discount = totalBeforeDiscount;
+        form.sale_price = this.formatDecimal(totalBeforeDiscount - discount);
       }
-      if (form.productName.trim() === "") {
-        form.productID = "";
-        form.productName = "";
-        form.price = "";
-        form.sale_qty = 0;
-        form.sale_price = 0.0;
-        form.sale_discount = 0;
-        form.discounttype = "amount"; // ค่าเริ่มต้น
-        form.productImg = null;
-        form.product_detail = "";
-        form.pro_unit = "";
-        form.showDetails = false;
-        form.isReadonly2 = false;
-        form.isDisabled2 = false;
-      }
+      form.sale_discount = discount;
 
-      if (selectedProduct === undefined) {
-        form.productID = "";
-      }
+      // เรียกใช้ฟังก์ชันคำนวณผลรวมทั้งหมดของใบเสนอราคา
+      this.calculateTotals();
+    },
+        calculateTotals() {
+      this.updateTotalDiscount();
+      this.totalNetPrice();
+      this.vat_price();
+      this.total_pricesale();
+      this.total_priceBeforeDiscount();
+      this.vatTypeChange(); // เรียกใช้เพื่อให้คำนวณ VAT ใหม่เสมอ
     },
     getDetailCustomer() {
       let items = [];
@@ -1525,19 +1433,6 @@ export default {
         doc.text("Signature", 110, 265);
         doc.text("Name", 110, 275);
         doc.text("Position", 110, 285);
-
-        // //line width
-        // doc.setLineWidth(0.2);
-        // //[start(x,y), end(x,y)]
-        // doc.line(130, 265, 200, 265);
-        // doc.line(130, 275, 200, 275);
-        // doc.line(130, 285, 200, 285);
-
-        // doc.setLineWidth(0.5);
-        // doc.line(10, 35, 120, 35);
-        // doc.line(10, 72, 200, 72);
-        // doc.line(10, 210, 200, 210);
-        // doc.line(10, 250, 200, 250);
 
         doc.setFontSize(10);
         doc.setTextColor(0, 0, 0);
