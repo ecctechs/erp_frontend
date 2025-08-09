@@ -1269,7 +1269,7 @@ export default {
         if (json.statusCode === 200) {
           this.Leaving = json.data.map((item) => {
             const DateLeave = new Date(item.date_start);
-            const DateLeaveEnd = new Date(item.dateEnd);
+            const DateLeaveEnd = new Date(item.date_end);
             const formatDate = {
               day: "2-digit",
               month: "short",
@@ -1666,7 +1666,7 @@ export default {
               employeeID: this.formDataLeave.employeeID,
               detail: this.formDataLeave.detail,
               date_start: this.formDataLeave.date,
-              dateEnd: this.formDataLeave.dateEnd,
+              date_end: this.formDataLeave.dateEnd,
             }),
           });
           const json = await response.json();
@@ -1710,7 +1710,7 @@ export default {
                 employeeID: this.formDataLeave.employeeID,
                 detail: this.formDataLeave.detail,
                 date_start: this.formDataLeave.date,
-                dateEnd: this.formDataLeave.dateEnd,
+                date_end: this.formDataLeave.dateEnd,
               }),
             }
           );
