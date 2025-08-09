@@ -841,12 +841,6 @@ export default {
       this.formDataLeave.employeeID = employee.ID;
       this.formDataLeave.detail = item.detail;
 
-      // const formatDateForPicker = (date) => {
-      //   if (!date) return null;
-      //   const d = new Date(date);
-      //   if (isNaN(d.getTime())) return null; // Check if the date is valid
-      //   return d;
-      // };
       const formatDateForPicker = (date) => {
         if (!date) return null;
         const d = new Date(date);
@@ -861,9 +855,6 @@ export default {
       };
 
       const filteredLevea = this.Leaving.filter((emp) => emp.ID === item.ID);
-
-      // const formattedDateStart = formatDateForPicker(item["date"]);
-      // const formattedDateEnd = formatDateForPicker(item["dateEnd"]);
 
       const formattedDateStart = formatDateForPicker(filteredLevea[0]["date"]);
       const formattedDateEnd = formatDateForPicker(filteredLevea[0]["dateEnd"]);
@@ -1277,7 +1268,7 @@ export default {
 
         if (json.statusCode === 200) {
           this.Leaving = json.data.map((item) => {
-            const DateLeave = new Date(item.date);
+            const DateLeave = new Date(item.date_start);
             const DateLeaveEnd = new Date(item.dateEnd);
             const formatDate = {
               day: "2-digit",
@@ -1674,7 +1665,7 @@ export default {
             body: JSON.stringify({
               employeeID: this.formDataLeave.employeeID,
               detail: this.formDataLeave.detail,
-              date: this.formDataLeave.date,
+              date_start: this.formDataLeave.date,
               dateEnd: this.formDataLeave.dateEnd,
             }),
           });
@@ -1718,7 +1709,7 @@ export default {
               body: JSON.stringify({
                 employeeID: this.formDataLeave.employeeID,
                 detail: this.formDataLeave.detail,
-                date: this.formDataLeave.date,
+                date_start: this.formDataLeave.date,
                 dateEnd: this.formDataLeave.dateEnd,
               }),
             }
