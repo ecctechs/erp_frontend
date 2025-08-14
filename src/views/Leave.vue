@@ -413,9 +413,9 @@ export default {
         departmentID: "",
         PositionID: "",
         start_working_date: "",
-        Salary: "",
-        employeeType: "",
-        bankName: "",
+        salary: "",
+        employee_type: "",
+        bank_name: "",
         bankAccountID: "",
         positions: "",
         status: "active",
@@ -433,9 +433,9 @@ export default {
         departmentID: "",
         PositionID: "",
         start_working_date: "",
-        Salary: "",
-        employeeType: "",
-        bankName: "",
+        salary: "",
+        employee_type: "",
+        bank_name: "",
         bankAccountID: "",
         positions: "",
         status: "active",
@@ -510,7 +510,7 @@ export default {
           label: this.t("startworkingdateHeaderTable"),
           key: "Start Working Date",
         },
-        { label: this.t("salaryHeaderTable"), key: "Salary" },
+        { label: this.t("salaryHeaderTable"), key: "salary" },
         { label: this.t("emptypeHeaderTable"), key: "Emp. type" },
         { label: this.t("bankNameHeaderTable"), key: "Bank Name" },
         { label: this.t("bankaccHeaderTable"), key: "Bank Account ID" },
@@ -875,9 +875,9 @@ export default {
         departmentID: "",
         PositionID: "",
         start_working_date: "",
-        Salary: "",
-        employeeType: "",
-        bankName: "",
+        salary: "",
+        employee_type: "",
+        bank_name: "",
         bankAccountID: "",
         positions: "",
         status: "",
@@ -894,9 +894,9 @@ export default {
       this.isEmpty.departmentID = false;
       this.isEmpty.PositionID = false;
       this.isEmpty.start_working_date = false;
-      this.isEmpty.Salary = false;
-      this.isEmpty.employeeType = false;
-      this.isEmpty.bankName = false;
+      this.isEmpty.salary = false;
+      this.isEmpty.employee_type = false;
+      this.isEmpty.bank_name = false;
       this.isEmpty.bankAccountID = false;
 
       this.formData.status = "active";
@@ -990,9 +990,9 @@ export default {
         start_working_date: formatDateForPicker(
           filteredEmp[0]["Start Working Date"]
         ),
-        Salary: item.Salary,
-        employeeType: item["Emp. type"],
-        bankName: item["Bank Name"],
+        salary: item.salary,
+        employee_type: item["Emp. type"],
+        bank_name: item["Bank Name"],
         bankAccountID: item["Bank Account ID"],
         departments: departments.join(", "),
         positions: positions.join(", "),
@@ -1129,9 +1129,9 @@ export default {
                 "Tel.": item.phone_number,
                 email: item.email,
                 "Start Working Date": startWorking,
-                Salary: formatSalary(item.Salary),
-                "Emp. type": item.employeeType,
-                "Bank Name": item.bankName,
+                salary: formatSalary(item.salary),
+                "Emp. type": item.employee_type,
+                "Bank Name": item.bank_name,
                 "Bank Account ID": item.bankAccountID,
                 Department: departments.join(", "),
                 Position: positions.join(", "),
@@ -1409,9 +1409,9 @@ export default {
       this.isEmpty.departmentID = false;
       this.isEmpty.PositionID = false;
       this.isEmpty.start_working_date = false;
-      this.isEmpty.Salary = false;
-      this.isEmpty.employeeType = false;
-      this.isEmpty.bankName = false;
+      this.isEmpty.salary = false;
+      this.isEmpty.employee_type = false;
+      this.isEmpty.bank_name = false;
       this.isEmpty.bankAccountID = false;
 
       // ตรวจสอบแต่ละฟิลด์ว่ามีค่าว่างหรือไม่
@@ -1503,18 +1503,18 @@ export default {
         errorMessages.push(this.$t("validation.start_working_date"));
       }
 
-      if (this.formData.Salary === "") {
-        this.isEmpty.Salary = true;
+      if (this.formData.salary === "") {
+        this.isEmpty.salary = true;
         errorMessages.push(this.$t("validation.Salary"));
       }
 
-      if (this.formData.employeeType === "") {
-        this.isEmpty.employeeType = true;
+      if (this.formData.employee_type === "") {
+        this.isEmpty.employee_type = true;
         errorMessages.push(this.$t("validation.employeeType"));
       }
 
-      if (this.formData.bankName === "") {
-        this.isEmpty.bankName = true;
+      if (this.formData.bank_name === "") {
+        this.isEmpty.bank_name = true;
         errorMessages.push(this.$t("validation.bankName"));
       }
 
@@ -1583,9 +1583,9 @@ export default {
             departmentID: this.formData.departmentID,
             PositionID: this.formData.PositionID,
             start_working_date: this.formData.start_working_date,
-            Salary: this.formData.Salary,
-            employeeType: this.formData.employeeType,
-            bankName: this.formData.bankName,
+            salary: this.formData.salary,
+            employee_type: this.formData.employee_type,
+            bank_name: this.formData.bank_name,
             bankAccountID: this.formData.bankAccountID,
           }),
         });
@@ -1609,9 +1609,9 @@ export default {
             departmentID: "",
             PositionID: "",
             start_working_date: "",
-            Salary: "",
-            employeeType: "",
-            bankName: "",
+            salary: "",
+            employee_type: "",
+            bank_name: "",
             bankAccountID: "",
             status: "",
           };
@@ -1812,7 +1812,6 @@ export default {
               "Content-Type": "application/json",
               Authorization: `Bearer ${accessToken}`,
             },
-            // body: JSON.stringify(this.formData),
             body: JSON.stringify({
               title: this.formData.title,
              first_name: this.formData.first_name,
@@ -1825,9 +1824,9 @@ export default {
               departmentID: this.formData.departmentID,
               PositionID: this.formData.PositionID,
               start_working_date: this.formData.start_working_date,
-              Salary: parseSalary(this.formData.Salary),
-              employeeType: this.formData.employeeType,
-              bankName: this.formData.bankName,
+              salary: parseSalary(this.formData.salary),
+              employee_type: this.formData.employee_type,
+              bank_name: this.formData.bank_name,
               bankAccountID: this.formData.bankAccountID,
             }),
           }

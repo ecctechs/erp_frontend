@@ -344,9 +344,9 @@ export default {
         departmentID: "",
         PositionID: "",
         start_working_date: new Date(),
-        Salary: "",
-        employeeType: "",
-        bankName: "",
+        salary: "",
+        employee_type: "",
+        bank_name: "",
         bankAccountID: "",
         positions: "",
         status: "active",
@@ -364,9 +364,9 @@ export default {
         departmentID: false,
         PositionID: false,
         start_working_date: false,
-        Salary: false,
-        employeeType: false,
-        bankName: false,
+        salary: false,
+        employee_type: false,
+        bank_name: false,
         bankAccountID: false,
         positions: false,
         status: "active",
@@ -447,7 +447,7 @@ export default {
           label: this.t("startworkingdateHeaderTable"),
           key: "Start Working Date",
         },
-        { label: this.t("salaryHeaderTable"), key: "Salary" },
+        { label: this.t("salaryHeaderTable"), key: "salary" },
         { label: this.t("emptypeHeaderTable"), key: "Emp. type" },
         { label: this.t("bankNameHeaderTable"), key: "Bank Name" },
         { label: this.t("bankaccHeaderTable"), key: "Bank Account ID" },
@@ -618,7 +618,7 @@ export default {
     switch (key) {
       case 'title':
         return this.titleOptions;
-      case 'employeeType':
+      case 'employee_type':
         return this.employeeTypeOptions;
       case 'departmentID':
         return this.departmentOptions;
@@ -750,9 +750,9 @@ export default {
         departmentID: "",
         PositionID: "",
         start_working_date: "",
-        Salary: "",
-        employeeType: "",
-        bankName: "",
+        salary: "",
+        employee_type: "",
+        bank_name: "",
         bankAccountID: "",
         positions: "",
         status: "",
@@ -769,9 +769,9 @@ export default {
         departmentID: false,
         PositionID: false,
         start_working_date: false,
-        Salary: false,
-        employeeType: false,
-        bankName: false,
+        salary: false,
+        employee_type: false,
+        bank_name: false,
         bankAccountID: false,
       };
       this.formData.status = "active";
@@ -855,9 +855,9 @@ export default {
         departmentID: item.departmentID,
         PositionID: item.PositionID,
         start_working_date: startingworkdate,
-        Salary: item.Salary,
-        employeeType: item["Emp. type"],
-        bankName: item["Bank Name"],
+        salary: item.salary,
+        employee_type: item["Emp. type"],
+        bank_name: item["Bank Name"],
         bankAccountID: item["Bank Account ID"],
         departments: departments.join(", "),
         positions: positions.join(", "),
@@ -956,7 +956,7 @@ export default {
           item.Department || "",
           item.Position || "",
           this.formatDateToThai(item["Start Working Date"]),
-          String(item.Salary).replace(/,/g, "") || "",
+          String(item.salary).replace(/,/g, "") || "",
           this.translateEmpType(item["Emp. type"]),
           item["Bank Name"] || "",
           item["Bank Account ID"] || "",
@@ -1037,9 +1037,9 @@ export default {
               "Tel.": item.phone_number,
               email: item.email,
               "Start Working Date": startWorking,
-              Salary: formatSalary(item.Salary),
-              "Emp. type": item.employeeType,
-              "Bank Name": item.bankName,
+              salary: formatSalary(item.salary),
+              "Emp. type": item.employee_type,
+              "Bank Name": item.bank_name,
               "Bank Account ID": item.bankAccountID,
               Department: departments.join(", "),
               Position: positions.join(", "),
@@ -1282,9 +1282,9 @@ export default {
         departmentID: false,
         PositionID: false,
         start_working_date: false,
-        Salary: false,
-        employeeType: false,
-        bankName: false,
+        salary: false,
+        employee_type: false,
+        bank_name: false,
         bankAccountID: false,
       };
       let errorMessages = [];
@@ -1366,8 +1366,8 @@ export default {
         this.isEmpty.start_working_date = true;
         errorMessages.push(this.$t("validation.start_working_date"));
       }
-      if (this.formData.employeeType === "") {
-        this.isEmpty.employeeType = true;
+      if (this.formData.employee_type === "") {
+        this.isEmpty.employee_type = true;
         errorMessages.push(this.$t("validation.employeeType"));
       }
       if (errorMessages.length > 0) {
@@ -1410,9 +1410,9 @@ export default {
             departmentID: this.formData.departmentID,
             PositionID: this.formData.PositionID,
             start_working_date: this.formData.start_working_date,
-            Salary: this.formData.Salary,
-            employeeType: this.formData.employeeType,
-            bankName: this.formData.bankName,
+            salary: this.formData.salary,
+            employee_type: this.formData.employee_type,
+            bank_name: this.formData.bank_name,
             bankAccountID: this.formData.bankAccountID,
           }),
         });
@@ -1436,9 +1436,9 @@ export default {
             departmentID: "",
             PositionID: "",
             start_working_date: "",
-            Salary: "",
-            employeeType: "",
-            bankName: "",
+            salary: "",
+            employee_type: "",
+            bank_name: "",
             bankAccountID: "",
             status: "",
           };
@@ -1625,9 +1625,9 @@ export default {
               departmentID: this.formData.departmentID,
               PositionID: this.formData.PositionID,
               start_working_date: this.formData.start_working_date,
-              Salary: parseSalary(this.formData.Salary),
-              employeeType: this.formData.employeeType,
-              bankName: this.formData.bankName,
+              salary: parseSalary(this.formData.salary),
+              employee_type: this.formData.employee_type,
+              bank_name: this.formData.bank_name,
               bankAccountID: this.formData.bankAccountID,
             }),
           }

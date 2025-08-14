@@ -349,7 +349,7 @@ export default {
       // ฟิลเตอร์ตามประเภทพนักงานที่เลือก
       if (this.selectedEmployeeType !== "all") {
         filteredEmployees = filteredEmployees.filter(
-          (item) => item.employeeType === this.selectedEmployeeType
+          (item) => item.employee_type === this.selectedEmployeeType
         );
       }
 

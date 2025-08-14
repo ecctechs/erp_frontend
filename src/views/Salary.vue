@@ -1180,11 +1180,11 @@ export default {
             return {
               "Employee ID": item.employee_id,
               "Employee Name": item.name,
-              "Emp. type": item.employeeType,
+              "Emp. type": item.employee_type,
               "Tel.": item.phone,
               Email: item.email,
               Salary: formatSalary(item.salary),
-              "Bank Name": item.bankName,
+              "Bank Name": item.bank_name,
               "Bank Account ID": item.bankAccountID,
               Department: item.department,
               Position: item.position,

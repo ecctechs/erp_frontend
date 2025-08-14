@@ -876,12 +876,6 @@ export default {
           path: "/position",
           displayNameTh: "จัดการตําแหน่งงาน",
         },
-        // {
-        //   name: "salary",
-        //   displayName: "Salary Management",
-        //   path: "/salary",
-        //   displayNameTh: "เงินเดือนพนักงาน",
-        // },
         {
           name: "rolemanage",
           displayName: "Role Manage",

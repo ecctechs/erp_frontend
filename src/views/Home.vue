@@ -874,7 +874,7 @@ export default {
               Month: item.month,
               Year: item.year,
               "Employee Name": item.employeeName,
-              Salary: item.salary,
+              salary: item.salary,
             };
             return initialTableData;
           });
@@ -895,7 +895,7 @@ export default {
               Month: item.month,
               Year: item.year,
               "Employee Name": item.employeeName,
-              Salary: item.salary,
+              salary: item.salary,
             };
             return initialTableData;
           });
@@ -1311,7 +1311,7 @@ export default {
 
       this.totalSalaryPaid = this.filteredPaySalaryData.reduce(
         (total, payment) => {
-          return total + (payment.Salary || 0); // รวม salary แต่ถ้าไม่มีค่าให้ใช้ 0
+          return total + (payment.salary || 0); // รวม salary แต่ถ้าไม่มีค่าให้ใช้ 0
         },
         0
       );
