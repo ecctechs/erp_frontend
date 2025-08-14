@@ -24,7 +24,7 @@ const props = defineProps({
   label: String,
   type: {
     type: String,
-    default: "text", // text, password, email, number, tel
+    default: "text", 
   },
   placeholder: String,
   required: {

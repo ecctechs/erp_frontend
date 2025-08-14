@@ -319,7 +319,7 @@ export default {
         { label: this.t("firstNameHeaderTable"), key: "First name" },
         { label: this.t("lastNameHeaderTable"), key: "Last name" },
         { label: this.t("phoneNumberHeaderTable"), key: "Phone number" },
-        { label: this.t("emailHeaderTable"), key: "Email" },
+        { label: this.t("emailHeaderTable"), key: "email" },
         { label: this.t("passwordHeaderTable"), key: "Password" },
         { label: this.t("roleHeaderTable"), key: "Role" },
       ];

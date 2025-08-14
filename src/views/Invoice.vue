@@ -1280,9 +1280,9 @@ summaryFields() {
         doc.text(`Name: `, 10, 255);
         doc.text(row.employeeName, 40, 255);
         doc.text(`Email: `, 10, 260);
-        doc.text(employ.Email, 40, 260);
+        doc.text(employ.email, 40, 260);
         doc.text(`Contact No.: `, 10, 265);
-        doc.text(employ.Phone_num, 40, 265);
+        doc.text(employ.phone_number, 40, 265);
         doc.text(`Remark: `, 10, 215);
         doc.text(`Total Before Discount: `, 130, 215);
         doc.text(`Total Before VAT: `, 130, 220);
@@ -1655,8 +1655,8 @@ summaryFields() {
             let initialTableData = {
               employee_id: item.employee_id,
               Name: item.name,
-              Phone_num: item.phone,
-              Email: item.email,
+              phone_number: item.phone,
+              email: item.email,
               Department: item.department,
               position: item.position,
             };

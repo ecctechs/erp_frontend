@@ -1252,19 +1252,6 @@ export default {
         doc.text("Name", 110, 275);
         doc.text("Position", 110, 285);
 
-        // //line width
-        // doc.setLineWidth(0.2);
-        // //[start(x,y), end(x,y)]
-        // doc.line(130, 265, 200, 265);
-        // doc.line(130, 275, 200, 275);
-        // doc.line(130, 285, 200, 285);
-
-        // doc.setLineWidth(0.5);
-        // doc.line(10, 35, 120, 35);
-        // doc.line(10, 72, 200, 72);
-        // doc.line(10, 210, 200, 210);
-        // doc.line(10, 250, 200, 250);
-
         doc.setFontSize(10);
         doc.setTextColor(0, 0, 0);
 
@@ -1314,27 +1301,11 @@ export default {
         doc.text(`Name: `, 10, 255);
         doc.text(row.employeeName, 40, 255);
         doc.text(`Email: `, 10, 260);
-        doc.text(employ.Email, 40, 260);
+        doc.text(employ.email, 40, 260);
         doc.text(`Contact No.: `, 10, 265);
-        doc.text(employ.Phone_num, 40, 265);
+        doc.text(employ.phone_number, 40, 265);
         doc.text(`Remark: `, 10, 215);
 
-        // const FormEmployee_sale = [
-        //   `${row.employeeName}`,
-        //   // `${employ.Email}`,
-        //   // `${employ.Phone_num}`,
-        // ];
-        // doc.text(FormEmployee_sale, 40, 255, {
-        //   align: "left",
-        //   valign: "middle",
-        //   lineGap: 5,
-        // });
-
-        // doc.text(`Total Before Discount: `, 130, 215);
-        // doc.text(`Total Before Vat: `, 130, 219);
-        // doc.text(`Discount: `, 130, 223);
-        // doc.text(`Vat 7%: `, 130, 227);
-        // doc.text(`Net Price:  `, 130, 231);
         doc.text(`Total Before Discount: `, 130, 215);
         doc.text(`Total Before VAT: `, 130, 220);
         doc.text(`Discount: `, 130, 225);
@@ -1721,8 +1692,8 @@ export default {
             let initialTableData = {
               employee_id: item.employee_id,
               Name: item.name,
-              Phone_num: item.phone,
-              Email: item.email,
+              phone_number: item.phone,
+              email: item.email,
               Department: item.department,
               position: item.position,
             };

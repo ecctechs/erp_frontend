@@ -336,11 +336,11 @@ export default {
         title: "",
        first_name: "",
         last_name: "",
-        Address: "",
-        Birthdate: new Date(),
-        NID_num: "",
-        Phone_num: "",
-        Email: "",
+        address: "",
+        birth_date: new Date(),
+        national_id_number: "",
+        phone_number: "",
+        email: "",
         departmentID: "",
         PositionID: "",
         start_working_date: new Date(),
@@ -356,11 +356,11 @@ export default {
         title: false,
        first_name: false,
         last_name: false,
-        Address: false,
-        Birthdate: false,
-        NID_num: false,
-        Phone_num: false,
-        Email: false,
+        address: false,
+        birth_date: false,
+        national_id_number: false,
+        phone_number: false,
+        email: false,
         departmentID: false,
         PositionID: false,
         start_working_date: false,
@@ -438,11 +438,11 @@ export default {
       return [
         { label: this.t("titleHeaderTable"), key: "Title" },
         { label: this.t("employeeNameFirstandLastHeaderTable"), key: "Name" },
-        { label: this.t("addressHeaderTable"), key: "Address" },
-        { label: this.t("birthdateHeaderTable"), key: "Birthdate" },
+        { label: this.t("addressHeaderTable"), key: "address" },
+        { label: this.t("birthdateHeaderTable"), key: "birth_date" },
         { label: this.t("NIDHeaderTable"), key: "National ID" },
         { label: this.t("telHeaderTable"), key: "Tel." },
-        { label: this.t("emailHeaderTable"), key: "Email" },
+        { label: this.t("emailHeaderTable"), key: "email" },
         {
           label: this.t("startworkingdateHeaderTable"),
           key: "Start Working Date",
@@ -492,8 +492,8 @@ export default {
         console.log("filteredEmployees++", filteredEmployees);
         filteredEmployees = filteredEmployees.map((emp) => ({
           ...emp,
-          Birthdate: emp.Birthdate
-            ? String(emp.Birthdate)
+          birth_date: emp.birth_date
+            ? String(emp.birth_date)
                 .replace(
                   /\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b/g,
                   (match) => monthMapping[match]
@@ -674,7 +674,7 @@ export default {
       this.isAddingMode = true;
       this.isEditMode = false;
       const currentDate = new Date();
-      this.formData.Birthdate =
+      this.formData.birth_date =
         this.t("lang") === "en"
           ? new Date(
               new Date(currentDate).setFullYear(currentDate.getFullYear())
@@ -742,11 +742,11 @@ export default {
         title: "",
        first_name: "",
         last_name: "",
-        Address: "",
-        Birthdate: "",
-        NID_num: "",
-        Phone_num: "",
-        Email: "",
+        address: "",
+        birth_date: "",
+        national_id_number: "",
+        phone_number: "",
+        email: "",
         departmentID: "",
         PositionID: "",
         start_working_date: "",
@@ -759,13 +759,13 @@ export default {
       };
       this.isEmpty = {
         title: false,
-       first_name: false,
+        first_name: false,
         last_name: false,
-        Address: false,
-        Birthdate: false,
-        NID_num: false,
-        Phone_num: false,
-        Email: false,
+        address: false,
+        birth_date: false,
+        national_id_number: false,
+        phone_number: false,
+        email: false,
         departmentID: false,
         PositionID: false,
         start_working_date: false,
@@ -822,13 +822,13 @@ export default {
         item.Title = "Miss";
       }
       const filteredEmp = this.employees.filter((emp) => emp.ID === item.ID);
-      let Birthdate = [];
+      let birth_date = [];
       let startingworkdate = [];
-      if (filteredEmp[0].Birthdate) {
-        Birthdate = new Date(filteredEmp[0].Birthdate + " GMT+0700");
-        Birthdate.toString();
+      if (filteredEmp[0].birth_date) {
+        birth_date = new Date(filteredEmp[0].birth_date + " GMT+0700");
+        birth_date.toString();
       } else {
-        Birthdate = new Date();
+        birth_date = new Date();
       }
       if (filteredEmp[0]["Start Working Date"]) {
         startingworkdate = new Date(
@@ -847,11 +847,11 @@ export default {
         title: item.Title,
        first_name: item.Name.split(" ")[0],
         last_name: item.Name.split(" ")[1],
-        Address: item.Address,
-        Birthdate: Birthdate,
-        NID_num: item["National ID"],
-        Phone_num: item["Tel."],
-        Email: item.Email,
+        address: item.address,
+        birth_date: birth_date,
+        national_id_number: item["National ID"],
+        phone_number: item["Tel."],
+        email: item.email,
         departmentID: item.departmentID,
         PositionID: item.PositionID,
         start_working_date: startingworkdate,
@@ -948,11 +948,11 @@ export default {
         return [
           item.Title || "",
           item.Name || "",
-          item.Address || "",
-          this.formatDateToThai(item.Birthdate),
+          item.address || "",
+          this.formatDateToThai(item.birth_date),
           item["National ID"] || "",
           item["Tel."] || "",
-          item.Email || "",
+          item.email || "",
           item.Department || "",
           item.Position || "",
           this.formatDateToThai(item["Start Working Date"]),
@@ -1000,16 +1000,16 @@ export default {
               ? [item.department.departmentName]
               : [];
             let positions = item.position ? [item.position.Position] : [];
-            const BD = new Date(item.Birthdate);
+            const BD = new Date(item.birth_date);
             const startWorkingDate = new Date(item.start_working_date);
             const formatDate = {
               day: "2-digit",
               month: "short",
               year: "numeric",
             };
-            const Birthdate =
-              item.Birthdate && item.Birthdate !== ""
-                ? new Date(item.Birthdate).toLocaleDateString(
+            const birth_date =
+              item.birth_date && item.birth_date !== ""
+                ? new Date(item.birth_date).toLocaleDateString(
                     "en-GB",
                     formatDate
                   )
@@ -1031,11 +1031,11 @@ export default {
               ID: item.employee_id,
               Title: item.title,
               Name: item.first_name + " " + item.last_name,
-              Address: item.Address,
-              Birthdate: Birthdate,
-              "National ID": item.NID_num,
-              "Tel.": item.Phone_num,
-              Email: item.Email,
+              address: item.address,
+              birth_date: birth_date,
+              "National ID": item.national_id_number,
+              "Tel.": item.phone_number,
+              email: item.email,
               "Start Working Date": startWorking,
               Salary: formatSalary(item.Salary),
               "Emp. type": item.employeeType,
@@ -1076,14 +1076,14 @@ export default {
               ? [item.department.departmentName]
               : [];
             let positions = item.position ? [item.position.Position] : [];
-            const BD = new Date(item.Birthdate);
+            const BD = new Date(item.birth_date);
             const startWorkingDate = new Date(item.start_working_date);
             const formatDate = {
               day: "2-digit",
               month: "short",
               year: "numeric",
             };
-            const Birthdate = BD.toLocaleDateString("en-GB", formatDate);
+            const birth_date = BD.toLocaleDateString("en-GB", formatDate);
             const startWorking = startWorkingDate.toLocaleDateString(
               "en-GB",
               formatDate
@@ -1274,11 +1274,11 @@ export default {
         title: false,
        first_name: false,
         last_name: false,
-        Address: false,
-        Birthdate: false,
-        NID_num: false,
-        Phone_num: false,
-        Email: false,
+        address: false,
+        birth_date: false,
+        national_id_number: false,
+        phone_number: false,
+        email: false,
         departmentID: false,
         PositionID: false,
         start_working_date: false,
@@ -1300,52 +1300,52 @@ export default {
         this.isEmpty.last_name = true;
         errorMessages.push(this.$t("validation.L_name"));
       }
-      if (this.formData.Address === "") {
-        this.isEmpty.Address = true;
+      if (this.formData.address === "") {
+        this.isEmpty.address = true;
         errorMessages.push(this.$t("validation.Address"));
       }
-      if (this.formData.Birthdate === "") {
-        this.isEmpty.Birthdate = true;
+      if (this.formData.birth_date === "") {
+        this.isEmpty.birth_date = true;
         errorMessages.push(this.$t("validation.Birthdate"));
       }
-      if (this.formData.NID_num === "") {
-        this.isEmpty.NID_num = true;
+      if (this.formData.national_id_number === "") {
+        this.isEmpty.national_id_number = true;
         errorMessages.push(this.$t("validation.NID_num"));
-      } else if (this.formData.NID_num.length !== 13) {
-        this.isEmpty.NID_num = true;
+      } else if (this.formData.national_id_number.length !== 13) {
+        this.isEmpty.national_id_number = true;
         errorMessages.push(this.$t("validation.NID_num_length"));
       }
       const isDuplicateNID_num = this.employees.some(
         (item) =>
-          item["National ID"].trim() === this.formData.NID_num.trim() &&
+          item["National ID"].trim() === this.formData.national_id_number.trim() &&
           item.ID !== this.formData.employee_id
       );
       if (isDuplicateNID_num) {
-        this.isEmpty.NID_num = true;
+        this.isEmpty.national_id_number = true;
         errorMessages.push(this.$t("validation.duplicateNID_num"));
       }
-      if (this.formData.Phone_num === "") {
-        this.isEmpty.Phone_num = true;
+      if (this.formData.phone_number === "") {
+        this.isEmpty.phone_number = true;
         errorMessages.push(this.$t("validation.Phone_num"));
       } else if (
-        !this.formData.Phone_num ||
-        this.formData.Phone_num.length < 9 ||
-        this.formData.Phone_num.length > 10
+        !this.formData.phone_number ||
+        this.formData.phone_number.length < 9 ||
+        this.formData.phone_number.length > 10
       ) {
-        this.isEmpty.Phone_num = true;
+        this.isEmpty.phone_number = true;
         errorMessages.push(this.$t("validation.Phone_num_length"));
       }
       const isDuplicatePhone = this.employees.some(
         (item) =>
-          item["Tel."].trim() === this.formData.Phone_num.trim() &&
+          item["Tel."].trim() === this.formData.phone_number.trim() &&
           item.ID !== this.formData.employee_id
       );
       if (isDuplicatePhone) {
-        this.isEmpty.Phone_num = true;
+        this.isEmpty.phone_number = true;
         errorMessages.push(this.$t("validation.duplicatePhone"));
       }
-      if (this.formData.Email === "") {
-        this.isEmpty.Email = true;
+      if (this.formData.email === "") {
+        this.isEmpty.email = true;
         errorMessages.push(this.$t("validation.Email"));
       }
       if (
@@ -1389,7 +1389,7 @@ export default {
       const accessToken = localStorage.getItem("@accessToken");
       if (!this.validateFormData()) return;
       this.isLoading = true;
-      const date_Birthdate = new Date(this.formData.Birthdate);
+      const date_Birthdate = new Date(this.formData.birth_date);
       date_Birthdate.setFullYear(date_Birthdate.getFullYear() - 543);
       try {
         const response = await fetch(`${API_CALL}/employee/AddEmployee`, {
@@ -1402,11 +1402,11 @@ export default {
             title: this.formData.title,
            first_name: this.formData.first_name,
             last_name: this.formData.last_name,
-            Address: this.formData.Address,
-            Birthdate: this.formData.Birthdate,
-            NID_num: this.formData.NID_num,
-            Phone_num: this.formData.Phone_num,
-            Email: this.formData.Email,
+            address: this.formData.address,
+            birth_date: this.formData.birth_date,
+            national_id_number: this.formData.national_id_number,
+            phone_number: this.formData.phone_number,
+            email: this.formData.email,
             departmentID: this.formData.departmentID,
             PositionID: this.formData.PositionID,
             start_working_date: this.formData.start_working_date,
@@ -1428,11 +1428,11 @@ export default {
             title: "",
            first_name: "",
             last_name: "",
-            Address: "",
-            Birthdate: "",
-            NID_num: "",
-            Phone_num: "",
-            Email: "",
+            address: "",
+            birth_date: "",
+            national_id_number: "",
+            phone_number: "",
+            email: "",
             departmentID: "",
             PositionID: "",
             start_working_date: "",
@@ -1596,7 +1596,7 @@ export default {
         return null;
       }
       const employee = this.formData.employee_id;
-      const date_Birthdate = new Date(this.formData.Birthdate);
+      const date_Birthdate = new Date(this.formData.birth_date);
       date_Birthdate.setFullYear(date_Birthdate.getFullYear() - 543);
       const date_start_working_date = new Date(
         this.formData.start_working_date
@@ -1617,11 +1617,11 @@ export default {
               title: this.formData.title,
              first_name: this.formData.first_name,
               last_name: this.formData.last_name,
-              Address: this.formData.Address,
-              Birthdate: this.formData.Birthdate,
-              NID_num: this.formData.NID_num,
-              Phone_num: this.formData.Phone_num,
-              Email: this.formData.Email,
+              address: this.formData.address,
+              birth_date: this.formData.birth_date,
+              national_id_number: this.formData.national_id_number,
+              phone_number: this.formData.phone_number,
+              email: this.formData.email,
               departmentID: this.formData.departmentID,
               PositionID: this.formData.PositionID,
               start_working_date: this.formData.start_working_date,

@@ -302,7 +302,6 @@ export default {
             this.isEmpty.bus_tel = true;
             errorMessages.push(this.$t("validation.phone_invalid"));
           }
-          // ตรวจสอบเฉพาะ email ต้องมีรูปแบบที่ถูกต้อง
           if (
             field === "userEmail" &&
             !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)

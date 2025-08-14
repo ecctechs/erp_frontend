@@ -405,11 +405,11 @@ export default {
         title: "",
        first_name: "",
         last_name: "",
-        Address: "",
-        Birthdate: "",
-        NID_num: "",
-        Phone_num: "",
-        Email: "",
+        address: "",
+        birth_date: "",
+        national_id_number: "",
+        phone_number: "",
+        email: "",
         departmentID: "",
         PositionID: "",
         start_working_date: "",
@@ -425,11 +425,11 @@ export default {
         title: "",
        first_name: "",
         last_name: "",
-        Address: "",
-        Birthdate: "",
-        NID_num: "",
-        Phone_num: "",
-        Email: "",
+        address: "",
+        birth_date: "",
+        national_id_number: "",
+        phone_number: "",
+        email: "",
         departmentID: "",
         PositionID: "",
         start_working_date: "",
@@ -501,11 +501,11 @@ export default {
       return [
         { label: this.t("titleHeaderTable"), key: "Title" },
         { label: this.t("employeeNameFirstandLastHeaderTable"), key: "Name" },
-        { label: this.t("addressHeaderTable"), key: "Address" },
-        { label: this.t("birthdateHeaderTable"), key: "Birthdate" },
+        { label: this.t("addressHeaderTable"), key: "address" },
+        { label: this.t("birthdateHeaderTable"), key: "birth_date" },
         { label: this.t("NIDHeaderTable"), key: "National ID" },
         { label: this.t("telHeaderTable"), key: "Tel." },
-        { label: this.t("emailHeaderTable"), key: "Email" },
+        { label: this.t("emailHeaderTable"), key: "email" },
         {
           label: this.t("startworkingdateHeaderTable"),
           key: "Start Working Date",
@@ -764,17 +764,10 @@ export default {
         event.preventDefault();
       }
     },
-    //validate Email format after @/. must be text
     validateEmail(email) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/;
       return emailRegex.test(email);
     },
-    // disabledBeforeToday(date) {
-    //   const today = new Date();
-    //   today.setHours(0, 0, 0, 0);
-
-    //   return date > today;
-    // },
     disabledBeforeToday(date) {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
@@ -794,7 +787,7 @@ export default {
       this.isEditMode = false;
       const currentDate = new Date();
 
-      this.formData.Birthdate =
+      this.formData.birth_date =
         this.t("lang") === "en"
           ? new Date(
               new Date(currentDate).setFullYear(currentDate.getFullYear())
@@ -874,11 +867,11 @@ export default {
         title: "",
        first_name: "",
         last_name: "",
-        Address: "",
-        Birthdate: "",
-        NID_num: "",
-        Phone_num: "",
-        Email: "",
+        address: "",
+        birth_date: "",
+        national_id_number: "",
+        phone_number: "",
+        email: "",
         departmentID: "",
         PositionID: "",
         start_working_date: "",
@@ -893,11 +886,11 @@ export default {
       this.isEmpty.title = false;
       this.isEmpty.first_name = false;
       this.isEmpty.last_name = false;
-      this.isEmpty.Address = false;
-      this.isEmpty.Birthdate = false;
-      this.isEmpty.NID_num = false;
-      this.isEmpty.Phone_num = false;
-      this.isEmpty.Email = false;
+      this.isEmpty.address = false;
+      this.isEmpty.birth_date = false;
+      this.isEmpty.national_id_number = false;
+      this.isEmpty.phone_number = false;
+      this.isEmpty.email = false;
       this.isEmpty.departmentID = false;
       this.isEmpty.PositionID = false;
       this.isEmpty.start_working_date = false;
@@ -976,7 +969,7 @@ export default {
       };
 
       const filteredEmp = this.employees.filter((emp) => emp.ID === item.ID);
-      // alert(formatDateForPicker(filteredEmp[0].Birthdate));
+
       console.log("Edit item:", filteredEmp);
       this.isPopupOpen = true;
       this.isAddingMode = false;
@@ -986,12 +979,11 @@ export default {
         title: item.Title,
        first_name: item.Name.split(" ")[0],
         last_name: item.Name.split(" ")[1],
-        Address: item.Address,
-        // Birthdate: formattedBirthdate,
-        Birthdate: formatDateForPicker(filteredEmp[0].Birthdate),
-        NID_num: item["National ID"],
-        Phone_num: item["Tel."],
-        Email: item.Email,
+        address: item.address,
+        birth_date: formatDateForPicker(filteredEmp[0].birth_date),
+        national_id_number: item["National ID"],
+        phone_number: item["Tel."],
+        email: item.email,
         departmentID: item.departmentID,
         PositionID: item.PositionID,
         // start_working_date: formattedStartWorking,
@@ -1105,14 +1097,14 @@ export default {
                 : [];
               let positions = item.position ? [item.position.Position] : [];
 
-              const BD = new Date(item.Birthdate);
+              const BD = new Date(item.birth_date);
               const startWorkingDate = new Date(item.start_working_date);
               const formatDate = {
                 day: "2-digit",
                 month: "short",
                 year: "numeric",
               };
-              const Birthdate = BD.toLocaleDateString("en-GB", formatDate);
+              const birth_date = BD.toLocaleDateString("en-GB", formatDate);
               const startWorking = startWorkingDate.toLocaleDateString(
                 "en-GB",
                 formatDate
@@ -1131,11 +1123,11 @@ export default {
                 ID: item.employee_id,
                 Title: item.title,
                 Name: item.first_name + " " + item.last_name,
-                Address: item.Address,
-                Birthdate: Birthdate,
-                "National ID": item.NID_num,
-                "Tel.": item.Phone_num,
-                Email: item.Email,
+                address: item.address,
+                birth_date: birth_date,
+                "National ID": item.national_id_number,
+                "Tel.": item.phone_number,
+                email: item.email,
                 "Start Working Date": startWorking,
                 Salary: formatSalary(item.Salary),
                 "Emp. type": item.employeeType,
@@ -1180,14 +1172,14 @@ export default {
               : [];
             let positions = item.position ? [item.position.Position] : [];
 
-            const BD = new Date(item.Birthdate);
+            const BD = new Date(item.birth_date);
             const startWorkingDate = new Date(item.start_working_date);
             const formatDate = {
               day: "2-digit",
               month: "short",
               year: "numeric",
             };
-            const Birthdate = BD.toLocaleDateString("en-GB", formatDate);
+            const birth_date = BD.toLocaleDateString("en-GB", formatDate);
             const startWorking = startWorkingDate.toLocaleDateString(
               "en-GB",
               formatDate
@@ -1409,11 +1401,11 @@ export default {
       this.isEmpty.title = false;
       this.isEmpty.first_name = false;
       this.isEmpty.last_name = false;
-      this.isEmpty.Address = false;
-      this.isEmpty.Birthdate = false;
-      this.isEmpty.NID_num = false;
-      this.isEmpty.Phone_num = false;
-      this.isEmpty.Email = false;
+      this.isEmpty.address = false;
+      this.isEmpty.birth_date = false;
+      this.isEmpty.national_id_number = false;
+      this.isEmpty.phone_number = false;
+      this.isEmpty.email = false;
       this.isEmpty.departmentID = false;
       this.isEmpty.PositionID = false;
       this.isEmpty.start_working_date = false;
@@ -1444,55 +1436,55 @@ export default {
       }
 
       // ตรวจสอบฟิลด์ price
-      if (this.formData.Address === "") {
-        this.isEmpty.Address = true;
+      if (this.formData.address === "") {
+        this.isEmpty.address = true;
         errorMessages.push(this.$t("validation.Address"));
       }
 
       // ตรวจสอบฟิลด์ productcost
-      if (this.formData.Birthdate === "") {
-        this.isEmpty.Birthdate = true;
+      if (this.formData.birth_date === "") {
+        this.isEmpty.birth_date = true;
         errorMessages.push(this.$t("validation.Birthdate"));
       }
 
-      if (this.formData.NID_num === "") {
-        this.isEmpty.NID_num = true;
+      if (this.formData.national_id_number === "") {
+        this.isEmpty.national_id_number = true;
         errorMessages.push(this.$t("validation.NID_num"));
-      } else if (this.formData.NID_num.length !== 13) {
-        this.isEmpty.NID_num = true;
+      } else if (this.formData.national_id_number.length !== 13) {
+        this.isEmpty.national_id_number = true;
         errorMessages.push(this.$t("validation.NID_num_length"));
       }
 
       const isDuplicateNID_num = this.employees.some(
         (item) =>
-          item["National ID"].trim() === this.formData.NID_num.trim() &&
+          item["National ID"].trim() === this.formData.national_id_number.trim() &&
           item.ID !== this.formData.employee_id // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
       );
       if (isDuplicateNID_num) {
-        this.isEmpty.NID_num = true;
+        this.isEmpty.national_id_number = true;
         errorMessages.push(this.$t("validation.duplicateNID_num"));
       }
 
-      if (this.formData.Phone_num === "") {
-        this.isEmpty.Phone_num = true;
+      if (this.formData.phone_number === "") {
+        this.isEmpty.phone_number = true;
         errorMessages.push(this.$t("validation.Phone_num"));
-      } else if (this.formData.Phone_num.length < 10) {
-        this.isEmpty.Phone_num = true;
+      } else if (this.formData.phone_number.length < 10) {
+        this.isEmpty.phone_number = true;
         errorMessages.push(this.$t("validation.Phone_num_length"));
       }
 
       const isDuplicatePhone = this.employees.some(
         (item) =>
-          item["Tel."].trim() === this.formData.Phone_num.trim() &&
+          item["Tel."].trim() === this.formData.phone_number.trim() &&
           item.ID !== this.formData.employee_id // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
       );
       if (isDuplicatePhone) {
-        this.isEmpty.Phone_num = true;
+        this.isEmpty.phone_number = true;
         errorMessages.push(this.$t("validation.duplicatePhone"));
       }
 
-      if (this.formData.Email === "") {
-        this.isEmpty.Email = true;
+      if (this.formData.email === "") {
+        this.isEmpty.email = true;
         errorMessages.push(this.$t("validation.Email"));
       }
 
@@ -1569,7 +1561,7 @@ export default {
       if (!this.validateFormData()) return;
       this.isLoading = true;
 
-      const date_Birthdate = new Date(this.formData.Birthdate); // ค่าที่ได้
+      const date_Birthdate = new Date(this.formData.birth_date); // ค่าที่ได้
       date_Birthdate.setFullYear(date_Birthdate.getFullYear() - 543); // ลบ 543 ปี
 
       try {
@@ -1583,12 +1575,11 @@ export default {
             title: this.formData.title,
            first_name: this.formData.first_name,
             last_name: this.formData.last_name,
-            Address: this.formData.Address,
-            Birthdate: this.formData.Birthdate,
-
-            NID_num: this.formData.NID_num,
-            Phone_num: this.formData.Phone_num,
-            Email: this.formData.Email,
+            address: this.formData.address,
+            birth_date: this.formData.birth_date,
+            national_id_number: this.formData.national_id_number,
+            phone_number: this.formData.phone_number,
+            email: this.formData.email,
             departmentID: this.formData.departmentID,
             PositionID: this.formData.PositionID,
             start_working_date: this.formData.start_working_date,
@@ -1610,11 +1601,11 @@ export default {
             title: "",
            first_name: "",
             last_name: "",
-            Address: "",
-            Birthdate: "",
-            NID_num: "",
-            Phone_num: "",
-            Email: "",
+            address: "",
+            birth_date: "",
+            national_id_number: "",
+            phone_number: "",
+            email: "",
             departmentID: "",
             PositionID: "",
             start_working_date: "",
@@ -1802,7 +1793,7 @@ export default {
         return null;
       }
       const employee = this.formData.employee_id;
-      const date_Birthdate = new Date(this.formData.Birthdate); // ค่าที่ได้
+      const date_Birthdate = new Date(this.formData.birth_date); // ค่าที่ได้
       date_Birthdate.setFullYear(date_Birthdate.getFullYear() - 543); // ลบ 543 ปี
 
       const date_start_working_date = new Date(
@@ -1826,11 +1817,11 @@ export default {
               title: this.formData.title,
              first_name: this.formData.first_name,
               last_name: this.formData.last_name,
-              Address: this.formData.Address,
-              Birthdate: this.formData.Birthdate,         
-              NID_num: this.formData.NID_num,
-              Phone_num: this.formData.Phone_num,
-              Email: this.formData.Email,
+              address: this.formData.address,
+              birth_date: this.formData.birth_date,         
+              national_id_number: this.formData.national_id_number,
+              phone_number: this.formData.phone_number,
+              email: this.formData.email,
               departmentID: this.formData.departmentID,
               PositionID: this.formData.PositionID,
               start_working_date: this.formData.start_working_date,

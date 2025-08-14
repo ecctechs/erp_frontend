@@ -1011,7 +1011,6 @@ export default {
     beforeUnmount() {
       window.removeEventListener("resize", this.updateWidth);
     },
-    //validate Email format after @/. must be text
     validateEmail(email) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/;
       return emailRegex.test(email);
@@ -1777,26 +1776,7 @@ export default {
       }
     },
     async editUser() {
-      //check empty input
-      // if (
-      //   this.formDataUser.userF_name === "" ||
-      //   this.formDataUser.userL_name === "" ||
-      //   this.formDataUser.userPhone === "" ||
-      //   this.formDataUser.userEmail === "" ||
-      //   this.formDataUser.userPassword === "" ||
-      //   this.formDataUser.RoleID === ""
-      // ) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Please fill data"); // call popup error
-      //   //check phone number
-      // } else if (this.formDataUser.userPhone.length !== 10) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Phone number must be 10 digits"); // call popup error
-      //   //check Email
-      // } else if (!this.validateEmail(this.formDataUser.userEmail)) {
-      //   this.inputError = true;
-      //   this.showPopup_error("Invalid email format"); // call popup error
-      // } else {
+
       if (!(await this.validateFormData())) return;
       this.isEditF_nameMode = false;
       this.isEditL_nameMode = false;

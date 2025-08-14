@@ -911,126 +911,6 @@ export default {
   // เรียกใช้ฟังก์ชันคำนวณราคารวม (สำคัญ)
   this.calculateRowTotal(form);
 },
-
-    // getDetailProduct(form, index) {
-    //   // const selectedProductId = form.productID;
-    //   const selectedProductName = form.productName;
-
-    //   const selectedProduct = this.Products.find(
-    //     (product) => product.productname === selectedProductName
-    //   );
-
-    //   console.log("=====================>>", form);
-
-    //   // form.productID = selectedProduct.productID;
-    //   if (selectedProduct !== undefined) {
-    //     form.productID = selectedProduct.productID;
-    //     form.price = this.formatDecimal(
-    //       parseFloat(selectedProduct.price.toFixed(2))
-    //     );
-    //     form.sale_price = this.formatDecimal(
-    //       form.sale_qty * parseFloat(form.price.replace(/,/g, ""))
-    //     );
-    //     form.productname = selectedProduct.productname;
-    //     form.productImg = selectedProduct.productImg;
-    //     if (form.discounttype === "percent") {
-    //       // const salePriceValue =
-    //       //   parseFloat(form.sale_price.replace(/,/g, "")) || 0;
-    //       let discountPercent = parseFloat(form.sale_discount) || 0;
-    //       discountPercent = Math.max(0, Math.min(discountPercent, 100));
-    //       // alert(discountPercent);
-
-    //       form.sale_price = this.formatDecimal(
-    //         parseFloat(form.sale_qty * parseFloat(form.price.replace(/,/g, "")))
-    //       );
-
-    //       if (discountPercent > 0) {
-    //         form.sale_price = this.formatDecimal(
-    //           form.sale_qty * parseFloat(form.price.replace(/,/g, "")) -
-    //             form.sale_qty *
-    //               parseFloat(form.price.replace(/,/g, "")) *
-    //               (discountPercent / 100)
-    //         );
-    //       }
-    //     } else {
-    //       form.sale_discount = parseFloat(form.sale_discount) || 0;
-
-    //       form.sale_price = this.formatDecimal(
-    //         parseFloat(
-    //           form.sale_price.replace(/,/g, "") - parseFloat(form.sale_discount)
-    //         )
-    //       );
-
-    //       if (form.sale_price.replace(/,/g, "") < 0) {
-    //         form.sale_discount = this.formatDecimal(
-    //           form.sale_qty * parseFloat(form.price.replace(/,/g, ""))
-    //         );
-    //         form.sale_price = "0.00";
-    //       } else {
-    //         form.sale_price = this.formatDecimal(
-    //           parseFloat(
-    //             form.sale_qty * parseFloat(form.price.replace(/,/g, "")) -
-    //               parseFloat(form.sale_discount)
-    //           )
-    //         );
-    //       }
-    //     }
-    //     this.updateTotalDiscount();
-    //     this.totalNetPrice();
-    //     this.vat_price();
-    //     this.total_pricesale();
-    //     this.total_priceBeforeDiscount();
-
-    //     if (this.formData.vatType === "VATincluding") {
-    //       this.formData.sale_totalprice = this.formatDecimal(
-    //         parseFloat(this.formData.Net_price.replace(/,/g, "")) / 1.07
-    //       );
-    //       this.formData.vat = this.formatDecimal(
-    //         parseFloat(this.formData.Net_price.replace(/,/g, "")) -
-    //           parseFloat(this.formData.sale_totalprice.replace(/,/g, ""))
-    //       );
-    //     } else {
-    //       this.formData.vat = this.formatDecimal(
-    //         parseFloat(this.formData.Net_price.replace(/,/g, "")) * 0.07
-    //       );
-    //       this.formData.sale_totalprice = this.formatDecimal(
-    //         parseFloat(this.formData.Net_price.replace(/,/g, "")) +
-    //           parseFloat(this.formData.vat.replace(/,/g, ""))
-    //       );
-    //     }
-    //     // this.isReadonly2 = true;
-    //     // this.isDisabled2 = true;
-    //     form.isReadonly2 = true;
-    //     form.isDisabled2 = true;
-    //   } else {
-    //     // this.isReadonly2 = false;
-    //     // this.isDisabled2 = false;
-    //     form.isReadonly2 = false;
-    //     form.isDisabled2 = false;
-    //     form.sale_price = "0.00";
-    //     form.sale_qty = "0";
-    //     form.price = "0";
-    //   }
-    //   if (form.productName.trim() === "") {
-    //     form.productID = "";
-    //     form.productName = "";
-    //     form.price = "";
-    //     form.sale_qty = 0;
-    //     form.sale_price = 0.0;
-    //     form.sale_discount = 0;
-    //     form.discounttype = "amount"; // ค่าเริ่มต้น
-    //     form.productImg = null;
-    //     form.product_detail = "";
-    //     form.pro_unit = "";
-    //     form.showDetails = false;
-    //     form.isReadonly2 = false;
-    //     form.isDisabled2 = false;
-    //   }
-
-    //   if (selectedProduct === undefined) {
-    //     form.productID = "";
-    //   }
-    // },
     calculateRowTotal(form) {
       const price = parseFloat(form.price) || 0;
       const quantity = parseInt(form.sale_qty) || 0;
@@ -1225,8 +1105,8 @@ export default {
             let initialTableData = {
               employee_id: item.employee_id,
               Name: item.name,
-              Phone_num: item.phone,
-              Email: item.email,
+              phone_number: item.phone,
+              email: item.email,
               Department: item.department,
               position: item.position,
               Status: item.Status,
@@ -1367,9 +1247,6 @@ export default {
           // ตรวจสอบหน้า PDF ที่ไม่ใช่หน้าแรกหรือ action เป็น 'download'
           doc.addPage();
         }
-
-        // doc.setFont("helvetica", "bold");
-        // doc.setFontSize(18);
         doc.setTextColor(0, 0, 0);
 
         doc.setFontSize(16);
@@ -1388,12 +1265,7 @@ export default {
 
         // ตั้งค่าฟอนต์ที่ต้องการ
         doc.setFont("PromptRegular", "normal");
-
-        //{text, x,y}
         doc.text(`${this.Business.bus_name}`, 10, 12);
-        // doc.text("Quotation", 160, 40);
-
-        // console.log("this.Business", this.Business.bank_id);
 
         const bank_detail = this.AllBanks.filter(
           (bank) => bank.bank_id === this.Business.bank_id
@@ -1445,10 +1317,6 @@ export default {
         doc.text(`E-mail: ` + row.cus_email, 10, 65);
         doc.text(`Contact No: ` + row.cus_tel, 10, 70);
         doc.text(`Tax ID: ` + row.cus_tax, 10, 75);
-
-        // doc.addFileToVFS("Prompt-Regular.ttf", PromptRegular);
-        // doc.addFont("Prompt-Regular.ttf", "PromptRegular", "normal");
-        // doc.setFontSize(12);
 
         // // ตั้งค่าฟอนต์ที่ต้องการ
         // doc.setFont("PromptRegular", "normal");
@@ -1512,9 +1380,9 @@ export default {
         doc.text(`Name: `, 10, 255);
         doc.text(row.employeeName, 40, 255);
         doc.text(`Email: `, 10, 260);
-        doc.text(employ.Email, 40, 260);
+        doc.text(employ.email, 40, 260);
         doc.text(`Contact No.: `, 10, 265);
-        doc.text(employ.Phone_num, 40, 265);
+        doc.text(employ.phone_number, 40, 265);
         doc.text(`Remark: `, 10, 215);
         doc.text(`Total Before Discount: `, 130, 215);
         doc.text(`Total Before VAT: `, 130, 220);
@@ -3194,8 +3062,8 @@ export default {
       if (selectedEmp) {
         this.formData.employeeName = selectedEmp.Name;
         this.formData.position = selectedEmp.position;
-        this.formData.employeeEmail = selectedEmp.Email;
-        (this.formData.employeeTel = selectedEmp.Phone_num),
+        this.formData.employeeEmail = selectedEmp.email;
+        (this.formData.employeeTel = selectedEmp.phone_number),
           console.log("Select employee: " + this.formData.employeeName);
       }
     },

@@ -267,7 +267,7 @@ export default {
         this.formData.userF_name = selected.first_name;
         this.formData.userL_name = selected.last_name;
         this.formData.userPhone = selected.Phone_num;
-        this.formData.userEmail = selected.Email;
+        this.formData.userEmail = selected.email;
       }
     },
     async getEmployee() {
