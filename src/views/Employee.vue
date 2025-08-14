@@ -332,10 +332,10 @@ export default {
       employeesSalaries: [],
       leaving_id: "",
       formData: {
-        employeeID: "",
+        employee_id: "",
         title: "",
-        F_name: "",
-        L_name: "",
+       first_name: "",
+        last_name: "",
         Address: "",
         Birthdate: new Date(),
         NID_num: "",
@@ -352,10 +352,10 @@ export default {
         status: "active",
       },
       isEmpty: {
-        employeeID: "",
+        employee_id: "",
         title: false,
-        F_name: false,
-        L_name: false,
+       first_name: false,
+        last_name: false,
         Address: false,
         Birthdate: false,
         NID_num: false,
@@ -373,14 +373,14 @@ export default {
       },
       formDataLeave: {
         ID: "",
-        employeeID: "",
+        employee_id: "",
         detail: "",
         date: "",
         dateEnd: "",
       },
       formDataOvertime: {
         ID: "",
-        employeeID: "",
+        employee_id: "",
         detail: "",
         date: "",
         hours: "",
@@ -468,7 +468,7 @@ export default {
       return [
         {
           label: this.t("employeeNameFirstandLastHeaderTable"),
-          key: "employeeID",
+          key: "employee_id",
         },
         { label: this.t("productDetailHeaderTable"), key: "detail" },
         { label: this.t("datepaysalaryHeaderTable"), key: "date" },
@@ -713,7 +713,7 @@ export default {
       this.EditIdLeaveHandle = item.ID;
       this.formDataLeave.ID = item.ID;
       const employee = this.employees.find((emp) => emp.Name === item.Name);
-      this.formDataLeave.employeeID = employee.ID;
+      this.formDataLeave.employee_id = employee.ID;
       this.formDataLeave.detail = item.detail;
       const formatDateForPicker = (date) => {
         if (!date) return null;
@@ -738,10 +738,10 @@ export default {
       this.isAddingMode = false;
       this.isEditMode = false;
       this.formData = {
-        employeeID: "",
+        employee_id: "",
         title: "",
-        F_name: "",
-        L_name: "",
+       first_name: "",
+        last_name: "",
         Address: "",
         Birthdate: "",
         NID_num: "",
@@ -759,8 +759,8 @@ export default {
       };
       this.isEmpty = {
         title: false,
-        F_name: false,
-        L_name: false,
+       first_name: false,
+        last_name: false,
         Address: false,
         Birthdate: false,
         NID_num: false,
@@ -780,9 +780,9 @@ export default {
     },
     closePopupLeave() {
       this.isPopupOpenLeave = false;
-      this.formDataLeave = { ID: "", employeeID: "", detail: "", date: "" };
+      this.formDataLeave = { ID: "", employee_id: "", detail: "", date: "" };
       this.isEmpty = {
-        employeeID: false,
+        employee_id: false,
         detail: false,
         date: false,
         dateEnd: false,
@@ -793,7 +793,7 @@ export default {
       this.isPopupOpenOvertime = false;
       this.formDataOvertime = {
         ID: "",
-        employeeID: "",
+        employee_id: "",
         detail: "",
         date: "",
         hours: "",
@@ -843,10 +843,10 @@ export default {
       this.isAddingMode = false;
       this.isEditMode = true;
       this.formData = {
-        employeeID: item.ID,
+        employee_id: item.ID,
         title: item.Title,
-        F_name: item.Name.split(" ")[0],
-        L_name: item.Name.split(" ")[1],
+       first_name: item.Name.split(" ")[0],
+        last_name: item.Name.split(" ")[1],
         Address: item.Address,
         Birthdate: Birthdate,
         NID_num: item["National ID"],
@@ -868,7 +868,7 @@ export default {
     handleDelete(item) {
       console.log("Delete button clicked for item:", item);
       this.isDeleteConfirmPopupOpen = true;
-      this.formData = { employeeID: item.ID };
+      this.formData = { employee_id: item.ID };
     },
     handleDeleteLeave(item) {
       console.log("Delete button clicked for item:", item);
@@ -1028,9 +1028,9 @@ export default {
               return "";
             }
             let initialTableData = {
-              ID: item.employeeID,
+              ID: item.employee_id,
               Title: item.title,
-              Name: item.F_name + " " + item.L_name,
+              Name: item.first_name + " " + item.last_name,
               Address: item.Address,
               Birthdate: Birthdate,
               "National ID": item.NID_num,
@@ -1049,8 +1049,8 @@ export default {
             };
             return initialTableData;
           });
-          this.getLeave();
-          this.getOvertime();
+          // this.getLeave();
+          // this.getOvertime();
         } else {
           console.log("Employee ", json);
           this.showPopup_error(json.data);
@@ -1094,7 +1094,7 @@ export default {
               }
               return "";
             }
-            let initialTableData = { ID: item.employeeID, Name: item.name };
+            let initialTableData = { ID: item.employee_id, Name: item.name };
             return initialTableData;
           });
         } else {
@@ -1141,96 +1141,96 @@ export default {
         console.error("Error fetching data:", error);
       }
     },
-    async getLeave() {
-      const accessToken = localStorage.getItem("@accessToken");
-      try {
-        const response = await fetch(`${API_CALL}/employee/getLeave`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
-        const json = await response.json();
-        if (json.statusCode === 200) {
-          this.Leaving = json.data.map((item) => {
-            const DateLeave = new Date(item.date);
-            const DateLeaveEnd = new Date(item.dateEnd);
-            const formatDate = {
-              day: "2-digit",
-              month: "short",
-              year: "numeric",
-            };
-            const DateLeaving = DateLeave.toLocaleDateString(
-              "en-GB",
-              formatDate
-            );
-            const DateLeavingEnd = DateLeaveEnd.toLocaleDateString(
-              "en-GB",
-              formatDate
-            );
-            const employee = this.employees.find(
-              (emp) => emp.ID === item.employeeID
-            );
-            const employeeName = employee ? employee.Name : "Unknown";
-            let initialTableData = {
-              ID: item.leaving_id,
-              Name: employeeName,
-              detail: item.detail,
-              date: DateLeaving,
-              dateEnd: DateLeavingEnd,
-            };
-            return initialTableData;
-          });
-        } else {
-          console.log(json);
-          this.showPopup_error(json.data);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    },
-    async getOvertime() {
-      const accessToken = localStorage.getItem("@accessToken");
-      try {
-        const response = await fetch(`${API_CALL}/employee/getOvertime`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
-        const json = await response.json();
-        if (json.statusCode === 200) {
-          this.Overtimes = json.data.map((item) => {
-            const DateLeave = new Date(item.date);
-            const formatDate = {
-              day: "2-digit",
-              month: "short",
-              year: "numeric",
-            };
-            const DateLeaving = DateLeave.toLocaleDateString(
-              "en-GB",
-              formatDate
-            );
-            const employeeName = `${item.employee.F_name} ${item.employee.L_name}`;
-            let initialTableData = {
-              ID: item.leaving_id,
-              Name: employeeName,
-              detail: item.detail,
-              date: DateLeaving,
-              hours: item.hours,
-            };
-            return initialTableData;
-          });
-        } else {
-          console.log(json);
-          this.showPopup_error(json.data);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    },
+    // async getLeave() {
+    //   const accessToken = localStorage.getItem("@accessToken");
+    //   try {
+    //     const response = await fetch(`${API_CALL}/employee/getLeave`, {
+    //       headers: { Authorization: `Bearer ${accessToken}` },
+    //     });
+    //     const json = await response.json();
+    //     if (json.statusCode === 200) {
+    //       this.Leaving = json.data.map((item) => {
+    //         const DateLeave = new Date(item.date);
+    //         const DateLeaveEnd = new Date(item.dateEnd);
+    //         const formatDate = {
+    //           day: "2-digit",
+    //           month: "short",
+    //           year: "numeric",
+    //         };
+    //         const DateLeaving = DateLeave.toLocaleDateString(
+    //           "en-GB",
+    //           formatDate
+    //         );
+    //         const DateLeavingEnd = DateLeaveEnd.toLocaleDateString(
+    //           "en-GB",
+    //           formatDate
+    //         );
+    //         const employee = this.employees.find(
+    //           (emp) => emp.ID === item.employee_id
+    //         );
+    //         const employeeName = employee ? employee.Name : "Unknown";
+    //         let initialTableData = {
+    //           ID: item.leaving_id,
+    //           Name: employeeName,
+    //           detail: item.detail,
+    //           date: DateLeaving,
+    //           dateEnd: DateLeavingEnd,
+    //         };
+    //         return initialTableData;
+    //       });
+    //     } else {
+    //       console.log(json);
+    //       this.showPopup_error(json.data);
+    //     }
+    //   } catch (error) {
+    //     console.error("Error fetching data:", error);
+    //   }
+    // },
+    // async getOvertime() {
+    //   const accessToken = localStorage.getItem("@accessToken");
+    //   try {
+    //     const response = await fetch(`${API_CALL}/employee/getOvertime`, {
+    //       headers: { Authorization: `Bearer ${accessToken}` },
+    //     });
+    //     const json = await response.json();
+    //     if (json.statusCode === 200) {
+    //       this.Overtimes = json.data.map((item) => {
+    //         const DateLeave = new Date(item.date);
+    //         const formatDate = {
+    //           day: "2-digit",
+    //           month: "short",
+    //           year: "numeric",
+    //         };
+    //         const DateLeaving = DateLeave.toLocaleDateString(
+    //           "en-GB",
+    //           formatDate
+    //         );
+    //         const employeeName = `${item.employee.F_name} ${item.employee.L_name}`;
+    //         let initialTableData = {
+    //           ID: item.leaving_id,
+    //           Name: employeeName,
+    //           detail: item.detail,
+    //           date: DateLeaving,
+    //           hours: item.hours,
+    //         };
+    //         return initialTableData;
+    //       });
+    //     } else {
+    //       console.log(json);
+    //       this.showPopup_error(json.data);
+    //     }
+    //   } catch (error) {
+    //     console.error("Error fetching data:", error);
+    //   }
+    // },
     validateLeave() {
-      this.isEmpty.employeeID = false;
+      this.isEmpty.employee_id = false;
       this.isEmpty.detail = false;
       this.isEmpty.date = false;
       this.isEmpty.dateEnd = false;
       let errorMessages2 = [];
-      if (this.formDataLeave.employeeID === "") {
-        this.isEmpty.employeeID = true;
+      if (this.formDataLeave.employee_id === "") {
+        this.isEmpty.employee_id = true;
         errorMessages2.push(this.$t("validation.employeeID"));
       }
       if (this.formDataLeave.detail === "") {
@@ -1272,8 +1272,8 @@ export default {
     validateFormData() {
       this.isEmpty = {
         title: false,
-        F_name: false,
-        L_name: false,
+       first_name: false,
+        last_name: false,
         Address: false,
         Birthdate: false,
         NID_num: false,
@@ -1292,12 +1292,12 @@ export default {
         this.isEmpty.title = true;
         errorMessages.push(this.$t("validation.title"));
       }
-      if (this.formData.F_name === "") {
-        this.isEmpty.F_name = true;
+      if (this.formData.first_name === "") {
+        this.isEmpty.first_name = true;
         errorMessages.push(this.$t("validation.F_name"));
       }
-      if (this.formData.L_name === "") {
-        this.isEmpty.L_name = true;
+      if (this.formData.last_name === "") {
+        this.isEmpty.last_name = true;
         errorMessages.push(this.$t("validation.L_name"));
       }
       if (this.formData.Address === "") {
@@ -1318,7 +1318,7 @@ export default {
       const isDuplicateNID_num = this.employees.some(
         (item) =>
           item["National ID"].trim() === this.formData.NID_num.trim() &&
-          item.ID !== this.formData.employeeID
+          item.ID !== this.formData.employee_id
       );
       if (isDuplicateNID_num) {
         this.isEmpty.NID_num = true;
@@ -1338,7 +1338,7 @@ export default {
       const isDuplicatePhone = this.employees.some(
         (item) =>
           item["Tel."].trim() === this.formData.Phone_num.trim() &&
-          item.ID !== this.formData.employeeID
+          item.ID !== this.formData.employee_id
       );
       if (isDuplicatePhone) {
         this.isEmpty.Phone_num = true;
@@ -1400,8 +1400,8 @@ export default {
           },
           body: JSON.stringify({
             title: this.formData.title,
-            F_name: this.formData.F_name,
-            L_name: this.formData.L_name,
+           first_name: this.formData.first_name,
+            last_name: this.formData.last_name,
             Address: this.formData.Address,
             Birthdate: this.formData.Birthdate,
             NID_num: this.formData.NID_num,
@@ -1424,10 +1424,10 @@ export default {
           this.showPopup(this.$t("validation.AddSucc"));
           console.log("Add employee success");
           this.formData = {
-            employeeID: "",
+            employee_id: "",
             title: "",
-            F_name: "",
-            L_name: "",
+           first_name: "",
+            last_name: "",
             Address: "",
             Birthdate: "",
             NID_num: "",
@@ -1465,7 +1465,7 @@ export default {
               Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-              employeeID: this.formDataLeave.employeeID,
+              employee_id: this.formDataLeave.employee_id,
               detail: this.formDataLeave.detail,
               date: this.formDataLeave.date,
               dateEnd: this.formDataLeave.dateEnd,
@@ -1473,11 +1473,11 @@ export default {
           });
           const json = await response.json();
           if (json.statusCode === 200) {
-            this.getLeave();
+            // this.getLeave();
             console.log("Manage successfully");
             this.showPopup(this.$t("validation.AddSucc"));
             this.formDataLeave = {
-              employeeID: "",
+              employee_id: "",
               date: "",
               detail: "",
               dateEnd: "",
@@ -1506,7 +1506,7 @@ export default {
                 Authorization: `Bearer ${accessToken}`,
               },
               body: JSON.stringify({
-                employeeID: this.formDataLeave.employeeID,
+                employee_id: this.formDataLeave.employee_id,
                 detail: this.formDataLeave.detail,
                 date: this.formDataLeave.date,
                 dateEnd: this.formDataLeave.dateEnd,
@@ -1517,10 +1517,10 @@ export default {
           if (json.statusCode === 200) {
             console.log("Edit successfully");
             this.showPopup(this.$t("validation.EditSucc"));
-            this.getLeave();
+            // this.getLeave();
             this.closePopupLeave();
             this.formDataLeave = {
-              employeeID: "",
+              employee_id: "",
               date: "",
               detail: "",
               dateEnd: "",
@@ -1539,7 +1539,7 @@ export default {
     async AddOvertime() {
       const accessToken = localStorage.getItem("@accessToken");
       if (
-        this.formDataOvertime.employeeID === "" ||
+        this.formDataOvertime.employee_id === "" ||
         this.formDataOvertime.date === "" ||
         this.formDataOvertime.detail === "" ||
         this.formDataOvertime.hours === ""
@@ -1557,7 +1557,7 @@ export default {
               Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-              employeeID: this.formDataOvertime.employeeID,
+              employee_id: this.formDataOvertime.employee_id,
               detail: this.formDataOvertime.detail,
               date: this.formDataOvertime.date,
               hours: this.formDataOvertime.hours,
@@ -1565,11 +1565,11 @@ export default {
           });
           const json = await response.json();
           if (json.statusCode === 200) {
-            this.getOvertime();
+            // this.getOvertime();
             console.log("Manage successfully");
             this.showPopup(this.$t("validation.AddSucc"));
             this.formDataOvertime = {
-              employeeID: "",
+              employee_id: "",
               date: "",
               detail: "",
               hours: "",
@@ -1595,7 +1595,7 @@ export default {
         }
         return null;
       }
-      const employee = this.formData.employeeID;
+      const employee = this.formData.employee_id;
       const date_Birthdate = new Date(this.formData.Birthdate);
       date_Birthdate.setFullYear(date_Birthdate.getFullYear() - 543);
       const date_start_working_date = new Date(
@@ -1615,8 +1615,8 @@ export default {
             },
             body: JSON.stringify({
               title: this.formData.title,
-              F_name: this.formData.F_name,
-              L_name: this.formData.L_name,
+             first_name: this.formData.first_name,
+              last_name: this.formData.last_name,
               Address: this.formData.Address,
               Birthdate: this.formData.Birthdate,
               NID_num: this.formData.NID_num,
@@ -1651,7 +1651,7 @@ export default {
     async deleteEmployee() {
       const accessToken = localStorage.getItem("@accessToken");
       this.isLoading = true;
-      const employeeID = this.formData.employeeID;
+      const employeeID = this.formData.employee_id;
       try {
         const response = await fetch(
           `${API_CALL}/employee/DeleteEmployee/${employeeID}`,
@@ -1661,14 +1661,14 @@ export default {
               "Content-Type": "application/json",
               Authorization: `Bearer ${accessToken}`,
             },
-            body: JSON.stringify({ employeeID: employeeID }),
+            body: JSON.stringify({ employee_id: employeeID }),
           }
         );
         const json = await response.json();
         if (json.statusCode === 200) {
           this.getEmployee();
           this.employees = this.employees.filter(
-            (item) => item.employeeID !== employeeID
+            (item) => item.employee_id !== employeeID
           );
           this.showPopup(this.$t("validation.DelateSucc"));
           console.log("delete employee success");
@@ -1698,8 +1698,8 @@ export default {
         });
         const json = await response.json();
         if (json.statusCode === 200) {
-          this.getLeave();
-          this.getOvertime();
+          // this.getLeave();
+          // this.getOvertime();
           this.closeDeleteLeaveConfirmPopup();
           this.showPopup(this.$t("validation.DelateSucc"));
           console.log("delete Leave success");
@@ -1718,7 +1718,7 @@ export default {
     this.getPosition();
     this.getDepartment();
     this.getEmployee();
-    this.getOvertime();
+    // this.getOvertime();
   },
 };
 </script>

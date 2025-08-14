@@ -377,7 +377,7 @@ export default {
             // สร้างข้อมูล formData สำหรับแต่ละรายการ และ return เพื่อเก็บใน Billings
             return {
               billing_number: item.billing_number,
-              employeeID: item.employeeID,
+              employee_id: item.employee_id,
               employeeName: item.employee_name,
               cus_id: item.cus_id,
               cus_name: item.cus_name,
@@ -422,7 +422,7 @@ export default {
             // สร้างข้อมูล formData สำหรับแต่ละรายการ และ return เพื่อเก็บใน Billings
             return {
               billing_number: item.billing_number,
-              employeeID: item.employeeID,
+              employee_id: item.employee_id,
               employeeName: item.employee_name,
               cus_id: item.cus_id,
               cus_name: item.cus_name,
@@ -467,7 +467,7 @@ export default {
             // สร้างข้อมูล formData สำหรับแต่ละรายการ และ return เพื่อเก็บใน Billings
             return {
               billing_number: item.billing_number,
-              employeeID: item.employeeID,
+              employee_id: item.employee_id,
               employeeName: item.employee_name,
               cus_id: item.cus_id,
               cus_name: item.cus_name,

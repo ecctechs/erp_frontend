@@ -384,7 +384,7 @@ export default {
       // หลังจากกรองข้อมูลแล้ว เรียกใช้ฟังก์ชันสร้างกราฟ
       this.filteredOvertimes = this.Overtimes.filter((overtime) => {
         return this.filteredEmployees.some(
-          (employee) => employee.employeeID === overtime.employeeID
+          (employee) => employee.employee_id === overtime.employee_id
         );
       });
       await this.getLeave();
@@ -392,7 +392,7 @@ export default {
       // กรองข้อมูลการลา (Leave) ตามพนักงานที่ถูกกรอง
       this.filteredLeaves = this.Leaving.filter((leave) => {
         return this.filteredEmployees.some(
-          (employee) => employee.employeeID === leave.employeeID
+          (employee) => employee.employee_id === leave.employee_id
         );
       });
 
@@ -496,7 +496,7 @@ export default {
           this.getLeave();
           this.filterEmployee();
           this.totalEmployee = this.Employees.filter(
-            (item) => item.employeeID != null
+            (item) => item.employee_id != null
           ).length;
           this.filteredEmployees = json.data;
 
@@ -538,7 +538,7 @@ export default {
 
             let initialTableData = {
               ID: item.leaving_id,
-              employeeID: item.employeeID,
+              employee_id: item.employee_id,
               detail: item.detail,
               date: DateLeaving,
             };
@@ -579,7 +579,7 @@ export default {
 
             let initialTableData = {
               ID: item.leaving_id,
-              employeeID: item.employeeID,
+              employee_id: item.employee_id,
               detail: item.detail,
               date: DateLeaving,
               hours: item.hours,
@@ -773,7 +773,7 @@ export default {
           ? this.filteredLeaves
           : this.filteredLeaves.filter((leave) => {
               const employee = this.Employees.find(
-                (emp) => emp.employeeID === leave.employeeID
+                (emp) => emp.employee_id === leave.employee_id
               );
               return (
                 employee && employee.departmentID === this.selectedDepartment

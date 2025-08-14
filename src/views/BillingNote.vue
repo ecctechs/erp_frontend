@@ -452,7 +452,7 @@ export default {
         bus_id: "",
         cus_id: "",
         productID: "",
-        employeeID: "",
+        employee_id: "",
         employeeName: "",
         position: "",
         employeeEmail: "",
@@ -893,7 +893,7 @@ export default {
       this.formData = {
         deleted_at: row.deleted_at,
         billing_number: row.billing_number,
-        employeeID: row.employeeID,
+        employee_id: row.employee_id,
         employeeName: row.employeeName,
         cus_id: row.cus_id,
         cus_name: row.cus_name,
@@ -1001,7 +1001,7 @@ export default {
       const formattedBilling = formatDateForPicker(row.billing_date);
       this.formData = {
         billing_number: row.billing_number,
-        employeeID: row.employeeID,
+        employee_id: row.employee_id,
         employeeName: row.employeeName,
         cus_id: row.cus_id,
         cus_name: row.cus_name,
@@ -1060,7 +1060,7 @@ export default {
       };
       this.formData = {
         billing_number: row.billing_number,
-        employeeID: row.employeeID,
+        employee_id: row.employee_id,
         employeeName: row.employeeName,
         cus_id: row.cus_id,
         cus_name: row.cus_name,
@@ -1344,7 +1344,7 @@ export default {
 
         doc.setFont("PromptRegularLight", "normal");
         const employ = this.Employees.find(
-          (p) => p.employeeID === row.employeeID
+          (p) => p.employee_id === row.employee_id
         );
 
         doc.text(`Name: `, 10, 255);
@@ -1643,7 +1643,7 @@ export default {
         bus_id: "",
         cus_id: "",
         productID: "",
-        employeeID: "",
+        employee_id: "",
         employeeName: "",
         position: "",
         employeeEmail: "",
@@ -1738,7 +1738,7 @@ export default {
               tax_invoice_number: item.tax_invoice_number,
               invoice_number: item.invoice_number,
               quotation_num: item.quotation_num,
-              employeeID: item.employeeID,
+              employee_id: item.employee_id,
               employeeName: item.employee_name,
               cus_id: item.cus_id,
               cus_name: item.cus_name,
@@ -1873,7 +1873,7 @@ export default {
         if (json.statusCode === 200) {
           this.Employees = json.data.map((item) => {
             let initialTableData = {
-              employeeID: item.employeeID,
+              employee_id: item.employee_id,
               Name: item.name,
               Phone_num: item.phone,
               Email: item.email,

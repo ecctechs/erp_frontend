@@ -528,7 +528,7 @@ export default {
         bus_id: "",
         cus_id: "",
         productID: "",
-        employeeID: "",
+        employee_id: "",
         employeeName: "",
         position: "",
         employeeEmail: "",
@@ -565,7 +565,7 @@ export default {
         bus_id: "",
         cus_id: "",
         productID: "",
-        employeeID: "",
+        employee_id: "",
         employeeName: "",
         position: "",
         employeeEmail: "",
@@ -1223,7 +1223,7 @@ export default {
         if (json.statusCode === 200) {
           this.Employees = json.data.map((item) => {
             let initialTableData = {
-              employeeID: item.employeeID,
+              employee_id: item.employee_id,
               Name: item.name,
               Phone_num: item.phone,
               Email: item.email,
@@ -1505,7 +1505,7 @@ export default {
         // ตั้งค่าฟอนต์ที่ต้องการ
         doc.setFont("PromptRegularLight", "normal");
         const employ = this.Employees.find(
-          (p) => p.employeeID === row.employeeID
+          (p) => p.employee_id === row.employee_id
         );
 
         // doc.text(`${employ.position}`, 10, 255);
@@ -1945,7 +1945,7 @@ export default {
               status: item.status,
               sale_id: item.sale_id,
               sale_number: item.quotation_num,
-              employeeID: item.employeeID,
+              employee_id: item.employee_id,
               employeeName: item.employee_name,
               cus_id: item.cus_id,
               cus_name: item.cus_name,
@@ -1985,7 +1985,7 @@ export default {
     },
     async validateFormData() {
       this.isEmpty.cus_name = false;
-      this.isEmpty.employeeID = false;
+      this.isEmpty.employee_id = false;
       this.isEmpty.sale_date = false;
       this.isEmpty.credit_date_number = false;
       this.isEmpty.productForms = false;
@@ -2036,10 +2036,10 @@ export default {
       }
 
       if (
-        this.formData.employeeID === "" ||
-        this.formData.employeeID === null
+        this.formData.employee_id === "" ||
+        this.formData.employee_id === null
       ) {
-        this.isEmpty.employeeID = true;
+        this.isEmpty.employee_id = true;
         errorMessages.push(this.$t("validation.employeeID"));
         console.log(errorMessages);
       }
@@ -2286,7 +2286,7 @@ export default {
             ),
             bus_id: this.Business.bus_id,
             cus_id: this.formData.cus_id,
-            employeeID: this.formData.employeeID,
+            employee_id: this.formData.employee_id,
             status: "Pending",
             remark: this.formData.remark,
             remarkInfernal: this.formData.remarkInfernal,
@@ -2454,7 +2454,7 @@ export default {
                   : parseFloat(this.formData.sale_totalprice.replace(/,/g, "")),
               bus_id: this.Business.bus_id,
               cus_id: this.formData.cus_id,
-              employeeID: this.formData.employeeID,
+              employee_id: this.formData.employee_id,
               status: this.formData.status,
               remark: this.formData.remark,
               remarkInfernal: this.formData.remarkInfernal,
@@ -2630,7 +2630,7 @@ export default {
                   : parseFloat(this.formData.sale_totalprice.replace(/,/g, "")),
               bus_id: this.Business.bus_id,
               cus_id: this.formData.cus_id,
-              employeeID: this.formData.employeeID,
+              employee_id: this.formData.employee_id,
               status: "Allowed",
               remark: this.formData.remark,
               remarkInfernal: this.formData.remarkInfernal,
@@ -2784,7 +2784,7 @@ export default {
                   : parseFloat(this.formData.sale_totalprice.replace(/,/g, "")),
               bus_id: this.Business.bus_id,
               cus_id: this.formData.cus_id,
-              employeeID: this.formData.employeeID,
+              employee_id: this.formData.employee_id,
               status: "Pending",
               remark: this.formData.remark,
               remarkInfernal: this.formData.remarkInfernal,
@@ -3072,7 +3072,7 @@ export default {
         bus_id: "",
         cus_id: "",
         productID: "",
-        employeeID: "",
+        employee_id: "",
         employeeName: "",
         position: "",
         employeeEmail: "",
@@ -3142,7 +3142,7 @@ export default {
         bus_id: "",
         cus_id: "",
         productID: "",
-        employeeID: "",
+        employee_id: "",
         employeeName: "",
         position: "",
         employeeEmail: "",
@@ -3177,7 +3177,7 @@ export default {
       this.isEmpty.email = false;
       this.isEmpty.cus_tax = false;
       this.isEmpty.cus_purchase = false;
-      this.isEmpty.employeeID = false;
+      this.isEmpty.employee_id = false;
       this.isEmpty.sale_date = false;
       this.isEmpty.credit_date_number = false;
       this.isEmpty.productForms = false;
@@ -3187,9 +3187,9 @@ export default {
       this.isPopupVisible_error = false;
     },
     updateEmployee() {
-      const selectedEmptId = this.formData.employeeID;
+      const selectedEmptId = this.formData.employee_id;
       const selectedEmp = this.Employees.find(
-        (emp) => emp.employeeID === selectedEmptId
+        (emp) => emp.employee_id === selectedEmptId
       );
       if (selectedEmp) {
         this.formData.employeeName = selectedEmp.Name;
@@ -3656,7 +3656,7 @@ export default {
         sale_id: row.sale_id,
         sale_number: row.sale_number,
         status: quotationData.status,
-        employeeID: row.employeeID,
+        employee_id: row.employee_id,
         employeeName: row.employee_name,
         cus_id: row.cus_id,
         cus_name: row.cus_name,
@@ -3775,7 +3775,7 @@ export default {
         sale_id: row.sale_id,
         sale_number: row.sale_number,
         status: row.status,
-        employeeID: row.employeeID,
+        employee_id: row.employee_id,
         employeeName: row.employee_name,
         cus_id: row.cus_id,
         cus_name: row.cus_name,
@@ -3840,7 +3840,7 @@ export default {
         sale_id: row.sale_id,
         sale_number: row.quotation_num,
         status: row.status,
-        employeeID: row.employeeID,
+        employee_id: row.employee_id,
         employeeName: row.employee_name,
         cus_id: row.cus_id,
         cus_name: row.cus_name,

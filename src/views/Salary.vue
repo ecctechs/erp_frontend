@@ -550,7 +550,7 @@ export default {
       salary_id: "",
       formData: {
         payment_id: "",
-        employeeID: "",
+        employee_id: "",
         Date: "",
         round: "",
         month: "",
@@ -559,7 +559,7 @@ export default {
       formDataEdit: {
         emp_name: "",
         payment_id: "",
-        employeeID: "",
+        employee_id: "",
         Date: "",
         round: "",
         month: "",
@@ -954,7 +954,7 @@ export default {
               Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-              employeeID: this.selectedEmployeeID,
+              employee_id: this.selectedEmployeeID,
               detail: this.formDataOvertime.detail,
               date: this.formDataOvertime.date,
               hours: this.formDataOvertime.hours,
@@ -997,7 +997,7 @@ export default {
     },
     openPopupOvertime(employeeID) {
       this.isovertimeopen = true; // แสดง popup
-      this.selectedEmployeeID = employeeID.employeeID;
+      this.selectedEmployeeID = employeeID.employee_id;
       console.log("Employee ID:", employeeID);
     },
     closePopupOvertime() {
@@ -1025,7 +1025,7 @@ export default {
       this.isPopupOpen = false;
       this.formData = {
         payment_id: "",
-        employeeID: "",
+        employee_id: "",
         round: "",
         month: "",
         year: "",
@@ -1047,9 +1047,9 @@ export default {
     selectItem(item) {
       const [firstName, lastName] = item["Employee Name"].split(" ");
       this.formEmployee.push({
-        employeeID: item["Employee ID"],
-        F_name: firstName,
-        L_name: lastName,
+        employee_id: item["Employee ID"],
+       first_name: firstName,
+        last_name: lastName,
         departmentID: item.departmentID,
         PositionID: item.PositionID,
       });
@@ -1120,7 +1120,7 @@ export default {
           },
           body: JSON.stringify({
             payments: this.formEmployee.map((form) => ({
-              employeeID: form.employeeID,
+              employee_id: form.employee_id,
               Date: formattedDate,
               round: this.selectedRound,
               month: selectedMonthEng,
@@ -1178,7 +1178,7 @@ export default {
                 : "";
             }
             return {
-              "Employee ID": item.employeeID,
+              "Employee ID": item.employee_id,
               "Employee Name": item.name,
               "Emp. type": item.employeeType,
               "Tel.": item.phone,
@@ -1230,7 +1230,7 @@ export default {
               "Employee Name": item.employeeName || "-",
               position: item.position.Position,
               ID: item.payment_id,
-              employeeID: item.employeeID,
+              employee_id: item.employee_id,
               Date: PaymentDate,
               Round: item.round,
               Month: item.month,
@@ -1251,7 +1251,7 @@ export default {
     mergeAndDisplayData() {
       this.payments.forEach((payment) => {
         const employee = this.empDataformaintable.find(
-          (emp) => emp.employeeID === payment.employeeID
+          (emp) => emp.employee_id === payment.employee_id
         );
         if (employee) {
           payment["Employee Name"] = employee["Employee Name"];

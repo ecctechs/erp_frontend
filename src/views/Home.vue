@@ -470,7 +470,7 @@ export default {
         bus_id: "",
         cus_id: "",
         productID: "",
-        employeeID: "",
+        employee_id: "",
         employeeName: "",
         position: "",
         employeeEmail: "",
@@ -672,7 +672,7 @@ export default {
 
             return {
               billing_number: item.billing_number,
-              employeeID: item.employeeID,
+              employee_id: item.employee_id,
               employeeName: item.employee_name,
               cus_id: item.cus_id,
               cus_name: item.cus_name,
@@ -716,7 +716,7 @@ export default {
 
             return {
               billing_number: item.billing_number,
-              employeeID: item.employeeID,
+              employee_id: item.employee_id,
               employeeName: item.employee_name,
               cus_id: item.cus_id,
               cus_name: item.cus_name,
@@ -939,7 +939,7 @@ export default {
               sale_id: item.sale_id,
               sale_number: item.quotation_num,
               status: item.status,
-              employeeID: item.employeeID,
+              employee_id: item.employee_id,
               employeeName: item.employee_name,
               cus_id: item.cus_id,
               cus_name: item.cus_name,
@@ -981,7 +981,7 @@ export default {
               sale_id: item.sale_id,
               sale_number: item.quotation_num,
               status: item.status,
-              employeeID: item.employeeID,
+              employee_id: item.employee_id,
               employeeName: item.employee_name,
               cus_id: item.cus_id,
               cus_name: item.cus_name,
@@ -1042,7 +1042,7 @@ export default {
 
             let initialTableData = {
               invoice_number: item.invoice_number,
-              employeeID: item.employeeID,
+              employee_id: item.employee_id,
               employeeName: item.employee_name,
               cus_id: item.cus_id,
               cus_name: item.cus_name,
@@ -1084,7 +1084,7 @@ export default {
 
             let initialTableData = {
               invoice_number: item.invoice_number,
-              employeeID: item.employeeID,
+              employee_id: item.employee_id,
               employeeName: item.employee_name,
               cus_id: item.cus_id,
               cus_name: item.cus_name,
@@ -1138,7 +1138,7 @@ export default {
               "en-GB",
               formatDate
             );
-            const employeeName = `${item.employee.F_name} ${item.employee.L_name}`;
+            const employeeName = `${item.employee.first_name} ${item.employee.last_name}`;
 
             let initialTableData = {
               ID: item.leaving_id,
@@ -1162,7 +1162,7 @@ export default {
               "en-GB",
               formatDate
             );
-            const employeeName = `${item.employee.F_name} ${item.employee.L_name}`;
+            const employeeName = `${item.employee.first_name} ${item.employee.last_name}`;
 
             let initialTableData = {
               ID: item.leaving_id,

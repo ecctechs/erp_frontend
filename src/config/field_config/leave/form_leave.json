@@ -1,6 +1,6 @@
 [
   {
-    "key": "employeeID",
+    "key": "employee_id",
     "label": "empname",
     "componentType": "Dropdown",
     "options": "employeeOptions",

@@ -444,7 +444,7 @@ export default {
         bus_id: "",
         cus_id: "",
         productID: "",
-        employeeID: "",
+        employee_id: "",
         employeeName: "",
         position: "",
         employeeEmail: "",
@@ -829,7 +829,7 @@ export default {
 
       console.log("this.Invoices----->", filteredInvoice);
       this.formData = {
-        employeeID: row.employeeID,
+        employee_id: row.employee_id,
         employeeName: row.employeeName,
         cus_id: row.cus_id,
         cus_name: row.cus_name,
@@ -981,7 +981,7 @@ export default {
       const formattedInvoice = formatDateForPicker(row.invoice_date);
 
       this.formData = {
-        employeeID: row.employeeID,
+        employee_id: row.employee_id,
         employeeName: row.employeeName,
         cus_id: row.cus_id,
         cus_name: row.cus_name,
@@ -1043,7 +1043,7 @@ export default {
       const formattedInvoice = formatDateForPicker(row.invoice_date);
 
       this.formData = {
-        employeeID: row.employeeID,
+        employee_id: row.employee_id,
         employeeName: row.employeeName,
         cus_id: row.cus_id,
         cus_name: row.cus_name,
@@ -1307,7 +1307,7 @@ export default {
         // ตั้งค่าฟอนต์ที่ต้องการ
         doc.setFont("PromptRegularLight", "normal");
         const employ = this.Employees.find(
-          (p) => p.employeeID === row.employeeID
+          (p) => p.employee_id === row.employee_id
         );
 
         // doc.text(`${employ.position}`, 10, 255);
@@ -1667,7 +1667,7 @@ export default {
         bus_id: "",
         cus_id: "",
         productID: "",
-        employeeID: "",
+        employee_id: "",
         employeeName: "",
         position: "",
         employeeEmail: "",
@@ -1719,7 +1719,7 @@ export default {
         if (json.statusCode === 200) {
           this.Employees = json.data.map((item) => {
             let initialTableData = {
-              employeeID: item.employeeID,
+              employee_id: item.employee_id,
               Name: item.name,
               Phone_num: item.phone,
               Email: item.email,
@@ -1880,7 +1880,7 @@ export default {
               tax_invoice_number: item.tax_invoice_number,
               invoice_number: item.invoice_number,
               quotation_num: item.quotation_num,
-              employeeID: item.employeeID,
+              employee_id: item.employee_id,
               employeeName: item.employee_name,
               cus_id: item.cus_id,
               cus_name: item.cus_name,

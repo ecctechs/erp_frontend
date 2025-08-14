@@ -401,10 +401,10 @@ export default {
       employeesSalaries: [],
       leaving_id: "",
       formData: {
-        employeeID: "",
+        employee_id: "",
         title: "",
-        F_name: "",
-        L_name: "",
+       first_name: "",
+        last_name: "",
         Address: "",
         Birthdate: "",
         NID_num: "",
@@ -421,10 +421,10 @@ export default {
         status: "active",
       },
       isEmpty: {
-        employeeID: "",
+        employee_id: "",
         title: "",
-        F_name: "",
-        L_name: "",
+       first_name: "",
+        last_name: "",
         Address: "",
         Birthdate: "",
         NID_num: "",
@@ -446,21 +446,21 @@ export default {
           end: null,
         },
         ID: "",
-        employeeID: "",
+        employee_id: "",
         detail: "ลาป่วย",
         date: "",
         dateEnd: "",
       },
       isEmpty: {
         ID: "",
-        employeeID: false,
+        employee_id: false,
         detail: false,
         date: false,
         dateEnd: false,
       },
       formDataOvertime: {
         ID: "",
-        employeeID: "",
+        employee_id: "",
         detail: "",
         date: "",
         hours: "",
@@ -531,7 +531,7 @@ export default {
       return [
         {
           label: this.t("employeeNameFirstandLastHeaderTable"),
-          key: "employeeID",
+          key: "employee_id",
         },
         { label: this.t("productDetailHeaderTable"), key: "detail" },
         { label: this.t("datepaysalaryHeaderTable"), key: "date" },
@@ -838,7 +838,7 @@ export default {
 
       this.formDataLeave.ID = item.ID;
       const employee = this.employees.find((emp) => emp.Name === item.Name);
-      this.formDataLeave.employeeID = employee.ID;
+      this.formDataLeave.employee_id = employee.ID;
       this.formDataLeave.detail = item.detail;
 
       const formatDateForPicker = (date) => {
@@ -870,10 +870,10 @@ export default {
       this.isAddingMode = false;
       this.isEditMode = false;
       this.formData = {
-        employeeID: "",
+        employee_id: "",
         title: "",
-        F_name: "",
-        L_name: "",
+       first_name: "",
+        last_name: "",
         Address: "",
         Birthdate: "",
         NID_num: "",
@@ -891,8 +891,8 @@ export default {
       };
 
       this.isEmpty.title = false;
-      this.isEmpty.F_name = false;
-      this.isEmpty.L_name = false;
+      this.isEmpty.first_name = false;
+      this.isEmpty.last_name = false;
       this.isEmpty.Address = false;
       this.isEmpty.Birthdate = false;
       this.isEmpty.NID_num = false;
@@ -914,12 +914,12 @@ export default {
       this.isPopupOpenLeave = false;
       this.formDataLeave = {
         ID: "",
-        employeeID: "",
+        employee_id: "",
         detail: "",
         date: "",
       };
 
-      this.isEmpty.employeeID = false;
+      this.isEmpty.employee_id = false;
       this.isEmpty.detail = false;
       this.isEmpty.date = false;
       this.isEmpty.dateEnd = false;
@@ -932,7 +932,7 @@ export default {
       this.isPopupOpenOvertime = false;
       this.formDataOvertime = {
         ID: "",
-        employeeID: "",
+        employee_id: "",
         detail: "",
         date: "",
         hours: "",
@@ -982,10 +982,10 @@ export default {
       this.isAddingMode = false;
       this.isEditMode = true;
       this.formData = {
-        employeeID: item.ID,
+        employee_id: item.ID,
         title: item.Title,
-        F_name: item.Name.split(" ")[0],
-        L_name: item.Name.split(" ")[1],
+       first_name: item.Name.split(" ")[0],
+        last_name: item.Name.split(" ")[1],
         Address: item.Address,
         // Birthdate: formattedBirthdate,
         Birthdate: formatDateForPicker(filteredEmp[0].Birthdate),
@@ -1011,7 +1011,7 @@ export default {
       console.log("Delete button clicked for item:", item);
       this.isDeleteConfirmPopupOpen = true;
       this.formData = {
-        employeeID: item.ID,
+        employee_id: item.ID,
       };
     },
     handleDeleteLeave(item) {
@@ -1128,9 +1128,9 @@ export default {
               }
 
               let initialTableData = {
-                ID: item.employeeID,
+                ID: item.employee_id,
                 Title: item.title,
-                Name: item.F_name + " " + item.L_name,
+                Name: item.first_name + " " + item.last_name,
                 Address: item.Address,
                 Birthdate: Birthdate,
                 "National ID": item.NID_num,
@@ -1201,7 +1201,7 @@ export default {
             }
 
             let initialTableData = {
-              ID: item.employeeID,
+              ID: item.employee_id,
               Name: item.name,
             };
             return initialTableData;
@@ -1284,7 +1284,7 @@ export default {
               formatDate
             );
             const employee = this.employees.find(
-              (emp) => emp.ID === item.employeeID
+              (emp) => emp.ID === item.employee_id
             );
             const employeeName = employee ? employee.Name : "Unknown";
 
@@ -1326,7 +1326,7 @@ export default {
               "en-GB",
               formatDate
             );
-            const employeeName = `${item.employee.F_name} ${item.employee.L_name}`;
+            const employeeName = `${item.employee.first_name} ${item.employee.last_name}`;
 
             let initialTableData = {
               ID: item.leaving_id,
@@ -1346,15 +1346,15 @@ export default {
       }
     },
     validateLeave() {
-      this.isEmpty.employeeID = false;
+      this.isEmpty.employee_id = false;
       this.isEmpty.detail = false;
       this.isEmpty.date = false;
       this.isEmpty.dateEnd = false;
 
       let errorMessages2 = [];
 
-      if (this.formDataLeave.employeeID === "") {
-        this.isEmpty.employeeID = true;
+      if (this.formDataLeave.employee_id === "") {
+        this.isEmpty.employee_id = true;
         errorMessages2.push(this.$t("validation.employeeID"));
       }
 
@@ -1407,8 +1407,8 @@ export default {
     validateFormData() {
       // ตั้งค่า isEmpty ของทุกฟิลด์เป็น false ก่อนเริ่มการตรวจสอบ
       this.isEmpty.title = false;
-      this.isEmpty.F_name = false;
-      this.isEmpty.L_name = false;
+      this.isEmpty.first_name = false;
+      this.isEmpty.last_name = false;
       this.isEmpty.Address = false;
       this.isEmpty.Birthdate = false;
       this.isEmpty.NID_num = false;
@@ -1432,14 +1432,14 @@ export default {
       }
 
       // ตรวจสอบฟิลด์ categoryID
-      if (this.formData.F_name === "") {
-        this.isEmpty.F_name = true;
+      if (this.formData.first_name === "") {
+        this.isEmpty.first_name = true;
         errorMessages.push(this.$t("validation.F_name"));
       }
 
       // ตรวจสอบฟิลด์ productname
-      if (this.formData.L_name === "") {
-        this.isEmpty.L_name = true;
+      if (this.formData.last_name === "") {
+        this.isEmpty.last_name = true;
         errorMessages.push(this.$t("validation.L_name"));
       }
 
@@ -1466,7 +1466,7 @@ export default {
       const isDuplicateNID_num = this.employees.some(
         (item) =>
           item["National ID"].trim() === this.formData.NID_num.trim() &&
-          item.ID !== this.formData.employeeID // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
+          item.ID !== this.formData.employee_id // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
       );
       if (isDuplicateNID_num) {
         this.isEmpty.NID_num = true;
@@ -1484,7 +1484,7 @@ export default {
       const isDuplicatePhone = this.employees.some(
         (item) =>
           item["Tel."].trim() === this.formData.Phone_num.trim() &&
-          item.ID !== this.formData.employeeID // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
+          item.ID !== this.formData.employee_id // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
       );
       if (isDuplicatePhone) {
         this.isEmpty.Phone_num = true;
@@ -1538,7 +1538,7 @@ export default {
         (item) =>
           item["Bank Account ID"].trim() ===
             this.formData.bankAccountID.trim() &&
-          item.ID !== this.formData.employeeID // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
+          item.ID !== this.formData.employee_id // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
       );
       if (isDuplicateBankAcc) {
         this.isEmpty.bankAccountID = true;
@@ -1581,8 +1581,8 @@ export default {
           },
           body: JSON.stringify({
             title: this.formData.title,
-            F_name: this.formData.F_name,
-            L_name: this.formData.L_name,
+           first_name: this.formData.first_name,
+            last_name: this.formData.last_name,
             Address: this.formData.Address,
             Birthdate: this.formData.Birthdate,
 
@@ -1606,10 +1606,10 @@ export default {
           this.showPopup(this.$t("validation.AddSucc"));
           console.log("Add employee success");
           this.formData = {
-            employeeID: "",
+            employee_id: "",
             title: "",
-            F_name: "",
-            L_name: "",
+           first_name: "",
+            last_name: "",
             Address: "",
             Birthdate: "",
             NID_num: "",
@@ -1663,7 +1663,7 @@ export default {
               Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-              employeeID: this.formDataLeave.employeeID,
+              employee_id: this.formDataLeave.employee_id,
               detail: this.formDataLeave.detail,
               date_start: this.formDataLeave.date,
               date_end: this.formDataLeave.dateEnd,
@@ -1676,7 +1676,7 @@ export default {
             console.log("Manage successfully");
             this.showPopup(this.$t("validation.AddSucc"));
             this.formDataLeave = {
-              employeeID: "",
+              employee_id: "",
               date: "",
               detail: "",
               dateEnd: "",
@@ -1707,7 +1707,7 @@ export default {
                 Authorization: `Bearer ${accessToken}`,
               },
               body: JSON.stringify({
-                employeeID: this.formDataLeave.employeeID,
+                employee_id: this.formDataLeave.employee_id,
                 detail: this.formDataLeave.detail,
                 date_start: this.formDataLeave.date,
                 date_end: this.formDataLeave.dateEnd,
@@ -1721,7 +1721,7 @@ export default {
             this.getLeave();
             this.closePopupLeave();
             this.formDataLeave = {
-              employeeID: "",
+              employee_id: "",
               date: "",
               detail: "",
               dateEnd: "",
@@ -1742,7 +1742,7 @@ export default {
     async AddOvertime() {
       const accessToken = localStorage.getItem("@accessToken");
       if (
-        this.formDataOvertime.employeeID === "" ||
+        this.formDataOvertime.employee_id === "" ||
         this.formDataOvertime.date === "" ||
         this.formDataOvertime.detail === "" ||
         this.formDataOvertime.hours === ""
@@ -1761,7 +1761,7 @@ export default {
               Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-              employeeID: this.formDataOvertime.employeeID,
+              employee_id: this.formDataOvertime.employee_id,
               detail: this.formDataOvertime.detail,
               date: this.formDataOvertime.date,
               hours: this.formDataOvertime.hours,
@@ -1773,7 +1773,7 @@ export default {
             console.log("Manage successfully");
             this.showPopup(this.$t("validation.AddSucc"));
             this.formDataOvertime = {
-              employeeID: "",
+              employee_id: "",
               date: "",
               detail: "",
               hours: "",
@@ -1801,7 +1801,7 @@ export default {
         }
         return null;
       }
-      const employee = this.formData.employeeID;
+      const employee = this.formData.employee_id;
       const date_Birthdate = new Date(this.formData.Birthdate); // ค่าที่ได้
       date_Birthdate.setFullYear(date_Birthdate.getFullYear() - 543); // ลบ 543 ปี
 
@@ -1824,8 +1824,8 @@ export default {
             // body: JSON.stringify(this.formData),
             body: JSON.stringify({
               title: this.formData.title,
-              F_name: this.formData.F_name,
-              L_name: this.formData.L_name,
+             first_name: this.formData.first_name,
+              last_name: this.formData.last_name,
               Address: this.formData.Address,
               Birthdate: this.formData.Birthdate,         
               NID_num: this.formData.NID_num,
@@ -1863,7 +1863,7 @@ export default {
     async deleteEmployee() {
       const accessToken = localStorage.getItem("@accessToken");
       this.isLoading = true;
-      const employeeID = this.formData.employeeID;
+      const employeeID = this.formData.employee_id;
       try {
         const response = await fetch(
           `${API_CALL}/employee/DeleteEmployee/${employeeID}`,
@@ -1874,7 +1874,7 @@ export default {
               Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-              employeeID: employeeID,
+              employee_id: employeeID,
             }),
           }
         );
@@ -1883,7 +1883,7 @@ export default {
         if (json.statusCode === 200) {
           this.getEmployee();
           this.employees = this.employees.filter(
-            (item) => item.employeeID !== employeeID
+            (item) => item.employee_id !== employeeID
           );
           this.showPopup(this.$t("validation.DelateSucc"));
           console.log("delete employee success");

@@ -49,8 +49,8 @@
   <div v-if="isExistingUser && isAddingMode" class="mt-3">
     <select id="employeeSelect" v-model="selectedEmployee" class="form-select" @change="selectUser(selectedEmployee)">
       <option disabled value="">-- กรุณาเลือกพนักงาน --</option>
-      <option v-for="emp in Employees" :key="emp.employeeID" :value="emp.employeeID">
-        {{ emp.F_name + " " + emp.L_name }}
+      <option v-for="emp in Employees" :key="emp.employee_id" :value="emp.employee_id">
+        {{ emp.first_name + " " + emp.last_name }}
       </option>
     </select>
   </div>
@@ -262,10 +262,10 @@ export default {
       }
     },
     selectUser(id) {
-      const selected = this.Employees.find((emp) => emp.employeeID === id);
+      const selected = this.Employees.find((emp) => emp.employee_id === id);
       if (selected) {
-        this.formData.userF_name = selected.F_name;
-        this.formData.userL_name = selected.L_name;
+        this.formData.userF_name = selected.first_name;
+        this.formData.userL_name = selected.last_name;
         this.formData.userPhone = selected.Phone_num;
         this.formData.userEmail = selected.Email;
       }

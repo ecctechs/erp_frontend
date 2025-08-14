@@ -15,14 +15,14 @@
     "options": "statusOptions"
   },
   {
-    "key": "employeeID",
+    "key": "employee_id",
     "label": "employeeName",
     "componentType": "Autocomplete",
     "required": true,
     "group": "header",
     "items": "Employees",
     "itemTitle": "Name",
-    "itemValue": "employeeID"
+    "itemValue": "employee_id"
   },
   {
     "key": "cus_name",

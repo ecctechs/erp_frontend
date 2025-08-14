@@ -1,8 +1,8 @@
 [
   { "key": "HEADING_1", "label": "employeeInformation", "componentType": "heading" },
   { "key": "title", "label": "title", "componentType": "Dropdown", "optionsKey": "titleOptions", "required": true },
-  { "key": "F_name", "label": "firstname", "componentType": "TextField", "type": "text", "required": true },
-  { "key": "L_name", "label": "lastname", "componentType": "TextField", "type": "text", "required": true },
+  { "key": "first_name", "label": "firstname", "componentType": "TextField", "type": "text", "required": true },
+  { "key": "last_name", "label": "lastname", "componentType": "TextField", "type": "text", "required": true },
   { "key": "Birthdate", "label": "birthdate", "componentType": "DatePicker", "required": true },
   { "key": "Address", "label": "address", "componentType": "TextField", "type": "text", "required": true },
   { "key": "Phone_num", "label": "phoneNum", "componentType": "TextField", "type": "tel", "required": true, "maxlength": 10, "isNumeric": true },
