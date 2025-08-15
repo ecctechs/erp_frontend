@@ -108,8 +108,8 @@
           </template>
         </v-date-picker>
 
-        <div v-if="(field.key === 'departmentID' && Departments.length === 0) || (field.key === 'position_id' && Positions.length === 0)" class="text-danger mt-1">
-          {{ field.key === 'departmentID' ? t("pleaseDepartment") : t("pleasePosition") }}
+        <div v-if="(field.key === 'department_id' && Departments.length === 0) || (field.key === 'position_id' && Positions.length === 0)" class="text-danger mt-1">
+          {{ field.key === 'department_id' ? t("pleaseDepartment") : t("pleasePosition") }}
         </div>
       </div>
     </div>
@@ -341,7 +341,7 @@ export default {
         national_id_number: "",
         phone_number: "",
         email: "",
-        departmentID: "",
+        department_id: "",
         position_id: "",
         start_working_date: new Date(),
         salary: "",
@@ -361,7 +361,7 @@ export default {
         national_id_number: false,
         phone_number: false,
         email: false,
-        departmentID: false,
+        department_id: false,
         position_id: false,
         start_working_date: false,
         salary: false,
@@ -408,7 +408,7 @@ export default {
     departmentOptions() {
       if (!this.Departments) return [];
       return this.Departments.map((dep) => ({
-        value: dep.departmentID,
+        value: dep.department_id,
         text: dep.departmentName,
       }));
     },
@@ -620,7 +620,7 @@ export default {
         return this.titleOptions;
       case 'employee_type':
         return this.employeeTypeOptions;
-      case 'departmentID':
+      case 'department_id':
         return this.departmentOptions;
       case 'position_id':
         return this.positionOptions;
@@ -747,7 +747,7 @@ export default {
         national_id_number: "",
         phone_number: "",
         email: "",
-        departmentID: "",
+        department_id: "",
         position_id: "",
         start_working_date: "",
         salary: "",
@@ -766,7 +766,7 @@ export default {
         national_id_number: false,
         phone_number: false,
         email: false,
-        departmentID: false,
+        department_id: false,
         position_id: false,
         start_working_date: false,
         salary: false,
@@ -852,7 +852,7 @@ export default {
         national_id_number: item["National ID"],
         phone_number: item["Tel."],
         email: item.email,
-        departmentID: item.departmentID,
+        department_id: item.department_id,
         position_id: item.position_id,
         start_working_date: startingworkdate,
         salary: item.salary,
@@ -1043,7 +1043,7 @@ export default {
               "Bank Account ID": item.bank_account_id,
               Department: departments.join(", "),
               position_name: positions.join(", "),
-              departmentID: item.departmentID,
+              department_id: item.department_id,
               position_id: item.position_id,
               status: item.employee_status,
             };
@@ -1277,7 +1277,7 @@ export default {
         national_id_number: false,
         phone_number: false,
         email: false,
-        departmentID: false,
+        department_id: false,
         position_id: false,
         start_working_date: false,
         salary: false,
@@ -1347,10 +1347,10 @@ export default {
         errorMessages.push(this.$t("validation.Email"));
       }
       if (
-        this.formData.departmentID === "" ||
-        this.formData.departmentID === null
+        this.formData.department_id === "" ||
+        this.formData.department_id === null
       ) {
-        this.isEmpty.departmentID = true;
+        this.isEmpty.department_id = true;
         errorMessages.push(this.$t("validation.departmentID"));
       }
       if (
@@ -1405,7 +1405,7 @@ export default {
             national_id_number: this.formData.national_id_number,
             phone_number: this.formData.phone_number,
             email: this.formData.email,
-            departmentID: this.formData.departmentID,
+            department_id: this.formData.department_id,
             position_id: this.formData.position_id,
             start_working_date: this.formData.start_working_date,
             salary: this.formData.salary,
@@ -1431,7 +1431,7 @@ export default {
             national_id_number: "",
             phone_number: "",
             email: "",
-            departmentID: "",
+            department_id: "",
             position_id: "",
             start_working_date: "",
             salary: "",
@@ -1620,7 +1620,7 @@ export default {
               national_id_number: this.formData.national_id_number,
               phone_number: this.formData.phone_number,
               email: this.formData.email,
-              departmentID: this.formData.departmentID,
+              department_id: this.formData.department_id,
               position_id: this.formData.position_id,
               start_working_date: this.formData.start_working_date,
               salary: parseSalary(this.formData.salary),

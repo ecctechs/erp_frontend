@@ -855,7 +855,7 @@ export default {
       this.isPopupOpen = false;
       this.isAddingMode = false;
       this.isEditMode = false;
-      this.formData = { departmentID: "", departmentName: "" };
+      this.formData = { department_id: "", departmentName: "" };
       this.inputError = false;
       this.isPopupVisible_error = false;
     },

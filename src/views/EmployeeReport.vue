@@ -82,8 +82,8 @@
             <option value="all">{{ t("all") }}</option>
             <option
               v-for="department in Departments"
-              :value="department.departmentID"
-              :key="department.departmentID"
+              :value="department.department_id"
+              :key="department.department_id"
             >
               {{ department.departmentName }}
             </option>
@@ -335,7 +335,7 @@ export default {
       // ฟิลเตอร์ตามแผนกที่เลือก
       if (this.selectedDepartment !== "all") {
         filteredEmployees = filteredEmployees.filter(
-          (item) => item.departmentID === this.selectedDepartment
+          (item) => item.department_id === this.selectedDepartment
         );
       }
 
@@ -369,7 +369,7 @@ export default {
             this.selectedYear;
         const departmentMatch =
           this.selectedDepartment === "all" ||
-          employee.departmentID == this.selectedDepartment;
+          employee.department_id == this.selectedDepartment;
         const positionMatch =
           this.selectedPosition === "all" ||
           employee.positionID == this.selectedPosition;
@@ -439,7 +439,7 @@ export default {
           this.Departments = json.data;
 
           this.totalDepart = this.Departments.filter(
-            (item) => item.departmentID != null
+            (item) => item.department_id != null
           ).length;
           this.filterEmployees();
         } else {
@@ -776,7 +776,7 @@ export default {
                 (emp) => emp.employee_id === leave.employee_id
               );
               return (
-                employee && employee.departmentID === this.selectedDepartment
+                employee && employee.department_id === this.selectedDepartment
               );
             });
 

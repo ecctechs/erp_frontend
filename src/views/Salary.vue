@@ -1050,7 +1050,7 @@ export default {
         employee_id: item["Employee ID"],
        first_name: firstName,
         last_name: lastName,
-        departmentID: item.departmentID,
+        department_id: item.department_id,
         PositionID: item.PositionID,
       });
     },

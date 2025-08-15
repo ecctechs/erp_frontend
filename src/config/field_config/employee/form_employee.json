@@ -10,7 +10,7 @@
   { "key": "email", "label": "email", "componentType": "TextField", "type": "email", "required": true },
   { "key": "HEADING_2", "label": "headerAboutJob", "componentType": "heading" },
   { "key": "employee_type", "label": "empType", "componentType": "Dropdown", "optionsKey": "employeeTypeOptions", "required": true },
-  { "key": "departmentID", "label": "department", "componentType": "Dropdown", "optionsKey": "departmentOptions", "required": true },
+  { "key": "department_id", "label": "department", "componentType": "Dropdown", "optionsKey": "departmentOptions", "required": true },
   { "key": "position_id", "label": "position", "componentType": "Dropdown", "optionsKey": "positionOptions", "required": true },
   { "key": "salary", "label": "salary", "componentType": "TextField", "type": "tel", "required": false, "isNumeric": true },
   { "key": "start_working_date", "label": "startWorking", "componentType": "DatePicker", "required": true },

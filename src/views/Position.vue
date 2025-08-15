@@ -189,7 +189,7 @@ export default {
       inputError: false, // Validation flag for inputs
       formData: {
         // Form data for department
-        departmentID: "",
+        department_id: "",
         departmentName: "",
       },
       formPosition: {
@@ -273,7 +273,7 @@ export default {
       this.isEditMode = false;
       this.formData = {
         // Reset form data
-        departmentID: "",
+        department_id: "",
         departmentName: "",
       };
       this.inputError = false; // Reset validation errors
@@ -314,14 +314,14 @@ export default {
       this.isEditMode = true; // Enable edit mode
       this.formData = {
         // Fill form with selected data
-        departmentID: item.ID,
+        department_id: item.ID,
         departmentName: item["Department Name"],
       };
     },
     // Opens the delete confirmation popup for department
     handleDelete(item) {
       this.isDeleteConfirmPopupOpen = true;
-      this.formData = { departmentID: item.ID }; // Store department ID for deletion
+      this.formData = { department_id: item.ID }; // Store department ID for deletion
     },
     // Opens the edit popup with selected position data
     handleEditPosition(item) {
@@ -367,7 +367,7 @@ export default {
         if (json.statusCode === 200) {
           // Map response to table format
           this.Departments = json.data.map((item) => ({
-            ID: item.departmentID,
+            ID: item.department_id,
             "Department Name": item.departmentName,
             Employee: item.sumEmployee,
           }));
@@ -424,7 +424,7 @@ export default {
       } else {
         this.inputError = false;
         this.isLoading = true;
-        const departmentID = this.formData.departmentID;
+        const departmentID = this.formData.department_id;
         try {
           const response = await fetch(
             `${API_CALL}/employee/EditDepartment/${departmentID}`,
@@ -458,7 +458,7 @@ export default {
     async deleteDepartment() {
       const accessToken = localStorage.getItem("@accessToken");
       this.isLoading = true;
-      const departmentID = this.formData.departmentID;
+      const departmentID = this.formData.department_id;
       try {
         const response = await fetch(
           `${API_CALL}/employee/DeleteDepartment/${departmentID}`,

@@ -179,11 +179,11 @@ export default {
       isPopupVisible: false,
       inputError: false,
       formData: {
-        departmentID: "",
+        department_id: "",
         departmentName: "",
       },
       isEmpty: {
-        departmentID: false,
+        department_id: false,
         departmentName: false,
       },
       formPosition: {
@@ -221,7 +221,7 @@ export default {
         (item) =>
           item["Department Name"].trim() ===
             this.formData.departmentName.trim() &&
-          item.ID !== this.formData.departmentID
+          item.ID !== this.formData.department_id
       );
       if (isDuplicateNDepartmentName) {
         this.isEmpty.departmentName = true;
@@ -253,7 +253,7 @@ export default {
       this.isAddingMode = false;
       this.isEditMode = false;
       this.formData = {
-        departmentID: "",
+        department_id: "",
         departmentName: "",
       };
       this.inputError = false;
@@ -286,13 +286,13 @@ export default {
       this.isAddingMode = false;
       this.isEditMode = true;
       this.formData = {
-        departmentID: item.ID,
+        department_id: item.ID,
         departmentName: item["Department Name"],
       };
     },
     handleDelete(item) {
       this.isDeleteConfirmPopupOpen = true;
-      this.formData = { departmentID: item.ID };
+      this.formData = { department_id: item.ID };
     },
     handleEditPosition(item) {
       this.isAddPositionPopupOpen = true;
@@ -331,7 +331,7 @@ export default {
         const json = await response.json();
         if (json.statusCode === 200) {
           this.Departments = json.data.map((item) => ({
-            ID: item.departmentID,
+            ID: item.department_id,
             "Department Name": item.departmentName,
             Employee: item.sumEmployee,
           }));
@@ -381,7 +381,7 @@ export default {
       } else {
         this.inputError = false;
         this.isLoading = true;
-        const departmentID = this.formData.departmentID;
+        const departmentID = this.formData.department_id;
         try {
           const response = await fetch(
             `${API_CALL}/employee/EditDepartment/${departmentID}`,
@@ -414,7 +414,7 @@ export default {
     async deleteDepartment() {
       const accessToken = localStorage.getItem("@accessToken");
       this.isLoading = true;
-      const departmentID = this.formData.departmentID;
+      const departmentID = this.formData.department_id;
       try {
         const response = await fetch(
           `${API_CALL}/employee/DeleteDepartment/${departmentID}`,

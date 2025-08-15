@@ -410,7 +410,7 @@ export default {
         national_id_number: "",
         phone_number: "",
         email: "",
-        departmentID: "",
+        department_id: "",
         position_id: "",
         start_working_date: "",
         salary: "",
@@ -430,7 +430,7 @@ export default {
         national_id_number: "",
         phone_number: "",
         email: "",
-        departmentID: "",
+        department_id: "",
         position_id: "",
         start_working_date: "",
         salary: "",
@@ -872,7 +872,7 @@ export default {
         national_id_number: "",
         phone_number: "",
         email: "",
-        departmentID: "",
+        department_id: "",
         position_id: "",
         start_working_date: "",
         salary: "",
@@ -891,7 +891,7 @@ export default {
       this.isEmpty.national_id_number = false;
       this.isEmpty.phone_number = false;
       this.isEmpty.email = false;
-      this.isEmpty.departmentID = false;
+      this.isEmpty.department_id = false;
       this.isEmpty.position_id = false;
       this.isEmpty.start_working_date = false;
       this.isEmpty.salary = false;
@@ -984,7 +984,7 @@ export default {
         national_id_number: item["National ID"],
         phone_number: item["Tel."],
         email: item.email,
-        departmentID: item.departmentID,
+        department_id: item.department_id,
         position_id: item.position_id,
         // start_working_date: formattedStartWorking,
         start_working_date: formatDateForPicker(
@@ -1135,7 +1135,7 @@ export default {
                 "Bank Account ID": item.bank_account_id,
                 Department: departments.join(", "),
                 position_name: positions.join(", "),
-                departmentID: item.departmentID,
+                department_id: item.department_id,
                 position_id: item.position_id,
                 status: item.employee_status,
               };
@@ -1406,7 +1406,7 @@ export default {
       this.isEmpty.national_id_number = false;
       this.isEmpty.phone_number = false;
       this.isEmpty.email = false;
-      this.isEmpty.departmentID = false;
+      this.isEmpty.department_id = false;
       this.isEmpty.position_id = false;
       this.isEmpty.start_working_date = false;
       this.isEmpty.salary = false;
@@ -1488,8 +1488,8 @@ export default {
         errorMessages.push(this.$t("validation.Email"));
       }
 
-      if (this.formData.departmentID === "") {
-        this.isEmpty.departmentID = true;
+      if (this.formData.department_id === "") {
+        this.isEmpty.department_id = true;
         errorMessages.push(this.$t("validation.departmentID"));
       }
 
@@ -1580,7 +1580,7 @@ export default {
             national_id_number: this.formData.national_id_number,
             phone_number: this.formData.phone_number,
             email: this.formData.email,
-            departmentID: this.formData.departmentID,
+            department_id: this.formData.department_id,
             position_id: this.formData.position_id,
             start_working_date: this.formData.start_working_date,
             salary: this.formData.salary,
@@ -1606,7 +1606,7 @@ export default {
             national_id_number: "",
             phone_number: "",
             email: "",
-            departmentID: "",
+            department_id: "",
             position_id: "",
             start_working_date: "",
             salary: "",
@@ -1821,7 +1821,7 @@ export default {
               national_id_number: this.formData.national_id_number,
               phone_number: this.formData.phone_number,
               email: this.formData.email,
-              departmentID: this.formData.departmentID,
+              department_id: this.formData.department_id,
               position_id: this.formData.position_id,
               start_working_date: this.formData.start_working_date,
               salary: parseSalary(this.formData.salary),
