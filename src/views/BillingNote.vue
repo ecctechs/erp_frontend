@@ -1212,7 +1212,7 @@ export default {
         );
         return [
           index + 1,
-          product && product.productImg ? product.productImg : "---",
+          product && product.product_img ? product.product_img : "---",
           product.product_name +
             (form.product_detail ? "\n" + form.product_detail : ""),
           form.sale_qty,
@@ -1905,7 +1905,7 @@ export default {
               price: item.price,
               Cost: item.product_cost,
               Amount: item.amount,
-              productImg: item.productImg,
+              product_img: item.product_img,
               product_type_id: item.product_type_id,
               category_id: item.category_id,
             };

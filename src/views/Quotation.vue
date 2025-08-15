@@ -894,7 +894,7 @@ export default {
     // ✅ อัปเดตข้อมูลด้วยตัวเลขดิบ (raw number)
     form.product_id = selectedProduct.product_id;
     form.price = parseFloat(selectedProduct.price.toFixed(2)); // ใช้ parseFloat แทน formatDecimal
-    form.productImg = selectedProduct.productImg;
+    form.product_img = selectedProduct.product_img;
     form.isReadonly2 = true; // (Optional: ถ้ายังต้องการใช้)
     form.isDisabled2 = true; // (Optional: ถ้ายังต้องการใช้)
   } else {
@@ -1209,7 +1209,7 @@ export default {
 
         return [
           index + 1,
-          product && product.productImg ? product.productImg : "---", // ดึงรูปภาพสินค้าถ้ามี
+          product && product.product_img ? product.product_img : "---", // ดึงรูปภาพสินค้าถ้ามี
           product
             ? product.product_name +
               (form.product_detail ? "\n" + form.product_detail : "")
@@ -2720,7 +2720,7 @@ export default {
               price: item.price,
               Cost: item.product_cost,
               Amount: item.amount,
-              productImg: item.productImg,
+              product_img: item.product_img,
               product_type_id: item.product_type_id,
               category_id: item.category_id,
               Status: item.Status,
@@ -3140,7 +3140,7 @@ export default {
         sale_discount: 0,
         discounttype: "amount",
         product_name: "",
-        productImg: "",
+        product_img: "",
         product_detail: "",
         pro_unti: "",
         showDetails: false,
@@ -3238,7 +3238,7 @@ export default {
           form.sale_qty * parseFloat(form.price.replace(/,/g, ""))
         );
         form.product_name = selectedProduct.product_name;
-        form.productImg = selectedProduct.productImg;
+        form.product_img = selectedProduct.product_img;
         if (form.discounttype === "percent") {
           // const salePriceValue =
           //   parseFloat(form.sale_price.replace(/,/g, "")) || 0;
@@ -3367,7 +3367,7 @@ export default {
           form.sale_qty * parseFloat(form.price.replace(/,/g, ""))
         );
         form.product_name = selectedProduct.product_name;
-        form.productImg = selectedProduct.productImg;
+        form.product_img = selectedProduct.product_img;
         if (form.discounttype === "percent") {
           // const salePriceValue =
           //   parseFloat(form.sale_price.replace(/,/g, "")) || 0;

@@ -297,7 +297,7 @@ export default {
         product_cost: "0",
         category_id: "",
         product_id: "",
-        productImg: "",
+        product_img: "",
         status: "active",
       },
       isEmpty: {
@@ -571,7 +571,7 @@ export default {
         product_cost: "",
         category_id: "",
         product_id: "",
-        productImg: "",
+        product_img: "",
         status: "",
       }),
         (this.isEmpty.product_type_id = false);
@@ -580,7 +580,7 @@ export default {
       this.isEmpty.price = false;
       this.isEmpty.product_cost = false;
       this.isEmpty.amount = false;
-      this.isEmpty.productImg = false;
+      this.isEmpty.product_img = false;
 
       this.exp_files = "";
       this.inputError = false;
@@ -605,19 +605,19 @@ export default {
         product_cost: parseFloat(item.product_cost.replace(/,/g, "")),
         category_id: item.category_id,
         product_id: item.ID,
-        productImg: item.productImg,
+        product_img: item.product_img,
         status: item.status,
       };
 
-      this.exp_files = this.formData.productImg;
+      this.exp_files = this.formData.product_img;
       this.getProductType();
       this.getCategory();
 
-      if (!item.productImg) {
+      if (!item.product_img) {
         this.Image_pd = [];
         this.exp_files = [];
       } else {
-        console.log("กำลังแก้ไขข้อมูลสินค้าที่มีรูปภาพ:", item.productImg);
+        console.log("กำลังแก้ไขข้อมูลสินค้าที่มีรูปภาพ:", item.product_img);
       }
     },
     handleDelete(item) {
@@ -684,7 +684,7 @@ export default {
             product_name: "รายการสินค้า",
             product_detail: "รายละเอียด",
             price: "ราคาขาย",
-            productImg: "รูปภาพ",
+            product_img: "รูปภาพ",
             amount: "จำนวนสินค้าในคลัง",
           };
         } else {
@@ -693,7 +693,7 @@ export default {
             product_name: "รายการสินค้า",
             product_detail: "รายละเอียด",
             price: "ราคาขาย",
-            productImg: "รูปภาพ",
+            product_img: "รูปภาพ",
           };
         }
 
@@ -782,7 +782,7 @@ export default {
                 ).toLocaleString("en-US", {
                   minimumFractionDigits: 2,
                 }),
-                productImg: item.productImg,
+                product_img: item.product_img,
                 product_type_id: item.product_type_id,
                 category_id: item.category_id,
                 status: item.Status,
@@ -831,7 +831,7 @@ export default {
                 product_detail: item.product_detail,
                 price: item.price,
                 product_cost: item.product_cost,
-                productImg: item.productImg,
+                product_img: item.product_img,
                 product_type_id: item.product_type_id,
                 category_id: item.category_id,
                 status: item.Status,
@@ -1020,7 +1020,7 @@ export default {
         price: "",
         product_cost: "",
         category_id: "",
-        productImg: "",
+        product_img: "",
       };
       this.exp_files = [];
       this.$refs.fileInput.value = "";

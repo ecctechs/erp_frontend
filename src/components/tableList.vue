@@ -105,7 +105,7 @@
               :key="colIndex"
             >
               <!-- Column for Image -->
-              <div v-if="column.value === 'productImg'" class="image-table">
+              <div v-if="column.value === 'product_img'" class="image-table">
                 <img
                   v-if="isImageURL(item[column.value])"
                   :src="item[column.value]"
