@@ -875,7 +875,7 @@ export default {
     },
     closeAddPositionPopup() {
       this.isAddPositionPopupOpen = false;
-      this.formPosition = { PositionID: "", Position: "" };
+      this.formPosition = { PositionID: "", position_name: "" };
       this.inputError = false;
     },
     handleEdit(item) {
@@ -913,7 +913,7 @@ export default {
       this.isAddPositionPopupOpen = true;
       this.isAddingMode = false;
       this.isEditMode = true;
-      this.formPosition = { PositionID: item.ID, Position: item.Position };
+      this.formPosition = { PositionID: item.ID, position_name: item.position_name };
     },
     handleDeletePosition(item) {
       this.isDeleteConfirmPopupOpen = true;

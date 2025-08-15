@@ -188,7 +188,7 @@ export default {
       },
       formPosition: {
         PositionID: "",
-        Position: "",
+        position_name: "",
       },
     };
   },
@@ -277,7 +277,7 @@ export default {
       this.isAddPositionPopupOpen = false;
       this.formPosition = {
         PositionID: "",
-        Position: "",
+        position_name: "",
       };
       this.inputError = false;
     },
@@ -300,7 +300,7 @@ export default {
       this.isEditMode = true;
       this.formPosition = {
         PositionID: item.ID,
-        Position: item.Position,
+        position_name: item.position_name,
       };
     },
     handleDeletePosition(item) {
@@ -451,7 +451,7 @@ export default {
         if (json.statusCode === 200) {
           this.Positions = json.data.map((item) => ({
             ID: item.PositionID,
-            Position: item.Position,
+            position_name: item.position_name,
           }));
         } else {
           this.showPopup_error(json.data);
@@ -464,7 +464,7 @@ export default {
     },
     async addPosition() {
       const accessToken = localStorage.getItem("@accessToken");
-      if (this.formPosition.Position === "") {
+      if (this.formPosition.position_name === "") {
         this.inputError = true;
         this.showPopup_error("Please fill data");
       } else {
@@ -477,7 +477,7 @@ export default {
               "Content-Type": "application/json",
               Authorization: `Bearer ${accessToken}`,
             },
-            body: JSON.stringify({ Position: this.formPosition.Position }),
+            body: JSON.stringify({ position_name: this.formPosition.position_name }),
           });
           const json = await response.json();
           if (json.statusCode === 200) {
@@ -496,7 +496,7 @@ export default {
     },
     async editPosition() {
       const accessToken = localStorage.getItem("@accessToken");
-      if (this.formPosition.Position === "") {
+      if (this.formPosition.position_name === "") {
         this.inputError = true;
         this.showPopup_error("Please fill data");
       } else {
@@ -512,7 +512,7 @@ export default {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${accessToken}`,
               },
-              body: JSON.stringify({ Position: this.formPosition.Position }),
+              body: JSON.stringify({ position_name: this.formPosition.position_name }),
             }
           );
           const json = await response.json();

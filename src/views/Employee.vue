@@ -416,7 +416,7 @@ export default {
       if (!this.Positions) return [];
       return this.Positions.map((pos) => ({
         value: pos.PositionID,
-        text: pos.Position,
+        text: pos.position_name,
       }));
     },
     employeeLeaveOptions() {
@@ -519,7 +519,7 @@ export default {
             emp["Name"]
               .toLowerCase()
               .includes(this.searchQuery.toLowerCase()) ||
-            emp["Position"]
+            emp["position_name"]
               .toLowerCase()
               .includes(this.searchQuery.toLowerCase())
         );
@@ -812,7 +812,7 @@ export default {
         ? item.department.map((department) => department.departmentName)
         : [];
       let positions = Array.isArray(item.position)
-        ? item.position.map((position) => position.Position)
+        ? item.position.map((position) => position.position_name)
         : [];
       if (item.Title === "นาย") {
         item.Title = "Mr.";
@@ -954,7 +954,7 @@ export default {
           item["Tel."] || "",
           item.email || "",
           item.Department || "",
-          item.Position || "",
+          item.position_name || "",
           this.formatDateToThai(item["Start Working Date"]),
           String(item.salary).replace(/,/g, "") || "",
           this.translateEmpType(item["Emp. type"]),
@@ -999,7 +999,7 @@ export default {
             let departments = item.department
               ? [item.department.departmentName]
               : [];
-            let positions = item.position ? [item.position.Position] : [];
+            let positions = item.position ? [item.position.position_name] : [];
             const BD = new Date(item.birth_date);
             const startWorkingDate = new Date(item.start_working_date);
             const formatDate = {
@@ -1042,7 +1042,7 @@ export default {
               "Bank Name": item.bank_name,
               "Bank Account ID": item.bank_account_id,
               Department: departments.join(", "),
-              Position: positions.join(", "),
+              position_name: positions.join(", "),
               departmentID: item.departmentID,
               PositionID: item.PositionID,
               status: item.employee_status,
@@ -1075,7 +1075,7 @@ export default {
             let departments = item.department
               ? [item.department.departmentName]
               : [];
-            let positions = item.position ? [item.position.Position] : [];
+            let positions = item.position ? [item.position.position_name] : [];
             const BD = new Date(item.birth_date);
             const startWorkingDate = new Date(item.start_working_date);
             const formatDate = {

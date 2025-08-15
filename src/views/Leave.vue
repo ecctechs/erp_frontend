@@ -561,7 +561,7 @@ export default {
             emp["Name"]
               .toLowerCase()
               .includes(this.searchQuery.toLowerCase()) ||
-            emp["Position"]
+            emp["position_name"]
               .toLowerCase()
               .includes(this.searchQuery.toLowerCase())
         );
@@ -945,7 +945,7 @@ export default {
         ? item.department.map((department) => department.departmentName)
         : [];
       let positions = Array.isArray(item.position)
-        ? item.position.map((position) => position.Position)
+        ? item.position.map((position) => position.position_name)
         : [];
 
       const formatDate = (date) => {
@@ -1095,7 +1095,7 @@ export default {
               let departments = item.department
                 ? [item.department.departmentName]
                 : [];
-              let positions = item.position ? [item.position.Position] : [];
+              let positions = item.position ? [item.position.position_name] : [];
 
               const BD = new Date(item.birth_date);
               const startWorkingDate = new Date(item.start_working_date);
@@ -1134,7 +1134,7 @@ export default {
                 "Bank Name": item.bank_name,
                 "Bank Account ID": item.bank_account_id,
                 Department: departments.join(", "),
-                Position: positions.join(", "),
+                position_name: positions.join(", "),
                 departmentID: item.departmentID,
                 PositionID: item.PositionID,
                 status: item.employee_status,
@@ -1170,7 +1170,7 @@ export default {
             let departments = item.department
               ? [item.department.departmentName]
               : [];
-            let positions = item.position ? [item.position.Position] : [];
+            let positions = item.position ? [item.position.position_name] : [];
 
             const BD = new Date(item.birth_date);
             const startWorkingDate = new Date(item.start_working_date);

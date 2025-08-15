@@ -102,7 +102,7 @@
               :value="position.positionID"
               :key="position.positionID"
             >
-              {{ position.Position }}
+              {{ position.position_name }}
             </option>
           </select>
         </div>

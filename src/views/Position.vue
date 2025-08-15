@@ -47,9 +47,9 @@
           ><span style="color: red">*</span>{{ t("positionName") }}</label
         > -->
         <TextField
-          v-model="formPosition.Position"
+          v-model="formPosition.position_name"
           :label="t('positionName')"
-          :error="isEmpty.Position"
+          :error="isEmpty.position_name"
           :required="true"
           id="input-text"
         />
@@ -195,12 +195,12 @@ export default {
       formPosition: {
         // Form data for position
         PositionID: "",
-        Position: "",
+        position_name: "",
       },
       isEmpty: {
         // Form data for position
         PositionID: false,
-        Position: false,
+        position_name: false,
       },
     };
   },
@@ -222,22 +222,22 @@ export default {
       this.isPopupVisible_error = false;
     },
     async validateFormData() {
-      this.isEmpty.Position = false;
+      this.isEmpty.position_name = false;
 
       const errorMessages = [];
 
-      if (this.formPosition.Position.trim() === "") {
-        this.isEmpty.Position = true;
+      if (this.formPosition.position_name.trim() === "") {
+        this.isEmpty.position_name = true;
         errorMessages.push(this.$t("validation.Position"));
       }
 
       const isDuplicate = this.Positions.some(
         (item) =>
-          item["Position"].trim() === this.formPosition.Position.trim() &&
-          item.ID !== this.formPosition.Position // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
+          item["position_name"].trim() === this.formPosition.position_name.trim() &&
+          item.ID !== this.formPosition.position_name // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
       );
       if (isDuplicate) {
-        this.isEmpty.Position = true;
+        this.isEmpty.position_name = true;
         errorMessages.push(this.$t("validation.positionDup"));
       }
 
@@ -303,7 +303,7 @@ export default {
       this.formPosition = {
         // Reset form data
         PositionID: "",
-        Position: "",
+        position_name: "",
       };
       this.inputError = false; // Reset validation errors
     },
@@ -331,7 +331,7 @@ export default {
       this.formPosition = {
         // Fill form with selected data
         PositionID: item.ID,
-        Position: item.Position,
+        position_name: item.position_name,
       };
     },
     // Opens the delete confirmation popup for position
@@ -499,7 +499,7 @@ export default {
           // Map response to table format
           this.Positions = json.data.map((item) => ({
             ID: item.PositionID,
-            Position: item.Position,
+            position_name: item.position_name,
           }));
         } else {
           this.showPopup_error(json.data);
@@ -515,12 +515,7 @@ export default {
       const accessToken = localStorage.getItem("@accessToken");
       if (!(await this.validateFormData())) return;
       this.isLoading = true;
-      // if (this.formPosition.Position === "") {
-      //   this.inputError = true;
-      //   this.showPopup_error("Please fill data");
-      // } else {
-      //   this.inputError = false;
-      //   this.isLoading = true;
+
       try {
         const response = await fetch(`${API_CALL}/employee/AddPosition`, {
           method: "POST",
@@ -528,7 +523,7 @@ export default {
             "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`,
           },
-          body: JSON.stringify({ Position: this.formPosition.Position }),
+          body: JSON.stringify({ position_name: this.formPosition.position_name }),
         });
         const json = await response.json();
         if (json.statusCode === 200) {
@@ -548,7 +543,7 @@ export default {
     // Edits an existing position via API call
     async editPosition() {
       const accessToken = localStorage.getItem("@accessToken");
-      if (this.formPosition.Position === "") {
+      if (this.formPosition.position_name === "") {
         this.inputError = true;
         this.showPopup_error("Please fill data");
       } else {
@@ -564,7 +559,7 @@ export default {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${accessToken}`,
               },
-              body: JSON.stringify({ Position: this.formPosition.Position }),
+              body: JSON.stringify({ position_name: this.formPosition.position_name }),
             }
           );
           const json = await response.json();
