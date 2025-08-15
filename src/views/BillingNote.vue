@@ -451,7 +451,7 @@ export default {
       formData: {
         bus_id: "",
         cus_id: "",
-        productID: "",
+        product_id: "",
         employee_id: "",
         employeeName: "",
         position: "",
@@ -669,11 +669,11 @@ export default {
         // ✅ STEP 1: ตรวจสอบทั้งหมดก่อน
         for (const form of this.productForms) {
           const productData = this.Products.find(
-            (p) => p.productID === form.productID
+            (p) => p.product_id === form.product_id
           );
 
           if (!productData) {
-            alert(`ไม่พบข้อมูลสินค้า ${form.productID}`);
+            alert(`ไม่พบข้อมูลสินค้า ${form.product_id}`);
             return;
           }
 
@@ -708,7 +708,7 @@ export default {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                id: form.productID,
+                id: form.product_id,
                 transactionType,
                 quantity: form.sale_qty,
                 billing_number: this.formData.billing_number,
@@ -721,7 +721,7 @@ export default {
 
           if (json.statusCode !== 200) {
             alert(
-              `ไม่สามารถดำเนินการกับสินค้า ${form.productID} ได้: ${
+              `ไม่สามารถดำเนินการกับสินค้า ${form.product_id} ได้: ${
                 json.message || "เกิดข้อผิดพลาด"
               }`
             );
@@ -915,7 +915,7 @@ export default {
       //loop of product
       this.productForms = (row.productForms || []).map((detail) => {
         const selectedProduct = this.Products.find(
-          (product) => product.productID === detail.productID
+          (product) => product.product_id === detail.product_id
         );
         let price = 0;
         let productName = "";
@@ -932,7 +932,7 @@ export default {
           saleDiscount = (detail.sale_discount / 100) * salePrice;
         }
         return {
-          productID: detail.productID,
+          product_id: detail.product_id,
           price: price,
           productName: productName, // ✅ แก้ไขชื่อ property เป็น camelCase
           sale_qty: detail.sale_qty,
@@ -1020,7 +1020,7 @@ export default {
       //loop of product
       this.productForms = (row.productForms || []).map((detail) => {
         const selectedProduct = this.Products.find(
-          (product) => product.productname === detail.productID
+          (product) => product.productname === detail.product_id
         );
         let price = 0;
         if (selectedProduct) {
@@ -1034,7 +1034,7 @@ export default {
           saleDiscount = (detail.sale_discount / 100) * salePrice;
         }
         return {
-          productID: detail.productID,
+          product_id: detail.product_id,
           price: price,
           sale_qty: detail.sale_qty,
           sale_price: this.formatDecimal(salePrice - saleDiscount),
@@ -1079,7 +1079,7 @@ export default {
       //loop of product
       this.productForms = (row.details || []).map((detail) => {
         const selectedProduct = this.Products.find(
-          (product) => product.productID === detail.productID
+          (product) => product.product_id === detail.product_id
         );
         let price = 0;
         if (selectedProduct) {
@@ -1093,7 +1093,7 @@ export default {
           saleDiscount = (detail.sale_discount / 100) * salePrice;
         }
         return {
-          productID: detail.productID,
+          product_id: detail.product_id,
           price: price,
           sale_qty: detail.sale_qty,
           sale_price: this.formatDecimal(salePrice - saleDiscount),
@@ -1214,7 +1214,7 @@ export default {
 
       const tableData = productForms.map((form, index) => {
         const product = this.Products.find(
-          (product) => product.productID === form.productID
+          (product) => product.product_id === form.product_id
         );
         return [
           index + 1,
@@ -1642,7 +1642,7 @@ export default {
       this.formData = {
         bus_id: "",
         cus_id: "",
-        productID: "",
+        product_id: "",
         employee_id: "",
         employeeName: "",
         position: "",
@@ -1756,7 +1756,7 @@ export default {
               payments: item.payments,
               deleted_at: item.deleted_at,
               productForms: item.details.map((detail) => ({
-                productID: detail.productID,
+                product_id: detail.product_id,
                 sale_price: detail.sale_price,
                 discounttype: detail.discounttype,
                 sale_discount: detail.sale_discount,
@@ -1904,7 +1904,7 @@ export default {
         if (json.statusCode === 200) {
           this.Products = json.data.map((item) => {
             return {
-              productID: item.productID,
+              product_id: item.product_id,
               Category: item.product_category.categoryName,
               productname: item.productname,
               Detail: item.productdetail,

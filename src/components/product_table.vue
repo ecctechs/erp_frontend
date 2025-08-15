@@ -37,7 +37,7 @@
                   <datalist id="browsers2">
                     <option
                       v-for="item in productsList"
-                      :key="item.productID"
+                      :key="item.product_id"
                       :value="item.productname"
                     ></option>
                   </datalist>
@@ -190,7 +190,7 @@ function emitProductChange(form, index) {
 
 function addProductRow() {
   const newProduct = {
-    productID: "", price: 0, sale_qty: 1, sale_price: "0.00",
+    product_id: "", price: 0, sale_qty: 1, sale_price: "0.00",
     sale_discount: 0, discounttype: "amount", productName: "",
     product_detail: "", pro_unti: "", showDetails: false,
   };

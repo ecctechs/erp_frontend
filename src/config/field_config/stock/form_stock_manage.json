@@ -1,12 +1,12 @@
 [
   {
-    "key": "productID",
+    "key": "product_id",
     "label": "productNameProduct",
     "componentType": "Autocomplete",
     "required": true,
     "items": "currentTableData",
     "itemTitle": "productname",
-    "itemValue": "productID"
+    "itemValue": "product_id"
   },
   {
     "key": "transactionType",

@@ -301,7 +301,7 @@ export default {
         price: "",
         productcost: "0",
         categoryID: "",
-        productID: "",
+        product_id: "",
         productImg: "",
         status: "active",
       },
@@ -504,7 +504,7 @@ export default {
         const isDuplicateName = this.currentTableData.some(
           (item) => 
             item.productname.trim() === this.formData.productname.trim() && 
-            item.ID !== this.formData.productID
+            item.ID !== this.formData.product_id
         );
         if (this.formData.productname && isDuplicateName) {
           this.isEmpty.productname = true;
@@ -575,7 +575,7 @@ export default {
         price: "",
         productcost: "",
         categoryID: "",
-        productID: "",
+        product_id: "",
         productImg: "",
         status: "",
       }),
@@ -609,7 +609,7 @@ export default {
         price: parseFloat(item.price.replace(/,/g, "")),
         productcost: parseFloat(item.productcost.replace(/,/g, "")),
         categoryID: item.categoryID,
-        productID: item.ID,
+        product_id: item.ID,
         productImg: item.productImg,
         status: item.status,
       };
@@ -627,7 +627,7 @@ export default {
     },
     handleDelete(item) {
       this.isDeleteConfirmPopupOpen = true;
-      this.formData = { productID: item.ID };
+      this.formData = { product_id: item.ID };
     },
     handleFileUpload(event) {
       this.errorMessages = [];
@@ -772,7 +772,7 @@ export default {
             })
             .map((item) => {
               let product = {
-                ID: item.productID,
+                ID: item.product_id,
                 Category: item.product_category.categoryName,
                 productname: item.productname,
                 productdetail: item.productdetail,
@@ -830,7 +830,7 @@ export default {
             })
             .map((item) => {
               let product = {
-                ID: item.productID,
+                ID: item.product_id,
                 Category: item.product_category.categoryName,
                 productname: item.productname,
                 productdetail: item.productdetail,
@@ -922,7 +922,7 @@ export default {
       if (!(await this.validateFormData())) return;
       this.errorMessage = [];
       this.isLoading = true;
-      const productID = this.formData.productID;
+      const productID = this.formData.product_id;
       try {
         const formDataImage = this.createFormData();
         const response = await fetch(
@@ -953,7 +953,7 @@ export default {
     async deleteProduct() {
       const accessToken = localStorage.getItem("@accessToken");
       this.isLoading = true;
-      const productID = this.formData.productID;
+      const productID = this.formData.product_id;
 
       try {
         const response = await fetch(

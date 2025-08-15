@@ -394,7 +394,7 @@ export default {
               billing_status: item.billing_status,
               payments: item.payments,
               productForms: item.details.map((detail) => ({
-                ID: detail.productID,
+                ID: detail.product_id,
                 sale_price: detail.sale_price,
                 sale_discount: detail.sale_discount,
                 sale_qty: detail.sale_qty,

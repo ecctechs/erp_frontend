@@ -527,7 +527,7 @@ export default {
       formData: {
         bus_id: "",
         cus_id: "",
-        productID: "",
+        product_id: "",
         employee_id: "",
         employeeName: "",
         position: "",
@@ -564,7 +564,7 @@ export default {
       isEmpty: {
         bus_id: "",
         cus_id: "",
-        productID: "",
+        product_id: "",
         employee_id: "",
         employeeName: "",
         position: "",
@@ -896,14 +896,14 @@ export default {
 
   if (selectedProduct) {
     // ✅ อัปเดตข้อมูลด้วยตัวเลขดิบ (raw number)
-    form.productID = selectedProduct.productID;
+    form.product_id = selectedProduct.product_id;
     form.price = parseFloat(selectedProduct.price.toFixed(2)); // ใช้ parseFloat แทน formatDecimal
     form.productImg = selectedProduct.productImg;
     form.isReadonly2 = true; // (Optional: ถ้ายังต้องการใช้)
     form.isDisabled2 = true; // (Optional: ถ้ายังต้องการใช้)
   } else {
     // กรณีเป็นสินค้าใหม่ (ไม่มีในลิสต์)
-    form.productID = "";
+    form.product_id = "";
     form.isReadonly2 = false; // (Optional)
     form.isDisabled2 = false; // (Optional)
   }
@@ -1207,11 +1207,8 @@ export default {
       ];
 
       const tableData = productForms.map((form, index) => {
-        // const product = this.Products.find(
-        //   (p) => p.productID === form.productID.toString()
-        // );
         const product = this.Products.find(
-          (product) => product.productID === form.productID
+          (product) => product.product_id === form.product_id
         );
 
         return [
@@ -1832,7 +1829,7 @@ export default {
 
               // invoice: item.invoice,
               productForms: item.details.map((detail) => ({
-                productID: detail.productID,
+                product_id: detail.product_id,
                 sale_price: detail.sale_price,
                 discounttype: detail.discounttype,
                 sale_discount: detail.sale_discount,
@@ -2025,8 +2022,8 @@ export default {
           const json = await res.json();
           console.log("AddProductQuotataion ", json);
 
-          if (json.statusCode == 200 && json.data && json.data.productID) {
-            addedProductIDs.push(json.data.productID); // สมมติว่าตอบกลับ API มี field `data.productID`
+          if (json.statusCode == 200 && json.data && json.data.product_id) {
+            addedProductIDs.push(json.data.product_id); 
             console.warn("เพิ่มสินค้าไม่สำเร็จ", json.message || json);
             this.getEmployee();
             this.getCustomer();
@@ -2035,7 +2032,7 @@ export default {
             this.getQuotation();
           }
         }
-        return addedProductIDs; // ส่งคืน productID ทั้งหมด
+        return addedProductIDs; 
       } else {
         console.warn("ไม่พบหมวดหมู่ชื่อ ไม่มีหมวดหมู่");
       }
@@ -2048,9 +2045,9 @@ export default {
         let addedIndex = 0; // ตัวชี้ตำแหน่งใน addedProductIDs
         this.productForms.forEach((form) => {
           // ตรวจสอบว่าสินค้านี้เป็นสินค้าที่เพิ่งเพิ่มใหม่
-          if (!form.productID) {
+          if (!form.product_id) {
             if (addedIndex < addedProductIDs.length) {
-              form.productID = addedProductIDs[addedIndex];
+              form.product_id = addedProductIDs[addedIndex];
               addedIndex++;
             } else {
               console.warn(
@@ -2161,7 +2158,7 @@ export default {
             discount_quotation: this.formData.discount_quotation,
             vatType: this.formData.vatType,
             products: this.productForms.map((form) => ({
-              productID: form.productID, // กรณีเพิ่มสินค้าใน quotaion จะหาตัวนี้ไม่เจอ
+              product_id: form.product_id, // กรณีเพิ่มสินค้าใน quotaion จะหาตัวนี้ไม่เจอ
               sale_price: parseFloat(form.sale_price.replace(/,/g, "")),
               discounttype: form.discounttype,
               sale_discount: parseFloat(form.sale_discount),
@@ -2211,9 +2208,9 @@ export default {
         let addedIndex = 0; // ตัวชี้ตำแหน่งใน addedProductIDs
         this.productForms.forEach((form) => {
           // ตรวจสอบว่าสินค้านี้เป็นสินค้าที่เพิ่งเพิ่มใหม่
-          if (!form.productID) {
+          if (!form.product_id) {
             if (addedIndex < addedProductIDs.length) {
-              form.productID = addedProductIDs[addedIndex];
+              form.product_id = addedProductIDs[addedIndex];
               addedIndex++;
             } else {
               console.warn(
@@ -2269,9 +2266,8 @@ export default {
               errorMessages.push(this.$t("sale_qty_zero"));
             }
 
-            // ค้นหา Product ที่ตรงกับ form.productID
             const matchedProduct = this.Products.find(
-              (product) => product.productname === form.productID
+              (product) => product.productname === form.product_id
             );
             // console.log("matchedProduct",matchedProduct)
             if (matchedProduct && matchedProduct.Status === "not active") {
@@ -2329,7 +2325,7 @@ export default {
               discount_quotation: this.formData.discount_quotation,
               vatType: this.formData.vatType,
               products: this.productForms.map((form) => ({
-                productID: form.productID,
+                product_id: form.product_id,
                 sale_price: parseFloat(form.sale_price.replace(/,/g, "")),
                 discounttype: form.discounttype,
                 sale_discount: parseFloat(form.sale_discount),
@@ -2421,9 +2417,8 @@ export default {
               errorMessages.push(this.$t("sale_qty_zero"));
             }
 
-            // ค้นหา Product ที่ตรงกับ form.productID
             const matchedProduct = this.Products.find(
-              (product) => product.productname === form.productID
+              (product) => product.productname === form.product_id
             );
             // console.log("matchedProduct", matchedProduct);
             if (matchedProduct && matchedProduct.Status === "not active") {
@@ -2447,10 +2442,8 @@ export default {
             this.isEmpty.productForms = true;
             errorMessages.push(this.$t("sale_qty_zero"));
           }
-
-          // ค้นหา Product ที่ตรงกับ form.productID
           const matchedProduct = this.Products.find(
-            (product) => product.productname === form.productID
+            (product) => product.productname === form.product_id
           );
           console.log("matchedProduct", matchedProduct);
           if (matchedProduct && matchedProduct.Status === "not active") {
@@ -2505,7 +2498,7 @@ export default {
               discount_quotation: this.formData.discount_quotation,
               vatType: this.formData.vatType,
               products: this.productForms.map((form) => ({
-                productID: form.productID,
+                product_id: form.product_id,
                 sale_price: parseFloat(form.sale_price.replace(/,/g, "")),
                 discounttype: form.discounttype,
                 sale_discount: parseFloat(form.sale_discount),
@@ -2597,10 +2590,8 @@ export default {
               this.isEmpty.productForms = true;
               errorMessages.push(this.$t("sale_qty_zero"));
             }
-
-            // ค้นหา Product ที่ตรงกับ form.productID
             const matchedProduct = this.Products.find(
-              (product) => product.productname === form.productID
+              (product) => product.productname === form.product_id
             );
 
             console.log("matchedProduct", matchedProduct);
@@ -2659,7 +2650,7 @@ export default {
               discount_quotation: this.formData.discount_quotation,
               vatType: this.formData.vatType,
               products: this.productForms.map((form) => ({
-                productID: form.productID,
+                product_id: form.product_id,
                 sale_price: parseFloat(form.sale_price.replace(/,/g, "")),
                 discounttype: form.discounttype,
                 sale_discount: parseFloat(form.sale_discount),
@@ -2727,10 +2718,8 @@ export default {
 
         if (json.statusCode === 200) {
           this.Products = json.data
-            // Filter only products with "Active" status
-            // Include only products with active status
             .map((item) => ({
-              productID: item.productID,
+              product_id: item.product_id,
               Category: item.product_category?.categoryName || "N/A",
               productname: item.productname,
               Detail: item.productdetail,
@@ -2939,7 +2928,7 @@ export default {
       this.formData = {
         bus_id: "",
         cus_id: "",
-        productID: "",
+        product_id: "",
         employee_id: "",
         employeeName: "",
         position: "",
@@ -3009,7 +2998,7 @@ export default {
       this.formData = {
         bus_id: "",
         cus_id: "",
-        productID: "",
+        product_id: "",
         employee_id: "",
         employeeName: "",
         position: "",
@@ -3150,7 +3139,7 @@ export default {
     },
     showingAddProduct() {
       this.productForms.push({
-        productID: "",
+        product_id: "",
         price: 0,
         sale_qty: 0,
         sale_price: 0,
@@ -3191,7 +3180,7 @@ export default {
     },
     updatePrice2(form, index) {
       form.sale_discount = 0;
-      const selectedProductId = form.productID;
+      const selectedProductId = form.product_id;
       const selectedProduct = this.Products.find(
         (product) => product.productname === selectedProductId
       );
@@ -3319,7 +3308,7 @@ export default {
       }
     },
     updatePrice(form, index, event) {
-      const selectedProductId = form.productID;
+      const selectedProductId = form.product_id;
       const selectedProduct = this.Products.find(
         (product) => product.productname === selectedProductId
       );
@@ -3565,7 +3554,7 @@ export default {
       }
       this.productForms = (row.productForms || []).map((detail) => {
         const selectedProduct = this.Products.find(
-          (product) => product.productID === detail.productID
+          (product) => product.product_id === detail.product_id
         );
         console.log("selectedProduct", selectedProduct);
         let price = 0;
@@ -3586,7 +3575,7 @@ export default {
           // detail.showDetails = true;
         }
         return {
-          productID: detail.productID,
+          product_id: detail.product_id,
           price: price,
           sale_qty: detail.sale_qty,
           sale_price: this.formatDecimal(salePrice - saleDiscount),
@@ -3662,7 +3651,7 @@ export default {
 
       this.productForms = (row.details || []).map((detail) => {
         const selectedProduct = this.Products.find(
-          (product) => product.productID === detail.productID
+          (product) => product.product_id === detail.product_id
         );
         let price = 0;
         if (selectedProduct) {
@@ -3678,7 +3667,7 @@ export default {
         }
 
         return {
-          productID: detail.productID,
+          product_id: detail.product_id,
           price: price,
           sale_qty: detail.sale_qty,
           sale_price: this.formatDecimal(salePrice - saleDiscount),
@@ -3725,7 +3714,7 @@ export default {
       };
       this.productForms = (row.details || []).map((detail) => {
         const selectedProduct = this.Products.find(
-          (product) => product.productID === detail.productID
+          (product) => product.product_id === detail.product_id
         );
         let price = 0;
 
@@ -3741,7 +3730,7 @@ export default {
         }
 
         return {
-          productID: detail.productID,
+          product_id: detail.product_id,
           price: price,
           sale_qty: detail.sale_qty,
           sale_price: this.formatDecimal(salePrice - saleDiscount),

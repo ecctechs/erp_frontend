@@ -469,7 +469,7 @@ export default {
       formData: {
         bus_id: "",
         cus_id: "",
-        productID: "",
+        product_id: "",
         employee_id: "",
         employeeName: "",
         position: "",
@@ -689,7 +689,7 @@ export default {
               billing_status: item.billing_status,
               payments: item.payments,
               productForms: item.details.map((detail) => ({
-                productID: detail.productID,
+                product_id: detail.product_id,
                 sale_price: detail.sale_price,
                 sale_discount: detail.sale_discount,
                 sale_qty: detail.sale_qty,
@@ -733,7 +733,7 @@ export default {
               billing_status: item.billing_status,
               payments: item.payments,
               productForms: item.details.map((detail) => ({
-                productID: detail.productID,
+                product_id: detail.product_id,
                 sale_price: detail.sale_price,
                 sale_discount: detail.sale_discount,
                 sale_qty: detail.sale_qty,
@@ -955,7 +955,7 @@ export default {
               remark: item.remark || "",
               invoice: item.invoice,
               productForms: item.details.map((detail) => ({
-                productID: detail.productID,
+                product_id: detail.product_id,
                 sale_price: detail.sale_price,
                 sale_discount: detail.sale_discount,
                 sale_qty: detail.sale_qty,
@@ -997,7 +997,7 @@ export default {
               remark: item.remark || "",
               invoice: item.invoice,
               productForms: item.details.map((detail) => ({
-                productID: detail.productID,
+                product_id: detail.product_id,
                 sale_price: detail.sale_price,
                 sale_discount: detail.sale_discount,
                 sale_qty: detail.sale_qty,
@@ -1058,7 +1058,7 @@ export default {
               remark: item.invoice_remark || "",
               billing: item.billing,
               productForms: item.details.map((detail) => ({
-                productID: detail.productID,
+                product_id: detail.product_id,
                 sale_price: detail.sale_price,
                 sale_discount: detail.sale_discount,
                 sale_qty: detail.sale_qty,
@@ -1100,7 +1100,7 @@ export default {
               remark: item.invoice_remark || "",
               billing: item.billing,
               productForms: item.details.map((detail) => ({
-                productID: detail.productID,
+                product_id: detail.product_id,
                 sale_price: detail.sale_price,
                 sale_discount: detail.sale_discount,
                 sale_qty: detail.sale_qty,

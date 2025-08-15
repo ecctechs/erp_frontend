@@ -443,7 +443,7 @@ export default {
       formData: {
         bus_id: "",
         cus_id: "",
-        productID: "",
+        product_id: "",
         employee_id: "",
         employeeName: "",
         position: "",
@@ -720,8 +720,8 @@ export default {
       }
       this.expandedItems = new Set(this.expandedItems); // อัปเดต reactivity
     },
-    getProductName(productID) {
-      const product = this.Products.find((p) => p.productID === productID);
+    getProductName(product_id) {
+      const product = this.Products.find((p) => p.product_id === product_id);
       return product ? product.productname : "Unknown";
     },
     showPopup_error(message) {
@@ -851,7 +851,7 @@ export default {
 
         this.productForms = (row.productForms || []).map((detail) => {
         const selectedProduct = this.Products.find(
-          (product) => product.productID === detail.productID
+          (product) => product.product_id === detail.product_id
         );
         let price = 0;
         let productName = ""; // เปลี่ยนชื่อตัวแปรเพื่อความชัดเจน
@@ -868,7 +868,7 @@ export default {
           saleDiscount = (detail.sale_discount / 100) * salePrice;
         }
         return {
-          productID: detail.productID,
+          product_id: detail.product_id,
           price: price,
           productName: productName, 
           sale_qty: detail.sale_qty,
@@ -1001,7 +1001,7 @@ export default {
 
       this.productForms = (row.details || []).map((detail) => {
         const selectedProduct = this.Products.find(
-          (product) => product.productID === detail.productID
+          (product) => product.product_id === detail.product_id
         );
         let price = 0;
         if (selectedProduct) {
@@ -1017,7 +1017,7 @@ export default {
         }
 
         return {
-          productID: detail.productID,
+          product_id: detail.product_id,
           price: price,
           sale_qty: detail.sale_qty,
           sale_price: this.formatDecimal(salePrice - saleDiscount),
@@ -1062,7 +1062,7 @@ export default {
       };
       this.productForms = (row.details || []).map((detail) => {
         const selectedProduct = this.Products.find(
-          (product) => product.productID === detail.productID
+          (product) => product.product_id === detail.product_id
         );
         let price = 0;
         if (selectedProduct) {
@@ -1077,7 +1077,7 @@ export default {
         }
 
         return {
-          productID: detail.productID,
+          product_id: detail.product_id,
           price: price,
           sale_qty: detail.sale_qty,
           sale_price: this.formatDecimal(salePrice - saleDiscount),
@@ -1151,11 +1151,8 @@ export default {
       ];
 
       const tableData = productForms.map((form, index) => {
-        // const product = this.Products.find(
-        //   (p) => p.productID === form.productID.toString()
-        // );
         const product = this.Products.find(
-          (product) => product.productID === form.productID
+          (product) => product.product_id === form.product_id
         );
         // console.log(product);
         return [
@@ -1637,7 +1634,7 @@ export default {
       this.formData = {
         bus_id: "",
         cus_id: "",
-        productID: "",
+        product_id: "",
         employee_id: "",
         employeeName: "",
         position: "",
@@ -1721,7 +1718,7 @@ export default {
         if (json.statusCode === 200) {
           this.Products = json.data.map((item) => {
             return {
-              productID: item.productID,
+              product_id: item.product_id,
               Category: item.product_category.categoryName,
               productname: item.productname,
               Detail: item.productdetail,
@@ -1874,7 +1871,7 @@ export default {
               invoice_id: item.invoice_id,
               deleted_at: item.deleted_at,
               productForms: item.details.map((detail) => ({
-                productID: detail.productID,
+                product_id: detail.product_id,
                 sale_price: detail.sale_price,
                 discounttype: detail.discounttype,
                 sale_discount: detail.sale_discount,

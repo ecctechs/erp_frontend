@@ -179,7 +179,7 @@ export default {
       inputError: false, // Tracks input validation errors
       role: localStorage.getItem("RoleName"), // Fetches user role from local storage
       formData: {
-        productID: "", // Product ID for transactions
+        product_id: "", // Product ID for transactions
         ID: "", // Transaction ID for editing
         product: "",
         transactionType: "", // Type of transaction (issue/receive)
@@ -189,7 +189,7 @@ export default {
         update_product_amount: "",
       },
       isEmpty: {
-        productID: "", // Product ID for transactions
+        product_id: "", // Product ID for transactions
         ID: "", // Transaction ID for editing
         product: "",
         transactionType: "", // Type of transaction (issue/receive)
@@ -199,9 +199,9 @@ export default {
     };
   },
     watch: {
-"formData.productID"(newId) {
+"formData.product_id"(newId) {
   if (newId) {
-    const selectedProduct = this.Product.find(p => p.productID === newId);
+    const selectedProduct = this.Product.find(p => p.product_id === newId);
     if (selectedProduct) {
       this.formData.current_product_amount = selectedProduct.amount;
       this.calculateUpdatedAmount(); // เรียกใช้การคำนวณเมื่อ product เปลี่ยน
@@ -273,7 +273,7 @@ export default {
 },
     async selectProdcut(id) {
       // สมมุติว่า Product เป็น array และคุณต้องการหา product ที่มี id ตรงกับที่ส่งมา
-      const selectedProduct = this.Product.find((p) => p.productID === id);
+      const selectedProduct = this.Product.find((p) => p.product_id === id);
 
       if (!selectedProduct) {
         console.error("Product not found");
@@ -344,20 +344,19 @@ export default {
     },
     validateFormData() {
       // ตั้งค่า isEmpty ของทุกฟิลด์เป็น false ก่อนเริ่มการตรวจสอบ
-      this.isEmpty.productID = false;
+      this.isEmpty.product_id = false;
       this.isEmpty.transactionType = false;
       this.isEmpty.quantity = false;
 
       const errorMessages = [];
 
       // ตรวจสอบฟิลด์ productID
-      if (this.formData.productID === "") {
-        this.isEmpty.productID = true;
+      if (this.formData.product_id === "") {
+        this.isEmpty.product_id = true;
         errorMessages.push(this.$t("validation.productID"));
       } else {
-        // ตรวจสอบ productID ใน currentTableData
         const matchingProduct = this.currentTableData.find(
-          (item) => item.productID === this.formData.productID
+          (item) => item.product_id === this.formData.product_id
         );
 
         if (this.formData.transactionType === "issue") {
@@ -414,14 +413,14 @@ export default {
       this.isAddingMode = false;
       this.isEditingMode = false;
       this.formData = {
-        productID: "",
+        product_id: "",
         ID: "",
         product: "",
         transactionType: "",
         quantity: "",
         transactionDetail: "",
       };
-      this.isEmpty.productID = false;
+      this.isEmpty.product_id = false;
       this.isEmpty.transactionType = false;
       this.isEmpty.quantity = false;
 
@@ -440,7 +439,7 @@ export default {
         item.Transaction = "Receive";
       }
       this.formData = {
-        productID: item.productID,
+        product_id: item.product_id,
         ID: item.ID,
         transactionType: item.Transaction,
         quantity: item.Quantity,
@@ -513,7 +512,7 @@ export default {
         if (json.statusCode === 200) {
           this.transactionTable = json.data.map((item) => ({
             ID: item.id,
-            productID: item.productID,
+            product_id: item.product_id,
             product: item.Product,
             Date: item.Date,
             Transaction: item.Transaction,
@@ -543,7 +542,7 @@ export default {
             Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify({
-            productID: this.formData.productID,
+            product_id: this.formData.product_id,
             transactionType: this.formData.transactionType,
             quantity: this.formData.quantity,
             transactionDetail: this.formData.transactionDetail,
@@ -590,7 +589,7 @@ export default {
               Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-              productID: this.formData.productID,
+              product_id: this.formData.product_id,
               transactionType: this.formData.transactionType,
               quantity: this.formData.quantity,
               transactionDetail: this.formData.transactionDetail,
