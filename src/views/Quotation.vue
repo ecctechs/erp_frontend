@@ -884,14 +884,10 @@ export default {
       if (charCode < 48 || charCode > 57) {
         event.preventDefault();
       }
-      // ลบเลข 0 ข้างหน้า
-      // this.form.sale_qty = tthis.form.sale_qty.replace(/^0+/, "") || "0";
-      // this.form.sale_discount =
-      //   this.form.sale_discoun.replace(/^0+/, "") || "0";
     },
     getDetailProduct(form, index) {
   const selectedProduct = this.Products.find(
-    (product) => product.productname === form.productName
+    (product) => product.product_name === form.productName
   );
 
   if (selectedProduct) {
@@ -1215,7 +1211,7 @@ export default {
           index + 1,
           product && product.productImg ? product.productImg : "---", // ดึงรูปภาพสินค้าถ้ามี
           product
-            ? product.productname +
+            ? product.product_name +
               (form.product_detail ? "\n" + form.product_detail : "")
             : "",
           form.sale_qty.toLocaleString(),
@@ -1965,12 +1961,12 @@ export default {
         const formData = new FormData();
         formData.append("file", product.file || ""); // ไฟล์ถ้ามี
         formData.append("product_type_id", 1);
-        formData.append("productname", product.productName);
+        formData.append("product_name", product.productName);
         formData.append("productdetail", product.product_detail);
         formData.append("amount", 0);
         formData.append("price", parseInt(product.price));
         formData.append("productcost", 0);
-        formData.append("categoryID", cate_id);
+        formData.append("category_id", cate_id);
         formData.append("Status", "active");
         return formData;
       });
@@ -1996,14 +1992,12 @@ export default {
       // console.log("addProductQuotataion",json)
       this.Categorys = json.data;
 
-      // ค้นหาหมวดหมู่ที่ชื่อเป็น "categoryName"
       const matchedCategory = this.Categorys.find(
-        (category) => category.categoryName === "ไม่มีหมวดหมู่"
+        (category) => category.category_name === "ไม่มีหมวดหมู่"
       );
 
-      // ถ้าเจอ หมวดหมู่ ให้กำหนด categoryID
       if (matchedCategory) {
-        this.CategoryIDFormAddNewProduct = matchedCategory.categoryID;
+        this.CategoryIDFormAddNewProduct = matchedCategory.category_id;
 
         const formDataList = this.createFormDataList(
           this.CategoryIDFormAddNewProduct,
@@ -2267,7 +2261,7 @@ export default {
             }
 
             const matchedProduct = this.Products.find(
-              (product) => product.productname === form.product_id
+              (product) => product.product_name === form.product_id
             );
             // console.log("matchedProduct",matchedProduct)
             if (matchedProduct && matchedProduct.Status === "not active") {
@@ -2418,7 +2412,7 @@ export default {
             }
 
             const matchedProduct = this.Products.find(
-              (product) => product.productname === form.product_id
+              (product) => product.product_name === form.product_id
             );
             // console.log("matchedProduct", matchedProduct);
             if (matchedProduct && matchedProduct.Status === "not active") {
@@ -2443,7 +2437,7 @@ export default {
             errorMessages.push(this.$t("sale_qty_zero"));
           }
           const matchedProduct = this.Products.find(
-            (product) => product.productname === form.product_id
+            (product) => product.product_name === form.product_id
           );
           console.log("matchedProduct", matchedProduct);
           if (matchedProduct && matchedProduct.Status === "not active") {
@@ -2591,7 +2585,7 @@ export default {
               errorMessages.push(this.$t("sale_qty_zero"));
             }
             const matchedProduct = this.Products.find(
-              (product) => product.productname === form.product_id
+              (product) => product.product_name === form.product_id
             );
 
             console.log("matchedProduct", matchedProduct);
@@ -2720,15 +2714,15 @@ export default {
           this.Products = json.data
             .map((item) => ({
               product_id: item.product_id,
-              Category: item.product_category?.categoryName || "N/A",
-              productname: item.productname,
+              Category: item.product_category?.category_name || "N/A",
+              product_name: item.product_name,
               Detail: item.productdetail,
               price: item.price,
               Cost: item.productcost,
               Amount: item.amount,
               productImg: item.productImg,
               product_type_id: item.product_type_id,
-              categoryID: item.categoryID,
+              category_id: item.category_id,
               Status: item.Status,
             }));
         } else {
@@ -3145,7 +3139,7 @@ export default {
         sale_price: 0,
         sale_discount: 0,
         discounttype: "amount",
-        productname: "",
+        product_name: "",
         productImg: "",
         product_detail: "",
         pro_unti: "",
@@ -3182,7 +3176,7 @@ export default {
       form.sale_discount = 0;
       const selectedProductId = form.product_id;
       const selectedProduct = this.Products.find(
-        (product) => product.productname === selectedProductId
+        (product) => product.product_name === selectedProductId
       );
       if (!selectedProduct) {
         // ใช้ form.price เดิมในการคำนวณ sale_price
@@ -3243,7 +3237,7 @@ export default {
         form.sale_price = this.formatDecimal(
           form.sale_qty * parseFloat(form.price.replace(/,/g, ""))
         );
-        form.productname = selectedProduct.productname;
+        form.product_name = selectedProduct.product_name;
         form.productImg = selectedProduct.productImg;
         if (form.discounttype === "percent") {
           // const salePriceValue =
@@ -3310,7 +3304,7 @@ export default {
     updatePrice(form, index, event) {
       const selectedProductId = form.product_id;
       const selectedProduct = this.Products.find(
-        (product) => product.productname === selectedProductId
+        (product) => product.product_name === selectedProductId
       );
 
       if (!selectedProduct) {
@@ -3372,7 +3366,7 @@ export default {
         form.sale_price = this.formatDecimal(
           form.sale_qty * parseFloat(form.price.replace(/,/g, ""))
         );
-        form.productname = selectedProduct.productname;
+        form.product_name = selectedProduct.product_name;
         form.productImg = selectedProduct.productImg;
         if (form.discounttype === "percent") {
           // const salePriceValue =
@@ -3583,7 +3577,7 @@ export default {
           discounttype: detail.discounttype,
           product_detail: detail.product_detail,
           pro_unti: detail.pro_unti,
-          productName: selectedProduct.productname,
+          productName: selectedProduct.product_name,
         };
       });
 

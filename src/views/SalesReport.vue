@@ -547,14 +547,14 @@ export default {
 
             let product = {
               ID: item.ID,
-              Category: item.product_category.categoryName,
-              "Product Name": item.productname,
+              Category: item.product_category.category_name,
+              "Product Name": item.product_name,
               Detail: item.productdetail,
               Price: item.price,
               Cost: item.productcost,
               "Product Image": item.productImg,
               product_type_id: item.product_type_id,
-              categoryID: item.categoryID,
+              category_id: item.category_id,
               product_date: this.formatDateForPicker(Productdate),
               product_type_name: item.product_type.product_type_name,
               Amount: item.amount,
@@ -573,22 +573,19 @@ export default {
 
             let product = {
               ID: item.ID,
-              Category: item.product_category.categoryName,
-              "Product Name": item.productname,
+              Category: item.product_category.category_name,
+              "Product Name": item.product_name,
               Detail: item.productdetail,
               Price: item.price,
               Cost: item.productcost,
               "Product Image": item.productImg,
               product_type_id: item.product_type_id,
-              categoryID: item.categoryID,
+              category_id: item.category_id,
               product_date: this.formatDateForPicker(Productdate),
               product_type_name: item.product_type.product_type_name,
               Amount: item.amount,
             };
             console.log(item.product_type.product_type_name);
-            // if (this.selectedType === 'A') {
-            //     product.Amount = item.amount;
-            // }
             return product;
           });
 
@@ -944,7 +941,7 @@ export default {
         const result = await response.json();
 
         // แปลงข้อมูลให้เหมาะสมกับการแสดงผล
-        const Sale_date = result.data.map((item) => item.categoryName); // ดึงชื่อหมวดหมู่
+        const Sale_date = result.data.map((item) => item.category_name); // ดึงชื่อหมวดหมู่
         const SaleData = result.data.map((item) => item.total_sale_price); // ดึงยอดขายรวม
 
         // ตัวเลือกของกราฟ
@@ -1197,8 +1194,8 @@ export default {
 
         if (json.statusCode === 200) {
           this.Categories = json.data.map((item) => ({
-            ID: item.categoryID,
-            "Category Name": item.categoryName,
+            ID: item.category_id,
+            "Category Name": item.category_name,
           }));
           console.log(json);
         } else {

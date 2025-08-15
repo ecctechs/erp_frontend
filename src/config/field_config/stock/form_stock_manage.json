@@ -5,7 +5,7 @@
     "componentType": "Autocomplete",
     "required": true,
     "items": "currentTableData",
-    "itemTitle": "productname",
+    "itemTitle": "product_name",
     "itemValue": "product_id"
   },
   {

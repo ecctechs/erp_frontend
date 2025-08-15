@@ -38,7 +38,7 @@
                     <option
                       v-for="item in productsList"
                       :key="item.product_id"
-                      :value="item.productname"
+                      :value="item.product_name"
                     ></option>
                   </datalist>
                   <a v-if="isEditable" class="text-muted" href="javascript:void(0)" @click="form.showDetails = !form.showDetails">
@@ -168,7 +168,7 @@ function validateNumeric(event) {
 
 function isPriceLocked(productName) {
   if (!productName || !props.productsList) return false;
-  return props.productsList.some(p => p.productname === productName);
+  return props.productsList.some(p => p.product_name === productName);
 }
 
 function getFormattedPrice(value) {

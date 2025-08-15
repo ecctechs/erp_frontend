@@ -48,9 +48,9 @@
       <h2 v-if="isEditMode">{{ t("headerPopupEditCategory") }}</h2>
       <div class="mb-3">
         <TextField
-          v-model="formData.categoryName"
+          v-model="formData.category_name"
           :label="t('categoryName')"
-          :error="isEmpty.categoryName"
+          :error="isEmpty.category_name"
           :required="true"
           maxlength="30"
         />
@@ -183,12 +183,12 @@ export default {
       inputValue: "",
       inputError: false,
       formData: {
-        categoryID: "",
-        categoryName: "",
+        category_id: "",
+        category_name: "",
       },
       isEmpty: {
-        categoryID: "",
-        categoryName: false,
+        category_id: "",
+        category_name: false,
       },
       searchQuery: "",
     };
@@ -215,21 +215,21 @@ export default {
       this.isPopupVisible_error = false;
     },
     validateFormData() {
-      this.isEmpty.categoryName = false;
+      this.isEmpty.category_name = false;
 
       const errorMessages = [];
 
-      if (this.formData.categoryName === "") {
-        this.isEmpty.categoryName = true;
+      if (this.formData.category_name === "") {
+        this.isEmpty.category_name = true;
         errorMessages.push(this.$t("validation.categoryName"));
       }
       const isDuplicateName = this.Categories.some(
         (item) =>
-          item["Category Name"].trim() === this.formData.categoryName.trim() &&
-          item.ID !== this.formData.categoryID
+          item["Category Name"].trim() === this.formData.category_name.trim() &&
+          item.ID !== this.formData.category_id
       );
       if (isDuplicateName) {
-        this.isEmpty.categoryName = true;
+        this.isEmpty.category_name = true;
         errorMessages.push(this.$t("validation.duplicatecategoryName"));
       }
 
@@ -258,8 +258,8 @@ export default {
       this.isAddingMode = false;
       this.isEditMode = false;
       this.formData = {
-        categoryID: "",
-        categoryName: "",
+        category_id: "",
+        category_name: "",
       };
       this.category_file = "";
       this.inputError = false;
@@ -274,15 +274,15 @@ export default {
       this.isAddingMode = false;
       this.isEditMode = true;
       this.formData = {
-        categoryID: item.ID,
-        categoryName: item["Category Name"],
+        category_id: item.ID,
+        category_name: item["Category Name"],
       };
     },
     handleDelete(item) {
       console.log("Delete button clicked for item:", item);
       this.isDeleteConfirmPopupOpen = true;
       this.formData = {
-        categoryID: item.ID,
+        category_id: item.ID,
       };
     },
     showPopup(message) {
@@ -341,8 +341,8 @@ export default {
 
         if (json.statusCode === 200) {
           this.Categories = json.data.map((item) => ({
-            ID: item.categoryID,
-            "Category Name": item.categoryName,
+            ID: item.category_id,
+            "Category Name": item.category_name,
           }));
           console.log(json);
         } else {
@@ -368,7 +368,7 @@ export default {
             Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify({
-            categoryName: this.formData.categoryName,
+            category_name: this.formData.category_name,
           }),
         });
         const json = await response.json();
@@ -377,8 +377,8 @@ export default {
           this.getProductCategory();
           this.showPopup(this.$t("validation.AddSucc"));
           this.formData = {
-            categoryID: "",
-            categoryName: "",
+            category_id: "",
+            category_name: "",
           };
         } else {
           this.showPopup_error(json.data);
@@ -396,7 +396,7 @@ export default {
       if (!(await this.validateFormData())) return;
       this.errorMessages = [];
       this.isLoading = true;
-      const categoryID = this.formData.categoryID;
+      const categoryID = this.formData.category_id;
       try {
         const response = await fetch(
           `${API_CALL}/product/EditCategory/${categoryID}`,
@@ -407,7 +407,7 @@ export default {
               Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-              categoryName: this.formData.categoryName,
+              category_name: this.formData.category_name,
             }),
           }
         );
@@ -431,7 +431,7 @@ export default {
     async deleteCategory() {
       const accessToken = localStorage.getItem("@accessToken");
       this.isLoading = true;
-      const categoryID = this.formData.categoryID;
+      const categoryID = this.formData.category_id;
       let errorMessages = [];
       try {
         const response = await fetch(
@@ -448,7 +448,7 @@ export default {
 
         if (json.statusCode === 200) {
           this.Categories = this.Categories.filter(
-            (item) => item.categoryID !== categoryID
+            (item) => item.category_id !== categoryID
           );
           this.getProductCategory();
           this.showPopup(this.$t("validation.DelateSucc"));

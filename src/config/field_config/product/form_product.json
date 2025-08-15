@@ -1,13 +1,13 @@
 [
   {
-    "key": "categoryID",
+    "key": "category_id",
     "label": "productCategory",
     "componentType": "Dropdown",
     "required": true,
     "optionsKey": "categoryOptions"
   },
   {
-    "key": "productname",
+    "key": "product_name",
     "labelDynamic": true, 
     "componentType": "TextField",
     "type": "text",

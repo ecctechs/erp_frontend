@@ -697,7 +697,7 @@ summaryFields() {
     },
     getProductName(product_id) {
       const product = this.Products.find((p) => p.product_id === product_id);
-      return product ? product.productname : "Unknown";
+      return product ? product.product_name : "Unknown";
     },
     showPopup_error(message) {
       this.popupMessage_error = message;
@@ -836,7 +836,7 @@ summaryFields() {
           price = this.formatDecimal(
             parseFloat(selectedProduct.price.toFixed(2))
           );
-          productName = selectedProduct.productname; // ดึงค่าจาก selectedProduct
+          productName = selectedProduct.product_name; // ดึงค่าจาก selectedProduct
         }
 
         const salePrice = detail.sale_qty * parseFloat(price.replace(/,/g, ""));
@@ -1140,7 +1140,7 @@ summaryFields() {
         return [
           index + 1,
           product && product.productImg ? product.productImg : "---", // ดึงรูปภาพสินค้าถ้ามี
-          product.productname +
+          product.product_name +
             (form.product_detail ? "\n" + form.product_detail : ""),
           form.sale_qty,
           this.formatDecimal(product ? product.price : ""),
@@ -1682,15 +1682,15 @@ summaryFields() {
           this.Products = json.data.map((item) => {
             return {
               product_id: item.product_id,
-              Category: item.product_category.categoryName,
-              productname: item.productname,
+              Category: item.product_category.category_name,
+              product_name: item.product_name,
               Detail: item.productdetail,
               price: item.price,
               Cost: item.productcost,
               Amount: item.amount,
               productImg: item.productImg,
               product_type_id: item.product_type_id,
-              categoryID: item.categoryID,
+              category_id: item.category_id,
             };
           });
         } else {

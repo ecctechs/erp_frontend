@@ -265,11 +265,6 @@ export default {
   data() {
     return {
       fieldConfig: formConfig,
-      // productFieldConfig: {
-      //   keys: ['categoryID', 'productname', 'productdetail', 'price', 'amount'],
-      //   components: ['dropdown', 'text', 'text', 'price', 'number'],
-      //   required: [true, true, false, true, false]
-      // },
       dropDownStatus: "",
       errorMessages: [],
       isPopupVisible_error: false,
@@ -295,20 +290,20 @@ export default {
       errorMessage: "",
       formData: {
         product_type_id: "",
-        productname: "",
+        product_name: "",
         productdetail: "",
         amount: "",
         price: "",
         productcost: "0",
-        categoryID: "",
+        category_id: "",
         product_id: "",
         productImg: "",
         status: "active",
       },
       isEmpty: {
         product_type_id: false,
-        categoryID: false,
-        productname: false,
+        category_id: false,
+        product_name: false,
         price: false,
         productcost: false,
         amount: false,
@@ -320,8 +315,8 @@ export default {
     categoryOptions() {
       if (!this.Categories) return [];
       return this.Categories.map((cat) => ({
-        value: cat.categoryID,
-        text: cat.categoryName,
+        value: cat.category_id,
+        text: cat.category_name,
       }));
     },
     statusOptions() {
@@ -379,7 +374,7 @@ export default {
 
       if (this.searchQuery.trim()) {
         filteredProduct = filteredProduct.filter((prod) =>
-          prod["productname"]
+          prod["product_name"]
             .toLowerCase()
             .includes(this.searchQuery.toLowerCase())
         );
@@ -503,11 +498,11 @@ export default {
         // ตรวจสอบชื่อซ้ำ (เหมือนเดิม)
         const isDuplicateName = this.currentTableData.some(
           (item) => 
-            item.productname.trim() === this.formData.productname.trim() && 
+            item.product_name.trim() === this.formData.product_name.trim() && 
             item.ID !== this.formData.product_id
         );
-        if (this.formData.productname && isDuplicateName) {
-          this.isEmpty.productname = true;
+        if (this.formData.product_name && isDuplicateName) {
+          this.isEmpty.product_name = true;
           this.errorMessages.push(this.$t("validation.duplicateProductName"));
         }
 
@@ -569,19 +564,19 @@ export default {
       const getCurrentStatus = this.formData.status;
       (this.formData = {
         product_type_id: "",
-        productname: "",
+        product_name: "",
         productdetail: "",
         amount: "",
         price: "",
         productcost: "",
-        categoryID: "",
+        category_id: "",
         product_id: "",
         productImg: "",
         status: "",
       }),
         (this.isEmpty.product_type_id = false);
-      this.isEmpty.categoryID = false;
-      this.isEmpty.productname = false;
+      this.isEmpty.category_id = false;
+      this.isEmpty.product_name = false;
       this.isEmpty.price = false;
       this.isEmpty.productcost = false;
       this.isEmpty.amount = false;
@@ -603,12 +598,12 @@ export default {
       const getCurrentStatus = this.formData.status;
       this.formData = {
         product_type_id: item.product_type_id,
-        productname: item.productname,
+        product_name: item.product_name,
         productdetail: item.productdetail,
         amount: item.amount,
         price: parseFloat(item.price.replace(/,/g, "")),
         productcost: parseFloat(item.productcost.replace(/,/g, "")),
-        categoryID: item.categoryID,
+        category_id: item.category_id,
         product_id: item.ID,
         productImg: item.productImg,
         status: item.status,
@@ -686,7 +681,7 @@ export default {
         if (this.selectedType === "A") {
           columnMap = {
             Category: "หมวดหมู่",
-            productname: "รายการสินค้า",
+            product_name: "รายการสินค้า",
             productdetail: "รายละเอียด",
             price: "ราคาขาย",
             productImg: "รูปภาพ",
@@ -695,7 +690,7 @@ export default {
         } else {
           columnMap = {
             Category: "หมวดหมู่",
-            productname: "รายการสินค้า",
+            product_name: "รายการสินค้า",
             productdetail: "รายละเอียด",
             price: "ราคาขาย",
             productImg: "รูปภาพ",
@@ -773,8 +768,8 @@ export default {
             .map((item) => {
               let product = {
                 ID: item.product_id,
-                Category: item.product_category.categoryName,
-                productname: item.productname,
+                Category: item.product_category.category_name,
+                product_name: item.product_name,
                 productdetail: item.productdetail,
                 price: parseFloat(item.price.toFixed(2)).toLocaleString(
                   "en-US",
@@ -789,7 +784,7 @@ export default {
                 }),
                 productImg: item.productImg,
                 product_type_id: item.product_type_id,
-                categoryID: item.categoryID,
+                category_id: item.category_id,
                 status: item.Status,
               };
               if (this.selectedType === "A") {
@@ -831,14 +826,14 @@ export default {
             .map((item) => {
               let product = {
                 ID: item.product_id,
-                Category: item.product_category.categoryName,
-                productname: item.productname,
+                Category: item.product_category.category_name,
+                product_name: item.product_name,
                 productdetail: item.productdetail,
                 price: item.price,
                 productcost: item.productcost,
                 productImg: item.productImg,
                 product_type_id: item.product_type_id,
-                categoryID: item.categoryID,
+                category_id: item.category_id,
                 status: item.Status,
               };
               if (this.selectedType === "A") {
@@ -893,8 +888,8 @@ export default {
         if (json.statusCode === 200) {
           const categories = [...json.data];
           categories.sort((a, b) => {
-            const nameA = a.categoryName.toLowerCase();
-            const nameB = b.categoryName.toLowerCase();
+            const nameA = a.category_name.toLowerCase();
+            const nameB = b.category_name.toLowerCase();
             if (nameA === "ไม่มีหมวดหมู่") return 1;
             if (nameB === "ไม่มีหมวดหมู่") return -1;
             if (nameA === "อื่น") return 1;
@@ -904,10 +899,10 @@ export default {
           this.Categories = categories;
           if (this.isAddingMode) {
             const noCategory = this.Categories.find(
-              (c) => c.categoryName === "ไม่มีหมวดหมู่"
+              (c) => c.category_name === "ไม่มีหมวดหมู่"
             );
             if (noCategory) {
-              this.formData.categoryID = noCategory.categoryID;
+              this.formData.category_id = noCategory.category_id;
             }
           }
         } else {
@@ -991,7 +986,7 @@ export default {
       const formDataImage = new FormData();
       formDataImage.append("file", this.Image_pd);
       formDataImage.append("product_type_id", this.formData.product_type_id);
-      formDataImage.append("productname", this.formData.productname.trim());
+      formDataImage.append("product_name", this.formData.product_name.trim());
       formDataImage.append("productdetail", this.formData.productdetail);
       formDataImage.append("amount", this.formData.amount || 0);
       formDataImage.append("price", parseFloat(this.formData.price) || 0);
@@ -999,19 +994,19 @@ export default {
         "productcost",
         parseFloat(this.formData.productcost) || 0
       );
-      formDataImage.append("categoryID", this.formData.categoryID);
+      formDataImage.append("category_id", this.formData.category_id);
       formDataImage.append("Status", this.formData.status);
       return formDataImage;
     },
     clearFormData() {
       this.formData = {
         product_type_id: "1",
-        productname: "",
+        product_name: "",
         productdetail: "",
         amount: 0,
         price: 0,
         productcost: 0,
-        categoryID: "",
+        category_id: "",
         status: "",
       };
       this.Image_pd = null;
@@ -1019,12 +1014,12 @@ export default {
     resetFormData() {
       this.formData = {
         product_type_id: "",
-        productname: "",
+        product_name: "",
         productdetail: "",
         amount: "",
         price: "",
         productcost: "",
-        categoryID: "",
+        category_id: "",
         productImg: "",
       };
       this.exp_files = [];

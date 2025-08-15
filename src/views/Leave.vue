@@ -1350,7 +1350,6 @@ export default {
         errorMessages2.push(this.$t("validation.employeeID"));
       }
 
-      // ตรวจสอบฟิลด์ categoryID
       if (this.formDataLeave.detail === "") {
         this.isEmpty.detail = true;
         errorMessages2.push(this.$t("validation.detail"));
@@ -1422,14 +1421,11 @@ export default {
         this.isEmpty.title = true;
         errorMessages.push(this.$t("validation.title"));
       }
-
-      // ตรวจสอบฟิลด์ categoryID
       if (this.formData.first_name === "") {
         this.isEmpty.first_name = true;
         errorMessages.push(this.$t("validation.F_name"));
       }
 
-      // ตรวจสอบฟิลด์ productname
       if (this.formData.last_name === "") {
         this.isEmpty.last_name = true;
         errorMessages.push(this.$t("validation.L_name"));
