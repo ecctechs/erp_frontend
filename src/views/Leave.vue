@@ -1090,7 +1090,7 @@ export default {
         if (json.statusCode === 200) {
           console.log("-----", json.data);
           this.employees = json.data
-            .filter((item) => item.Status === "active") // กรอง status active เท่านั้น
+            .filter((item) => item.employee_status === "active") // กรอง status active เท่านั้น
             .map((item) => {
               let departments = item.department
                 ? [item.department.departmentName]
@@ -1137,7 +1137,7 @@ export default {
                 Position: positions.join(", "),
                 departmentID: item.departmentID,
                 PositionID: item.PositionID,
-                status: item.Status,
+                status: item.employee_status,
               };
               return initialTableData;
             });

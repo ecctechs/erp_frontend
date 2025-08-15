@@ -1109,7 +1109,7 @@ export default {
               email: item.email,
               Department: item.department,
               position: item.position,
-              Status: item.Status,
+              Status: item.employee_status,
             };
             return initialTableData;
           });

@@ -1045,7 +1045,7 @@ export default {
               Position: positions.join(", "),
               departmentID: item.departmentID,
               PositionID: item.PositionID,
-              status: item.Status,
+              status: item.employee_status,
             };
             return initialTableData;
           });
