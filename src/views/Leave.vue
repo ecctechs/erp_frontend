@@ -416,7 +416,7 @@ export default {
         salary: "",
         employee_type: "",
         bank_name: "",
-        bankAccountID: "",
+        bank_account_id: "",
         positions: "",
         status: "active",
       },
@@ -436,7 +436,7 @@ export default {
         salary: "",
         employee_type: "",
         bank_name: "",
-        bankAccountID: "",
+        bank_account_id: "",
         positions: "",
         status: "active",
       },
@@ -878,7 +878,7 @@ export default {
         salary: "",
         employee_type: "",
         bank_name: "",
-        bankAccountID: "",
+        bank_account_id: "",
         positions: "",
         status: "",
       };
@@ -897,7 +897,7 @@ export default {
       this.isEmpty.salary = false;
       this.isEmpty.employee_type = false;
       this.isEmpty.bank_name = false;
-      this.isEmpty.bankAccountID = false;
+      this.isEmpty.bank_account_id = false;
 
       this.formData.status = "active";
       this.inputError = false;
@@ -993,7 +993,7 @@ export default {
         salary: item.salary,
         employee_type: item["Emp. type"],
         bank_name: item["Bank Name"],
-        bankAccountID: item["Bank Account ID"],
+        bank_account_id: item["Bank Account ID"],
         departments: departments.join(", "),
         positions: positions.join(", "),
         status: item.status,
@@ -1132,7 +1132,7 @@ export default {
                 salary: formatSalary(item.salary),
                 "Emp. type": item.employee_type,
                 "Bank Name": item.bank_name,
-                "Bank Account ID": item.bankAccountID,
+                "Bank Account ID": item.bank_account_id,
                 Department: departments.join(", "),
                 Position: positions.join(", "),
                 departmentID: item.departmentID,
@@ -1412,7 +1412,7 @@ export default {
       this.isEmpty.salary = false;
       this.isEmpty.employee_type = false;
       this.isEmpty.bank_name = false;
-      this.isEmpty.bankAccountID = false;
+      this.isEmpty.bank_account_id = false;
 
       // ตรวจสอบแต่ละฟิลด์ว่ามีค่าว่างหรือไม่
       let errorMessages = []; // กำหนดค่าเริ่มต้นว่าฟอร์มถูกต้อง
@@ -1518,22 +1518,22 @@ export default {
         errorMessages.push(this.$t("validation.bankName"));
       }
 
-      if (this.formData.bankAccountID === "") {
-        this.isEmpty.bankAccountID = true;
+      if (this.formData.bank_account_id === "") {
+        this.isEmpty.bank_account_id = true;
         errorMessages.push(this.$t("validation.bankAccountID"));
-      } else if (this.formData.bankAccountID.length < 10) {
-        this.isEmpty.bankAccountID = true;
+      } else if (this.formData.bank_account_id.length < 10) {
+        this.isEmpty.bank_account_id = true;
         errorMessages.push(this.$t("validation.bankAccountID_length"));
       }
 
       const isDuplicateBankAcc = this.employees.some(
         (item) =>
           item["Bank Account ID"].trim() ===
-            this.formData.bankAccountID.trim() &&
+            this.formData.bank_account_id.trim() &&
           item.ID !== this.formData.employee_id // ตรวจสอบว่าข้อมูลไม่ได้เป็นตัวเอง
       );
       if (isDuplicateBankAcc) {
-        this.isEmpty.bankAccountID = true;
+        this.isEmpty.bank_account_id = true;
         errorMessages.push(this.$t("validation.duplicateBankAcc"));
       }
 
@@ -1586,7 +1586,7 @@ export default {
             salary: this.formData.salary,
             employee_type: this.formData.employee_type,
             bank_name: this.formData.bank_name,
-            bankAccountID: this.formData.bankAccountID,
+            bank_account_id: this.formData.bank_account_id,
           }),
         });
         const json = await response.json();
@@ -1612,7 +1612,7 @@ export default {
             salary: "",
             employee_type: "",
             bank_name: "",
-            bankAccountID: "",
+            bank_account_id: "",
             status: "",
           };
         } else {
@@ -1827,7 +1827,7 @@ export default {
               salary: parseSalary(this.formData.salary),
               employee_type: this.formData.employee_type,
               bank_name: this.formData.bank_name,
-              bankAccountID: this.formData.bankAccountID,
+              bank_account_id: this.formData.bank_account_id,
             }),
           }
         );

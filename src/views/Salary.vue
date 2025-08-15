@@ -1185,7 +1185,7 @@ export default {
               Email: item.email,
               Salary: formatSalary(item.salary),
               "Bank Name": item.bank_name,
-              "Bank Account ID": item.bankAccountID,
+              "Bank Account ID": item.bank_account_id,
               Department: item.department,
               Position: item.position,
             };

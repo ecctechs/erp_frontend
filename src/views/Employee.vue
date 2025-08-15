@@ -347,7 +347,7 @@ export default {
         salary: "",
         employee_type: "",
         bank_name: "",
-        bankAccountID: "",
+        bank_account_id: "",
         positions: "",
         status: "active",
       },
@@ -367,7 +367,7 @@ export default {
         salary: false,
         employee_type: false,
         bank_name: false,
-        bankAccountID: false,
+        bank_account_id: false,
         positions: false,
         status: "active",
       },
@@ -753,7 +753,7 @@ export default {
         salary: "",
         employee_type: "",
         bank_name: "",
-        bankAccountID: "",
+        bank_account_id: "",
         positions: "",
         status: "",
       };
@@ -772,7 +772,7 @@ export default {
         salary: false,
         employee_type: false,
         bank_name: false,
-        bankAccountID: false,
+        bank_account_id: false,
       };
       this.formData.status = "active";
       this.inputError = false;
@@ -858,7 +858,7 @@ export default {
         salary: item.salary,
         employee_type: item["Emp. type"],
         bank_name: item["Bank Name"],
-        bankAccountID: item["Bank Account ID"],
+        bank_account_id: item["Bank Account ID"],
         departments: departments.join(", "),
         positions: positions.join(", "),
         status: item.status,
@@ -1040,7 +1040,7 @@ export default {
               salary: formatSalary(item.salary),
               "Emp. type": item.employee_type,
               "Bank Name": item.bank_name,
-              "Bank Account ID": item.bankAccountID,
+              "Bank Account ID": item.bank_account_id,
               Department: departments.join(", "),
               Position: positions.join(", "),
               departmentID: item.departmentID,
@@ -1285,7 +1285,7 @@ export default {
         salary: false,
         employee_type: false,
         bank_name: false,
-        bankAccountID: false,
+        bank_account_id: false,
       };
       let errorMessages = [];
       if (this.formData.title === "") {
@@ -1413,7 +1413,7 @@ export default {
             salary: this.formData.salary,
             employee_type: this.formData.employee_type,
             bank_name: this.formData.bank_name,
-            bankAccountID: this.formData.bankAccountID,
+            bank_account_id: this.formData.bank_account_id,
           }),
         });
         const json = await response.json();
@@ -1439,7 +1439,7 @@ export default {
             salary: "",
             employee_type: "",
             bank_name: "",
-            bankAccountID: "",
+            bank_account_id: "",
             status: "",
           };
         } else {
@@ -1628,7 +1628,7 @@ export default {
               salary: parseSalary(this.formData.salary),
               employee_type: this.formData.employee_type,
               bank_name: this.formData.bank_name,
-              bankAccountID: this.formData.bankAccountID,
+              bank_account_id: this.formData.bank_account_id,
             }),
           }
         );

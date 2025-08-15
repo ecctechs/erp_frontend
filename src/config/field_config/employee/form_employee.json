@@ -16,5 +16,5 @@
   { "key": "start_working_date", "label": "startWorking", "componentType": "DatePicker", "required": true },
   { "key": "HEADING_3", "label": "headerAboutBank", "componentType": "heading" },
   { "key": "bank_name", "label": "bankname", "componentType": "TextField", "type": "text", "required": false },
-  { "key": "bankAccountID", "label": "bankaccount", "componentType": "TextField", "type": "tel", "required": false, "maxlength": 15, "isNumeric": true }
+  { "key": "bank_account_id", "label": "bankaccount", "componentType": "TextField", "type": "tel", "required": false, "maxlength": 15, "isNumeric": true }
 ]
