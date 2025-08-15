@@ -194,12 +194,12 @@ export default {
       },
       formPosition: {
         // Form data for position
-        PositionID: "",
+        position_id: "",
         position_name: "",
       },
       isEmpty: {
         // Form data for position
-        PositionID: false,
+        position_id: false,
         position_name: false,
       },
     };
@@ -302,7 +302,7 @@ export default {
       this.isAddPositionPopupOpen = false;
       this.formPosition = {
         // Reset form data
-        PositionID: "",
+        position_id: "",
         position_name: "",
       };
       this.inputError = false; // Reset validation errors
@@ -330,14 +330,14 @@ export default {
       this.isEditMode = true; // Enable edit mode
       this.formPosition = {
         // Fill form with selected data
-        PositionID: item.ID,
+        position_id: item.ID,
         position_name: item.position_name,
       };
     },
     // Opens the delete confirmation popup for position
     handleDeletePosition(item) {
       this.isDeleteConfirmPopupOpen = true;
-      this.formPosition = { PositionID: item.ID }; // Store position ID for deletion
+      this.formPosition = { position_id: item.ID }; // Store position ID for deletion
     },
     // Displays a success popup message
     showPopup(message) {
@@ -498,7 +498,7 @@ export default {
         if (json.statusCode === 200) {
           // Map response to table format
           this.Positions = json.data.map((item) => ({
-            ID: item.PositionID,
+            ID: item.position_id,
             position_name: item.position_name,
           }));
         } else {
@@ -549,7 +549,7 @@ export default {
       } else {
         this.inputError = false;
         this.isLoading = true;
-        const PositionID = this.formPosition.PositionID;
+        const PositionID = this.formPosition.position_id;
         try {
           const response = await fetch(
             `${API_CALL}/employee/EditPosition/${PositionID}`,
@@ -583,7 +583,7 @@ export default {
     async deletePosition() {
       const accessToken = localStorage.getItem("@accessToken");
       this.isLoading = true;
-      const PositionID = this.formPosition.PositionID;
+      const PositionID = this.formPosition.position_id;
       try {
         const response = await fetch(
           `${API_CALL}/employee/DeletePosition/${PositionID}`,

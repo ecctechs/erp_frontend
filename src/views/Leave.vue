@@ -411,7 +411,7 @@ export default {
         phone_number: "",
         email: "",
         departmentID: "",
-        PositionID: "",
+        position_id: "",
         start_working_date: "",
         salary: "",
         employee_type: "",
@@ -431,7 +431,7 @@ export default {
         phone_number: "",
         email: "",
         departmentID: "",
-        PositionID: "",
+        position_id: "",
         start_working_date: "",
         salary: "",
         employee_type: "",
@@ -873,7 +873,7 @@ export default {
         phone_number: "",
         email: "",
         departmentID: "",
-        PositionID: "",
+        position_id: "",
         start_working_date: "",
         salary: "",
         employee_type: "",
@@ -892,7 +892,7 @@ export default {
       this.isEmpty.phone_number = false;
       this.isEmpty.email = false;
       this.isEmpty.departmentID = false;
-      this.isEmpty.PositionID = false;
+      this.isEmpty.position_id = false;
       this.isEmpty.start_working_date = false;
       this.isEmpty.salary = false;
       this.isEmpty.employee_type = false;
@@ -985,7 +985,7 @@ export default {
         phone_number: item["Tel."],
         email: item.email,
         departmentID: item.departmentID,
-        PositionID: item.PositionID,
+        position_id: item.position_id,
         // start_working_date: formattedStartWorking,
         start_working_date: formatDateForPicker(
           filteredEmp[0]["Start Working Date"]
@@ -1136,7 +1136,7 @@ export default {
                 Department: departments.join(", "),
                 position_name: positions.join(", "),
                 departmentID: item.departmentID,
-                PositionID: item.PositionID,
+                position_id: item.position_id,
                 status: item.employee_status,
               };
               return initialTableData;
@@ -1407,7 +1407,7 @@ export default {
       this.isEmpty.phone_number = false;
       this.isEmpty.email = false;
       this.isEmpty.departmentID = false;
-      this.isEmpty.PositionID = false;
+      this.isEmpty.position_id = false;
       this.isEmpty.start_working_date = false;
       this.isEmpty.salary = false;
       this.isEmpty.employee_type = false;
@@ -1493,8 +1493,8 @@ export default {
         errorMessages.push(this.$t("validation.departmentID"));
       }
 
-      if (this.formData.PositionID === "") {
-        this.isEmpty.PositionID = true;
+      if (this.formData.position_id === "") {
+        this.isEmpty.position_id = true;
         errorMessages.push(this.$t("validation.PositionID"));
       }
 
@@ -1581,7 +1581,7 @@ export default {
             phone_number: this.formData.phone_number,
             email: this.formData.email,
             departmentID: this.formData.departmentID,
-            PositionID: this.formData.PositionID,
+            position_id: this.formData.position_id,
             start_working_date: this.formData.start_working_date,
             salary: this.formData.salary,
             employee_type: this.formData.employee_type,
@@ -1607,7 +1607,7 @@ export default {
             phone_number: "",
             email: "",
             departmentID: "",
-            PositionID: "",
+            position_id: "",
             start_working_date: "",
             salary: "",
             employee_type: "",
@@ -1822,7 +1822,7 @@ export default {
               phone_number: this.formData.phone_number,
               email: this.formData.email,
               departmentID: this.formData.departmentID,
-              PositionID: this.formData.PositionID,
+              position_id: this.formData.position_id,
               start_working_date: this.formData.start_working_date,
               salary: parseSalary(this.formData.salary),
               employee_type: this.formData.employee_type,

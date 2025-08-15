@@ -467,7 +467,7 @@ export default {
           this.Positions = json.data;
 
           this.totalPosition = this.Positions.filter(
-            (item) => item.PositionID != null
+            (item) => item.position_id != null
           ).length;
           this.filterEmployees();
         } else {
