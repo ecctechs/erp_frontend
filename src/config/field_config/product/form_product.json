@@ -14,7 +14,7 @@
     "required": true
   },
   {
-    "key": "productdetail",
+    "key": "product_detail",
     "label": "productDetail",
     "componentType": "TextField",
     "type": "text"

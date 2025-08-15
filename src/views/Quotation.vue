@@ -1962,10 +1962,10 @@ export default {
         formData.append("file", product.file || ""); // ไฟล์ถ้ามี
         formData.append("product_type_id", 1);
         formData.append("product_name", product.productName);
-        formData.append("productdetail", product.product_detail);
+        formData.append("product_detail", product.product_detail);
         formData.append("amount", 0);
         formData.append("price", parseInt(product.price));
-        formData.append("productcost", 0);
+        formData.append("product_cost", 0);
         formData.append("category_id", cate_id);
         formData.append("Status", "active");
         return formData;
@@ -2716,9 +2716,9 @@ export default {
               product_id: item.product_id,
               Category: item.product_category?.category_name || "N/A",
               product_name: item.product_name,
-              Detail: item.productdetail,
+              Detail: item.product_detail,
               price: item.price,
-              Cost: item.productcost,
+              Cost: item.product_cost,
               Amount: item.amount,
               productImg: item.productImg,
               product_type_id: item.product_type_id,

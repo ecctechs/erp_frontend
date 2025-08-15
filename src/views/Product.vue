@@ -291,10 +291,10 @@ export default {
       formData: {
         product_type_id: "",
         product_name: "",
-        productdetail: "",
+        product_detail: "",
         amount: "",
         price: "",
-        productcost: "0",
+        product_cost: "0",
         category_id: "",
         product_id: "",
         productImg: "",
@@ -305,7 +305,7 @@ export default {
         category_id: false,
         product_name: false,
         price: false,
-        productcost: false,
+        product_cost: false,
         amount: false,
       },
       searchQuery: "",
@@ -337,12 +337,12 @@ export default {
     },
     formattedCost: {
       get() {
-        return this.formData.productcost
-          ? new Intl.NumberFormat("en-US").format(this.formData.productcost)
+        return this.formData.product_cost
+          ? new Intl.NumberFormat("en-US").format(this.formData.product_cost)
           : "";
       },
       set(value) {
-        this.formData.productcost = Number(value.replace(/,/g, ""));
+        this.formData.product_cost = Number(value.replace(/,/g, ""));
       },
     },
     tableHeaders() {
@@ -466,9 +466,9 @@ export default {
         this.formData.price = 0;
       }
     },
-    "formData.productcost": function (newVal) {
+    "formData.product_cost": function (newVal) {
       if (newVal < 0) {
-        this.formData.productcost = 0;
+        this.formData.product_cost = 0;
       }
     },
   },
@@ -528,7 +528,7 @@ export default {
     },
     updateCost(event) {
       const rawValue = event.target.value.replace(/,/g, "");
-      this.formData.productcost = Number(rawValue);
+      this.formData.product_cost = Number(rawValue);
     },
     displayProductType(name) {
       if (this.t("headerLang") === "TH") {
@@ -565,10 +565,10 @@ export default {
       (this.formData = {
         product_type_id: "",
         product_name: "",
-        productdetail: "",
+        product_detail: "",
         amount: "",
         price: "",
-        productcost: "",
+        product_cost: "",
         category_id: "",
         product_id: "",
         productImg: "",
@@ -578,7 +578,7 @@ export default {
       this.isEmpty.category_id = false;
       this.isEmpty.product_name = false;
       this.isEmpty.price = false;
-      this.isEmpty.productcost = false;
+      this.isEmpty.product_cost = false;
       this.isEmpty.amount = false;
       this.isEmpty.productImg = false;
 
@@ -599,10 +599,10 @@ export default {
       this.formData = {
         product_type_id: item.product_type_id,
         product_name: item.product_name,
-        productdetail: item.productdetail,
+        product_detail: item.product_detail,
         amount: item.amount,
         price: parseFloat(item.price.replace(/,/g, "")),
-        productcost: parseFloat(item.productcost.replace(/,/g, "")),
+        product_cost: parseFloat(item.product_cost.replace(/,/g, "")),
         category_id: item.category_id,
         product_id: item.ID,
         productImg: item.productImg,
@@ -682,7 +682,7 @@ export default {
           columnMap = {
             Category: "หมวดหมู่",
             product_name: "รายการสินค้า",
-            productdetail: "รายละเอียด",
+            product_detail: "รายละเอียด",
             price: "ราคาขาย",
             productImg: "รูปภาพ",
             amount: "จำนวนสินค้าในคลัง",
@@ -691,7 +691,7 @@ export default {
           columnMap = {
             Category: "หมวดหมู่",
             product_name: "รายการสินค้า",
-            productdetail: "รายละเอียด",
+            product_detail: "รายละเอียด",
             price: "ราคาขาย",
             productImg: "รูปภาพ",
           };
@@ -770,15 +770,15 @@ export default {
                 ID: item.product_id,
                 Category: item.product_category.category_name,
                 product_name: item.product_name,
-                productdetail: item.productdetail,
+                product_detail: item.product_detail,
                 price: parseFloat(item.price.toFixed(2)).toLocaleString(
                   "en-US",
                   {
                     minimumFractionDigits: 2,
                   }
                 ),
-                productcost: parseFloat(
-                  item.productcost.toFixed(2)
+                product_cost: parseFloat(
+                  item.product_cost.toFixed(2)
                 ).toLocaleString("en-US", {
                   minimumFractionDigits: 2,
                 }),
@@ -828,9 +828,9 @@ export default {
                 ID: item.product_id,
                 Category: item.product_category.category_name,
                 product_name: item.product_name,
-                productdetail: item.productdetail,
+                product_detail: item.product_detail,
                 price: item.price,
-                productcost: item.productcost,
+                product_cost: item.product_cost,
                 productImg: item.productImg,
                 product_type_id: item.product_type_id,
                 category_id: item.category_id,
@@ -987,12 +987,12 @@ export default {
       formDataImage.append("file", this.Image_pd);
       formDataImage.append("product_type_id", this.formData.product_type_id);
       formDataImage.append("product_name", this.formData.product_name.trim());
-      formDataImage.append("productdetail", this.formData.productdetail);
+      formDataImage.append("product_detail", this.formData.product_detail);
       formDataImage.append("amount", this.formData.amount || 0);
       formDataImage.append("price", parseFloat(this.formData.price) || 0);
       formDataImage.append(
-        "productcost",
-        parseFloat(this.formData.productcost) || 0
+        "product_cost",
+        parseFloat(this.formData.product_cost) || 0
       );
       formDataImage.append("category_id", this.formData.category_id);
       formDataImage.append("Status", this.formData.status);
@@ -1002,10 +1002,10 @@ export default {
       this.formData = {
         product_type_id: "1",
         product_name: "",
-        productdetail: "",
+        product_detail: "",
         amount: 0,
         price: 0,
-        productcost: 0,
+        product_cost: 0,
         category_id: "",
         status: "",
       };
@@ -1015,10 +1015,10 @@ export default {
       this.formData = {
         product_type_id: "",
         product_name: "",
-        productdetail: "",
+        product_detail: "",
         amount: "",
         price: "",
-        productcost: "",
+        product_cost: "",
         category_id: "",
         productImg: "",
       };

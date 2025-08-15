@@ -1437,7 +1437,6 @@ export default {
         errorMessages.push(this.$t("validation.Address"));
       }
 
-      // ตรวจสอบฟิลด์ productcost
       if (this.formData.birth_date === "") {
         this.isEmpty.birth_date = true;
         errorMessages.push(this.$t("validation.Birthdate"));
