@@ -1417,7 +1417,7 @@ export default {
       // ตรวจสอบแต่ละฟิลด์ว่ามีค่าว่างหรือไม่
       let errorMessages = []; // กำหนดค่าเริ่มต้นว่าฟอร์มถูกต้อง
 
-      // ตรวจสอบฟิลด์ productTypeID
+      // ตรวจสอบฟิลด์ product_type_id
       if (this.formData.title === "") {
         this.isEmpty.title = true;
         errorMessages.push(this.$t("validation.title"));

@@ -1689,7 +1689,7 @@ summaryFields() {
               Cost: item.productcost,
               Amount: item.amount,
               productImg: item.productImg,
-              productTypeID: item.productTypeID,
+              product_type_id: item.product_type_id,
               categoryID: item.categoryID,
             };
           });

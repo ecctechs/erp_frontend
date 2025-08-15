@@ -98,7 +98,7 @@
   </div>
 
   <div v-for="field in fieldConfig" :key="field.key">
-    <div v-if="!field.condition || (field.condition === 'isProduct' && formData.productTypeID === 1)" class="mb-3 div-for-formControl">
+    <div v-if="!field.condition || (field.condition === 'isProduct' && formData.product_type_id === 1)" class="mb-3 div-for-formControl">
       <label class="col-sm-3 col-md-6">
         <span v-if="field.required" style="color: red">*</span>
         <span v-if="field.labelDynamic">
@@ -294,7 +294,7 @@ export default {
       approveMessage: "",
       errorMessage: "",
       formData: {
-        productTypeID: "",
+        product_type_id: "",
         productname: "",
         productdetail: "",
         amount: "",
@@ -306,7 +306,7 @@ export default {
         status: "active",
       },
       isEmpty: {
-        productTypeID: false,
+        product_type_id: false,
         categoryID: false,
         productname: false,
         price: false,
@@ -492,7 +492,7 @@ export default {
           // ตรวจสอบฟิลด์ที่จำเป็น (required)
           if (field.required && (!value || value === 0)) {
             // เงื่อนไขพิเศษ: ไม่ต้อง validate 'amount' ถ้าเป็น Service
-            if (field.key === 'amount' && this.formData.productTypeID !== 1) {
+            if (field.key === 'amount' && this.formData.product_type_id !== 1) {
               continue; // ข้ามไป field ถัดไป
             }
             this.isEmpty[field.key] = true;
@@ -555,9 +555,9 @@ export default {
       this.getCategory();
       this.clearFormData();
       if (this.selectedType === "A") {
-        this.formData.productTypeID = "1";
+        this.formData.product_type_id = "1";
       } else {
-        this.formData.productTypeID = "2";
+        this.formData.product_type_id = "2";
       }
       this.Image_pd = [];
       this.exp_files = [];
@@ -568,7 +568,7 @@ export default {
       this.isEditMode = false;
       const getCurrentStatus = this.formData.status;
       (this.formData = {
-        productTypeID: "",
+        product_type_id: "",
         productname: "",
         productdetail: "",
         amount: "",
@@ -579,7 +579,7 @@ export default {
         productImg: "",
         status: "",
       }),
-        (this.isEmpty.productTypeID = false);
+        (this.isEmpty.product_type_id = false);
       this.isEmpty.categoryID = false;
       this.isEmpty.productname = false;
       this.isEmpty.price = false;
@@ -602,7 +602,7 @@ export default {
       this.isEditMode = true;
       const getCurrentStatus = this.formData.status;
       this.formData = {
-        productTypeID: item.productTypeID,
+        product_type_id: item.product_type_id,
         productname: item.productname,
         productdetail: item.productdetail,
         amount: item.amount,
@@ -764,9 +764,9 @@ export default {
           this.currentTableData = json.data
             .filter((item) => {
               if (this.selectedType === "A") {
-                return item.productTypeID === 1;
+                return item.product_type_id === 1;
               } else if (this.selectedType === "B") {
-                return item.productTypeID !== 1;
+                return item.product_type_id !== 1;
               }
               return false;
             })
@@ -788,7 +788,7 @@ export default {
                   minimumFractionDigits: 2,
                 }),
                 productImg: item.productImg,
-                productTypeID: item.productTypeID,
+                product_type_id: item.product_type_id,
                 categoryID: item.categoryID,
                 status: item.Status,
               };
@@ -818,9 +818,9 @@ export default {
           this.currentTableData = json.data
             .filter((item) => {
               if (this.selectedType === "A") {
-                return item.productTypeID === 1;
+                return item.product_type_id === 1;
               } else if (this.selectedType === "B") {
-                return item.productTypeID !== 1;
+                return item.product_type_id !== 1;
               }
               if (this.formData.status === "active") {
                 return (item.Status = "active");
@@ -837,7 +837,7 @@ export default {
                 price: item.price,
                 productcost: item.productcost,
                 productImg: item.productImg,
-                productTypeID: item.productTypeID,
+                product_type_id: item.product_type_id,
                 categoryID: item.categoryID,
                 status: item.Status,
               };
@@ -990,7 +990,7 @@ export default {
     createFormData() {
       const formDataImage = new FormData();
       formDataImage.append("file", this.Image_pd);
-      formDataImage.append("productTypeID", this.formData.productTypeID);
+      formDataImage.append("product_type_id", this.formData.product_type_id);
       formDataImage.append("productname", this.formData.productname.trim());
       formDataImage.append("productdetail", this.formData.productdetail);
       formDataImage.append("amount", this.formData.amount || 0);
@@ -1005,7 +1005,7 @@ export default {
     },
     clearFormData() {
       this.formData = {
-        productTypeID: "1",
+        product_type_id: "1",
         productname: "",
         productdetail: "",
         amount: 0,
@@ -1018,7 +1018,7 @@ export default {
     },
     resetFormData() {
       this.formData = {
-        productTypeID: "",
+        product_type_id: "",
         productname: "",
         productdetail: "",
         amount: "",

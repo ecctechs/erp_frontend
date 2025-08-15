@@ -1964,7 +1964,7 @@ export default {
       return productForms.map((product) => {
         const formData = new FormData();
         formData.append("file", product.file || ""); // ไฟล์ถ้ามี
-        formData.append("productTypeID", 1);
+        formData.append("product_type_id", 1);
         formData.append("productname", product.productName);
         formData.append("productdetail", product.product_detail);
         formData.append("amount", 0);
@@ -2727,7 +2727,7 @@ export default {
               Cost: item.productcost,
               Amount: item.amount,
               productImg: item.productImg,
-              productTypeID: item.productTypeID,
+              product_type_id: item.product_type_id,
               categoryID: item.categoryID,
               Status: item.Status,
             }));

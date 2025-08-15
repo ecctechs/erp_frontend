@@ -553,16 +553,13 @@ export default {
               Price: item.price,
               Cost: item.productcost,
               "Product Image": item.productImg,
-              productTypeID: item.productTypeID,
+              product_type_id: item.product_type_id,
               categoryID: item.categoryID,
               product_date: this.formatDateForPicker(Productdate),
-              productTypeName: item.product_type.productTypeName,
+              product_type_name: item.product_type.product_type_name,
               Amount: item.amount,
             };
-            console.log(item.product_type.productTypeName);
-            // if (this.selectedType === 'A') {
-            //     product.Amount = item.amount;
-            // }
+            console.log(item.product_type.product_type_name);
             return product;
           });
           this.filteredProductData = json.data.map((item) => {
@@ -582,13 +579,13 @@ export default {
               Price: item.price,
               Cost: item.productcost,
               "Product Image": item.productImg,
-              productTypeID: item.productTypeID,
+              product_type_id: item.product_type_id,
               categoryID: item.categoryID,
               product_date: this.formatDateForPicker(Productdate),
-              productTypeName: item.product_type.productTypeName,
+              product_type_name: item.product_type.product_type_name,
               Amount: item.amount,
             };
-            console.log(item.product_type.productTypeName);
+            console.log(item.product_type.product_type_name);
             // if (this.selectedType === 'A') {
             //     product.Amount = item.amount;
             // }

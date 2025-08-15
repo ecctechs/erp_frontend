@@ -779,13 +779,13 @@ export default {
               Price: item.price,
               Cost: item.productcost,
               "Product Image": item.productImg,
-              productTypeID: item.productTypeID,
+              product_type_id: item.product_type_id,
               categoryID: item.categoryID,
               product_date: ProductDate,
-              productTypeName: item.product_type.productTypeName,
+              product_type_name: item.product_type.product_type_name,
               Amount: item.amount,
             };
-            console.log(item.product_type.productTypeName);
+            console.log(item.product_type.product_type_name);
             return product;
           });
 
@@ -806,21 +806,21 @@ export default {
               Price: item.price,
               Cost: item.productcost,
               "Product Image": item.productImg,
-              productTypeID: item.productTypeID,
+              product_type_id: item.product_type_id,
               categoryID: item.categoryID,
               product_date: ProductDate,
-              productTypeName: item.product_type.productTypeName,
+              product_type_name: item.product_type.product_type_name,
               Amount: item.amount,
             };
-            console.log(item.product_type.productTypeName);
+            console.log(item.product_type.product_type_name);
             return product;
           });
 
           this.productTypeA = this.ProductFilter.filter(
-            (product) => product.productTypeID === 1
+            (product) => product.product_type_id === 1
           ).length;
           this.productTypeB = this.ProductFilter.filter(
-            (product) => product.productTypeID !== 1
+            (product) => product.product_type_id !== 1
           ).length;
 
           console.log("Product Type A count:", this.productTypeA);
@@ -1296,7 +1296,7 @@ export default {
 
       this.totalProductCost = this.filteredProductData.reduce(
         (sum, product) => {
-          if (product.productTypeID === 1) {
+          if (product.product_type_id === 1) {
             // ประเภทที่ 1: คูณ Cost กับ Amount
             return sum + product.Cost * (product.Amount || 1); // ถ้าไม่มี Amount จะใช้ค่า 1
           } else {
