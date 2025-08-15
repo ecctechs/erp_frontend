@@ -190,7 +190,7 @@ export default {
       formData: {
         // Form data for department
         department_id: "",
-        departmentName: "",
+        department_name: "",
       },
       formPosition: {
         // Form data for position
@@ -274,7 +274,7 @@ export default {
       this.formData = {
         // Reset form data
         department_id: "",
-        departmentName: "",
+        department_name: "",
       };
       this.inputError = false; // Reset validation errors
       this.isPopupVisible_error = false;
@@ -315,7 +315,7 @@ export default {
       this.formData = {
         // Fill form with selected data
         department_id: item.ID,
-        departmentName: item["Department Name"],
+        department_name: item["Department Name"],
       };
     },
     // Opens the delete confirmation popup for department
@@ -368,7 +368,7 @@ export default {
           // Map response to table format
           this.Departments = json.data.map((item) => ({
             ID: item.department_id,
-            "Department Name": item.departmentName,
+            "Department Name": item.department_name,
             Employee: item.sumEmployee,
           }));
         } else {
@@ -383,7 +383,7 @@ export default {
     // Adds a new department via API call
     async addDepartment() {
       const accessToken = localStorage.getItem("@accessToken");
-      if (this.formData.departmentName === "") {
+      if (this.formData.department_name === "") {
         this.inputError = true;
         this.showPopup_error("Please fill data");
       } else {
@@ -397,7 +397,7 @@ export default {
               Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-              departmentName: this.formData.departmentName,
+              department_name: this.formData.department_name,
             }),
           });
           const json = await response.json();
@@ -418,7 +418,7 @@ export default {
     // Edits an existing department via API call
     async editDepartment() {
       const accessToken = localStorage.getItem("@accessToken");
-      if (this.formData.departmentName === "") {
+      if (this.formData.department_name === "") {
         this.inputError = true;
         this.showPopup_error("Please fill data");
       } else {
@@ -435,7 +435,7 @@ export default {
                 Authorization: `Bearer ${accessToken}`,
               },
               body: JSON.stringify({
-                departmentName: this.formData.departmentName,
+                department_name: this.formData.department_name,
               }),
             }
           );

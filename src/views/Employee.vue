@@ -409,7 +409,7 @@ export default {
       if (!this.Departments) return [];
       return this.Departments.map((dep) => ({
         value: dep.department_id,
-        text: dep.departmentName,
+        text: dep.department_name,
       }));
     },
     positionOptions() {
@@ -809,7 +809,7 @@ export default {
     },
     handleEdit(item) {
       let departments = Array.isArray(item.department)
-        ? item.department.map((department) => department.departmentName)
+        ? item.department.map((department) => department.department_name)
         : [];
       let positions = Array.isArray(item.position)
         ? item.position.map((position) => position.position_name)
@@ -997,7 +997,7 @@ export default {
           console.log("-----", json.data);
           this.employees = json.data.map((item) => {
             let departments = item.department
-              ? [item.department.departmentName]
+              ? [item.department.department_name]
               : [];
             let positions = item.position ? [item.position.position_name] : [];
             const BD = new Date(item.birth_date);
@@ -1071,7 +1071,7 @@ export default {
           console.log("+++++", json.data);
           this.employeesSalaries = json.data.map((item) => {
             let departments = item.department
-              ? [item.department.departmentName]
+              ? [item.department.department_name]
               : [];
             let positions = item.position ? [item.position.position_name] : [];
             const BD = new Date(item.birth_date);

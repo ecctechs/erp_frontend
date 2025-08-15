@@ -41,9 +41,9 @@
 
       <div class="mb-3">
         <TextField
-          v-model="formData.departmentName"
+          v-model="formData.department_name"
           :label="t('departName')"
-          :error="isEmpty.departmentName"
+          :error="isEmpty.department_name"
           :required="true"
           id="input-text"
         />
@@ -180,11 +180,11 @@ export default {
       inputError: false,
       formData: {
         department_id: "",
-        departmentName: "",
+        department_name: "",
       },
       isEmpty: {
         department_id: false,
-        departmentName: false,
+        department_name: false,
       },
       formPosition: {
         position_id: "",
@@ -208,23 +208,23 @@ export default {
       this.isPopupVisible_error = false;
     },
     async validateFormData() {
-      this.isEmpty.departmentName = false;
+      this.isEmpty.department_name = false;
 
       const errorMessages = [];
 
-      if (this.formData.departmentName.trim() === "") {
-        this.isEmpty.departmentName = true;
+      if (this.formData.department_name.trim() === "") {
+        this.isEmpty.department_name = true;
         errorMessages.push(this.$t("validation.departmentName"));
       }
 
       const isDuplicateNDepartmentName = this.Departments.some(
         (item) =>
           item["Department Name"].trim() ===
-            this.formData.departmentName.trim() &&
+            this.formData.department_name.trim() &&
           item.ID !== this.formData.department_id
       );
       if (isDuplicateNDepartmentName) {
-        this.isEmpty.departmentName = true;
+        this.isEmpty.department_name = true;
         errorMessages.push(this.$t("validation.duplicateDepartmentName"));
       }
 
@@ -254,7 +254,7 @@ export default {
       this.isEditMode = false;
       this.formData = {
         department_id: "",
-        departmentName: "",
+        department_name: "",
       };
       this.inputError = false;
       this.isPopupVisible_error = false;
@@ -287,7 +287,7 @@ export default {
       this.isEditMode = true;
       this.formData = {
         department_id: item.ID,
-        departmentName: item["Department Name"],
+        department_name: item["Department Name"],
       };
     },
     handleDelete(item) {
@@ -332,7 +332,7 @@ export default {
         if (json.statusCode === 200) {
           this.Departments = json.data.map((item) => ({
             ID: item.department_id,
-            "Department Name": item.departmentName,
+            "Department Name": item.department_name,
             Employee: item.sumEmployee,
           }));
         } else {
@@ -356,7 +356,7 @@ export default {
             Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify({
-            departmentName: this.formData.departmentName,
+            department_name: this.formData.department_name,
           }),
         });
         const json = await response.json();
@@ -375,7 +375,7 @@ export default {
     },
     async editDepartment() {
       const accessToken = localStorage.getItem("@accessToken");
-      if (this.formData.departmentName === "") {
+      if (this.formData.department_name === "") {
         this.inputError = true;
         this.showPopup_error("Please fill data");
       } else {
@@ -392,7 +392,7 @@ export default {
                 Authorization: `Bearer ${accessToken}`,
               },
               body: JSON.stringify({
-                departmentName: this.formData.departmentName,
+                department_name: this.formData.department_name,
               }),
             }
           );

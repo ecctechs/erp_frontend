@@ -942,7 +942,7 @@ export default {
     },
     handleEdit(item) {
       let departments = Array.isArray(item.department)
-        ? item.department.map((department) => department.departmentName)
+        ? item.department.map((department) => department.department_name)
         : [];
       let positions = Array.isArray(item.position)
         ? item.position.map((position) => position.position_name)
@@ -1093,7 +1093,7 @@ export default {
             .filter((item) => item.employee_status === "active") // กรอง status active เท่านั้น
             .map((item) => {
               let departments = item.department
-                ? [item.department.departmentName]
+                ? [item.department.department_name]
                 : [];
               let positions = item.position ? [item.position.position_name] : [];
 
@@ -1168,7 +1168,7 @@ export default {
           console.log("+++++", json.data);
           this.employeesSalaries = json.data.map((item) => {
             let departments = item.department
-              ? [item.department.departmentName]
+              ? [item.department.department_name]
               : [];
             let positions = item.position ? [item.position.position_name] : [];
 

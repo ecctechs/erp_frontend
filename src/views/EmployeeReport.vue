@@ -85,7 +85,7 @@
               :value="department.department_id"
               :key="department.department_id"
             >
-              {{ department.departmentName }}
+              {{ department.department_name }}
             </option>
           </select>
         </div>
