@@ -1142,7 +1142,7 @@ export default {
               return initialTableData;
             });
           this.getLeave();
-          this.getOvertime();
+          // this.getOvertime();
         } else {
           console.log("Employee ", json);
           this.showPopup_error(json.data);
@@ -1921,7 +1921,7 @@ export default {
     this.getPosition();
     this.getDepartment();
     this.getEmployee();
-    this.getOvertime();
+    // this.getOvertime();
   },
 };
 </script>
