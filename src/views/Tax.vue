@@ -1798,7 +1798,6 @@ export default {
           },
         });
         const json = await response.json();
-        console.log("json getTaxInvoice", json.data[0]);
 
         if (json.statusCode === 200) {
           console.log(json.data);

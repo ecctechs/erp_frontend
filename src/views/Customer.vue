@@ -499,7 +499,7 @@ export default {
       const cusID = this.formDataCustomer.company_person_id;
       try {
         const response = await fetch(
-          `${API_CALL}/Quotation/editCustomer2/${cusID}`,
+          `${API_CALL}/Quotation/editCompany/${cusID}`,
           {
             method: "PUT",
             headers: {
@@ -1020,7 +1020,7 @@ export default {
         const endpoint =
           this.selectedType === "A"
             ? `${API_CALL}/Quotation/deleteCustomer/${cusID}`
-            : `${API_CALL}/Quotation/deleteCustomer2/${cusID}`;
+            : `${API_CALL}/Quotation/deleteCompany/${cusID}`;
 
         const response = await fetch(endpoint, {
           method: "DELETE",
