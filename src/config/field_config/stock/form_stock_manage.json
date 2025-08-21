@@ -9,7 +9,7 @@
     "itemValue": "product_id"
   },
   {
-    "key": "transactionType",
+    "key": "transaction_type",
     "label": "manageStockType",
     "componentType": "Dropdown",
     "required": true,
@@ -38,7 +38,7 @@
     "readonly": true
   },
   {
-    "key": "transactionDetail",
+    "key": "transaction_detail",
     "label": "productDetail",
     "componentType": "TextField",
     "type": "text"

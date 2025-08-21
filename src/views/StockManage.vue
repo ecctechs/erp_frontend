@@ -182,9 +182,9 @@ export default {
         product_id: "", // Product ID for transactions
         ID: "", // Transaction ID for editing
         product: "",
-        transactionType: "", // Type of transaction (issue/receive)
+        transaction_type: "", // Type of transaction (issue/receive)
         quantity: "", // Quantity of product for transaction
-        transactionDetail: "", // Additional details for transaction
+        btransaction_detail: "", // Additional details for transaction
         current_product_amount: "",
         update_product_amount: "",
       },
@@ -192,9 +192,9 @@ export default {
         product_id: "", // Product ID for transactions
         ID: "", // Transaction ID for editing
         product: "",
-        transactionType: "", // Type of transaction (issue/receive)
+        transaction_type: "", // Type of transaction (issue/receive)
         quantity: "", // Quantity of product for transaction
-        transactionDetail: "", // Additional details for transaction
+        transaction_detail: "", // Additional details for transaction
       },
     };
   },
@@ -211,7 +211,7 @@ export default {
     this.formData.update_product_amount = '';
   }
 },
-"formData.transactionType"() {
+"formData.transaction_type"() {
   this.calculateUpdatedAmount(); // เรียกใช้การคำนวณเมื่อประเภทเปลี่ยน
 },
 "formData.quantity"() {
@@ -263,9 +263,9 @@ export default {
   const current = parseInt(this.formData.current_product_amount) || 0;
   const quantity = parseInt(this.formData.quantity) || 0;
 
-  if (this.formData.transactionType === 'Receive') {
+  if (this.formData.transaction_type === 'Receive') {
     this.formData.update_product_amount = current + quantity;
-  } else if (this.formData.transactionType === 'Issue') {
+  } else if (this.formData.transaction_type === 'Issue') {
     this.formData.update_product_amount = current - quantity;
   } else {
     this.formData.update_product_amount = current;
@@ -282,7 +282,7 @@ export default {
 
       this.formData.current_product_amount = selectedProduct.amount;
 
-      if (this.formData.transactionType === "Receive") {
+      if (this.formData.transaction_type === "Receive") {
         this.formData.update_product_amount =
           parseInt(this.formData.current_product_amount) +
           parseInt(this.formData.quantity);
@@ -345,7 +345,7 @@ export default {
     validateFormData() {
       // ตั้งค่า isEmpty ของทุกฟิลด์เป็น false ก่อนเริ่มการตรวจสอบ
       this.isEmpty.product_id = false;
-      this.isEmpty.transactionType = false;
+      this.isEmpty.transaction_type = false;
       this.isEmpty.quantity = false;
 
       const errorMessages = [];
@@ -359,7 +359,7 @@ export default {
           (item) => item.product_id === this.formData.product_id
         );
 
-        if (this.formData.transactionType === "issue") {
+        if (this.formData.transaction_type === "issue") {
           if (!matchingProduct) {
             errorMessages.push(this.$t("validation.productNotFound"));
           } else if (matchingProduct.amount < this.formData.quantity) {
@@ -368,8 +368,8 @@ export default {
         }
       }
 
-      if (this.formData.transactionType === "") {
-        this.isEmpty.transactionType = true;
+      if (this.formData.transaction_type === "") {
+        this.isEmpty.transaction_type = true;
         errorMessages.push(this.$t("validation.transactionType"));
       }
       if (this.formData.quantity === "") {
@@ -416,12 +416,12 @@ export default {
         product_id: "",
         ID: "",
         product: "",
-        transactionType: "",
+        transaction_type: "",
         quantity: "",
-        transactionDetail: "",
+        transaction_detail: "",
       };
       this.isEmpty.product_id = false;
-      this.isEmpty.transactionType = false;
+      this.isEmpty.transaction_type = false;
       this.isEmpty.quantity = false;
 
       this.inputError = false;
@@ -441,9 +441,9 @@ export default {
       this.formData = {
         product_id: item.product_id,
         ID: item.ID,
-        transactionType: item.Transaction,
+        transaction_type: item.Transaction,
         quantity: item.Quantity,
-        transactionDetail: item.Detail,
+        transaction_detail: item.Detail,
       };
     },
     showPopup(message) {
@@ -543,9 +543,9 @@ export default {
           },
           body: JSON.stringify({
             product_id: this.formData.product_id,
-            transactionType: this.formData.transactionType,
+            transaction_type: this.formData.transaction_type,
             quantity: this.formData.quantity,
-            transactionDetail: this.formData.transactionDetail,
+            transaction_detail: this.formData.transaction_detail,
           }),
         });
         const json = await response.json();
@@ -590,9 +590,9 @@ export default {
             },
             body: JSON.stringify({
               product_id: this.formData.product_id,
-              transactionType: this.formData.transactionType,
+              transaction_type: this.formData.transaction_type,
               quantity: this.formData.quantity,
-              transactionDetail: this.formData.transactionDetail,
+              transaction_detail: this.formData.transaction_detail,
             }),
           }
         );
