@@ -785,7 +785,7 @@ export default {
                 product_img: item.product_img,
                 product_type_id: item.product_type_id,
                 category_id: item.category_id,
-                status: item.Status,
+                status: item.product_status,
               };
               if (this.selectedType === "A") {
                 product.amount = item.amount;
@@ -818,9 +818,9 @@ export default {
                 return item.product_type_id !== 1;
               }
               if (this.formData.status === "active") {
-                return (item.Status = "active");
+                return (item.product_status = "active");
               } else {
-                return (item.Status = "not active");
+                return (item.product_status = "not active");
               }
             })
             .map((item) => {
@@ -834,7 +834,7 @@ export default {
                 product_img: item.product_img,
                 product_type_id: item.product_type_id,
                 category_id: item.category_id,
-                status: item.Status,
+                status: item.product_status,
               };
               if (this.selectedType === "A") {
                 product.amount = item.amount;
@@ -995,7 +995,7 @@ export default {
         parseFloat(this.formData.product_cost) || 0
       );
       formDataImage.append("category_id", this.formData.category_id);
-      formDataImage.append("Status", this.formData.status);
+      formDataImage.append("product_status", this.formData.status);
       return formDataImage;
     },
     clearFormData() {

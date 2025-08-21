@@ -483,7 +483,7 @@ export default {
           this.currentTableData = json.data.filter(
             (item) =>
               item.product_type_id === 1 &&
-              (item.Status === "active" || item.Status === "Discontinued")
+              (item.product_status === "active" || item.product_status === "Discontinued")
           );
           //   console.log(this.currentTableData);
         } else {

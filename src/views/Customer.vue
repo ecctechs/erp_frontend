@@ -187,7 +187,7 @@
           :disabled="isLoading"
           customClass="btn btn-primary me-3"
           v-if="isAddingMode"
-          @click="addCustomer2"
+          @click="addCompany"
         >
           <span
             v-if="isLoading"
@@ -828,7 +828,7 @@ export default {
             this.Customers = json.data.map((item) => {
               let initialTableData = {
                 ID: item.cus_id,
-                status: item.Status,
+                customer_status: item.customer_status,
                 "Customer Name": item.cus_name,
                 "Customer Address": item.cus_address,
                 "Customer Tel": item.cus_tel,
@@ -872,13 +872,13 @@ export default {
         this.isLoading = false;
       }
     },
-    async addCustomer2() {
+    async addCompany() {
       const accessToken = localStorage.getItem("@accessToken");
 
       if (!(await this.validateFormData2())) return;
       this.isLoading = true;
       try {
-        const response = await fetch(`${API_CALL}/Quotation/addCustomer2`, {
+        const response = await fetch(`${API_CALL}/Quotation/addCompany`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

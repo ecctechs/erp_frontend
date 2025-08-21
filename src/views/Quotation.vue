@@ -643,7 +643,7 @@ export default {
       }));
     },
     filteredProducts() {
-      return this.Products.filter((item) => item.Status !== "not active");
+      return this.Products.filter((item) => item.product_status !== "not active");
     },
     allExpanded() {
       return this.expandedItems.size === this.Quotations.length; // ถ้าทั้งหมดขยาย ให้ return true
@@ -1137,7 +1137,7 @@ export default {
               cus_email: item.cus_email,
               cus_tax: item.cus_tax,
               cus_purchase: item.cus_purchase,
-              Status: item.Status,
+              customer_status: item.customer_status,
             };
             return initialTableData;
           });
@@ -1967,7 +1967,7 @@ export default {
         formData.append("price", parseInt(product.price));
         formData.append("product_cost", 0);
         formData.append("category_id", cate_id);
-        formData.append("Status", "active");
+        formData.append("product_status", "active");
         return formData;
       });
     },
@@ -2264,7 +2264,7 @@ export default {
               (product) => product.product_name === form.product_id
             );
             // console.log("matchedProduct",matchedProduct)
-            if (matchedProduct && matchedProduct.Status === "not active") {
+            if (matchedProduct && matchedProduct.product_status === "not active") {
               errorMessages.push(this.$t("productActive"));
             }
           });
@@ -2415,7 +2415,7 @@ export default {
               (product) => product.product_name === form.product_id
             );
             // console.log("matchedProduct", matchedProduct);
-            if (matchedProduct && matchedProduct.Status === "not active") {
+            if (matchedProduct && matchedProduct.product_status === "not active") {
               errorMessages.push(this.$t("productActive"));
             }
           });
@@ -2440,7 +2440,7 @@ export default {
             (product) => product.product_name === form.product_id
           );
           console.log("matchedProduct", matchedProduct);
-          if (matchedProduct && matchedProduct.Status === "not active") {
+          if (matchedProduct && matchedProduct.product_status === "not active") {
             errorMessages.push(this.$t("productActive"));
           }
         });
@@ -2589,7 +2589,7 @@ export default {
             );
 
             console.log("matchedProduct", matchedProduct);
-            if (matchedProduct && matchedProduct.Status === "not active") {
+            if (matchedProduct && matchedProduct.product_status === "not active") {
               errorMessages.push(this.$t("productActive"));
             }
           });
@@ -2723,7 +2723,7 @@ export default {
               product_img: item.product_img,
               product_type_id: item.product_type_id,
               category_id: item.category_id,
-              Status: item.Status,
+              product_status: item.product_status,
             }));
         } else {
           this.showPopup_error(json.data || "Unexpected error");
