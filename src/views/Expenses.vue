@@ -231,8 +231,39 @@
     </div>
   </div>
 
-  <div class="modal-footer mb-3">
-    </div>
+   <div class="modal-footer mb-3">
+        <Button
+          :disabled="isLoading"
+          customClass="btn btn-primary me-3"
+          v-if="isAddingMode"
+          @click="addExpense"
+        >
+          <span
+            v-if="isLoading"
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          <span v-else>{{ t("buttonAdd") }}</span>
+        </Button>
+        <Button
+          :disabled="isLoading"
+          customClass="btn btn-primary me-3"
+          v-if="isEditMode"
+          @click="editExpense"
+        >
+          <span
+            v-if="isLoading"
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          <span v-else>{{ t("buttonSave") }}</span>
+        </Button>
+        <Button customClass="btn btn-secondary" @click="closePopup">
+          {{ t("buttonCancel") }}
+        </Button>
+      </div>
 </Popup>
     <div class="delete-popup">
       <Popup
