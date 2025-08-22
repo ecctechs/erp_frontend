@@ -184,9 +184,9 @@
         <div v-for="field in customerFields" :key="field.key" class="mb-3 div-for-formControl">
             <label class="col-sm-5 col-md-6"><span v-if="field.required" style="color:red;">*</span>{{ t(field.label) }}</label>
             <div v-if="field.componentType === 'Datalist'" style="position: relative; width: 50%;">
-                <input list="browsers" class="form-control" v-model="selectedCusName" @input="getDetailCustomer()" :class="{ error: isEmpty.cus_name }" autoComplete="off" />
+                <input list="browsers" class="form-control" v-model="selectedCusName" @input="getDetailCustomer()" :class="{ error: isEmpty.customer_name }" autoComplete="off" />
                 <datalist id="browsers">
-                    <option v-for="item in Customers" :key="item.customer_id" :value="item.cus_name"></option>
+                    <option v-for="item in Customers" :key="item.customer_id" :value="item.customer_name"></option>
                 </datalist>
             </div>
             <TextField v-else v-model="formData[field.key]" :readonly="isReadonly" :disabled="isDisabled" :maxlength="field.maxlength" @keypress="field.isNumeric ? validateInput($event) : null" :class="{ error: isEmpty[field.key] }" />
@@ -533,7 +533,7 @@ export default {
         position: "",
         employeeEmail: "",
         employeeTel: "",
-        cus_name: "",
+        customer_name: "",
         cus_address: "",
         cus_tel: "",
         cus_email: "",
@@ -570,7 +570,7 @@ export default {
         position: "",
         employeeEmail: "",
         employeeTel: "",
-        cus_name: "",
+        customer_name: "",
         cus_address: "",
         cus_tel: "",
         cus_email: "",
@@ -696,7 +696,7 @@ export default {
         { label: this.t("statusHeaderTable"), key: "status" },
         { label: this.t("salenumberHeaderTable"), key: "sale_number" },
         { label: this.t("employeeNameHeaderTable"), key: "employeeName" },
-        { label: this.t("cusNameHeaderTable"), key: "cus_name" },
+        { label: this.t("cusNameHeaderTable"), key: "customer_name" },
         { label: this.t("cusAddressHeaderTable"), key: "cus_address" },
         { label: this.t("cusTelHeaderTable"), key: "cus_tel" },
         { label: this.t("cusEmailHeaderTable"), key: "cus_email" },
@@ -818,7 +818,7 @@ export default {
       items = this.Customers.filter((item) => item.customer_id === newVal);
 
       this.formData.customer_id = items[0].customer_id;
-      this.formData.cus_name = items[0].cus_name;
+      this.formData.customer_name = items[0].customer_name;
       this.formData.cus_address = items[0].cus_address;
       this.formData.cus_tel = items[0].cus_tel;
       this.formData.cus_email = items[0].cus_email;
@@ -937,11 +937,11 @@ export default {
       let items = [];
 
       items = this.Customers.filter(
-        (item) => item.cus_name === this.selectedCusName
+        (item) => item.customer_name === this.selectedCusName
       );
       if (items.length > 0) {
         this.formData.customer_id = items[0].customer_id;
-        this.formData.cus_name = items[0].cus_name;
+        this.formData.customer_name = items[0].customer_name;
         this.formData.cus_address = items[0].cus_address;
         this.formData.cus_tel = items[0].cus_tel;
         this.formData.cus_email = items[0].cus_email;
@@ -953,7 +953,7 @@ export default {
         this.NotCustomerExit = false;
       } else {
         this.formData.customer_id = "";
-        this.formData.cus_name = "";
+        this.formData.customer_name = "";
         this.formData.cus_address = "";
         this.formData.cus_tel = "";
         this.formData.cus_email = "";
@@ -964,7 +964,7 @@ export default {
         this.isDisabled = false;
         this.NotCustomerExit = true;
 
-        this.formData.cus_name = this.selectedCusName;
+        this.formData.customer_name = this.selectedCusName;
       }
     },
     async previewImage(event) {
@@ -1062,15 +1062,15 @@ export default {
       // ทำอย่างอื่นกับ selectedItem ตามต้องการ
     },
     filterItems() {
-      if (this.formData.cus_name.trim() === "") {
+      if (this.formData.customer_name.trim() === "") {
         this.filteredItems = [];
         return; // ไม่ต้องกรองรายการถ้าช่อง input ว่างเปล่า
       }
 
       this.filteredItems = this.Customers.filter((cus) =>
-        cus.cus_name
+        cus.customer_name
           .toLowerCase()
-          .includes(this.formData.cus_name.toLowerCase())
+          .includes(this.formData.customer_name.toLowerCase())
       );
     },
     onInput(event) {
@@ -1131,7 +1131,7 @@ export default {
           this.Customers = json.data.map((item) => {
             let initialTableData = {
               customer_id: item.customer_id,
-              cus_name: item.cus_name,
+              customer_name: item.customer_name,
               cus_address: item.cus_address,
               cus_tel: item.cus_tel,
               cus_email: item.cus_email,
@@ -1302,7 +1302,7 @@ export default {
         doc.setFontSize(10);
         doc.setTextColor(0, 0, 0);
 
-        doc.text(`Customer Name: ` + row.cus_name, 10, 50);
+        doc.text(`Customer Name: ` + row.customer_name, 10, 50);
         // doc.text(`Number: ${row.sale_number}`, 150, 50);
         doc.text(`Address: ` + row.cus_address, 10, 55);
         // doc.text(`Date:     ${Quo_date}`, 150, 55);
@@ -1540,7 +1540,7 @@ export default {
         // เปิดในแท็บใหม่
         window.open(pdfUrl, "_blank");
       } else if (action === "download") {
-        doc.save(`quotation-${row.cus_name}-${row.sale_number}.pdf`);
+        doc.save(`quotation-${row.customer_name}-${row.sale_number}.pdf`);
       }
       this.shortcutAllow = false;
     },
@@ -1809,7 +1809,7 @@ export default {
               employee_id: item.employee_id,
               employeeName: item.employee_name,
               customer_id: item.customer_id,
-              cus_name: item.cus_name,
+              customer_name: item.customer_name,
               cus_address: item.cus_address,
               cus_tel: item.cus_tel,
               cus_email: item.cus_email,
@@ -1845,7 +1845,7 @@ export default {
       }
     },
     async validateFormData() {
-      this.isEmpty.cus_name = false;
+      this.isEmpty.customer_name = false;
       this.isEmpty.employee_id = false;
       this.isEmpty.sale_date = false;
       this.isEmpty.credit_date_number = false;
@@ -1858,8 +1858,8 @@ export default {
 
       const errorMessages = [];
 
-      if (this.formData.cus_name === "") {
-        this.isEmpty.cus_name = true;
+      if (this.formData.customer_name === "") {
+        this.isEmpty.customer_name = true;
         errorMessages.push(this.$t("validation.cus_name"));
       }
 
@@ -2077,7 +2077,7 @@ export default {
               Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-              cus_name: this.formData.cus_name,
+              customer_name: this.formData.customer_name,
               cus_address: this.formData.cus_address,
               cus_tel: this.formData.cus_tel,
               cus_email: this.formData.cus_email,
@@ -2090,7 +2090,7 @@ export default {
           await this.getCustomer();
 
           const dataStorage = this.Customers.find(
-            (customer) => customer.cus_name === this.formData.cus_name
+            (customer) => customer.customer_name === this.formData.customer_name
           );
 
           if (dataStorage) {
@@ -2223,7 +2223,7 @@ export default {
               Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-              cus_name: this.formData.cus_name,
+              customer_name: this.formData.customer_name,
               cus_address: this.formData.cus_address,
               cus_tel: this.formData.cus_tel,
               cus_email: this.formData.cus_email,
@@ -2236,7 +2236,7 @@ export default {
           await this.getCustomer();
 
           const dataStorage = this.Customers.find(
-            (customer) => customer.cus_name === this.formData.cus_name
+            (customer) => customer.customer_name === this.formData.customer_name
           );
 
           if (dataStorage) {
@@ -2374,7 +2374,7 @@ export default {
               Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-              cus_name: this.formData.cus_name,
+              customer_name: this.formData.customer_name,
               cus_address: this.formData.cus_address,
               cus_tel: this.formData.cus_tel,
               cus_email: this.formData.cus_email,
@@ -2387,7 +2387,7 @@ export default {
           await this.getCustomer();
 
           const dataStorage = this.Customers.find(
-            (customer) => customer.cus_name === this.formData.cus_name
+            (customer) => customer.customer_name === this.formData.customer_name
           );
 
           if (dataStorage) {
@@ -2548,7 +2548,7 @@ export default {
               Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-              cus_name: this.formData.cus_name,
+              customer_name: this.formData.customer_name,
               cus_address: this.formData.cus_address,
               cus_tel: this.formData.cus_tel,
               cus_email: this.formData.cus_email,
@@ -2561,7 +2561,7 @@ export default {
           await this.getCustomer();
 
           const dataStorage = this.Customers.find(
-            (customer) => customer.cus_name === this.formData.cus_name
+            (customer) => customer.customer_name === this.formData.customer_name
           );
 
           if (dataStorage) {
@@ -2926,7 +2926,7 @@ export default {
         position: "",
         employeeEmail: "",
         employeeTel: "",
-        cus_name: "",
+        customer_name: "",
         cus_address: "",
         cus_tel: "",
         cus_email: "",
@@ -2996,7 +2996,7 @@ export default {
         position: "",
         employeeEmail: "",
         employeeTel: "",
-        cus_name: "",
+        customer_name: "",
         cus_address: "",
         cus_tel: "",
         cus_email: "",
@@ -3021,7 +3021,7 @@ export default {
         pdfname: "",
         file: "",
       };
-      this.isEmpty.cus_name = false;
+      this.isEmpty.customer_name = false;
       this.isEmpty.cus_address = false;
       this.isEmpty.email = false;
       this.isEmpty.cus_tax = false;
@@ -3437,7 +3437,7 @@ export default {
     async companySelected(selectedCus) {
       console.log(selectedCus);
       this.formData.customer_id = selectedCus.customer_id;
-      this.formData.cus_name = selectedCus.cus_name;
+      this.formData.customer_name = selectedCus.customer_name;
       this.formData.cus_address = selectedCus.cus_address;
       this.formData.cus_tel = selectedCus.cus_tel;
       this.formData.cus_email = selectedCus.cus_email;
@@ -3500,7 +3500,7 @@ export default {
       );
 
       this.cus_drop_down = row.customer_id;
-      this.selectedCusName = row.cus_name;
+      this.selectedCusName = row.customer_name;
       this.formData = {
         sale_id: row.sale_id,
         sale_number: row.sale_number,
@@ -3508,7 +3508,7 @@ export default {
         employee_id: row.employee_id,
         employeeName: row.employee_name,
         customer_id: row.customer_id,
-        cus_name: row.cus_name,
+        customer_name: row.customer_name,
         cus_address: row.cus_address,
         cus_tel: row.cus_tel,
         cus_email: row.cus_email,
@@ -3627,7 +3627,7 @@ export default {
         employee_id: row.employee_id,
         employeeName: row.employee_name,
         customer_id: row.customer_id,
-        cus_name: row.cus_name,
+        customer_name: row.customer_name,
         cus_address: row.cus_address,
         cus_tel: row.cus_tel,
         cus_email: row.cus_email,
@@ -3692,7 +3692,7 @@ export default {
         employee_id: row.employee_id,
         employeeName: row.employee_name,
         customer_id: row.customer_id,
-        cus_name: row.cus_name,
+        customer_name: row.customer_name,
         cus_address: row.cus_address,
         cus_tel: row.cus_tel,
         cus_email: row.cus_email,

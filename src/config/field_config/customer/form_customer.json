@@ -1,7 +1,7 @@
 {
   "company": [
     {
-      "key": "cus_name",
+      "key": "customer_name",
       "label": "customerName",
       "type": "text",
       "required": true

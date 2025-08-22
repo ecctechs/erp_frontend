@@ -312,7 +312,7 @@ export default {
       inputError: false,
       formData: {
         customer_id: "",
-        cus_name: "",
+        customer_name: "",
         cus_address: "",
         cus_tel: "",
         cus_email: "",
@@ -338,7 +338,7 @@ export default {
       },
       isEmpty: {
         customer_id: "",
-        cus_name: false,
+        customer_name: false,
         cus_address: false,
         cus_tel: false,
         cus_email: false,
@@ -360,7 +360,7 @@ export default {
       if (!this.CustomerDropown) return [];
       return this.CustomerDropown.map((customer) => ({
         value: customer.customer_id,
-        text: customer.cus_name,
+        text: customer.customer_name,
       }));
     },
     tableHeaders() {
@@ -542,7 +542,7 @@ export default {
       this.isEmpty2.company_person_email = false;
       this.isEmpty2.company_person_name = false;
       this.isEmpty2.company_person_tel = false;
-      this.isEmpty2.cus_name = false;
+      this.isEmpty2.customer_name = false;
 
       const errorMessages = [];
 
@@ -585,7 +585,7 @@ export default {
       }
     },
     async validateFormData() {
-      this.isEmpty.cus_name = false;
+      this.isEmpty.customer_name = false;
       this.isEmpty.cus_address = false;
       this.isEmpty.cus_tel = false;
       this.isEmpty.cus_email = false;
@@ -594,8 +594,8 @@ export default {
 
       const errorMessages = [];
 
-      if (this.formData.cus_name.trim() === "") {
-        this.isEmpty.cus_name = true;
+      if (this.formData.customer_name.trim() === "") {
+        this.isEmpty.customer_name = true;
         errorMessages.push(this.$t("validation.cus_name"));
       }
 
@@ -687,7 +687,7 @@ export default {
       this.isEditMode = false;
       this.formData = {
         customer_id: "",
-        cus_name: "",
+        customer_name: "",
         cus_address: "",
         cus_tel: "",
         cus_email: "",
@@ -695,7 +695,7 @@ export default {
         cus_purchase: "",
         status: "",
       };
-      this.isEmpty.cus_name = false;
+      this.isEmpty.customer_name = false;
       this.isEmpty.cus_address = false;
       this.isEmpty.cus_tel = false;
       this.isEmpty.cus_email = false;
@@ -717,7 +717,7 @@ export default {
       this.formData = {
         customer_id: item.ID,
         status: item.status,
-        cus_name: item["Customer Name"],
+        customer_name: item["Customer Name"],
         cus_address: item["Customer Address"],
         cus_tel: item["Customer Tel"],
         cus_email: item["Customer Email"],
@@ -740,7 +740,7 @@ export default {
 
       this.CustomerDropown = json.data;
       const customer = this.CustomerDropown.find(
-        (customer) => customer.cus_name === item["Customer Company"]
+        (customer) => customer.customer_name === item["Customer Company"]
       );
 
       this.formDataCustomer = {
@@ -829,7 +829,7 @@ export default {
               let initialTableData = {
                 ID: item.customer_id,
                 customer_status: item.customer_status,
-                "Customer Name": item.cus_name,
+                "Customer Name": item.customer_name,
                 "Customer Address": item.cus_address,
                 "Customer Tel": item.cus_tel,
                 "Customer Email": item.cus_email,
@@ -857,7 +857,7 @@ export default {
                 "Customer Name": item.company_person_name,
                 "Customer Tel": item.company_person_tel,
                 "Customer Email": item.company_person_email,
-                "Customer Company": item.cus_name,
+                "Customer Company": item.customer_name,
               };
               return initialTableData;
             });
@@ -930,7 +930,7 @@ export default {
           this.showPopup(this.$t("validation.AddSucc"));
           this.formData = {
             customer_id: "",
-            cus_name: "",
+            customer_name: "",
             cus_address: "",
             cus_tel: "",
             cus_email: "",
@@ -949,7 +949,7 @@ export default {
             this.isEmpty.cus_tel = true;
           } else if (json.data.includes("Customer")) {
             this.errorMessages.push(this.$t("validation.cus_name_already"));
-            this.isEmpty.cus_name = true;
+            this.isEmpty.customer_name = true;
           }
           this.showPopup_error(json.data);
           console.log("Add customer error:", json);
@@ -994,7 +994,7 @@ export default {
             this.isEmpty.cus_tel = true;
           } else if (json.data.includes("Customer")) {
             this.errorMessages.push(this.$t("validation.cus_name_already"));
-            this.isEmpty.cus_name = true;
+            this.isEmpty.customer_name = true;
           }
           this.showPopup_error(json.data);
           console.log("Edit customer error:", json);

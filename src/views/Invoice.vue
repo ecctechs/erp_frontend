@@ -477,7 +477,7 @@ export default {
         position: "",
         employeeEmail: "",
         employeeTel: "",
-        cus_name: "",
+        customer_name: "",
         cus_address: "",
         cus_tel: "",
         cus_email: "",
@@ -560,7 +560,7 @@ summaryFields() {
         { label: this.t("invoiceHeaderTable"), key: "invoice_number" },
         { label: this.t("salenumberHeaderTable"), key: "sale_number" },
         { label: this.t("employeeNameHeaderTable"), key: "employeeName" },
-        { label: this.t("cusNameHeaderTable"), key: "cus_name" },
+        { label: this.t("cusNameHeaderTable"), key: "customer_name" },
         { label: this.t("cusAddressHeaderTable"), key: "cus_address" },
         { label: this.t("cusTelHeaderTable"), key: "cus_tel" },
         { label: this.t("cusEmailHeaderTable"), key: "cus_email" },
@@ -809,7 +809,7 @@ summaryFields() {
         employee_id: row.employee_id,
         employeeName: row.employeeName,
         customer_id: row.customer_id,
-        cus_name: row.cus_name,
+        customer_name: row.customer_name,
         cus_address: row.cus_address,
         cus_tel: row.cus_tel,
         cus_email: row.cus_email,
@@ -964,7 +964,7 @@ summaryFields() {
         employee_id: row.employee_id,
         employeeName: row.employeeName,
         customer_id: row.customer_id,
-        cus_name: row.cus_name,
+        customer_name: row.customer_name,
         cus_address: row.cus_address,
         cus_tel: row.cus_tel,
         cus_email: row.cus_email,
@@ -1026,7 +1026,7 @@ summaryFields() {
         employee_id: row.employee_id,
         employeeName: row.employeeName,
         customer_id: row.customer_id,
-        cus_name: row.cus_name,
+        customer_name: row.customer_name,
         cus_address: row.cus_address,
         cus_tel: row.cus_tel,
         cus_email: row.cus_email,
@@ -1234,7 +1234,7 @@ summaryFields() {
         doc.setFontSize(10);
         doc.setTextColor(0, 0, 0);
 
-        doc.text(`Customer Name: ` + row.cus_name, 10, 50);
+        doc.text(`Customer Name: ` + row.customer_name, 10, 50);
         doc.text(`Address: ` + row.cus_address, 10, 55);
         doc.text(`Contact: ` + row.cus_tel, 10, 60);
         doc.text(`E-mail: ` + row.cus_email, 10, 65);
@@ -1445,7 +1445,7 @@ summaryFields() {
         this.pdfUrl = pdfUrl;
         window.open(pdfUrl, "_blank");
       } else if (action === "download") {
-        doc.save(`quotation-${row.cus_name}-${row.sale_number}.pdf`);
+        doc.save(`quotation-${row.customer_name}-${row.sale_number}.pdf`);
       }
       this.shortcutAllow = false;
     },
@@ -1603,7 +1603,7 @@ summaryFields() {
         position: "",
         employeeEmail: "",
         employeeTel: "",
-        cus_name: "",
+        customer_name: "",
         cus_address: "",
         cus_tel: "",
         cus_email: "",
@@ -1813,7 +1813,7 @@ summaryFields() {
               employee_id: item.employee_id,
               employeeName: item.employee_name,
               customer_id: item.customer_id,
-              cus_name: item.cus_name,
+              customer_name: item.customer_name,
               cus_address: item.cus_address,
               cus_tel: item.cus_tel,
               cus_email: item.cus_email,

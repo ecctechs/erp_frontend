@@ -25,7 +25,7 @@
     "itemValue": "employee_id"
   },
   {
-    "key": "cus_name",
+    "key": "customer_name",
     "label": "customerName",
     "componentType": "Datalist",
     "required": true,

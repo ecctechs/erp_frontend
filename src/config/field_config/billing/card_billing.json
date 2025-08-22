@@ -1,5 +1,5 @@
 [
-  { "label": "cusNameHeaderTable", "key": "cus_name" },
+  { "label": "cusNameHeaderTable", "key": "customer_name" },
   { "label": "employeeNameHeaderTable", "key": "employeeName" },
   { "label": "saleTotalpriceHeaderTable", "key": "sale_totalprice" },
   { "label": "netpriceHeaderTable", "key": "net_price", "expanded": true },

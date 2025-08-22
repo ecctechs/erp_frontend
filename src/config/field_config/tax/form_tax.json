@@ -29,7 +29,7 @@
     "group": "tax"
   },
   {
-    "key": "cus_name",
+    "key": "customer_name",
     "label": "customerName",
     "componentType": "TextField",
     "readonly": true,
