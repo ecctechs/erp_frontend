@@ -385,7 +385,7 @@ export default {
               customer_tel: item.customer_tel,
               customer_email: item.customer_email,
               customer_tax: item.customer_tax,
-              cus_purchase: item.cus_purchase,
+              customer_purchase: item.customer_purchase,
               sale_totalprice: item.sale_totalprice, // ตรวจสอบค่าที่ใช้คำนวณ
               invoice_id: item.invoice_id,
               remark: item.remark || "",
@@ -430,7 +430,7 @@ export default {
               customer_tel: item.customer_tel,
               customer_email: item.customer_email,
               customer_tax: item.customer_tax,
-              cus_purchase: item.cus_purchase,
+              customer_purchase: item.customer_purchase,
               sale_totalprice: item.sale_totalprice, // ตรวจสอบค่าที่ใช้คำนวณ
               invoice_id: item.invoice_id,
               remark: item.remark || "",
@@ -475,7 +475,7 @@ export default {
               customer_tel: item.customer_tel,
               customer_email: item.customer_email,
               customer_tax: item.customer_tax,
-              cus_purchase: item.cus_purchase,
+              customer_purchase: item.customer_purchase,
               sale_totalprice: item.sale_totalprice, // ตรวจสอบค่าที่ใช้คำนวณ
               invoice_id: item.invoice_id,
               remark: item.remark || "",

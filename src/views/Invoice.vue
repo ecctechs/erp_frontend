@@ -482,7 +482,7 @@ export default {
         customer_tel: "",
         customer_email: "",
         customer_tax: "",
-        cus_purchase: "",
+        customer_purchase: "",
         sale_qty: "",
         sale_date: "",
         credit_date_number: "",
@@ -565,7 +565,7 @@ summaryFields() {
         { label: this.t("cusTelHeaderTable"), key: "customer_tel" },
         { label: this.t("cusEmailHeaderTable"), key: "customer_email" },
         { label: this.t("cusTaxHeaderTable"), key: "customer_tax" },
-        { label: this.t("cusPurchaseHeaderTable"), key: "cus_purchase" },
+        { label: this.t("cusPurchaseHeaderTable"), key: "customer_purchase" },
         { label: this.t("saleTotalpriceHeaderTable"), key: "sale_totalprice" },
         { label: this.t("netpriceHeaderTable"), key: "net_price" },
         { label: this.t("invoiceDateHeaderTable"), key: "invoice_date" },
@@ -814,7 +814,7 @@ summaryFields() {
         customer_tel: row.customer_tel,
         customer_email: row.customer_email,
         customer_tax: row.customer_tax,
-        cus_purchase: row.cus_purchase,
+        customer_purchase: row.customer_purchase,
         sale_totalprice: row.sale_totalprice,
         remark: row.remark || "", // จัดการค่า remark ให้เป็น string ว่างถ้าเป็น null
         invoice_id: row.ID,
@@ -969,7 +969,7 @@ summaryFields() {
         customer_tel: row.customer_tel,
         customer_email: row.customer_email,
         customer_tax: row.customer_tax,
-        cus_purchase: row.cus_purchase,
+        customer_purchase: row.customer_purchase,
         sale_totalprice: row.sale_totalprice,
         remark: row.remark || "", // จัดการค่า remark ให้เป็น string ว่างถ้าเป็น null
 
@@ -1031,7 +1031,7 @@ summaryFields() {
         customer_tel: row.customer_tel,
         customer_email: row.customer_email,
         customer_tax: row.customer_tax,
-        cus_purchase: row.cus_purchase,
+        customer_purchase: row.customer_purchase,
         sale_totalprice: row.sale_totalprice,
         remark: row.remark || "", // จัดการค่า remark ให้เป็น string ว่างถ้าเป็น null
 
@@ -1608,7 +1608,7 @@ summaryFields() {
         customer_tel: "",
         customer_email: "",
         customer_tax: "",
-        cus_purchase: "",
+        customer_purchase: "",
         sale_qty: "",
         sale_date: "",
         credit_date_number: "",
@@ -1818,7 +1818,7 @@ summaryFields() {
               customer_tel: item.customer_tel,
               customer_email: item.customer_email,
               customer_tax: item.customer_tax,
-              cus_purchase: item.cus_purchase,
+              customer_purchase: item.customer_purchase,
               sale_totalprice: total_before_vat,
               net_price: vat_in,
 

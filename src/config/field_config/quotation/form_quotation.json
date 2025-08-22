@@ -69,7 +69,7 @@
     "isNumeric": true
   },
   {
-    "key": "cus_purchase",
+    "key": "customer_purchase",
     "label": "customerPurchaseBy",
     "componentType": "TextField",
     "required": true,

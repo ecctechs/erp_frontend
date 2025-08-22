@@ -538,7 +538,7 @@ export default {
         customer_tel: "",
         customer_email: "",
         customer_tax: "",
-        cus_purchase: "",
+        customer_purchase: "",
         sale_qty: "",
         sale_number: "",
         sale_date: "",
@@ -575,7 +575,7 @@ export default {
         customer_tel: "",
         customer_email: "",
         customer_tax: "",
-        cus_purchase: "",
+        customer_purchase: "",
         sale_qty: "",
         sale_number: "",
         sale_date: "",
@@ -701,7 +701,7 @@ export default {
         { label: this.t("cusTelHeaderTable"), key: "customer_tel" },
         { label: this.t("cusEmailHeaderTable"), key: "customer_email" },
         { label: this.t("cusTaxHeaderTable"), key: "customer_tax" },
-        { label: this.t("cusPurchaseHeaderTable"), key: "cus_purchase" },
+        { label: this.t("cusPurchaseHeaderTable"), key: "customer_purchase" },
         { label: this.t("saleDateHeaderTable"), key: "sale_date" },
         { label: this.t("creditdateHeaderTable"), key: "credit_date_number" },
         { label: this.t("expiredHeaderTable"), key: "credit_expired_date" },
@@ -823,7 +823,7 @@ export default {
       this.formData.customer_tel = items[0].customer_tel;
       this.formData.customer_email = items[0].customer_email;
       this.formData.customer_tax = items[0].customer_tax;
-      this.formData.cus_purchase = items[0].cus_purchase;
+      this.formData.customer_purchase = items[0].customer_purchase;
     },
   },
   methods: {
@@ -946,7 +946,7 @@ export default {
         this.formData.customer_tel = items[0].customer_tel;
         this.formData.customer_email = items[0].customer_email;
         this.formData.customer_tax = items[0].customer_tax;
-        this.formData.cus_purchase = items[0].cus_purchase;
+        this.formData.customer_purchase = items[0].customer_purchase;
 
         this.isReadonly = true;
         this.isDisabled = true;
@@ -958,7 +958,7 @@ export default {
         this.formData.customer_tel = "";
         this.formData.customer_email = "";
         this.formData.customer_tax = "";
-        this.formData.cus_purchase = "";
+        this.formData.customer_purchase = "";
 
         this.isReadonly = false;
         this.isDisabled = false;
@@ -1136,7 +1136,7 @@ export default {
               customer_tel: item.customer_tel,
               customer_email: item.customer_email,
               customer_tax: item.customer_tax,
-              cus_purchase: item.cus_purchase,
+              customer_purchase: item.customer_purchase,
               customer_status: item.customer_status,
             };
             return initialTableData;
@@ -1814,7 +1814,7 @@ export default {
               customer_tel: item.customer_tel,
               customer_email: item.customer_email,
               customer_tax: item.customer_tax,
-              cus_purchase: item.cus_purchase,
+              customer_purchase: item.customer_purchase,
               sale_date: Quotationdate,
               credit_date_number: item.credit_date,
               credit_expired_date: ExpiredDate,
@@ -1853,7 +1853,7 @@ export default {
       this.isEmpty.customer_address = false;
       this.isEmpty.customer_tel = false;
       this.isEmpty.customer_email = false;
-      this.isEmpty.cus_purchase = false;
+      this.isEmpty.customer_purchase = false;
       this.isEmpty.customer_tax = false;
 
       const errorMessages = [];
@@ -1891,8 +1891,8 @@ export default {
         errorMessages.push(this.$t("validation.cus_tax_length"));
       }
 
-      if (this.formData.cus_purchase.trim() === "") {
-        this.isEmpty.cus_purchase = true;
+      if (this.formData.customer_purchase.trim() === "") {
+        this.isEmpty.customer_purchase = true;
         errorMessages.push(this.$t("validation.cus_purchase"));
       }
 
@@ -2082,7 +2082,7 @@ export default {
               customer_tel: this.formData.customer_tel,
               customer_email: this.formData.customer_email,
               customer_tax: this.formData.customer_tax,
-              cus_purchase: this.formData.cus_purchase,
+              customer_purchase: this.formData.customer_purchase,
               bus_id: this.formData.bus_id,
               Status: "active",
             }),
@@ -2228,7 +2228,7 @@ export default {
               customer_tel: this.formData.customer_tel,
               customer_email: this.formData.customer_email,
               customer_tax: this.formData.customer_tax,
-              cus_purchase: this.formData.cus_purchase,
+              customer_purchase: this.formData.customer_purchase,
               bus_id: this.formData.bus_id,
               Status: "active",
             }),
@@ -2379,7 +2379,7 @@ export default {
               customer_tel: this.formData.customer_tel,
               customer_email: this.formData.customer_email,
               customer_tax: this.formData.customer_tax,
-              cus_purchase: this.formData.cus_purchase,
+              customer_purchase: this.formData.customer_purchase,
               bus_id: this.formData.bus_id,
               Status: "active",
             }),
@@ -2553,7 +2553,7 @@ export default {
               customer_tel: this.formData.customer_tel,
               customer_email: this.formData.customer_email,
               customer_tax: this.formData.customer_tax,
-              cus_purchase: this.formData.cus_purchase,
+              customer_purchase: this.formData.customer_purchase,
               bus_id: this.formData.bus_id,
               Status: "active",
             }),
@@ -2931,7 +2931,7 @@ export default {
         customer_tel: "",
         customer_email: "",
         customer_tax: "",
-        cus_purchase: "",
+        customer_purchase: "",
         sale_qty: "",
         sale_number: "",
         // sale_date: currentDate,
@@ -3001,7 +3001,7 @@ export default {
         customer_tel: "",
         customer_email: "",
         customer_tax: "",
-        cus_purchase: "",
+        customer_purchase: "",
         sale_qty: "",
         sale_number: "",
         sale_date: "",
@@ -3025,7 +3025,7 @@ export default {
       this.isEmpty.customer_address = false;
       this.isEmpty.email = false;
       this.isEmpty.customer_tax = false;
-      this.isEmpty.cus_purchase = false;
+      this.isEmpty.customer_purchase = false;
       this.isEmpty.employee_id = false;
       this.isEmpty.sale_date = false;
       this.isEmpty.credit_date_number = false;
@@ -3442,7 +3442,7 @@ export default {
       this.formData.customer_tel = selectedCus.customer_tel;
       this.formData.customer_email = selectedCus.customer_email;
       this.formData.customer_tax = selectedCus.customer_tax;
-      this.formData.cus_purchase = selectedCus.cus_purchase;
+      this.formData.customer_purchase = selectedCus.customer_purchase;
       console.log(this.formData.customer_address);
       this.filteredItems = [];
     },
@@ -3513,7 +3513,7 @@ export default {
         customer_tel: row.customer_tel,
         customer_email: row.customer_email,
         customer_tax: row.customer_tax,
-        cus_purchase: row.cus_purchase,
+        customer_purchase: row.customer_purchase,
         sale_date: formattedStart,
         credit_date_number: row.credit_date_number,
         credit_expired_date: formattedExpired,
@@ -3632,7 +3632,7 @@ export default {
         customer_tel: row.customer_tel,
         customer_email: row.customer_email,
         customer_tax: row.customer_tax,
-        cus_purchase: row.cus_purchase,
+        customer_purchase: row.customer_purchase,
         sale_date: formattedStart,
         credit_date_number: row.credit_date,
         credit_expired_date: formattedExpired,
@@ -3697,7 +3697,7 @@ export default {
         customer_tel: row.customer_tel,
         customer_email: row.customer_email,
         customer_tax: row.customer_tax,
-        cus_purchase: row.cus_purchase,
+        customer_purchase: row.customer_purchase,
         sale_date: formattedStart,
         credit_date_number: row.credit_date,
         credit_expired_date: formattedExpired,

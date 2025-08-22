@@ -56,7 +56,7 @@
     "group": "customer"
   },
   {
-    "key": "cus_purchase",
+    "key": "customer_purchase",
     "label": "customerPurchaseBy",
     "componentType": "TextField",
     "readonly": true,

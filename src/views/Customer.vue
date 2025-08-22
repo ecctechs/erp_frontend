@@ -317,7 +317,7 @@ export default {
         customer_tel: "",
         customer_email: "",
         customer_tax: "",
-        cus_purchase: "",
+        customer_purchase: "",
         status: "active",
       },
       formDataCustomer: {
@@ -343,7 +343,7 @@ export default {
         customer_tel: false,
         customer_email: false,
         customer_tax: false,
-        cus_purchase: false,
+        customer_purchase: false,
         status: "active",
       },
       searchQuery: "",
@@ -589,7 +589,7 @@ export default {
       this.isEmpty.customer_address = false;
       this.isEmpty.customer_tel = false;
       this.isEmpty.customer_email = false;
-      this.isEmpty.cus_purchase = false;
+      this.isEmpty.customer_purchase = false;
       this.isEmpty.customer_tax = false;
 
       const errorMessages = [];
@@ -631,8 +631,8 @@ export default {
         errorMessages.push(this.$t("validation.cus_tax_length"));
       }
 
-      if (this.formData.cus_purchase.trim() === "") {
-        this.isEmpty.cus_purchase = true;
+      if (this.formData.customer_purchase.trim() === "") {
+        this.isEmpty.customer_purchase = true;
         errorMessages.push(this.$t("validation.cus_purchase"));
       }
 
@@ -692,14 +692,14 @@ export default {
         customer_tel: "",
         customer_email: "",
         customer_tax: "",
-        cus_purchase: "",
+        customer_purchase: "",
         status: "",
       };
       this.isEmpty.customer_name = false;
       this.isEmpty.customer_address = false;
       this.isEmpty.customer_tel = false;
       this.isEmpty.customer_email = false;
-      this.isEmpty.cus_purchase = false;
+      this.isEmpty.customer_purchase = false;
       this.isEmpty.customer_tax = false;
 
       this.category_file = "";
@@ -722,7 +722,7 @@ export default {
         customer_tel: item["Customer Tel"],
         customer_email: item["Customer Email"],
         customer_tax: item["Customer Tax"],
-        cus_purchase: item["Purchase by"],
+        customer_purchase: item["Purchase by"],
       };
     },
     async handleEdit2(item) {
@@ -834,7 +834,7 @@ export default {
                 "Customer Tel": item.customer_tel,
                 "Customer Email": item.customer_email,
                 "Customer Tax": item.customer_tax,
-                "Purchase by": item.cus_purchase,
+                "Purchase by": item.customer_purchase,
               };
               return initialTableData;
             });
@@ -935,7 +935,7 @@ export default {
             customer_tel: "",
             customer_email: "",
             customer_tax: "",
-            cus_purchase: "",
+            customer_purchase: "",
             status: "",
           };
           this.isPopupOpen = false;

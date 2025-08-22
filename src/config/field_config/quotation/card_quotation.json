@@ -7,7 +7,7 @@
   { "label": "cusTelHeaderTable", "key": "customer_tel", "expanded": true },
   { "label": "cusEmailHeaderTable", "key": "customer_email", "expanded": true },
   { "label": "cusTaxHeaderTable", "key": "customer_tax", "expanded": true },
-  { "label": "cusPurchaseHeaderTable", "key": "cus_purchase", "expanded": true },
+  { "label": "cusPurchaseHeaderTable", "key": "customer_purchase", "expanded": true },
   { "label": "saleDateHeaderTable", "key": "sale_date", "expanded": true },
   { "label": "creditdateHeaderTable", "key": "credit_date_number", "expanded": true },
   { "label": "expiredHeaderTable", "key": "credit_expired_date", "expanded": true },

@@ -7,7 +7,7 @@
   { "label": "cusTelHeaderTable", "key": "customer_tel", "expanded": true },
   { "label": "cusEmailHeaderTable", "key": "customer_email", "expanded": true },
   { "label": "cusTaxHeaderTable", "key": "customer_tax", "expanded": true },
-  { "label": "cusPurchaseHeaderTable", "key": "cus_purchase", "expanded": true },
+  { "label": "cusPurchaseHeaderTable", "key": "customer_purchase", "expanded": true },
   { "label": "billingDateHeaderTable", "key": "billing_date", "expanded": true },
   { "label": "paymentsHeaderTable", "key": "payments", "expanded": true }
 ]
