@@ -485,7 +485,6 @@ export default {
               item.product_type_id === 1 &&
               (item.product_status === "active" || item.product_status === "Discontinued")
           );
-          //   console.log(this.currentTableData);
         } else {
           this.showPopup_error(json.data);
         }

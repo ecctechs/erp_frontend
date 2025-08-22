@@ -242,11 +242,11 @@ export default {
         userPassword: "",
         bus_id: "",
         business_name: "",
-        bus_address: "",
-        bus_website: "",
-        bus_tel: "",
-        bus_tax: "",
-        bus_logo: "",
+        business_address: "",
+        business_website: "",
+        business_tel: "",
+        business_tax: "",
+        business_logo: "",
         bank_name: "",
         bank_account: "",
         bank_number: "",
@@ -261,11 +261,11 @@ export default {
         userPassword: false,
         bus_id: false,
         business_name: false,
-        bus_address: false,
-        bus_website: false,
-        bus_tel: false,
-        bus_tax: false,
-        bus_logo: false,
+        business_address: false,
+        business_website: false,
+        business_tel: false,
+        business_tax: false,
+        business_logo: false,
         bank_name: false,
         bank_account: false,
         bank_number: false,
@@ -336,11 +336,11 @@ export default {
         "userPassword",
         "userPassword2",
         "business_name",
-        "bus_address",
-        "bus_tel",
+        "business_address",
+        "business_tel",
       ];
-      this.formData.bus_tel = this.formData.bus_tel.replace(/-/g, "");
-      this.formData.bus_tax = this.formData.bus_tax.replace(/-/g, "");
+      this.formData.business_tel = this.formData.business_tel.replace(/-/g, "");
+      this.formData.business_tax = this.formData.business_tax.replace(/-/g, "");
       this.formData.bank_number = this.formData.bank_number.replace(/-/g, "");
       fieldsToCheck.forEach((field) => {
         this.isEmpty[field] = false;
@@ -357,7 +357,7 @@ export default {
           errorMessages.push(this.$t(`validation.${field}`));
         } else {
           if (
-            (field === "userPhone" || field === "bus_tel") &&
+            (field === "userPhone" || field === "business_tel") &&
             !/^\d{9,10}$/.test(value)
           ) {
             this.isEmpty[field] = true;
@@ -393,20 +393,20 @@ export default {
             this.isEmpty.bank_number = true;
             errorMessages.push(this.$t("validation.bank_account_invalid"));
           }
-          if (field === "bus_tax" && value && !/^\d{10,13}$/.test(value)) {
-            this.isEmpty.bus_tax = true;
+          if (field === "business_tax" && value && !/^\d{10,13}$/.test(value)) {
+            this.isEmpty.business_tax = true;
             errorMessages.push(this.$t("validation.tax_invalid"));
           }
         }
       });
 
-      if (this.formData.bus_tax !== "") {
-        if (!/^\d{10,13}$/.test(this.formData.bus_tax)) {
-          this.isEmpty.bus_tax = true;
+      if (this.formData.business_tax !== "") {
+        if (!/^\d{10,13}$/.test(this.formData.business_tax)) {
+          this.isEmpty.business_tax = true;
           errorMessages.push(this.$t("validation.bus_txt_invalid"));
         }
       } else {
-        this.isEmpty.bus_tax = false;
+        this.isEmpty.business_tax = false;
       }
 
       if (
@@ -468,11 +468,11 @@ export default {
         userPassword: "",
         RoleID: "",
         business_name: "",
-        bus_address: "",
-        bus_website: "",
-        bus_tel: "",
-        bus_tax: "",
-        bus_logo: "",
+        business_address: "",
+        business_website: "",
+        business_tel: "",
+        business_tax: "",
+        business_logo: "",
         bank_name: "",
         bank_account: "",
         bank_number: "",
@@ -538,10 +538,10 @@ export default {
       );
       formDataBusiness.append("userPassword", this.formData.userPassword);
       formDataBusiness.append("business_name", this.formData.business_name);
-      formDataBusiness.append("bus_address", this.formData.bus_address);
-      formDataBusiness.append("bus_website", this.formData.bus_website);
-      formDataBusiness.append("bus_tel", this.formData.bus_tel);
-      formDataBusiness.append("bus_tax", this.formData.bus_tax);
+      formDataBusiness.append("business_address", this.formData.business_address);
+      formDataBusiness.append("business_website", this.formData.business_website);
+      formDataBusiness.append("business_tel", this.formData.business_tel);
+      formDataBusiness.append("business_tax", this.formData.business_tax);
       if (this.Image_bus) {
         formDataBusiness.append("file", this.Image_bus);
       }

@@ -44,7 +44,7 @@
                 v-model="formData[field.key]"
                 :error="isEmpty[field.key]"
                 :type="field.type"
-                :maxlength="field.key === 'bus_tel' ? 10 : field.key === 'bus_tax' ? 13 : field.key === 'bank_number' ? 15 : null"
+                :maxlength="field.key === 'business_tel' ? 10 : field.key === 'business_tax' ? 13 : field.key === 'bank_number' ? 15 : null"
               />
             </template>
           </div>
@@ -167,11 +167,11 @@ export default {
       formData: {
         bus_id: "",
         business_name: "",
-        bus_address: "",
-        bus_website: "",
-        bus_tel: "",
-        bus_tax: "",
-        bus_logo: "",
+        business_address: "",
+        business_website: "",
+        business_tel: "",
+        business_tax: "",
+        business_logo: "",
         bank_name: "",
         bank_account: "",
         bank_number: "",
@@ -179,11 +179,11 @@ export default {
       isEmpty: {
         bus_id: false,
         business_name: false,
-        bus_address: false,
-        bus_website: false,
-        bus_tel: false,
-        bus_tax: false,
-        bus_logo: false,
+        business_address: false,
+        business_website: false,
+        business_tel: false,
+        business_tax: false,
+        business_logo: false,
         bank_name: false,
         bank_account: false,
         bank_number: false,
@@ -236,7 +236,7 @@ export default {
       console.log("Edit item:", item);
       this.isEditMode = true;
       this.isShowing = false;
-      this.exp_files = this.formData.bus_logo;
+      this.exp_files = this.formData.business_logo;
     },
     //choose file for upload
     handleFileUpload(event) {
@@ -267,14 +267,14 @@ export default {
       let fieldsToCheck = [
         "bus_id",
         "business_name",
-        "bus_address",
+        "business_address",
         // "bus_website",
-        "bus_tel",
+        "business_tel",
       ];
 
       // ลบขีดออกจากข้อมูลที่ต้องการ
-      this.formData.bus_tel = this.formData.bus_tel.replace(/-/g, "");
-      this.formData.bus_tax = this.formData.bus_tax.replace(/-/g, "");
+      this.formData.business_tel = this.formData.business_tel.replace(/-/g, "");
+      this.formData.business_tax = this.formData.business_tax.replace(/-/g, "");
       this.formData.bank_number = this.formData.bank_number.replace(/-/g, "");
 
       // รีเซ็ตค่า isEmpty ทุกฟิลด์เป็น false
@@ -298,8 +298,8 @@ export default {
             this.isEmpty.userPhone = true;
             errorMessages.push(this.$t("validation.phone_invalid"));
           }
-          if (field === "bus_tel" && !/^\d{9,10}$/.test(value)) {
-            this.isEmpty.bus_tel = true;
+          if (field === "business_tel" && !/^\d{9,10}$/.test(value)) {
+            this.isEmpty.business_tel = true;
             errorMessages.push(this.$t("validation.phone_invalid"));
           }
           if (
@@ -313,21 +313,21 @@ export default {
             this.isEmpty.bank_number = true;
             errorMessages.push(this.$t("validation.bank_account_invalid"));
           }
-          // bus_tax: ถ้ามีการกรอก ต้องเป็นตัวเลข 10-13 หลัก
-          if (field === "bus_tax" && !/^\d{10,13}$/.test(value)) {
-            this.isEmpty.bus_tax = true;
+          // business_tax: ถ้ามีการกรอก ต้องเป็นตัวเลข 10-13 หลัก
+          if (field === "business_tax" && !/^\d{10,13}$/.test(value)) {
+            this.isEmpty.business_tax = true;
             errorMessages.push(this.$t("validation.tax_invalid"));
           }
         }
       });
 
-      if (this.formData.bus_tax !== "") {
-        if (!/^\d{10,13}$/.test(this.formData.bus_tax)) {
-          this.isEmpty.bus_tax = true;
+      if (this.formData.business_tax !== "") {
+        if (!/^\d{10,13}$/.test(this.formData.business_tax)) {
+          this.isEmpty.business_tax = true;
           errorMessages.push(this.$t("validation.bus_txt_invalid"));
         }
       } else {
-        this.isEmpty.bus_tax = false;
+        this.isEmpty.business_tax = false;
       }
 
       // ตรวจสอบว่ารหัสผ่านและยืนยันรหัสผ่านตรงกัน
@@ -376,23 +376,6 @@ export default {
     //call api for add business data
     async editBusiness() {
       const accessToken = localStorage.getItem("@accessToken");
-      console.log("Add Business ");
-
-      // if (
-      //   this.formData.bus_tel.length < 9 ||
-      //   this.formData.bus_tel.length > 10
-      // ) {
-      //   this.showPopup_error("Phone number must be 9 or 10 digits");
-      //   return;
-      // }
-      // if (this.formData.bus_tax.length != 13) {
-      //   this.showPopup_error("tax must be 13 digits");
-      //   return;
-      // }
-      // if (this.formData.bank_number.length < 10) {
-      //   this.showPopup_error("Bank account ID must be 10 digits");
-      //   return;
-      // }
       try {
         if (!this.validateFormData()) return;
         this.isLoading = true;
@@ -400,10 +383,10 @@ export default {
         const formDataBusiness = new FormData();
         formDataBusiness.append("bus_id", this.formData.bus_id);
         formDataBusiness.append("business_name", this.formData.business_name);
-        formDataBusiness.append("bus_address", this.formData.bus_address);
-        formDataBusiness.append("bus_website", this.formData.bus_website);
-        formDataBusiness.append("bus_tel", this.formData.bus_tel);
-        formDataBusiness.append("bus_tax", this.formData.bus_tax);
+        formDataBusiness.append("business_address", this.formData.business_address);
+        formDataBusiness.append("business_website", this.formData.business_website);
+        formDataBusiness.append("business_tel", this.formData.business_tel);
+        formDataBusiness.append("business_tax", this.formData.business_tax);
         formDataBusiness.append("file", this.Image_bus);
         formDataBusiness.append("bank_name", this.formData.bank_name);
         formDataBusiness.append("bank_account", this.formData.bank_account);
@@ -463,11 +446,11 @@ export default {
           this.formData = {
             bus_id: json.data.business.bus_id || "",
             business_name: json.data.business.business_name || "",
-            bus_address: json.data.business.bus_address || "",
-            bus_website: json.data.business.bus_website || "",
-            bus_tel: json.data.business.bus_tel || "",
-            bus_tax: json.data.business.bus_tax || "",
-            bus_logo: json.data.business.bus_logo || "",
+            business_address: json.data.business.business_address || "",
+            business_website: json.data.business.business_website || "",
+            business_tel: json.data.business.business_tel || "",
+            business_tax: json.data.business.business_tax || "",
+            business_logo: json.data.business.business_logo || "",
             bank_name:
               json.data.business.banks && json.data.business.banks[0]
                 ? json.data.business.banks[0].bank_name
@@ -488,11 +471,11 @@ export default {
           this.formData = {
             bus_id: "",
             business_name: "",
-            bus_address: "",
-            bus_website: "",
-            bus_tel: "",
-            bus_tax: "",
-            bus_logo: "",
+            business_address: "",
+            business_website: "",
+            business_tel: "",
+            business_tax: "",
+            business_logo: "",
             bank_name: "",
             bank_account: "",
             bank_number: "",

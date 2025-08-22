@@ -13,7 +13,7 @@
         ></span>
 
         <div class="container-fluid logowithname-top">
-          <img :src="formDataBusiness.bus_logo" class="logo-on-top" />
+          <img :src="formDataBusiness.business_logo" class="logo-on-top" />
           <a class="navbar-brand">{{ formDataBusiness.business_name }}</a>
         </div>
         <div class="me-3">
@@ -773,11 +773,11 @@ export default {
       formDataBusiness: {
         bus_id: 1,
         business_name: "",
-        bus_address: "",
-        bus_website: "",
-        bus_tel: "",
-        bus_tax: "",
-        bus_logo: "",
+        business_address: "",
+        business_website: "",
+        business_tel: "",
+        business_tax: "",
+        business_logo: "",
         bank_name: "",
         bank_account: "",
         bank_number: "",
@@ -1604,11 +1604,11 @@ export default {
         if (json.statusCode === 200 && json.data) {
           this.formDataBusiness = {
             business_name: json.data.business.business_name || "",
-            bus_address: json.data.business.bus_address || "",
-            bus_website: json.data.business.bus_website || "",
-            bus_tel: json.data.business.bus_tel || "",
-            bus_tax: json.data.business.bus_tax || "",
-            bus_logo: json.data.business.bus_logo || "",
+            business_address: json.data.business.business_address || "",
+            business_website: json.data.business.business_website || "",
+            business_tel: json.data.business.business_tel || "",
+            business_tax: json.data.business.business_tax || "",
+            business_logo: json.data.business.business_logo || "",
             bank_name:
               json.data.business.banks && json.data.business.banks[0]
                 ? json.data.business.banks[0].bank_name

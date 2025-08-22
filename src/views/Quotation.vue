@@ -1288,13 +1288,13 @@ export default {
         // ตั้งค่าฟอนต์ที่ต้องการ
         doc.setFont("PromptRegularLight", "normal");
         doc.text(
-          `${this.Business.business_name} ${this.Business.bus_website}`,
+          `${this.Business.business_name} ${this.Business.business_website}`,
           10,
           19
         );
-        doc.text(`${this.Business.bus_address}`, 10, 24);
-        doc.text(`Tax ID.${this.Business.bus_tax}`, 10, 29);
-        doc.text(`Tel.${this.Business.bus_tel}`, 10, 34);
+        doc.text(`${this.Business.business_address}`, 10, 24);
+        doc.text(`Tax ID.${this.Business.business_tax}`, 10, 29);
+        doc.text(`Tel.${this.Business.business_tel}`, 10, 34);
         doc.text("Signature", 110, 265);
         doc.text("Name", 110, 275);
         doc.text("Position", 110, 285);
@@ -1481,9 +1481,9 @@ export default {
         doc.setFont("PromptRegularLight", "normal");
         //set image (image , x,y,w,h)
 
-        if (this.Business.bus_logo != null) {
+        if (this.Business.business_logo != null) {
           const img = new Image();
-          img.src = `${this.Business.bus_logo}`;
+          img.src = `${this.Business.business_logo}`;
 
           await new Promise((resolve) => {
             img.onload = resolve;
