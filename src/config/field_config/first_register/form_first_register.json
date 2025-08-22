@@ -6,7 +6,7 @@
   { "key": "userEmail", "label": "email", "group": "user", "componentType": "TextField", "type": "email", "required": true, "col": "col-6" },
   { "key": "userPassword", "label": "password", "group": "user", "componentType": "Password", "required": true, "col": "col-md-6" },
   { "key": "userPassword2", "label": "comfrimpassword", "group": "user", "componentType": "Password", "required": true, "col": "col-md-6" },
-  { "key": "bus_name", "label": "customerName", "group": "business", "componentType": "TextField", "type": "text", "required": true, "col": "col-md-6" },
+  { "key": "business_name", "label": "customerName", "group": "business", "componentType": "TextField", "type": "text", "required": true, "col": "col-md-6" },
   { "key": "bus_website", "label": "companyWebsite", "group": "business", "componentType": "TextField", "type": "text", "required": false, "col": "col-md-6" },
   { "key": "bus_address", "label": "address", "group": "business", "componentType": "TextField", "type": "text", "required": true, "col": "col-md-12" },
   { "key": "bus_tel", "label": "companyPhone", "group": "business", "componentType": "TextField", "type": "tel", "required": true, "col": "col-md-6", "maxlength": 10, "isNumeric": true },

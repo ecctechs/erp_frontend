@@ -14,7 +14,7 @@
 
         <div class="container-fluid logowithname-top">
           <img :src="formDataBusiness.bus_logo" class="logo-on-top" />
-          <a class="navbar-brand">{{ formDataBusiness.bus_name }}</a>
+          <a class="navbar-brand">{{ formDataBusiness.business_name }}</a>
         </div>
         <div class="me-3">
           <div style="cursor: pointer" @click="toggleLanguage(t('headerLang'))">
@@ -772,7 +772,7 @@ export default {
       },
       formDataBusiness: {
         bus_id: 1,
-        bus_name: "",
+        business_name: "",
         bus_address: "",
         bus_website: "",
         bus_tel: "",
@@ -1603,7 +1603,7 @@ export default {
         const json = await response.json();
         if (json.statusCode === 200 && json.data) {
           this.formDataBusiness = {
-            bus_name: json.data.business.bus_name || "",
+            business_name: json.data.business.business_name || "",
             bus_address: json.data.business.bus_address || "",
             bus_website: json.data.business.bus_website || "",
             bus_tel: json.data.business.bus_tel || "",

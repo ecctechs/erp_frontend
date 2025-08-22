@@ -1189,7 +1189,7 @@ summaryFields() {
         doc.setFont("PromptRegular", "normal");
 
         //{text, x,y}
-        doc.text(`${this.Business.bus_name}`, 10, 12);
+        doc.text(`${this.Business.business_name}`, 10, 12);
         // console.log("this.Business", this.Business.bank_id);
 
         const bank_detail = this.AllBanks.filter(
@@ -1220,7 +1220,7 @@ summaryFields() {
         // ตั้งค่าฟอนต์ที่ต้องการ
         doc.setFont("PromptRegularLight", "normal");
         doc.text(
-          `${this.Business.bus_name} ${this.Business.bus_website}`,
+          `${this.Business.business_name} ${this.Business.bus_website}`,
           10,
           19
         );

@@ -166,7 +166,7 @@ export default {
       isPopupVisible: false,
       formData: {
         bus_id: "",
-        bus_name: "",
+        business_name: "",
         bus_address: "",
         bus_website: "",
         bus_tel: "",
@@ -178,7 +178,7 @@ export default {
       },
       isEmpty: {
         bus_id: false,
-        bus_name: false,
+        business_name: false,
         bus_address: false,
         bus_website: false,
         bus_tel: false,
@@ -266,7 +266,7 @@ export default {
       // รายชื่อฟิลด์ทั้งหมดที่ต้องตรวจสอบ
       let fieldsToCheck = [
         "bus_id",
-        "bus_name",
+        "business_name",
         "bus_address",
         // "bus_website",
         "bus_tel",
@@ -399,7 +399,7 @@ export default {
         //Set data in the form to be used only when sending data with an image
         const formDataBusiness = new FormData();
         formDataBusiness.append("bus_id", this.formData.bus_id);
-        formDataBusiness.append("bus_name", this.formData.bus_name);
+        formDataBusiness.append("business_name", this.formData.business_name);
         formDataBusiness.append("bus_address", this.formData.bus_address);
         formDataBusiness.append("bus_website", this.formData.bus_website);
         formDataBusiness.append("bus_tel", this.formData.bus_tel);
@@ -462,7 +462,7 @@ export default {
           //sendata to formData
           this.formData = {
             bus_id: json.data.business.bus_id || "",
-            bus_name: json.data.business.bus_name || "",
+            business_name: json.data.business.business_name || "",
             bus_address: json.data.business.bus_address || "",
             bus_website: json.data.business.bus_website || "",
             bus_tel: json.data.business.bus_tel || "",
@@ -487,7 +487,7 @@ export default {
           this.showPopup_error("No data found");
           this.formData = {
             bus_id: "",
-            bus_name: "",
+            business_name: "",
             bus_address: "",
             bus_website: "",
             bus_tel: "",

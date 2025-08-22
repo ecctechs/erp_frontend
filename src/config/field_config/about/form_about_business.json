@@ -1,6 +1,6 @@
 [
   {
-    "key": "bus_name",
+    "key": "business_name",
     "label": "customerName",
     "type": "text",
     "componentType": "text"

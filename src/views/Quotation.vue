@@ -1258,7 +1258,7 @@ export default {
 
         // ตั้งค่าฟอนต์ที่ต้องการ
         doc.setFont("PromptRegular", "normal");
-        doc.text(`${this.Business.bus_name}`, 10, 12);
+        doc.text(`${this.Business.business_name}`, 10, 12);
 
         const bank_detail = this.AllBanks.filter(
           (bank) => bank.bank_id === this.Business.bank_id
@@ -1288,7 +1288,7 @@ export default {
         // ตั้งค่าฟอนต์ที่ต้องการ
         doc.setFont("PromptRegularLight", "normal");
         doc.text(
-          `${this.Business.bus_name} ${this.Business.bus_website}`,
+          `${this.Business.business_name} ${this.Business.bus_website}`,
           10,
           19
         );

@@ -241,7 +241,7 @@ export default {
         userEmail: "",
         userPassword: "",
         bus_id: "",
-        bus_name: "",
+        business_name: "",
         bus_address: "",
         bus_website: "",
         bus_tel: "",
@@ -260,7 +260,7 @@ export default {
         userEmail: false,
         userPassword: false,
         bus_id: false,
-        bus_name: false,
+        business_name: false,
         bus_address: false,
         bus_website: false,
         bus_tel: false,
@@ -335,7 +335,7 @@ export default {
         "userEmail",
         "userPassword",
         "userPassword2",
-        "bus_name",
+        "business_name",
         "bus_address",
         "bus_tel",
       ];
@@ -467,7 +467,7 @@ export default {
         userEmail: "",
         userPassword: "",
         RoleID: "",
-        bus_name: "",
+        business_name: "",
         bus_address: "",
         bus_website: "",
         bus_tel: "",
@@ -537,7 +537,7 @@ export default {
         this.formData.userEmail.toLowerCase().trim()
       );
       formDataBusiness.append("userPassword", this.formData.userPassword);
-      formDataBusiness.append("bus_name", this.formData.bus_name);
+      formDataBusiness.append("business_name", this.formData.business_name);
       formDataBusiness.append("bus_address", this.formData.bus_address);
       formDataBusiness.append("bus_website", this.formData.bus_website);
       formDataBusiness.append("bus_tel", this.formData.bus_tel);
