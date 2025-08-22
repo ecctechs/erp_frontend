@@ -425,7 +425,7 @@ export default {
         "productID",
         "transaction_id",
         "invoice_id",
-        "cus_id",
+        "customer_id",
         "employeeID",
         "sale_id",
         "productForms",

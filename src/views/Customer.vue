@@ -311,7 +311,7 @@ export default {
       inputValue: "",
       inputError: false,
       formData: {
-        cus_id: "",
+        customer_id: "",
         cus_name: "",
         cus_address: "",
         cus_tel: "",
@@ -337,7 +337,7 @@ export default {
         company_person_customer: false,
       },
       isEmpty: {
-        cus_id: "",
+        customer_id: "",
         cus_name: false,
         cus_address: false,
         cus_tel: false,
@@ -359,7 +359,7 @@ export default {
     companyOptions() {
       if (!this.CustomerDropown) return [];
       return this.CustomerDropown.map((customer) => ({
-        value: customer.cus_id,
+        value: customer.customer_id,
         text: customer.cus_name,
       }));
     },
@@ -686,7 +686,7 @@ export default {
       this.isAddingMode = false;
       this.isEditMode = false;
       this.formData = {
-        cus_id: "",
+        customer_id: "",
         cus_name: "",
         cus_address: "",
         cus_tel: "",
@@ -715,7 +715,7 @@ export default {
       this.isAddingMode = false;
       this.isEditMode = true;
       this.formData = {
-        cus_id: item.ID,
+        customer_id: item.ID,
         status: item.status,
         cus_name: item["Customer Name"],
         cus_address: item["Customer Address"],
@@ -749,14 +749,14 @@ export default {
         company_person_address: item["Customer Address"],
         company_person_tel: item["Customer Tel"],
         company_person_email: item["Customer Email"],
-        company_person_customer: customer ? customer.cus_id : null,
+        company_person_customer: customer ? customer.customer_id : null,
       };
     },
     handleDelete(item) {
       console.log("Delete button clicked for item:", item);
       this.isDeleteConfirmPopupOpen = true;
       this.formData = {
-        cus_id: item.ID,
+        customer_id: item.ID,
       };
       this.formDataCustomer = {
         company_person_id: item.ID,
@@ -827,7 +827,7 @@ export default {
             this.CompanyPerson = [];
             this.Customers = json.data.map((item) => {
               let initialTableData = {
-                ID: item.cus_id,
+                ID: item.customer_id,
                 customer_status: item.customer_status,
                 "Customer Name": item.cus_name,
                 "Customer Address": item.cus_address,
@@ -929,7 +929,7 @@ export default {
           this.getCustomer();
           this.showPopup(this.$t("validation.AddSucc"));
           this.formData = {
-            cus_id: "",
+            customer_id: "",
             cus_name: "",
             cus_address: "",
             cus_tel: "",
@@ -966,7 +966,7 @@ export default {
       this.errorMessages = [];
 
       this.isLoading = true;
-      const cusID = this.formData.cus_id;
+      const cusID = this.formData.customer_id;
       try {
         const response = await fetch(
           `${API_CALL}/Quotation/editCustomer/${cusID}`,
@@ -1012,7 +1012,7 @@ export default {
 
       try {
         if (this.selectedType === "A") {
-          cusID = this.formData.cus_id;
+          cusID = this.formData.customer_id;
         } else {
           cusID = this.formDataCustomer.company_person_id;
         }
@@ -1038,7 +1038,7 @@ export default {
 
         if (json.statusCode === 200) {
           this.Customers = this.Customers.filter(
-            (item) => item.cus_id !== cusID
+            (item) => item.customer_id !== cusID
           );
           this.getCustomer();
           this.showPopup(this.$t("validation.DelateSucc"));

@@ -442,7 +442,7 @@ export default {
       productForms: [],
       formData: {
         bus_id: "",
-        cus_id: "",
+        customer_id: "",
         product_id: "",
         employee_id: "",
         employeeName: "",
@@ -827,11 +827,10 @@ export default {
         (inv) => inv.invoice_id === row.invoice_id
       );
 
-      console.log("this.Invoices----->", filteredInvoice);
       this.formData = {
         employee_id: row.employee_id,
         employeeName: row.employeeName,
-        cus_id: row.cus_id,
+        customer_id: row.customer_id,
         cus_name: row.cus_name,
         cus_address: row.cus_address,
         cus_tel: row.cus_tel,
@@ -983,7 +982,7 @@ export default {
       this.formData = {
         employee_id: row.employee_id,
         employeeName: row.employeeName,
-        cus_id: row.cus_id,
+        customer_id: row.customer_id,
         cus_name: row.cus_name,
         cus_address: row.cus_address,
         cus_tel: row.cus_tel,
@@ -1045,7 +1044,7 @@ export default {
       this.formData = {
         employee_id: row.employee_id,
         employeeName: row.employeeName,
-        cus_id: row.cus_id,
+        customer_id: row.customer_id,
         cus_name: row.cus_name,
         cus_address: row.cus_address,
         cus_tel: row.cus_tel,
@@ -1633,7 +1632,7 @@ export default {
       this.isEditMode = false;
       this.formData = {
         bus_id: "",
-        cus_id: "",
+        customer_id: "",
         product_id: "",
         employee_id: "",
         employeeName: "",
@@ -1849,7 +1848,7 @@ export default {
               quotation_num: item.quotation_num,
               employee_id: item.employee_id,
               employeeName: item.employee_name,
-              cus_id: item.cus_id,
+              customer_id: item.customer_id,
               cus_name: item.cus_name,
               cus_address: item.cus_address,
               cus_tel: item.cus_tel,

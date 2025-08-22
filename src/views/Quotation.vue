@@ -186,7 +186,7 @@
             <div v-if="field.componentType === 'Datalist'" style="position: relative; width: 50%;">
                 <input list="browsers" class="form-control" v-model="selectedCusName" @input="getDetailCustomer()" :class="{ error: isEmpty.cus_name }" autoComplete="off" />
                 <datalist id="browsers">
-                    <option v-for="item in Customers" :key="item.cus_id" :value="item.cus_name"></option>
+                    <option v-for="item in Customers" :key="item.customer_id" :value="item.cus_name"></option>
                 </datalist>
             </div>
             <TextField v-else v-model="formData[field.key]" :readonly="isReadonly" :disabled="isDisabled" :maxlength="field.maxlength" @keypress="field.isNumeric ? validateInput($event) : null" :class="{ error: isEmpty[field.key] }" />
@@ -526,7 +526,7 @@ export default {
       cus_drop_down: "",
       formData: {
         bus_id: "",
-        cus_id: "",
+        customer_id: "",
         product_id: "",
         employee_id: "",
         employeeName: "",
@@ -563,7 +563,7 @@ export default {
       },
       isEmpty: {
         bus_id: "",
-        cus_id: "",
+        customer_id: "",
         product_id: "",
         employee_id: "",
         employeeName: "",
@@ -815,9 +815,9 @@ export default {
       let items = []; // This is the data received from the API
       // console.log(items);
 
-      items = this.Customers.filter((item) => item.cus_id === newVal);
+      items = this.Customers.filter((item) => item.customer_id === newVal);
 
-      this.formData.cus_id = items[0].cus_id;
+      this.formData.customer_id = items[0].customer_id;
       this.formData.cus_name = items[0].cus_name;
       this.formData.cus_address = items[0].cus_address;
       this.formData.cus_tel = items[0].cus_tel;
@@ -940,7 +940,7 @@ export default {
         (item) => item.cus_name === this.selectedCusName
       );
       if (items.length > 0) {
-        this.formData.cus_id = items[0].cus_id;
+        this.formData.customer_id = items[0].customer_id;
         this.formData.cus_name = items[0].cus_name;
         this.formData.cus_address = items[0].cus_address;
         this.formData.cus_tel = items[0].cus_tel;
@@ -952,7 +952,7 @@ export default {
         this.isDisabled = true;
         this.NotCustomerExit = false;
       } else {
-        this.formData.cus_id = "";
+        this.formData.customer_id = "";
         this.formData.cus_name = "";
         this.formData.cus_address = "";
         this.formData.cus_tel = "";
@@ -1130,7 +1130,7 @@ export default {
         if (json.statusCode === 200) {
           this.Customers = json.data.map((item) => {
             let initialTableData = {
-              cus_id: item.cus_id,
+              customer_id: item.customer_id,
               cus_name: item.cus_name,
               cus_address: item.cus_address,
               cus_tel: item.cus_tel,
@@ -1808,7 +1808,7 @@ export default {
               sale_number: item.quotation_num,
               employee_id: item.employee_id,
               employeeName: item.employee_name,
-              cus_id: item.cus_id,
+              customer_id: item.customer_id,
               cus_name: item.cus_name,
               cus_address: item.cus_address,
               cus_tel: item.cus_tel,
@@ -2094,9 +2094,7 @@ export default {
           );
 
           if (dataStorage) {
-            this.formData.cus_id = dataStorage.cus_id; // เก็บค่า cus_id
-            // alert("GG");
-            console.log("dataStorage", dataStorage);
+            this.formData.customer_id = dataStorage.customer_id; // เก็บค่า customer_id
           } else {
             console.error("Customer not found.");
           }
@@ -2144,7 +2142,7 @@ export default {
               this.formData.sale_totalprice.replace(/,/g, "")
             ),
             bus_id: this.Business.bus_id,
-            cus_id: this.formData.cus_id,
+            customer_id: this.formData.customer_id,
             employee_id: this.formData.employee_id,
             status: "Pending",
             remark: this.formData.remark,
@@ -2242,7 +2240,7 @@ export default {
           );
 
           if (dataStorage) {
-            this.formData.cus_id = dataStorage.cus_id; // เก็บค่า cus_id
+            this.formData.customer_id = dataStorage.customer_id; 
 
             console.log("dataStorage", dataStorage);
           } else {
@@ -2311,7 +2309,7 @@ export default {
                   ? parseFloat(this.formData.sale_totalprice.replace(/,/g, ""))
                   : parseFloat(this.formData.sale_totalprice.replace(/,/g, "")),
               bus_id: this.Business.bus_id,
-              cus_id: this.formData.cus_id,
+              customer_id: this.formData.customer_id,
               employee_id: this.formData.employee_id,
               status: this.formData.status,
               remark: this.formData.remark,
@@ -2393,7 +2391,7 @@ export default {
           );
 
           if (dataStorage) {
-            this.formData.cus_id = dataStorage.cus_id; // เก็บค่า cus_id
+            this.formData.customer_id = dataStorage.customer_id; 
 
             console.log("dataStorage", dataStorage);
           } else {
@@ -2484,7 +2482,7 @@ export default {
                   ? parseFloat(this.formData.sale_totalprice.replace(/,/g, ""))
                   : parseFloat(this.formData.sale_totalprice.replace(/,/g, "")),
               bus_id: this.Business.bus_id,
-              cus_id: this.formData.cus_id,
+              customer_id: this.formData.customer_id,
               employee_id: this.formData.employee_id,
               status: "Allowed",
               remark: this.formData.remark,
@@ -2567,7 +2565,7 @@ export default {
           );
 
           if (dataStorage) {
-            this.formData.cus_id = dataStorage.cus_id; // เก็บค่า cus_id
+            this.formData.customer_id = dataStorage.customer_id; 
 
             console.log("dataStorage", dataStorage);
           } else {
@@ -2636,7 +2634,7 @@ export default {
                   ? parseFloat(this.formData.sale_totalprice.replace(/,/g, ""))
                   : parseFloat(this.formData.sale_totalprice.replace(/,/g, "")),
               bus_id: this.Business.bus_id,
-              cus_id: this.formData.cus_id,
+              customer_id: this.formData.customer_id,
               employee_id: this.formData.employee_id,
               status: "Pending",
               remark: this.formData.remark,
@@ -2921,7 +2919,7 @@ export default {
       this.cus_drop_down;
       this.formData = {
         bus_id: "",
-        cus_id: "",
+        customer_id: "",
         product_id: "",
         employee_id: "",
         employeeName: "",
@@ -2991,7 +2989,7 @@ export default {
       //   this.cus_drop_down = ""
       this.formData = {
         bus_id: "",
-        cus_id: "",
+        customer_id: "",
         product_id: "",
         employee_id: "",
         employeeName: "",
@@ -3438,7 +3436,7 @@ export default {
     },
     async companySelected(selectedCus) {
       console.log(selectedCus);
-      this.formData.cus_id = selectedCus.cus_id;
+      this.formData.customer_id = selectedCus.customer_id;
       this.formData.cus_name = selectedCus.cus_name;
       this.formData.cus_address = selectedCus.cus_address;
       this.formData.cus_tel = selectedCus.cus_tel;
@@ -3501,7 +3499,7 @@ export default {
         quotationData.quotation_expired_date
       );
 
-      this.cus_drop_down = row.cus_id;
+      this.cus_drop_down = row.customer_id;
       this.selectedCusName = row.cus_name;
       this.formData = {
         sale_id: row.sale_id,
@@ -3509,7 +3507,7 @@ export default {
         status: quotationData.status,
         employee_id: row.employee_id,
         employeeName: row.employee_name,
-        cus_id: row.cus_id,
+        customer_id: row.customer_id,
         cus_name: row.cus_name,
         cus_address: row.cus_address,
         cus_tel: row.cus_tel,
@@ -3621,14 +3619,14 @@ export default {
       };
       const formattedStart = formatDateForPicker(row.quotation_start_date);
       const formattedExpired = formatDateForPicker(row.quotation_expired_date);
-      this.cus_drop_down = row.cus_id;
+      this.cus_drop_down = row.customer_id;
       this.formData = {
         sale_id: row.sale_id,
         sale_number: row.sale_number,
         status: row.status,
         employee_id: row.employee_id,
         employeeName: row.employee_name,
-        cus_id: row.cus_id,
+        customer_id: row.customer_id,
         cus_name: row.cus_name,
         cus_address: row.cus_address,
         cus_tel: row.cus_tel,
@@ -3686,14 +3684,14 @@ export default {
       };
       const formattedStart = formatDateForPicker(row.quotation_start_date);
       const formattedExpired = formatDateForPicker(row.quotation_expired_date);
-      this.cus_drop_down = row.cus_id;
+      this.cus_drop_down = row.customer_id;
       this.formData = {
         sale_id: row.sale_id,
         sale_number: row.quotation_num,
         status: row.status,
         employee_id: row.employee_id,
         employeeName: row.employee_name,
-        cus_id: row.cus_id,
+        customer_id: row.customer_id,
         cus_name: row.cus_name,
         cus_address: row.cus_address,
         cus_tel: row.cus_tel,
