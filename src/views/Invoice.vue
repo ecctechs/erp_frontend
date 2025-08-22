@@ -480,8 +480,8 @@ export default {
         customer_name: "",
         customer_address: "",
         customer_tel: "",
-        cus_email: "",
-        cus_tax: "",
+        customer_email: "",
+        customer_tax: "",
         cus_purchase: "",
         sale_qty: "",
         sale_date: "",
@@ -563,8 +563,8 @@ summaryFields() {
         { label: this.t("cusNameHeaderTable"), key: "customer_name" },
         { label: this.t("cusAddressHeaderTable"), key: "customer_address" },
         { label: this.t("cusTelHeaderTable"), key: "customer_tel" },
-        { label: this.t("cusEmailHeaderTable"), key: "cus_email" },
-        { label: this.t("cusTaxHeaderTable"), key: "cus_tax" },
+        { label: this.t("cusEmailHeaderTable"), key: "customer_email" },
+        { label: this.t("cusTaxHeaderTable"), key: "customer_tax" },
         { label: this.t("cusPurchaseHeaderTable"), key: "cus_purchase" },
         { label: this.t("saleTotalpriceHeaderTable"), key: "sale_totalprice" },
         { label: this.t("netpriceHeaderTable"), key: "net_price" },
@@ -812,8 +812,8 @@ summaryFields() {
         customer_name: row.customer_name,
         customer_address: row.customer_address,
         customer_tel: row.customer_tel,
-        cus_email: row.cus_email,
-        cus_tax: row.cus_tax,
+        customer_email: row.customer_email,
+        customer_tax: row.customer_tax,
         cus_purchase: row.cus_purchase,
         sale_totalprice: row.sale_totalprice,
         remark: row.remark || "", // จัดการค่า remark ให้เป็น string ว่างถ้าเป็น null
@@ -967,8 +967,8 @@ summaryFields() {
         customer_name: row.customer_name,
         customer_address: row.customer_address,
         customer_tel: row.customer_tel,
-        cus_email: row.cus_email,
-        cus_tax: row.cus_tax,
+        customer_email: row.customer_email,
+        customer_tax: row.customer_tax,
         cus_purchase: row.cus_purchase,
         sale_totalprice: row.sale_totalprice,
         remark: row.remark || "", // จัดการค่า remark ให้เป็น string ว่างถ้าเป็น null
@@ -1029,8 +1029,8 @@ summaryFields() {
         customer_name: row.customer_name,
         customer_address: row.customer_address,
         customer_tel: row.customer_tel,
-        cus_email: row.cus_email,
-        cus_tax: row.cus_tax,
+        customer_email: row.customer_email,
+        customer_tax: row.customer_tax,
         cus_purchase: row.cus_purchase,
         sale_totalprice: row.sale_totalprice,
         remark: row.remark || "", // จัดการค่า remark ให้เป็น string ว่างถ้าเป็น null
@@ -1237,9 +1237,9 @@ summaryFields() {
         doc.text(`Customer Name: ` + row.customer_name, 10, 50);
         doc.text(`Address: ` + row.customer_address, 10, 55);
         doc.text(`Contact: ` + row.customer_tel, 10, 60);
-        doc.text(`E-mail: ` + row.cus_email, 10, 65);
+        doc.text(`E-mail: ` + row.customer_email, 10, 65);
         doc.text(`Contact No: ` + row.customer_tel, 10, 70);
-        doc.text(`Tax ID: ` + row.cus_tax, 10, 75);
+        doc.text(`Tax ID: ` + row.customer_tax, 10, 75);
 
         // ===== Header Section (จัดระนาบ) =====
         const startX_header_custom = 130;
@@ -1606,8 +1606,8 @@ summaryFields() {
         customer_name: "",
         customer_address: "",
         customer_tel: "",
-        cus_email: "",
-        cus_tax: "",
+        customer_email: "",
+        customer_tax: "",
         cus_purchase: "",
         sale_qty: "",
         sale_date: "",
@@ -1816,8 +1816,8 @@ summaryFields() {
               customer_name: item.customer_name,
               customer_address: item.customer_address,
               customer_tel: item.customer_tel,
-              cus_email: item.cus_email,
-              cus_tax: item.cus_tax,
+              customer_email: item.customer_email,
+              customer_tax: item.customer_tax,
               cus_purchase: item.cus_purchase,
               sale_totalprice: total_before_vat,
               net_price: vat_in,

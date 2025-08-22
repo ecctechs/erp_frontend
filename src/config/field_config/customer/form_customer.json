@@ -21,13 +21,13 @@
       "isNumeric": true
     },
     {
-      "key": "cus_email",
+      "key": "customer_email",
       "label": "email",
       "type": "email",
       "required": true
     },
     {
-      "key": "cus_tax",
+      "key": "customer_tax",
       "label": "taxID",
       "type": "tel",
       "required": true,

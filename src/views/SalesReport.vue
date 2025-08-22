@@ -383,8 +383,8 @@ export default {
               customer_name: item.customer_name,
               customer_address: item.customer_address,
               customer_tel: item.customer_tel,
-              cus_email: item.cus_email,
-              cus_tax: item.cus_tax,
+              customer_email: item.customer_email,
+              customer_tax: item.customer_tax,
               cus_purchase: item.cus_purchase,
               sale_totalprice: item.sale_totalprice, // ตรวจสอบค่าที่ใช้คำนวณ
               invoice_id: item.invoice_id,
@@ -428,8 +428,8 @@ export default {
               customer_name: item.customer_name,
               customer_address: item.customer_address,
               customer_tel: item.customer_tel,
-              cus_email: item.cus_email,
-              cus_tax: item.cus_tax,
+              customer_email: item.customer_email,
+              customer_tax: item.customer_tax,
               cus_purchase: item.cus_purchase,
               sale_totalprice: item.sale_totalprice, // ตรวจสอบค่าที่ใช้คำนวณ
               invoice_id: item.invoice_id,
@@ -473,8 +473,8 @@ export default {
               customer_name: item.customer_name,
               customer_address: item.customer_address,
               customer_tel: item.customer_tel,
-              cus_email: item.cus_email,
-              cus_tax: item.cus_tax,
+              customer_email: item.customer_email,
+              customer_tax: item.customer_tax,
               cus_purchase: item.cus_purchase,
               sale_totalprice: item.sale_totalprice, // ตรวจสอบค่าที่ใช้คำนวณ
               invoice_id: item.invoice_id,

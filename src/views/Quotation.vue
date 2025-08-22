@@ -536,8 +536,8 @@ export default {
         customer_name: "",
         customer_address: "",
         customer_tel: "",
-        cus_email: "",
-        cus_tax: "",
+        customer_email: "",
+        customer_tax: "",
         cus_purchase: "",
         sale_qty: "",
         sale_number: "",
@@ -573,8 +573,8 @@ export default {
         customer_name: "",
         customer_address: "",
         customer_tel: "",
-        cus_email: "",
-        cus_tax: "",
+        customer_email: "",
+        customer_tax: "",
         cus_purchase: "",
         sale_qty: "",
         sale_number: "",
@@ -699,8 +699,8 @@ export default {
         { label: this.t("cusNameHeaderTable"), key: "customer_name" },
         { label: this.t("cusAddressHeaderTable"), key: "customer_address" },
         { label: this.t("cusTelHeaderTable"), key: "customer_tel" },
-        { label: this.t("cusEmailHeaderTable"), key: "cus_email" },
-        { label: this.t("cusTaxHeaderTable"), key: "cus_tax" },
+        { label: this.t("cusEmailHeaderTable"), key: "customer_email" },
+        { label: this.t("cusTaxHeaderTable"), key: "customer_tax" },
         { label: this.t("cusPurchaseHeaderTable"), key: "cus_purchase" },
         { label: this.t("saleDateHeaderTable"), key: "sale_date" },
         { label: this.t("creditdateHeaderTable"), key: "credit_date_number" },
@@ -821,8 +821,8 @@ export default {
       this.formData.customer_name = items[0].customer_name;
       this.formData.customer_address = items[0].customer_address;
       this.formData.customer_tel = items[0].customer_tel;
-      this.formData.cus_email = items[0].cus_email;
-      this.formData.cus_tax = items[0].cus_tax;
+      this.formData.customer_email = items[0].customer_email;
+      this.formData.customer_tax = items[0].customer_tax;
       this.formData.cus_purchase = items[0].cus_purchase;
     },
   },
@@ -944,8 +944,8 @@ export default {
         this.formData.customer_name = items[0].customer_name;
         this.formData.customer_address = items[0].customer_address;
         this.formData.customer_tel = items[0].customer_tel;
-        this.formData.cus_email = items[0].cus_email;
-        this.formData.cus_tax = items[0].cus_tax;
+        this.formData.customer_email = items[0].customer_email;
+        this.formData.customer_tax = items[0].customer_tax;
         this.formData.cus_purchase = items[0].cus_purchase;
 
         this.isReadonly = true;
@@ -956,8 +956,8 @@ export default {
         this.formData.customer_name = "";
         this.formData.customer_address = "";
         this.formData.customer_tel = "";
-        this.formData.cus_email = "";
-        this.formData.cus_tax = "";
+        this.formData.customer_email = "";
+        this.formData.customer_tax = "";
         this.formData.cus_purchase = "";
 
         this.isReadonly = false;
@@ -1134,8 +1134,8 @@ export default {
               customer_name: item.customer_name,
               customer_address: item.customer_address,
               customer_tel: item.customer_tel,
-              cus_email: item.cus_email,
-              cus_tax: item.cus_tax,
+              customer_email: item.customer_email,
+              customer_tax: item.customer_tax,
               cus_purchase: item.cus_purchase,
               customer_status: item.customer_status,
             };
@@ -1307,9 +1307,9 @@ export default {
         doc.text(`Address: ` + row.customer_address, 10, 55);
         // doc.text(`Date:     ${Quo_date}`, 150, 55);
         doc.text(`Contact: ` + row.customer_tel, 10, 60);
-        doc.text(`E-mail: ` + row.cus_email, 10, 65);
+        doc.text(`E-mail: ` + row.customer_email, 10, 65);
         doc.text(`Contact No: ` + row.customer_tel, 10, 70);
-        doc.text(`Tax ID: ` + row.cus_tax, 10, 75);
+        doc.text(`Tax ID: ` + row.customer_tax, 10, 75);
 
         // // ตั้งค่าฟอนต์ที่ต้องการ
         // doc.setFont("PromptRegular", "normal");
@@ -1812,8 +1812,8 @@ export default {
               customer_name: item.customer_name,
               customer_address: item.customer_address,
               customer_tel: item.customer_tel,
-              cus_email: item.cus_email,
-              cus_tax: item.cus_tax,
+              customer_email: item.customer_email,
+              customer_tax: item.customer_tax,
               cus_purchase: item.cus_purchase,
               sale_date: Quotationdate,
               credit_date_number: item.credit_date,
@@ -1852,9 +1852,9 @@ export default {
       this.isEmpty.productForms = false;
       this.isEmpty.customer_address = false;
       this.isEmpty.customer_tel = false;
-      this.isEmpty.cus_email = false;
+      this.isEmpty.customer_email = false;
       this.isEmpty.cus_purchase = false;
-      this.isEmpty.cus_tax = false;
+      this.isEmpty.customer_tax = false;
 
       const errorMessages = [];
 
@@ -1875,19 +1875,19 @@ export default {
         errorMessages.push(this.$t("validation.cus_tel_length"));
       }
 
-      if (this.formData.cus_email.trim() === "") {
-        this.isEmpty.cus_email = true;
+      if (this.formData.customer_email.trim() === "") {
+        this.isEmpty.customer_email = true;
         errorMessages.push(this.$t("validation.cus_email"));
-      } else if (!this.validateEmail(this.formData.cus_email.trim())) {
-        this.isEmpty.cus_email = true;
+      } else if (!this.validateEmail(this.formData.customer_email.trim())) {
+        this.isEmpty.customer_email = true;
         errorMessages.push(this.$t("validation.cus_email2"));
       }
 
-      if (this.formData.cus_tax.trim() === "") {
-        this.isEmpty.cus_tax = true;
+      if (this.formData.customer_tax.trim() === "") {
+        this.isEmpty.customer_tax = true;
         errorMessages.push(this.$t("validation.cus_tax"));
-      } else if (this.formData.cus_tax.trim().length !== 13) {
-        this.isEmpty.cus_tax = true;
+      } else if (this.formData.customer_tax.trim().length !== 13) {
+        this.isEmpty.customer_tax = true;
         errorMessages.push(this.$t("validation.cus_tax_length"));
       }
 
@@ -2080,8 +2080,8 @@ export default {
               customer_name: this.formData.customer_name,
               customer_address: this.formData.customer_address,
               customer_tel: this.formData.customer_tel,
-              cus_email: this.formData.cus_email,
-              cus_tax: this.formData.cus_tax,
+              customer_email: this.formData.customer_email,
+              customer_tax: this.formData.customer_tax,
               cus_purchase: this.formData.cus_purchase,
               bus_id: this.formData.bus_id,
               Status: "active",
@@ -2226,8 +2226,8 @@ export default {
               customer_name: this.formData.customer_name,
               customer_address: this.formData.customer_address,
               customer_tel: this.formData.customer_tel,
-              cus_email: this.formData.cus_email,
-              cus_tax: this.formData.cus_tax,
+              customer_email: this.formData.customer_email,
+              customer_tax: this.formData.customer_tax,
               cus_purchase: this.formData.cus_purchase,
               bus_id: this.formData.bus_id,
               Status: "active",
@@ -2377,8 +2377,8 @@ export default {
               customer_name: this.formData.customer_name,
               customer_address: this.formData.customer_address,
               customer_tel: this.formData.customer_tel,
-              cus_email: this.formData.cus_email,
-              cus_tax: this.formData.cus_tax,
+              customer_email: this.formData.customer_email,
+              customer_tax: this.formData.customer_tax,
               cus_purchase: this.formData.cus_purchase,
               bus_id: this.formData.bus_id,
               Status: "active",
@@ -2551,8 +2551,8 @@ export default {
               customer_name: this.formData.customer_name,
               customer_address: this.formData.customer_address,
               customer_tel: this.formData.customer_tel,
-              cus_email: this.formData.cus_email,
-              cus_tax: this.formData.cus_tax,
+              customer_email: this.formData.customer_email,
+              customer_tax: this.formData.customer_tax,
               cus_purchase: this.formData.cus_purchase,
               bus_id: this.formData.bus_id,
               Status: "active",
@@ -2929,8 +2929,8 @@ export default {
         customer_name: "",
         customer_address: "",
         customer_tel: "",
-        cus_email: "",
-        cus_tax: "",
+        customer_email: "",
+        customer_tax: "",
         cus_purchase: "",
         sale_qty: "",
         sale_number: "",
@@ -2999,8 +2999,8 @@ export default {
         customer_name: "",
         customer_address: "",
         customer_tel: "",
-        cus_email: "",
-        cus_tax: "",
+        customer_email: "",
+        customer_tax: "",
         cus_purchase: "",
         sale_qty: "",
         sale_number: "",
@@ -3024,7 +3024,7 @@ export default {
       this.isEmpty.customer_name = false;
       this.isEmpty.customer_address = false;
       this.isEmpty.email = false;
-      this.isEmpty.cus_tax = false;
+      this.isEmpty.customer_tax = false;
       this.isEmpty.cus_purchase = false;
       this.isEmpty.employee_id = false;
       this.isEmpty.sale_date = false;
@@ -3440,8 +3440,8 @@ export default {
       this.formData.customer_name = selectedCus.customer_name;
       this.formData.customer_address = selectedCus.customer_address;
       this.formData.customer_tel = selectedCus.customer_tel;
-      this.formData.cus_email = selectedCus.cus_email;
-      this.formData.cus_tax = selectedCus.cus_tax;
+      this.formData.customer_email = selectedCus.customer_email;
+      this.formData.customer_tax = selectedCus.customer_tax;
       this.formData.cus_purchase = selectedCus.cus_purchase;
       console.log(this.formData.customer_address);
       this.filteredItems = [];
@@ -3511,8 +3511,8 @@ export default {
         customer_name: row.customer_name,
         customer_address: row.customer_address,
         customer_tel: row.customer_tel,
-        cus_email: row.cus_email,
-        cus_tax: row.cus_tax,
+        customer_email: row.customer_email,
+        customer_tax: row.customer_tax,
         cus_purchase: row.cus_purchase,
         sale_date: formattedStart,
         credit_date_number: row.credit_date_number,
@@ -3630,8 +3630,8 @@ export default {
         customer_name: row.customer_name,
         customer_address: row.customer_address,
         customer_tel: row.customer_tel,
-        cus_email: row.cus_email,
-        cus_tax: row.cus_tax,
+        customer_email: row.customer_email,
+        customer_tax: row.customer_tax,
         cus_purchase: row.cus_purchase,
         sale_date: formattedStart,
         credit_date_number: row.credit_date,
@@ -3695,8 +3695,8 @@ export default {
         customer_name: row.customer_name,
         customer_address: row.customer_address,
         customer_tel: row.customer_tel,
-        cus_email: row.cus_email,
-        cus_tax: row.cus_tax,
+        customer_email: row.customer_email,
+        customer_tax: row.customer_tax,
         cus_purchase: row.cus_purchase,
         sale_date: formattedStart,
         credit_date_number: row.credit_date,

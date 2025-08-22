@@ -315,8 +315,8 @@ export default {
         customer_name: "",
         customer_address: "",
         customer_tel: "",
-        cus_email: "",
-        cus_tax: "",
+        customer_email: "",
+        customer_tax: "",
         cus_purchase: "",
         status: "active",
       },
@@ -341,8 +341,8 @@ export default {
         customer_name: false,
         customer_address: false,
         customer_tel: false,
-        cus_email: false,
-        cus_tax: false,
+        customer_email: false,
+        customer_tax: false,
         cus_purchase: false,
         status: "active",
       },
@@ -588,9 +588,9 @@ export default {
       this.isEmpty.customer_name = false;
       this.isEmpty.customer_address = false;
       this.isEmpty.customer_tel = false;
-      this.isEmpty.cus_email = false;
+      this.isEmpty.customer_email = false;
       this.isEmpty.cus_purchase = false;
-      this.isEmpty.cus_tax = false;
+      this.isEmpty.customer_tax = false;
 
       const errorMessages = [];
 
@@ -615,19 +615,19 @@ export default {
         errorMessages.push(this.$t("validation.cus_tel_length"));
       }
 
-      if (this.formData.cus_email.trim() === "") {
-        this.isEmpty.cus_email = true;
+      if (this.formData.customer_email.trim() === "") {
+        this.isEmpty.customer_email = true;
         errorMessages.push(this.$t("validation.cus_email"));
-      } else if (!this.validateEmail(this.formData.cus_email)) {
-        this.isEmpty.cus_email = true;
+      } else if (!this.validateEmail(this.formData.customer_email)) {
+        this.isEmpty.customer_email = true;
         errorMessages.push(this.$t("validation.cus_email2"));
       }
 
-      if (this.formData.cus_tax.trim() === "") {
-        this.isEmpty.cus_tax = true;
+      if (this.formData.customer_tax.trim() === "") {
+        this.isEmpty.customer_tax = true;
         errorMessages.push(this.$t("validation.cus_tax"));
-      } else if (this.formData.cus_tax.length !== 13) {
-        this.isEmpty.cus_tax = true;
+      } else if (this.formData.customer_tax.length !== 13) {
+        this.isEmpty.customer_tax = true;
         errorMessages.push(this.$t("validation.cus_tax_length"));
       }
 
@@ -690,17 +690,17 @@ export default {
         customer_name: "",
         customer_address: "",
         customer_tel: "",
-        cus_email: "",
-        cus_tax: "",
+        customer_email: "",
+        customer_tax: "",
         cus_purchase: "",
         status: "",
       };
       this.isEmpty.customer_name = false;
       this.isEmpty.customer_address = false;
       this.isEmpty.customer_tel = false;
-      this.isEmpty.cus_email = false;
+      this.isEmpty.customer_email = false;
       this.isEmpty.cus_purchase = false;
-      this.isEmpty.cus_tax = false;
+      this.isEmpty.customer_tax = false;
 
       this.category_file = "";
       this.inputError = false;
@@ -720,8 +720,8 @@ export default {
         customer_name: item["Customer Name"],
         customer_address: item["Customer Address"],
         customer_tel: item["Customer Tel"],
-        cus_email: item["Customer Email"],
-        cus_tax: item["Customer Tax"],
+        customer_email: item["Customer Email"],
+        customer_tax: item["Customer Tax"],
         cus_purchase: item["Purchase by"],
       };
     },
@@ -832,8 +832,8 @@ export default {
                 "Customer Name": item.customer_name,
                 "Customer Address": item.customer_address,
                 "Customer Tel": item.customer_tel,
-                "Customer Email": item.cus_email,
-                "Customer Tax": item.cus_tax,
+                "Customer Email": item.customer_email,
+                "Customer Tax": item.customer_tax,
                 "Purchase by": item.cus_purchase,
               };
               return initialTableData;
@@ -933,8 +933,8 @@ export default {
             customer_name: "",
             customer_address: "",
             customer_tel: "",
-            cus_email: "",
-            cus_tax: "",
+            customer_email: "",
+            customer_tax: "",
             cus_purchase: "",
             status: "",
           };
@@ -943,7 +943,7 @@ export default {
           this.errorMessages = [];
           if (json.data.includes("tax")) {
             this.errorMessages.push(this.$t("validation.cus_tax_already"));
-            this.isEmpty.cus_tax = true;
+            this.isEmpty.customer_tax = true;
           } else if (json.data.includes("Contact")) {
             this.errorMessages.push(this.$t("validation.cus_name_Contact"));
             this.isEmpty.customer_tel = true;
@@ -988,7 +988,7 @@ export default {
         } else {
           if (json.data.includes("tax")) {
             this.errorMessages.push(this.$t("validation.cus_tax_already"));
-            this.isEmpty.cus_tax = true;
+            this.isEmpty.customer_tax = true;
           } else if (json.data.includes("Contact")) {
             this.errorMessages.push(this.$t("validation.cus_name_Contact"));
             this.isEmpty.customer_tel = true;
