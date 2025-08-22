@@ -938,7 +938,7 @@ export default {
             let initialTableData = {
               sale_id: item.sale_id,
               sale_number: item.quotation_num,
-              status: item.status,
+              quotation_status: item.quotation_status,
               employee_id: item.employee_id,
               employeeName: item.employee_name,
               customer_id: item.customer_id,
@@ -980,7 +980,7 @@ export default {
             let initialTableData = {
               sale_id: item.sale_id,
               sale_number: item.quotation_num,
-              status: item.status,
+              quotation_status: item.quotation_status,
               employee_id: item.employee_id,
               employeeName: item.employee_name,
               customer_id: item.customer_id,
@@ -1427,10 +1427,10 @@ export default {
       );
 
       const pendingQuotations = this.filteredQuoData.filter(
-        (item) => item.status === "pending" || "Pending"
+        (item) => item.quotation_status === "pending" || "Pending"
       );
       const expiredQuotations = this.filteredQuoData.filter(
-        (item) => item.status === "expired"
+        (item) => item.quotation_status === "expired"
       );
       this.pendingQuotationCount = pendingQuotations.length;
       this.pendingQuotationTotal = pendingQuotations.reduce(

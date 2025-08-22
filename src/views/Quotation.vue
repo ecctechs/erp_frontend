@@ -49,18 +49,18 @@
                   class="col-3 text-end"
                   :class="{
                     'text-success': ['อนุมัติ', 'Allowed'].includes(
-                      quotation.status
+                      quotation.quotation_status
                     ),
-                    'text-danger': quotation.status === 'ยกเลิก',
+                    'text-danger': quotation.quotation_status === 'ยกเลิก',
                   }"
                 >
-                  {{ quotation.status }}
+                  {{ quotation.quotation_status }}
                 </div>
                 <div class="col-1 text-end">
                   <Icon
                     v-if="
-                      quotation.status === 'ยังไม่มีใบวางบิล' ||
-                      quotation.status === 'Invoice not Issued'
+                      quotation.quotation_status === 'ยังไม่มีใบวางบิล' ||
+                      quotation.quotation_status === 'Invoice not Issued'
                     "
                     name="mdi-check-circle"
                     @click="handleAllow(quotation)"
@@ -77,8 +77,8 @@
                 <div class="col-1 text-end">
                   <Icon
                     v-if="
-                      quotation.status === 'ยังไม่มีใบวางบิล' ||
-                      quotation.status === 'Invoice not Issued'
+                      quotation.quotation_status === 'ยังไม่มีใบวางบิล' ||
+                      quotation.quotation_status === 'Invoice not Issued'
                     "
                     name="mdi mdi-trash-can-outline"
                     style="color: red; cursor: pointer"
@@ -299,10 +299,10 @@
     <transition name="fade">
       <div v-if="openPopupAllow" class="popup-overlay">
         <div class="popup-content-custome alert alert-light" role="alert">
-          <span v-if="formData.status === 'Allowed'">
+          <span v-if="formData.quotation_status === 'Allowed'">
             <i class="fa-solid fa-ban"></i> {{ t("popupCancelInvoic") }}
           </span>
-          <span v-else-if="formData.status === 'Pending'">
+          <span v-else-if="formData.quotation_status === 'Pending'">
             <i class="fa-solid fa-check"></i> {{ t("popupCreatedInvoic") }}
           </span>
         </div>
@@ -554,7 +554,7 @@ export default {
         vat: 0, //price not percentage
         price: "", //price per product
         remark: "",
-        status: "",
+        quotation_status: "",
         pdfname: "",
         file: "",
         discount_quotation: "",
@@ -591,7 +591,7 @@ export default {
         vat: 0, //price not percentage
         price: "", //price per product
         remark: "",
-        status: "",
+        quotation_status: "",
         pdfname: "",
         file: "",
         discount_quotation: "",
@@ -693,7 +693,7 @@ export default {
     },
     tableHeaders() {
       return [
-        { label: this.t("statusHeaderTable"), key: "status" },
+        { label: this.t("statusHeaderTable"), key: "quotation_status" },
         { label: this.t("salenumberHeaderTable"), key: "sale_number" },
         { label: this.t("employeeNameHeaderTable"), key: "employeeName" },
         { label: this.t("cusNameHeaderTable"), key: "customer_name" },
@@ -718,14 +718,14 @@ export default {
       let data = this.Quotations.map((sale) => ({
         ...sale,
         showAllowButton: sale.deleted_at === "" || sale.deleted_at === null, // true ถ้า Pending, false ถ้าไม่ใช่
-        status:
-          sale.status === "Allowed" || sale.status === "Allow"
+        quotation_status:
+          sale.quotation_status === "Allowed" || sale.quotation_status === "Allow"
             ? t("AllowLG")
-            : sale.status === "Pending"
+            : sale.quotation_status === "Pending"
             ? t("PendingLG")
-            : sale.status === "Cancel"
+            : sale.quotation_status === "Cancel"
             ? t("CancelLG")
-            : sale.status,
+            : sale.quotation_status,
       }));
 
       if (this.searchQuery.trim()) {
@@ -1779,9 +1779,9 @@ export default {
             );
 
             if (new Date(EXPD) < currentDate) {
-              item.status = this.t("quotatation_excess");
+              item.quotation_status = this.t("quotatation_excess");
             } else {
-              item.status = item.status;
+              item.quotation_status = item.quotation_status;
             }
 
             let total_before_vat;
@@ -1803,7 +1803,7 @@ export default {
             vat_in = formatNumber(vat_in);
 
             let initialTableData = {
-              status: item.status,
+              quotation_status: item.quotation_status,
               sale_id: item.sale_id,
               sale_number: item.quotation_num,
               employee_id: item.employee_id,
@@ -2144,7 +2144,7 @@ export default {
             bus_id: this.Business.bus_id,
             customer_id: this.formData.customer_id,
             employee_id: this.formData.employee_id,
-            status: "Pending",
+            quotation_status: "Pending",
             remark: this.formData.remark,
             remarkInfernal: this.formData.remarkInfernal,
             discount_quotation: this.formData.discount_quotation,
@@ -2248,7 +2248,7 @@ export default {
           }
         }
 
-        if (this.formData.status === "Allowed") {
+        if (this.formData.quotation_status === "Allowed") {
           let errorMessages = [];
 
           this.productForms.forEach((form) => {
@@ -2273,8 +2273,8 @@ export default {
         }
         const qt_id = this.formData.sale_id;
 
-        if (this.formData.status === "รอดําเนินการ") {
-          this.formData.status = "Pending";
+        if (this.formData.quotation_status === "รอดําเนินการ") {
+          this.formData.quotation_status = "Pending";
         }
 
         const toYYYYMMDD = (date) => {
@@ -2310,7 +2310,7 @@ export default {
               bus_id: this.Business.bus_id,
               customer_id: this.formData.customer_id,
               employee_id: this.formData.employee_id,
-              status: this.formData.status,
+              quotation_status: this.formData.quotation_status,
               remark: this.formData.remark,
               remarkInfernal: this.formData.remarkInfernal,
               discount_quotation: this.formData.discount_quotation,
@@ -2398,7 +2398,7 @@ export default {
           }
         }
 
-        if (this.formData.status === "Allowed") {
+        if (this.formData.quotation_status === "Allowed") {
 
           let errorMessages = [];
 
@@ -2424,8 +2424,8 @@ export default {
         }
         const qt_id = this.formData.sale_id;
 
-        if (this.formData.status === "รอดําเนินการ") {
-          this.formData.status = "Pending";
+        if (this.formData.quotation_status === "รอดําเนินการ") {
+          this.formData.quotation_status = "Pending";
         }
         let errorMessages = [];
         this.productForms.forEach((form) => {
@@ -2483,7 +2483,7 @@ export default {
               bus_id: this.Business.bus_id,
               customer_id: this.formData.customer_id,
               employee_id: this.formData.employee_id,
-              status: "Allowed",
+              quotation_status: "Allowed",
               remark: this.formData.remark,
               remarkInfernal: this.formData.remarkInfernal,
               discount_quotation: this.formData.discount_quotation,
@@ -2572,8 +2572,8 @@ export default {
           }
         }
 
-        if (this.formData.status === "Allowed") {
-          // เช็คว่า status === comfime order ถ้ามี ให้ alert message
+        if (this.formData.quotation_status === "Allowed") {
+
           let errorMessages = [];
 
           this.productForms.forEach((form) => {
@@ -2598,8 +2598,8 @@ export default {
         }
         const qt_id = this.formData.sale_id;
 
-        if (this.formData.status === "รอดําเนินการ") {
-          this.formData.status = "Pending";
+        if (this.formData.quotation_status === "รอดําเนินการ") {
+          this.formData.quotation_status = "Pending";
         }
 
         const toYYYYMMDD = (date) => {
@@ -2635,7 +2635,7 @@ export default {
               bus_id: this.Business.bus_id,
               customer_id: this.formData.customer_id,
               employee_id: this.formData.employee_id,
-              status: "Pending",
+              quotation_status: "Pending",
               remark: this.formData.remark,
               remarkInfernal: this.formData.remarkInfernal,
               discount_quotation: this.formData.discount_quotation,
@@ -2958,7 +2958,7 @@ export default {
         vat: 0, //price not percentage
         price: "", //price per product
         remark: "",
-        status: "",
+        quotation_status: "",
         pdfname: "",
         file: "",
         discount_quotation: "0",
@@ -3016,7 +3016,7 @@ export default {
         vat: 0, //price not percentage
         price: "", //price per product
         remark: "",
-        status: "",
+        quotation_status: "",
         pdfname: "",
         file: "",
       };
@@ -3503,7 +3503,7 @@ export default {
       this.formData = {
         sale_id: row.sale_id,
         sale_number: row.sale_number,
-        status: quotationData.status,
+        quotation_status: quotationData.quotation_status,
         employee_id: row.employee_id,
         employeeName: row.employee_name,
         customer_id: row.customer_id,
@@ -3622,7 +3622,7 @@ export default {
       this.formData = {
         sale_id: row.sale_id,
         sale_number: row.sale_number,
-        status: row.status,
+        quotation_status: row.quotation_status,
         employee_id: row.employee_id,
         employeeName: row.employee_name,
         customer_id: row.customer_id,
@@ -3687,7 +3687,7 @@ export default {
       this.formData = {
         sale_id: row.sale_id,
         sale_number: row.quotation_num,
-        status: row.status,
+        quotation_status: row.quotation_status,
         employee_id: row.employee_id,
         employeeName: row.employee_name,
         customer_id: row.customer_id,
@@ -3750,7 +3750,7 @@ export default {
       this.shortcutAllow = true;
       await this.handleEdit(row);
       // return false;
-      if (this.formData.status === "Allowed") {
+      if (this.formData.quotation_status === "Allowed") {
         const saleNumber = this.formData.sale_id; // "QT-2505080001"
 
         await this.deleteInvoice(saleNumber);
@@ -3760,7 +3760,7 @@ export default {
         setTimeout(() => {
           this.openPopupAllow = false;
         }, 3000);
-      } else if (this.formData.status === "expired") {
+      } else if (this.formData.quotation_status === "expired") {
         alert("Quotation หมดอายุ");
       } else {
         await this.editQuotation2();

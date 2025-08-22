@@ -7,7 +7,7 @@
     "group": "header"
   },
   {
-    "key": "status",
+    "key": "quotation_status",
     "label": "statusQuotation",
     "componentType": "Dropdown",
     "readonly": true,
