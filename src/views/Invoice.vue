@@ -478,8 +478,8 @@ export default {
         employeeEmail: "",
         employeeTel: "",
         customer_name: "",
-        cus_address: "",
-        cus_tel: "",
+        customer_address: "",
+        customer_tel: "",
         cus_email: "",
         cus_tax: "",
         cus_purchase: "",
@@ -561,8 +561,8 @@ summaryFields() {
         { label: this.t("salenumberHeaderTable"), key: "sale_number" },
         { label: this.t("employeeNameHeaderTable"), key: "employeeName" },
         { label: this.t("cusNameHeaderTable"), key: "customer_name" },
-        { label: this.t("cusAddressHeaderTable"), key: "cus_address" },
-        { label: this.t("cusTelHeaderTable"), key: "cus_tel" },
+        { label: this.t("cusAddressHeaderTable"), key: "customer_address" },
+        { label: this.t("cusTelHeaderTable"), key: "customer_tel" },
         { label: this.t("cusEmailHeaderTable"), key: "cus_email" },
         { label: this.t("cusTaxHeaderTable"), key: "cus_tax" },
         { label: this.t("cusPurchaseHeaderTable"), key: "cus_purchase" },
@@ -810,8 +810,8 @@ summaryFields() {
         employeeName: row.employeeName,
         customer_id: row.customer_id,
         customer_name: row.customer_name,
-        cus_address: row.cus_address,
-        cus_tel: row.cus_tel,
+        customer_address: row.customer_address,
+        customer_tel: row.customer_tel,
         cus_email: row.cus_email,
         cus_tax: row.cus_tax,
         cus_purchase: row.cus_purchase,
@@ -965,8 +965,8 @@ summaryFields() {
         employeeName: row.employeeName,
         customer_id: row.customer_id,
         customer_name: row.customer_name,
-        cus_address: row.cus_address,
-        cus_tel: row.cus_tel,
+        customer_address: row.customer_address,
+        customer_tel: row.customer_tel,
         cus_email: row.cus_email,
         cus_tax: row.cus_tax,
         cus_purchase: row.cus_purchase,
@@ -1027,8 +1027,8 @@ summaryFields() {
         employeeName: row.employeeName,
         customer_id: row.customer_id,
         customer_name: row.customer_name,
-        cus_address: row.cus_address,
-        cus_tel: row.cus_tel,
+        customer_address: row.customer_address,
+        customer_tel: row.customer_tel,
         cus_email: row.cus_email,
         cus_tax: row.cus_tax,
         cus_purchase: row.cus_purchase,
@@ -1235,10 +1235,10 @@ summaryFields() {
         doc.setTextColor(0, 0, 0);
 
         doc.text(`Customer Name: ` + row.customer_name, 10, 50);
-        doc.text(`Address: ` + row.cus_address, 10, 55);
-        doc.text(`Contact: ` + row.cus_tel, 10, 60);
+        doc.text(`Address: ` + row.customer_address, 10, 55);
+        doc.text(`Contact: ` + row.customer_tel, 10, 60);
         doc.text(`E-mail: ` + row.cus_email, 10, 65);
-        doc.text(`Contact No: ` + row.cus_tel, 10, 70);
+        doc.text(`Contact No: ` + row.customer_tel, 10, 70);
         doc.text(`Tax ID: ` + row.cus_tax, 10, 75);
 
         // ===== Header Section (จัดระนาบ) =====
@@ -1604,8 +1604,8 @@ summaryFields() {
         employeeEmail: "",
         employeeTel: "",
         customer_name: "",
-        cus_address: "",
-        cus_tel: "",
+        customer_address: "",
+        customer_tel: "",
         cus_email: "",
         cus_tax: "",
         cus_purchase: "",
@@ -1814,8 +1814,8 @@ summaryFields() {
               employeeName: item.employee_name,
               customer_id: item.customer_id,
               customer_name: item.customer_name,
-              cus_address: item.cus_address,
-              cus_tel: item.cus_tel,
+              customer_address: item.customer_address,
+              customer_tel: item.customer_tel,
               cus_email: item.cus_email,
               cus_tax: item.cus_tax,
               cus_purchase: item.cus_purchase,

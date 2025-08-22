@@ -534,8 +534,8 @@ export default {
         employeeEmail: "",
         employeeTel: "",
         customer_name: "",
-        cus_address: "",
-        cus_tel: "",
+        customer_address: "",
+        customer_tel: "",
         cus_email: "",
         cus_tax: "",
         cus_purchase: "",
@@ -571,8 +571,8 @@ export default {
         employeeEmail: "",
         employeeTel: "",
         customer_name: "",
-        cus_address: "",
-        cus_tel: "",
+        customer_address: "",
+        customer_tel: "",
         cus_email: "",
         cus_tax: "",
         cus_purchase: "",
@@ -697,8 +697,8 @@ export default {
         { label: this.t("salenumberHeaderTable"), key: "sale_number" },
         { label: this.t("employeeNameHeaderTable"), key: "employeeName" },
         { label: this.t("cusNameHeaderTable"), key: "customer_name" },
-        { label: this.t("cusAddressHeaderTable"), key: "cus_address" },
-        { label: this.t("cusTelHeaderTable"), key: "cus_tel" },
+        { label: this.t("cusAddressHeaderTable"), key: "customer_address" },
+        { label: this.t("cusTelHeaderTable"), key: "customer_tel" },
         { label: this.t("cusEmailHeaderTable"), key: "cus_email" },
         { label: this.t("cusTaxHeaderTable"), key: "cus_tax" },
         { label: this.t("cusPurchaseHeaderTable"), key: "cus_purchase" },
@@ -819,8 +819,8 @@ export default {
 
       this.formData.customer_id = items[0].customer_id;
       this.formData.customer_name = items[0].customer_name;
-      this.formData.cus_address = items[0].cus_address;
-      this.formData.cus_tel = items[0].cus_tel;
+      this.formData.customer_address = items[0].customer_address;
+      this.formData.customer_tel = items[0].customer_tel;
       this.formData.cus_email = items[0].cus_email;
       this.formData.cus_tax = items[0].cus_tax;
       this.formData.cus_purchase = items[0].cus_purchase;
@@ -942,8 +942,8 @@ export default {
       if (items.length > 0) {
         this.formData.customer_id = items[0].customer_id;
         this.formData.customer_name = items[0].customer_name;
-        this.formData.cus_address = items[0].cus_address;
-        this.formData.cus_tel = items[0].cus_tel;
+        this.formData.customer_address = items[0].customer_address;
+        this.formData.customer_tel = items[0].customer_tel;
         this.formData.cus_email = items[0].cus_email;
         this.formData.cus_tax = items[0].cus_tax;
         this.formData.cus_purchase = items[0].cus_purchase;
@@ -954,8 +954,8 @@ export default {
       } else {
         this.formData.customer_id = "";
         this.formData.customer_name = "";
-        this.formData.cus_address = "";
-        this.formData.cus_tel = "";
+        this.formData.customer_address = "";
+        this.formData.customer_tel = "";
         this.formData.cus_email = "";
         this.formData.cus_tax = "";
         this.formData.cus_purchase = "";
@@ -1132,8 +1132,8 @@ export default {
             let initialTableData = {
               customer_id: item.customer_id,
               customer_name: item.customer_name,
-              cus_address: item.cus_address,
-              cus_tel: item.cus_tel,
+              customer_address: item.customer_address,
+              customer_tel: item.customer_tel,
               cus_email: item.cus_email,
               cus_tax: item.cus_tax,
               cus_purchase: item.cus_purchase,
@@ -1304,11 +1304,11 @@ export default {
 
         doc.text(`Customer Name: ` + row.customer_name, 10, 50);
         // doc.text(`Number: ${row.sale_number}`, 150, 50);
-        doc.text(`Address: ` + row.cus_address, 10, 55);
+        doc.text(`Address: ` + row.customer_address, 10, 55);
         // doc.text(`Date:     ${Quo_date}`, 150, 55);
-        doc.text(`Contact: ` + row.cus_tel, 10, 60);
+        doc.text(`Contact: ` + row.customer_tel, 10, 60);
         doc.text(`E-mail: ` + row.cus_email, 10, 65);
-        doc.text(`Contact No: ` + row.cus_tel, 10, 70);
+        doc.text(`Contact No: ` + row.customer_tel, 10, 70);
         doc.text(`Tax ID: ` + row.cus_tax, 10, 75);
 
         // // ตั้งค่าฟอนต์ที่ต้องการ
@@ -1810,8 +1810,8 @@ export default {
               employeeName: item.employee_name,
               customer_id: item.customer_id,
               customer_name: item.customer_name,
-              cus_address: item.cus_address,
-              cus_tel: item.cus_tel,
+              customer_address: item.customer_address,
+              customer_tel: item.customer_tel,
               cus_email: item.cus_email,
               cus_tax: item.cus_tax,
               cus_purchase: item.cus_purchase,
@@ -1850,8 +1850,8 @@ export default {
       this.isEmpty.sale_date = false;
       this.isEmpty.credit_date_number = false;
       this.isEmpty.productForms = false;
-      this.isEmpty.cus_address = false;
-      this.isEmpty.cus_tel = false;
+      this.isEmpty.customer_address = false;
+      this.isEmpty.customer_tel = false;
       this.isEmpty.cus_email = false;
       this.isEmpty.cus_purchase = false;
       this.isEmpty.cus_tax = false;
@@ -1863,15 +1863,15 @@ export default {
         errorMessages.push(this.$t("validation.cus_name"));
       }
 
-      if (this.formData.cus_address.trim() === "") {
-        this.isEmpty.cus_address = true;
+      if (this.formData.customer_address.trim() === "") {
+        this.isEmpty.customer_address = true;
         errorMessages.push(this.$t("validation.cus_address"));
       }
-      if (this.formData.cus_tel.trim() === "") {
-        this.isEmpty.cus_tel = true;
+      if (this.formData.customer_tel.trim() === "") {
+        this.isEmpty.customer_tel = true;
         errorMessages.push(this.$t("validation.cus_tel"));
-      } else if (this.formData.cus_tel.length !== 10) {
-        this.isEmpty.cus_tel = true;
+      } else if (this.formData.customer_tel.length !== 10) {
+        this.isEmpty.customer_tel = true;
         errorMessages.push(this.$t("validation.cus_tel_length"));
       }
 
@@ -2078,8 +2078,8 @@ export default {
             },
             body: JSON.stringify({
               customer_name: this.formData.customer_name,
-              cus_address: this.formData.cus_address,
-              cus_tel: this.formData.cus_tel,
+              customer_address: this.formData.customer_address,
+              customer_tel: this.formData.customer_tel,
               cus_email: this.formData.cus_email,
               cus_tax: this.formData.cus_tax,
               cus_purchase: this.formData.cus_purchase,
@@ -2224,8 +2224,8 @@ export default {
             },
             body: JSON.stringify({
               customer_name: this.formData.customer_name,
-              cus_address: this.formData.cus_address,
-              cus_tel: this.formData.cus_tel,
+              customer_address: this.formData.customer_address,
+              customer_tel: this.formData.customer_tel,
               cus_email: this.formData.cus_email,
               cus_tax: this.formData.cus_tax,
               cus_purchase: this.formData.cus_purchase,
@@ -2375,8 +2375,8 @@ export default {
             },
             body: JSON.stringify({
               customer_name: this.formData.customer_name,
-              cus_address: this.formData.cus_address,
-              cus_tel: this.formData.cus_tel,
+              customer_address: this.formData.customer_address,
+              customer_tel: this.formData.customer_tel,
               cus_email: this.formData.cus_email,
               cus_tax: this.formData.cus_tax,
               cus_purchase: this.formData.cus_purchase,
@@ -2549,8 +2549,8 @@ export default {
             },
             body: JSON.stringify({
               customer_name: this.formData.customer_name,
-              cus_address: this.formData.cus_address,
-              cus_tel: this.formData.cus_tel,
+              customer_address: this.formData.customer_address,
+              customer_tel: this.formData.customer_tel,
               cus_email: this.formData.cus_email,
               cus_tax: this.formData.cus_tax,
               cus_purchase: this.formData.cus_purchase,
@@ -2927,8 +2927,8 @@ export default {
         employeeEmail: "",
         employeeTel: "",
         customer_name: "",
-        cus_address: "",
-        cus_tel: "",
+        customer_address: "",
+        customer_tel: "",
         cus_email: "",
         cus_tax: "",
         cus_purchase: "",
@@ -2997,8 +2997,8 @@ export default {
         employeeEmail: "",
         employeeTel: "",
         customer_name: "",
-        cus_address: "",
-        cus_tel: "",
+        customer_address: "",
+        customer_tel: "",
         cus_email: "",
         cus_tax: "",
         cus_purchase: "",
@@ -3022,7 +3022,7 @@ export default {
         file: "",
       };
       this.isEmpty.customer_name = false;
-      this.isEmpty.cus_address = false;
+      this.isEmpty.customer_address = false;
       this.isEmpty.email = false;
       this.isEmpty.cus_tax = false;
       this.isEmpty.cus_purchase = false;
@@ -3438,12 +3438,12 @@ export default {
       console.log(selectedCus);
       this.formData.customer_id = selectedCus.customer_id;
       this.formData.customer_name = selectedCus.customer_name;
-      this.formData.cus_address = selectedCus.cus_address;
-      this.formData.cus_tel = selectedCus.cus_tel;
+      this.formData.customer_address = selectedCus.customer_address;
+      this.formData.customer_tel = selectedCus.customer_tel;
       this.formData.cus_email = selectedCus.cus_email;
       this.formData.cus_tax = selectedCus.cus_tax;
       this.formData.cus_purchase = selectedCus.cus_purchase;
-      console.log(this.formData.cus_address);
+      console.log(this.formData.customer_address);
       this.filteredItems = [];
     },
     updateCreditExpiredDate() {
@@ -3509,8 +3509,8 @@ export default {
         employeeName: row.employee_name,
         customer_id: row.customer_id,
         customer_name: row.customer_name,
-        cus_address: row.cus_address,
-        cus_tel: row.cus_tel,
+        customer_address: row.customer_address,
+        customer_tel: row.customer_tel,
         cus_email: row.cus_email,
         cus_tax: row.cus_tax,
         cus_purchase: row.cus_purchase,
@@ -3628,8 +3628,8 @@ export default {
         employeeName: row.employee_name,
         customer_id: row.customer_id,
         customer_name: row.customer_name,
-        cus_address: row.cus_address,
-        cus_tel: row.cus_tel,
+        customer_address: row.customer_address,
+        customer_tel: row.customer_tel,
         cus_email: row.cus_email,
         cus_tax: row.cus_tax,
         cus_purchase: row.cus_purchase,
@@ -3693,8 +3693,8 @@ export default {
         employeeName: row.employee_name,
         customer_id: row.customer_id,
         customer_name: row.customer_name,
-        cus_address: row.cus_address,
-        cus_tel: row.cus_tel,
+        customer_address: row.customer_address,
+        customer_tel: row.customer_tel,
         cus_email: row.cus_email,
         cus_tax: row.cus_tax,
         cus_purchase: row.cus_purchase,

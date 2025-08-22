@@ -33,7 +33,7 @@
     "items": "Customers"
   },
   {
-    "key": "cus_address",
+    "key": "customer_address",
     "label": "customerAddress",
     "componentType": "TextField",
     "required": true,
@@ -41,7 +41,7 @@
     "readonly": true
   },
   {
-    "key": "cus_tel",
+    "key": "customer_tel",
     "label": "phoneNum",
     "componentType": "TextField",
     "required": true,

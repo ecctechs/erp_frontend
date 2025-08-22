@@ -7,13 +7,13 @@
       "required": true
     },
     {
-      "key": "cus_address",
+      "key": "customer_address",
       "label": "customerAddress",
       "type": "text",
       "required": true
     },
     {
-      "key": "cus_tel",
+      "key": "customer_tel",
       "label": "phoneNum",
       "type": "tel",
       "required": true,

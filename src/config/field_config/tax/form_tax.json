@@ -36,14 +36,14 @@
     "group": "customer"
   },
   {
-    "key": "cus_address",
+    "key": "customer_address",
     "label": "customerAddress",
     "componentType": "TextField",
     "readonly": true,
     "group": "customer"
   },
   {
-    "key": "cus_tel",
+    "key": "customer_tel",
     "label": "phoneNum",
     "componentType": "TextField",
     "readonly": true,

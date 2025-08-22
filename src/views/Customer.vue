@@ -313,8 +313,8 @@ export default {
       formData: {
         customer_id: "",
         customer_name: "",
-        cus_address: "",
-        cus_tel: "",
+        customer_address: "",
+        customer_tel: "",
         cus_email: "",
         cus_tax: "",
         cus_purchase: "",
@@ -339,8 +339,8 @@ export default {
       isEmpty: {
         customer_id: "",
         customer_name: false,
-        cus_address: false,
-        cus_tel: false,
+        customer_address: false,
+        customer_tel: false,
         cus_email: false,
         cus_tax: false,
         cus_purchase: false,
@@ -586,8 +586,8 @@ export default {
     },
     async validateFormData() {
       this.isEmpty.customer_name = false;
-      this.isEmpty.cus_address = false;
-      this.isEmpty.cus_tel = false;
+      this.isEmpty.customer_address = false;
+      this.isEmpty.customer_tel = false;
       this.isEmpty.cus_email = false;
       this.isEmpty.cus_purchase = false;
       this.isEmpty.cus_tax = false;
@@ -599,19 +599,19 @@ export default {
         errorMessages.push(this.$t("validation.cus_name"));
       }
 
-      if (this.formData.cus_address.trim() === "") {
-        this.isEmpty.cus_address = true;
+      if (this.formData.customer_address.trim() === "") {
+        this.isEmpty.customer_address = true;
         errorMessages.push(this.$t("validation.cus_address"));
       }
 
-      if (this.formData.cus_tel.trim() === "") {
-        this.isEmpty.cus_tel = true;
+      if (this.formData.customer_tel.trim() === "") {
+        this.isEmpty.customer_tel = true;
         errorMessages.push(this.$t("validation.cus_tel"));
       } else if (
-        this.formData.cus_tel.length !== 10 &&
-        this.formData.cus_tel.length !== 9
+        this.formData.customer_tel.length !== 10 &&
+        this.formData.customer_tel.length !== 9
       ) {
-        this.isEmpty.cus_tel = true;
+        this.isEmpty.customer_tel = true;
         errorMessages.push(this.$t("validation.cus_tel_length"));
       }
 
@@ -688,16 +688,16 @@ export default {
       this.formData = {
         customer_id: "",
         customer_name: "",
-        cus_address: "",
-        cus_tel: "",
+        customer_address: "",
+        customer_tel: "",
         cus_email: "",
         cus_tax: "",
         cus_purchase: "",
         status: "",
       };
       this.isEmpty.customer_name = false;
-      this.isEmpty.cus_address = false;
-      this.isEmpty.cus_tel = false;
+      this.isEmpty.customer_address = false;
+      this.isEmpty.customer_tel = false;
       this.isEmpty.cus_email = false;
       this.isEmpty.cus_purchase = false;
       this.isEmpty.cus_tax = false;
@@ -718,8 +718,8 @@ export default {
         customer_id: item.ID,
         status: item.status,
         customer_name: item["Customer Name"],
-        cus_address: item["Customer Address"],
-        cus_tel: item["Customer Tel"],
+        customer_address: item["Customer Address"],
+        customer_tel: item["Customer Tel"],
         cus_email: item["Customer Email"],
         cus_tax: item["Customer Tax"],
         cus_purchase: item["Purchase by"],
@@ -830,8 +830,8 @@ export default {
                 ID: item.customer_id,
                 customer_status: item.customer_status,
                 "Customer Name": item.customer_name,
-                "Customer Address": item.cus_address,
-                "Customer Tel": item.cus_tel,
+                "Customer Address": item.customer_address,
+                "Customer Tel": item.customer_tel,
                 "Customer Email": item.cus_email,
                 "Customer Tax": item.cus_tax,
                 "Purchase by": item.cus_purchase,
@@ -931,8 +931,8 @@ export default {
           this.formData = {
             customer_id: "",
             customer_name: "",
-            cus_address: "",
-            cus_tel: "",
+            customer_address: "",
+            customer_tel: "",
             cus_email: "",
             cus_tax: "",
             cus_purchase: "",
@@ -946,7 +946,7 @@ export default {
             this.isEmpty.cus_tax = true;
           } else if (json.data.includes("Contact")) {
             this.errorMessages.push(this.$t("validation.cus_name_Contact"));
-            this.isEmpty.cus_tel = true;
+            this.isEmpty.customer_tel = true;
           } else if (json.data.includes("Customer")) {
             this.errorMessages.push(this.$t("validation.cus_name_already"));
             this.isEmpty.customer_name = true;
@@ -991,7 +991,7 @@ export default {
             this.isEmpty.cus_tax = true;
           } else if (json.data.includes("Contact")) {
             this.errorMessages.push(this.$t("validation.cus_name_Contact"));
-            this.isEmpty.cus_tel = true;
+            this.isEmpty.customer_tel = true;
           } else if (json.data.includes("Customer")) {
             this.errorMessages.push(this.$t("validation.cus_name_already"));
             this.isEmpty.customer_name = true;
