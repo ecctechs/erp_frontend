@@ -2249,7 +2249,6 @@ export default {
         }
 
         if (this.formData.status === "Allowed") {
-          // เช็คว่า status === comfime order ถ้ามี ให้ alert message
           let errorMessages = [];
 
           this.productForms.forEach((form) => {
@@ -2400,7 +2399,7 @@ export default {
         }
 
         if (this.formData.status === "Allowed") {
-          // เช็คว่า status === comfime order ถ้ามี ให้ alert message
+
           let errorMessages = [];
 
           this.productForms.forEach((form) => {
