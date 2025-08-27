@@ -546,7 +546,7 @@ export default {
         credit_expired_date: "",
         sale_discount: 0,
         sale_totalprice: 0, // total price cal discount and vat
-        discounttype: "",
+        discount_type: "",
         sale_price: 0, //total price before cal discount but *qty
         total_price: 0, ////////////cal all product
         total_discount: 0, ///////////////
@@ -583,7 +583,7 @@ export default {
         credit_expired_date: "",
         sale_discount: 0,
         sale_totalprice: 0, // total price cal discount and vat
-        discounttype: "",
+        discount_type: "",
         sale_price: 0, //total price before cal discount but *qty
         total_price: 0, ////////////cal all product
         total_discount: 0, ///////////////
@@ -913,7 +913,7 @@ export default {
       let discount = parseFloat(form.sale_discount) || 0;
       const totalBeforeDiscount = price * quantity;
 
-      if (form.discounttype === 'percent') {
+      if (form.discount_type === 'percent') {
         if (discount > 100) discount = 100;
         form.sale_price = this.formatDecimal(totalBeforeDiscount * (1 - (discount / 100)));
       } else { // amount
@@ -1827,7 +1827,7 @@ export default {
               productForms: item.details.map((detail) => ({
                 product_id: detail.product_id,
                 sale_price: detail.sale_price,
-                discounttype: detail.discounttype,
+                discount_type: detail.discount_type,
                 sale_discount: detail.sale_discount,
                 sale_qty: detail.sale_qty,
                 product_detail: detail.product_detail,
@@ -2152,7 +2152,7 @@ export default {
             products: this.productForms.map((form) => ({
               product_id: form.product_id, // กรณีเพิ่มสินค้าใน quotaion จะหาตัวนี้ไม่เจอ
               sale_price: parseFloat(form.sale_price.replace(/,/g, "")),
-              discounttype: form.discounttype,
+              discount_type: form.discount_type,
               sale_discount: parseFloat(form.sale_discount),
               sale_qty: parseFloat(form.sale_qty),
               product_detail: form.product_detail,
@@ -2318,7 +2318,7 @@ export default {
               products: this.productForms.map((form) => ({
                 product_id: form.product_id,
                 sale_price: parseFloat(form.sale_price.replace(/,/g, "")),
-                discounttype: form.discounttype,
+                discount_type: form.discount_type,
                 sale_discount: parseFloat(form.sale_discount),
                 sale_qty: parseFloat(form.sale_qty),
                 product_detail: form.product_detail,
@@ -2491,7 +2491,7 @@ export default {
               products: this.productForms.map((form) => ({
                 product_id: form.product_id,
                 sale_price: parseFloat(form.sale_price.replace(/,/g, "")),
-                discounttype: form.discounttype,
+                discount_type: form.discount_type,
                 sale_discount: parseFloat(form.sale_discount),
                 sale_qty: parseFloat(form.sale_qty),
                 product_detail: form.product_detail,
@@ -2643,7 +2643,7 @@ export default {
               products: this.productForms.map((form) => ({
                 product_id: form.product_id,
                 sale_price: parseFloat(form.sale_price.replace(/,/g, "")),
-                discounttype: form.discounttype,
+                discount_type: form.discount_type,
                 sale_discount: parseFloat(form.sale_discount),
                 sale_qty: parseFloat(form.sale_qty),
                 product_detail: form.product_detail,
@@ -2948,7 +2948,7 @@ export default {
                 new Date(nextMonthDate).setFullYear(nextMonthDate.getFullYear())
               )
             : nextMonthDate,
-        discounttype: "",
+        discount_type: "",
         sale_discount: 0,
         sale_totalprice: 0, // total price cal discount and vat
         sale_price: 0, //total price before cal discount but *qty
@@ -3009,7 +3009,7 @@ export default {
         sale_discount: 0,
         sale_totalprice: 0, // total price cal discount and vat
         sale_price: 0, //total price before cal discount but *qty
-        discounttype: "",
+        discount_type: "",
         total_price: 0, ////////////cal all product
         total_discount: 0, ///////////////
         Net_price: 0, //cal after cal discount
@@ -3071,7 +3071,7 @@ export default {
           return 0;
         }
 
-        if (form.discounttype === "percent") {
+        if (form.discount_type === "percent") {
           sumdiscount =
             (parseFloat(form.sale_discount) *
               (parseFloat(form.sale_qty) * parseFloat(form.price))) /
@@ -3135,7 +3135,7 @@ export default {
         sale_qty: 0,
         sale_price: 0,
         sale_discount: 0,
-        discounttype: "amount",
+        discount_type: "amount",
         product_name: "",
         product_img: "",
         product_detail: "",
@@ -3157,7 +3157,7 @@ export default {
       this.total_priceBeforeDiscount();
     },
     limitDiscount(form) {
-      if (form.discounttype === "percent") {
+      if (form.discount_type === "percent") {
         if (form.sale_discount > 100) {
           form.sale_discount = 100;
         } else if (form.sale_discount < 0) {
@@ -3180,7 +3180,7 @@ export default {
         const price = parseFloat(form.price.toString().replace(/,/g, ""));
         const sale_qty = parseFloat(form.sale_qty) || 0;
 
-        if (form.discounttype === "percent") {
+        if (form.discount_type === "percent") {
           let discountPercent = parseFloat(form.sale_discount) || 0;
           discountPercent = Math.max(0, Math.min(discountPercent, 100));
 
@@ -3236,12 +3236,9 @@ export default {
         );
         form.product_name = selectedProduct.product_name;
         form.product_img = selectedProduct.product_img;
-        if (form.discounttype === "percent") {
-          // const salePriceValue =
-          //   parseFloat(form.sale_price.replace(/,/g, "")) || 0;
+        if (form.discount_type === "percent") {
           let discountPercent = parseFloat(form.sale_discount) || 0;
           discountPercent = Math.max(0, Math.min(discountPercent, 100));
-          // alert(discountPercent);
 
           form.sale_price = this.formatDecimal(
             parseFloat(form.sale_qty * parseFloat(form.price.replace(/,/g, "")))
@@ -3309,7 +3306,7 @@ export default {
         const price = parseFloat(form.price.toString().replace(/,/g, ""));
         const sale_qty = parseFloat(form.sale_qty) || 0;
 
-        if (form.discounttype === "percent") {
+        if (form.discount_type === "percent") {
           let discountPercent = parseFloat(form.sale_discount) || 0;
           discountPercent = Math.max(0, Math.min(discountPercent, 100));
 
@@ -3365,13 +3362,9 @@ export default {
         );
         form.product_name = selectedProduct.product_name;
         form.product_img = selectedProduct.product_img;
-        if (form.discounttype === "percent") {
-          // const salePriceValue =
-          //   parseFloat(form.sale_price.replace(/,/g, "")) || 0;
+        if (form.discount_type === "percent") {
           let discountPercent = parseFloat(form.sale_discount) || 0;
           discountPercent = Math.max(0, Math.min(discountPercent, 100));
-          // alert(discountPercent);
-
           form.sale_price = this.formatDecimal(
             parseFloat(form.sale_qty * parseFloat(form.price.replace(/,/g, "")))
           );
@@ -3558,12 +3551,10 @@ export default {
 
         const salePrice = detail.sale_qty * parseFloat(price.replace(/,/g, ""));
         let saleDiscount = detail.sale_discount;
-        if (detail.discounttype === "percent") {
-          // sale_price = (detail.sale_discount / 100) * salePrice;
+        if (detail.discount_type === "percent") {
           saleDiscount = (detail.sale_discount / 100) * salePrice;
         }
         if (detail.product_detail !== "") {
-          // detail.showDetails = true;
         }
         return {
           product_id: detail.product_id,
@@ -3571,7 +3562,7 @@ export default {
           sale_qty: detail.sale_qty,
           sale_price: this.formatDecimal(salePrice - saleDiscount),
           sale_discount: detail.sale_discount,
-          discounttype: detail.discounttype,
+          discount_type: detail.discount_type,
           product_detail: detail.product_detail,
           pro_unti: detail.pro_unti,
           productName: selectedProduct.product_name,
@@ -3653,7 +3644,7 @@ export default {
 
         const salePrice = detail.sale_qty * parseFloat(price.replace(/,/g, ""));
         let saleDiscount = detail.sale_discount;
-        if (detail.discounttype === "percent") {
+        if (detail.discount_type === "percent") {
           saleDiscount = (detail.sale_discount / 100) * salePrice;
         }
 
@@ -3663,7 +3654,7 @@ export default {
           sale_qty: detail.sale_qty,
           sale_price: this.formatDecimal(salePrice - saleDiscount),
           sale_discount: saleDiscount,
-          discounttype: detail.discounttype,
+          discount_type: detail.discount_type,
         };
       });
       this.updateTotalDiscount();
@@ -3716,7 +3707,7 @@ export default {
         }
         const salePrice = detail.sale_qty * parseFloat(price.replace(/,/g, ""));
         let saleDiscount = detail.sale_discount;
-        if (detail.discounttype === "percent") {
+        if (detail.discount_type === "percent") {
           saleDiscount = (detail.sale_discount / 100) * salePrice;
         }
 
@@ -3726,7 +3717,7 @@ export default {
           sale_qty: detail.sale_qty,
           sale_price: this.formatDecimal(salePrice - saleDiscount),
           sale_discount: saleDiscount,
-          discounttype: detail.discounttype,
+          discount_type: detail.discount_type,
         };
       });
 

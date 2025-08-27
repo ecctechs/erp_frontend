@@ -92,7 +92,7 @@
               <td class="discount-column">
                 <div class="discount-type">
                   <Dropdown
-                    v-model="form.discounttype"
+                    v-model="form.discount_type"
                     :options="discountTypeOptions"
                     @change="emitProductChange(form, index)"
                     :disabled="!isEditable"
@@ -191,7 +191,7 @@ function emitProductChange(form, index) {
 function addProductRow() {
   const newProduct = {
     product_id: "", price: 0, sale_qty: 1, sale_price: "0.00",
-    sale_discount: 0, discounttype: "amount", productName: "",
+    sale_discount: 0, discount_type: "amount", productName: "",
     product_detail: "", pro_unti: "", showDetails: false,
   };
   const updatedValue = [...props.modelValue, newProduct];

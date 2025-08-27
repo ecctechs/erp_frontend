@@ -922,7 +922,7 @@ export default {
 
         const salePrice = detail.sale_qty * parseFloat(price.replace(/,/g, ""));
         let saleDiscount = detail.sale_discount;
-        if (detail.discounttype === "percent") {
+        if (detail.discount_type === "percent") {
           saleDiscount = (detail.sale_discount / 100) * salePrice;
         }
         return {
@@ -932,7 +932,7 @@ export default {
           sale_qty: detail.sale_qty,
           sale_price: this.formatDecimal(salePrice - saleDiscount),
           sale_discount: detail.sale_discount,
-          discounttype: detail.discounttype, // ✅ แก้ไขชื่อ property เป็นตัวพิมพ์เล็ก
+          discount_type: detail.discount_type, // ✅ แก้ไขชื่อ property เป็นตัวพิมพ์เล็ก
           product_detail: detail.product_detail,
           pro_unti: detail.pro_unti,
         };
@@ -1024,7 +1024,7 @@ export default {
         }
         const salePrice = detail.sale_qty * parseFloat(price.replace(/,/g, ""));
         let saleDiscount = detail.sale_discount;
-        if (detail.discounttype === "percent") {
+        if (detail.discount_type === "percent") {
           saleDiscount = (detail.sale_discount / 100) * salePrice;
         }
         return {
@@ -1033,7 +1033,7 @@ export default {
           sale_qty: detail.sale_qty,
           sale_price: this.formatDecimal(salePrice - saleDiscount),
           sale_discount: saleDiscount,
-          discounttype: detail.discounttype || "amount",
+          discount_type: detail.discount_type || "amount",
         };
       });
       this.updateTotalDiscount();
@@ -1083,7 +1083,7 @@ export default {
         }
         const salePrice = detail.sale_qty * parseFloat(price.replace(/,/g, ""));
         let saleDiscount = detail.sale_discount;
-        if (detail.discounttype === "percent") {
+        if (detail.discount_type === "percent") {
           saleDiscount = (detail.sale_discount / 100) * salePrice;
         }
         return {
@@ -1092,7 +1092,7 @@ export default {
           sale_qty: detail.sale_qty,
           sale_price: this.formatDecimal(salePrice - saleDiscount),
           sale_discount: saleDiscount,
-          discounttype: detail.discounttype || "amount",
+          discount_type: detail.discount_type || "amount",
         };
       });
       this.updateTotalDiscount();
@@ -1139,7 +1139,7 @@ export default {
           return 0;
         }
 
-        if (form.discounttype === "percent") {
+        if (form.discount_type === "percent") {
           sumdiscount =
             (parseFloat(form.sale_discount) *
               (parseFloat(form.sale_qty) * parseFloat(form.price))) /
@@ -1752,7 +1752,7 @@ export default {
               productForms: item.details.map((detail) => ({
                 product_id: detail.product_id,
                 sale_price: detail.sale_price,
-                discounttype: detail.discounttype,
+                discount_type: detail.discount_type,
                 sale_discount: detail.sale_discount,
                 sale_qty: detail.sale_qty,
                 product_detail: detail.product_detail,

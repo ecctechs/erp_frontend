@@ -863,7 +863,7 @@ export default {
 
         const salePrice = detail.sale_qty * parseFloat(price.replace(/,/g, ""));
         let saleDiscount = detail.sale_discount;
-        if (detail.discounttype === "percent") {
+        if (detail.discount_type === "percent") {
           saleDiscount = (detail.sale_discount / 100) * salePrice;
         }
         return {
@@ -873,7 +873,7 @@ export default {
           sale_qty: detail.sale_qty,
           sale_price: this.formatDecimal(salePrice - saleDiscount),
           sale_discount: detail.sale_discount,
-          discounttype: detail.discounttype, 
+          discount_type: detail.discount_type, 
           product_detail: detail.product_detail,
           pro_unti: detail.pro_unti,
         };
@@ -1871,7 +1871,7 @@ export default {
               productForms: item.details.map((detail) => ({
                 product_id: detail.product_id,
                 sale_price: detail.sale_price,
-                discounttype: detail.discounttype,
+                discount_type: detail.discount_type,
                 sale_discount: detail.sale_discount,
                 sale_qty: detail.sale_qty,
                 product_detail: detail.product_detail,
