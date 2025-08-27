@@ -559,7 +559,7 @@ export default {
         file: "",
         discount_quotation: "",
         vat_type: "",
-        remarkInfernal: "",
+        remark_infernal: "",
       },
       isEmpty: {
         bus_id: "",
@@ -596,7 +596,7 @@ export default {
         file: "",
         discount_quotation: "",
         vat_type: "",
-        remarkInfernal: "",
+        remark_infernal: "",
       },
       searchQuery: "",
     };
@@ -2146,7 +2146,7 @@ export default {
             employee_id: this.formData.employee_id,
             quotation_status: "Pending",
             remark: this.formData.remark,
-            remarkInfernal: this.formData.remarkInfernal,
+            remark_infernal: this.formData.remark_infernal,
             discount_quotation: this.formData.discount_quotation,
             vat_type: this.formData.vat_type,
             products: this.productForms.map((form) => ({
@@ -2312,7 +2312,7 @@ export default {
               employee_id: this.formData.employee_id,
               quotation_status: this.formData.quotation_status,
               remark: this.formData.remark,
-              remarkInfernal: this.formData.remarkInfernal,
+              remark_infernal: this.formData.remark_infernal,
               discount_quotation: this.formData.discount_quotation,
               vat_type: this.formData.vat_type,
               products: this.productForms.map((form) => ({
@@ -2485,7 +2485,7 @@ export default {
               employee_id: this.formData.employee_id,
               quotation_status: "Allowed",
               remark: this.formData.remark,
-              remarkInfernal: this.formData.remarkInfernal,
+              remark_infernal: this.formData.remark_infernal,
               discount_quotation: this.formData.discount_quotation,
               vat_type: this.formData.vat_type,
               products: this.productForms.map((form) => ({
@@ -2637,7 +2637,7 @@ export default {
               employee_id: this.formData.employee_id,
               quotation_status: "Pending",
               remark: this.formData.remark,
-              remarkInfernal: this.formData.remarkInfernal,
+              remark_infernal: this.formData.remark_infernal,
               discount_quotation: this.formData.discount_quotation,
               vat_type: this.formData.vat_type,
               products: this.productForms.map((form) => ({
@@ -3518,10 +3518,10 @@ export default {
         credit_expired_date: formattedExpired,
         sale_totalprice: row.sale_totalprice,
         remark: row.remark || "", // จัดการค่า remark ให้เป็น string ว่างถ้าเป็น null
-        remarkInfernal: row.remarkInfernal || "", // จัดการค่า remark ให้เป็น string ว่างถ้าเป็น null
+        remark_infernal: row.remark_infernal || "", // จัดการค่า remark ให้เป็น string ว่างถ้าเป็น null
         discount_quotation: quotationData.discount_quotation,
         vat_type: quotationData.vat_type,
-        remarkInfernal: quotationData.remarkInfernal,
+        remark_infernal: quotationData.remark_infernal,
       };
 
       if (this.t("lang") === "en") {

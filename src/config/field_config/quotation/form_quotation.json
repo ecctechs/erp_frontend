@@ -117,7 +117,7 @@
     "group": "internal"
   },
   {
-    "key": "remarkInfernal",
+    "key": "remark_infernal",
     "label": "InternalRemark",
     "componentType": "Textarea",
     "group": "internal",
