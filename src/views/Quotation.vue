@@ -558,7 +558,7 @@ export default {
         pdfname: "",
         file: "",
         discount_quotation: "",
-        vatType: "",
+        vat_type: "",
         remarkInfernal: "",
       },
       isEmpty: {
@@ -595,7 +595,7 @@ export default {
         pdfname: "",
         file: "",
         discount_quotation: "",
-        vatType: "",
+        vat_type: "",
         remarkInfernal: "",
       },
       searchQuery: "",
@@ -998,7 +998,7 @@ export default {
       index.showDetails = !index.showDetails;
     },
     vatTypeChange() {
-      if (this.formData.vatType === "VATincluding") {
+      if (this.formData.vat_type === "VATincluding") {
         this.formData.sale_totalprice = this.formatDecimal(
           parseFloat(this.formData.Net_price.replace(/,/g, "")) / 1.07
         );
@@ -1036,7 +1036,7 @@ export default {
       this.total_pricesale();
       this.total_priceBeforeDiscount();
 
-      if (this.formData.vatType === "VATincluding") {
+      if (this.formData.vat_type === "VATincluding") {
         this.formData.sale_totalprice = this.formatDecimal(
           parseFloat(this.formData.Net_price.replace(/,/g, "")) / 1.07
         );
@@ -1398,7 +1398,7 @@ export default {
         let netCal = this.formatDecimal(total_price * 0.07);
         let sale_data = this.formatDecimal(total_price + netCal);
 
-        if (quotationData.vatType === "VATincluding") {
+        if (quotationData.vat_type === "VATincluding") {
 
           let FormTotalprice = [
             `${this.formatDecimal(total_price)}`,
@@ -1787,7 +1787,7 @@ export default {
             let total_before_vat;
             let vat_in;
 
-            if (item.vatType === "VATexcluding") {
+            if (item.vat_type === "VATexcluding") {
               total_before_vat = (item.sale_totalprice * 100) / 107;
               vat_in = total_before_vat * 1.07;
             } else {
@@ -2148,7 +2148,7 @@ export default {
             remark: this.formData.remark,
             remarkInfernal: this.formData.remarkInfernal,
             discount_quotation: this.formData.discount_quotation,
-            vatType: this.formData.vatType,
+            vat_type: this.formData.vat_type,
             products: this.productForms.map((form) => ({
               product_id: form.product_id, // กรณีเพิ่มสินค้าใน quotaion จะหาตัวนี้ไม่เจอ
               sale_price: parseFloat(form.sale_price.replace(/,/g, "")),
@@ -2304,7 +2304,7 @@ export default {
               credit_date_number: this.formData.credit_date_number,
               credit_expired_date: this.formData.credit_expired_date,
               sale_totalprice:
-                this.formData.vatType !== "VATexcluding"
+                this.formData.vat_type !== "VATexcluding"
                   ? parseFloat(this.formData.sale_totalprice.replace(/,/g, ""))
                   : parseFloat(this.formData.sale_totalprice.replace(/,/g, "")),
               bus_id: this.Business.bus_id,
@@ -2314,7 +2314,7 @@ export default {
               remark: this.formData.remark,
               remarkInfernal: this.formData.remarkInfernal,
               discount_quotation: this.formData.discount_quotation,
-              vatType: this.formData.vatType,
+              vat_type: this.formData.vat_type,
               products: this.productForms.map((form) => ({
                 product_id: form.product_id,
                 sale_price: parseFloat(form.sale_price.replace(/,/g, "")),
@@ -2477,7 +2477,7 @@ export default {
               credit_date_number: this.formData.credit_date_number,
               credit_expired_date: this.formData.credit_expired_date,
               sale_totalprice:
-                this.formData.vatType !== "VATexcluding"
+                this.formData.vat_type !== "VATexcluding"
                   ? parseFloat(this.formData.sale_totalprice.replace(/,/g, ""))
                   : parseFloat(this.formData.sale_totalprice.replace(/,/g, "")),
               bus_id: this.Business.bus_id,
@@ -2487,7 +2487,7 @@ export default {
               remark: this.formData.remark,
               remarkInfernal: this.formData.remarkInfernal,
               discount_quotation: this.formData.discount_quotation,
-              vatType: this.formData.vatType,
+              vat_type: this.formData.vat_type,
               products: this.productForms.map((form) => ({
                 product_id: form.product_id,
                 sale_price: parseFloat(form.sale_price.replace(/,/g, "")),
@@ -2629,7 +2629,7 @@ export default {
               credit_date_number: this.formData.credit_date_number,
               credit_expired_date: this.formData.credit_expired_date,
               sale_totalprice:
-                this.formData.vatType !== "VATexcluding"
+                this.formData.vat_type !== "VATexcluding"
                   ? parseFloat(this.formData.sale_totalprice.replace(/,/g, ""))
                   : parseFloat(this.formData.sale_totalprice.replace(/,/g, "")),
               bus_id: this.Business.bus_id,
@@ -2639,7 +2639,7 @@ export default {
               remark: this.formData.remark,
               remarkInfernal: this.formData.remarkInfernal,
               discount_quotation: this.formData.discount_quotation,
-              vatType: this.formData.vatType,
+              vat_type: this.formData.vat_type,
               products: this.productForms.map((form) => ({
                 product_id: form.product_id,
                 sale_price: parseFloat(form.sale_price.replace(/,/g, "")),
@@ -2962,7 +2962,7 @@ export default {
         pdfname: "",
         file: "",
         discount_quotation: "0",
-        vatType: "VATexcluding",
+        vat_type: "VATexcluding",
       };
       this.clearFile();
       // this.fileName = [];
@@ -3206,7 +3206,7 @@ export default {
         this.total_priceBeforeDiscount();
 
         // VAT Calculation
-        if (this.formData.vatType === "VATincluding") {
+        if (this.formData.vat_type === "VATincluding") {
           this.formData.sale_totalprice = this.formatDecimal(
             parseFloat(this.formData.Net_price.replace(/,/g, "")) / 1.07
           );
@@ -3279,7 +3279,7 @@ export default {
           }
         }
 
-        if (this.formData.vatType === "VATincluding") {
+        if (this.formData.vat_type === "VATincluding") {
           this.formData.sale_totalprice = this.formatDecimal(
             parseFloat(this.formData.Net_price.replace(/,/g, "")) / 1.07
           );
@@ -3335,7 +3335,7 @@ export default {
         this.total_priceBeforeDiscount();
 
         // VAT Calculation
-        if (this.formData.vatType === "VATincluding") {
+        if (this.formData.vat_type === "VATincluding") {
           this.formData.sale_totalprice = this.formatDecimal(
             parseFloat(this.formData.Net_price.replace(/,/g, "")) / 1.07
           );
@@ -3414,7 +3414,7 @@ export default {
         this.total_pricesale();
         this.total_priceBeforeDiscount();
 
-        if (this.formData.vatType === "VATincluding") {
+        if (this.formData.vat_type === "VATincluding") {
           this.formData.sale_totalprice = this.formatDecimal(
             parseFloat(this.formData.Net_price.replace(/,/g, "")) / 1.07
           );
@@ -3520,7 +3520,7 @@ export default {
         remark: row.remark || "", // จัดการค่า remark ให้เป็น string ว่างถ้าเป็น null
         remarkInfernal: row.remarkInfernal || "", // จัดการค่า remark ให้เป็น string ว่างถ้าเป็น null
         discount_quotation: quotationData.discount_quotation,
-        vatType: quotationData.vatType,
+        vat_type: quotationData.vat_type,
         remarkInfernal: quotationData.remarkInfernal,
       };
 
@@ -3583,7 +3583,7 @@ export default {
       this.vat_price();
       this.total_pricesale();
       this.total_priceBeforeDiscount();
-      if (this.formData.vatType === "VATincluding") {
+      if (this.formData.vat_type === "VATincluding") {
         this.formData.sale_totalprice = this.formatDecimal(
           parseFloat(this.formData.Net_price.replace(/,/g, "")) / 1.07
         );

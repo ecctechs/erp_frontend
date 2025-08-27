@@ -233,11 +233,11 @@
         <label class="col-sm-5 col-md-6">{{ t("typeVat") }}</label>
         <div class="col-md-6">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" value="VATexcluding" v-model="formData.vatType" disabled />
+                <input class="form-check-input" type="radio" value="VATexcluding" v-model="formData.vat_type" disabled />
                 <label class="form-check-label">{{ t("vatType1") }}</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" value="VATincluding" v-model="formData.vatType" disabled />
+                <input class="form-check-input" type="radio" value="VATincluding" v-model="formData.vat_type" disabled />
                 <label class="form-check-label">{{ t("vatType2") }}</label>
             </div>
         </div>
@@ -823,7 +823,7 @@ summaryFields() {
         // invoice_date: formattedInvoice,
         invoice_date: formatDateForPicker(filteredInvoice[0].invoice_date),
         discount_quotation: quotationData.discount_quotation,
-        vatType: quotationData.vatType,
+        vat_type: quotationData.vat_type,
       };
 
       this.productForms = (row.productForms || []).map((detail) => {
@@ -860,7 +860,7 @@ summaryFields() {
       this.totalNetPrice();
       this.total_pricesale();
       this.total_priceBeforeDiscount();
-      if (this.formData.vatType === "VATincluding") {
+      if (this.formData.vat_type === "VATincluding") {
         this.formData.sale_totalprice = this.formatDecimal(
           parseFloat(this.formData.Net_price.replace(/,/g, "")) / 1.07
         );
@@ -1303,7 +1303,7 @@ summaryFields() {
         let netCal = this.formatDecimal(total_price * 0.07);
         let sale_data = this.formatDecimal(total_price + netCal);
 
-        if (quotationData.vatType === "VATincluding") {
+        if (quotationData.vat_type === "VATincluding") {
           let FormTotalprice = [
             `${this.formatDecimal(total_price)}`,
             `${(
@@ -1789,8 +1789,8 @@ summaryFields() {
             };
             let total_before_vat;
             let vat_in;
-            // alert(item.vatType);
-            if (item.vatType === "VATexcluding") {
+
+            if (item.vat_type === "VATexcluding") {
               total_before_vat = (item.sale_totalprice * 100) / 107;
               vat_in = total_before_vat * 1.07;
             } else {
@@ -2021,8 +2021,6 @@ summaryFields() {
       const accessToken = localStorage.getItem("@accessToken");
       this.isLoading = true;
       const qty_id = this.formData.sale_id;
-
-      // alert(qty_id);
       try {
         const response = await fetch(
           `${API_CALL}/quotation/deleteInvoice/${qty_id}`,

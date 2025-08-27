@@ -845,7 +845,7 @@ export default {
         // invoice_date: formattedInvoice,
         invoice_date: formatDateForPicker(filteredInvoice[0].invoice_date),
         discount_quotation: quotationData.discount_quotation,
-        vatType: quotationData.vatType,
+        vat_type: quotationData.vat_type,
       };
 
         this.productForms = (row.productForms || []).map((detail) => {
@@ -883,7 +883,7 @@ export default {
       this.total_pricesale();
       this.total_priceBeforeDiscount();
 
-      if (this.formData.vatType === "VATincluding") {
+      if (this.formData.vat_type === "VATincluding") {
         this.formData.sale_totalprice = this.formatDecimal(
           parseFloat(this.formData.Net_price.replace(/,/g, "")) / 1.07
         );
@@ -1321,7 +1321,7 @@ export default {
         let netCal = this.formatDecimal(total_price * 0.07);
         let sale_data = this.formatDecimal(total_price + netCal);
 
-        if (quotationData.vatType === "VATincluding") {
+        if (quotationData.vat_type === "VATincluding") {
 
           let FormTotalprice = [
             `${this.formatDecimal(total_price)}`,
@@ -1825,8 +1825,8 @@ export default {
             };
             let total_before_vat;
             let vat_in;
-            // alert(item.vatType);
-            if (item.vatType === "VATexcluding") {
+
+            if (item.vat_type === "VATexcluding") {
               total_before_vat = (item.sale_totalprice * 100) / 107;
               vat_in = total_before_vat * 1.07;
             } else {
