@@ -239,7 +239,7 @@ export default {
           localStorage.setItem("user_id", json.user_id);
           localStorage.setItem("user_name", json.user_first_name);
           localStorage.setItem("role_id", json.role_id);
-          localStorage.setItem("TokenCreate", json.TokenCreate);
+          localStorage.setItem("token_create", json.token_create);
 
           // If token and user info are stored, redirect to home
           if (localStorage.getItem("@access_token")) {

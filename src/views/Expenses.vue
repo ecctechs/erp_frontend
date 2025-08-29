@@ -826,7 +826,7 @@ export default {
           break;
         default:
           startDate = new Date(
-            this.parseThaiDateTime(localStorage.TokenCreate)
+            this.parseThaiDateTime(localStorage.token_create)
           );
           endDate = now;
           this.toggleCustomDate = false;
@@ -845,7 +845,7 @@ export default {
         });
         const json = await response.json();
         this.BusinessJson = json.data;
-        console.log(this.BusinessJson.TokenCreate);
+        console.log(this.BusinessJson.token_create);
       } catch (error) {
         console.error("Error fetching data:", error);
         this.showPopup_error("Error fetching data");

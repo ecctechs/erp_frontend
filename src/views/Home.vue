@@ -1251,7 +1251,7 @@ export default {
           break;
         default:
           startDate = new Date(
-            this.parseThaiDateTime(localStorage.TokenCreate)
+            this.parseThaiDateTime(localStorage.token_create)
           );
           endDate = now;
           this.toggleCustomDate = false;
@@ -1383,7 +1383,7 @@ export default {
           break;
         default:
           startDate2 = new Date(
-            this.parseThaiDateTime(localStorage.TokenCreate)
+            this.parseThaiDateTime(localStorage.token_create)
           );
           endDate2 = now;
           this.toggleCustomDate2 = false;
