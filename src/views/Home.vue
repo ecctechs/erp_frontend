@@ -553,7 +553,7 @@ export default {
     },
     TestToken() {
       const token = localStorage.getItem("@accessToken");
-      const userRole = localStorage.getItem("RoleName");
+      const userRole = localStorage.getItem("role_name");
       const userID = localStorage.getItem("user_id");
       if (token) {
         console.log("Token in Home page", token);
@@ -841,7 +841,7 @@ export default {
     async getPaymentTable() {
       this.isLoading = true;
       const accessToken = localStorage.getItem("@accessToken");
-      const userRole = localStorage.getItem("RoleName");
+      const userRole = localStorage.getItem("role_name");
       console.log("User Role : ", userRole);
       try {
         const response = await fetch(`${API_CALL}/employee/getPayment`, {

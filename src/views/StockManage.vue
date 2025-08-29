@@ -177,7 +177,7 @@ export default {
       isLoading: false, // Controls the loading state
       isPopupVisible: false, // Controls success popup visibility
       inputError: false, // Tracks input validation errors
-      role: localStorage.getItem("RoleName"), // Fetches user role from local storage
+      role: localStorage.getItem("role_name"), // Fetches user role from local storage
       formData: {
         product_id: "", // Product ID for transactions
         ID: "", // Transaction ID for editing

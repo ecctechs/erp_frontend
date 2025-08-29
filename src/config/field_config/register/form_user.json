@@ -42,7 +42,7 @@
     "col": "col-md-6"
   },
   {
-    "key": "RoleID",
+    "key": "role_id",
     "label": "role",
     "componentType": "Dropdown",
     "required": true,

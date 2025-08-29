@@ -35,7 +35,7 @@
             <label class="col-sm-5 col-md-6">Role name: </label>
             <input
               class="form-control col-sm-9 col-md-6"
-              v-model="formRole.RoleName"
+              v-model="formRole.role_name"
               type="text"
               id="input-text"
               required
@@ -153,8 +153,8 @@ export default {
       inputError: false, // Used for validation errors on input fields
       formRole: {
         // Form data for role being edited or added
-        RoleID: "", // Role ID for editing
-        RoleName: "", // Role name for input
+        role_id: "", // Role ID for editing
+        role_name: "", // Role name for input
       },
     };
   },
@@ -173,8 +173,8 @@ export default {
     closePopup() {
       this.isPopupOpen = false;
       this.formRole = {
-        RoleID: "",
-        RoleName: "",
+        role_id: "",
+        role_name: "",
       };
     },
     // Close the delete confirmation popup
@@ -186,8 +186,8 @@ export default {
       console.log("Edit item:", item);
       this.isPopupOpen = true;
       this.formRole = {
-        RoleID: item.ID, // Set the Role ID
-        RoleName: item.Role, // Set the Role Name
+        role_id: item.ID, // Set the Role ID
+        role_name: item.Role, // Set the Role Name
       };
     },
     // Open the delete confirmation popup
@@ -195,7 +195,7 @@ export default {
       console.log("Delete item:", item);
       this.isDeleteConfirmPopupOpen = true;
       this.formRole = {
-        RoleID: item.ID, // Set the Role ID for deletion
+        role_id: item.ID, // Set the Role ID for deletion
       };
     },
     // Show a success popup with the provided message
@@ -231,8 +231,8 @@ export default {
           // Map the role data to display in the table
           this.roles = json.data.map((item) => {
             let initialTableData = {
-              ID: item.RoleID,
-              Role: item.RoleName,
+              ID: item.role_id,
+              Role: item.role_name,
             };
             return initialTableData;
           });
@@ -249,7 +249,7 @@ export default {
     // Add a new role to the system
     async addRole() {
       const accessToken = localStorage.getItem("@accessToken");
-      if (this.formRole.RoleName === "") {
+      if (this.formRole.role_name === "") {
         this.inputError = true; // Show validation error if role name is empty
         this.showPopup_error("Please fill data");
       } else {
@@ -263,7 +263,7 @@ export default {
               Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-              RoleName: this.formRole.RoleName, // Send the role name to the API
+              role_name: this.formRole.role_name, // Send the role name to the API
             }),
           });
           const json = await response.json();
@@ -271,7 +271,7 @@ export default {
           if (json.statusCode === 200) {
             this.showPopup(this.$t("validation.AddSucc")); // Show success message
             this.getRole(); // Refresh the role list
-            this.formRole = { RoleID: "", RoleName: "" }; // Reset the form
+            this.formRole = { role_id: "", role_name: "" }; // Reset the form
           } else {
             this.showPopup_error(`${json.data}`); // Show error message
             console.log("Add role error", json);
@@ -286,12 +286,12 @@ export default {
     // Edit an existing role
     async editRole() {
       const accessToken = localStorage.getItem("@accessToken");
-      if (this.formRole.RoleName === "") {
+      if (this.formRole.role_name === "") {
         this.inputError = true; // Show validation error if role name is empty
       } else {
         this.inputError = false;
         this.isLoading = true;
-        const RoleID = this.formRole.RoleID; // Get the Role ID for editing
+        const RoleID = this.formRole.role_id; // Get the Role ID for editing
         try {
           const response = await fetch(`${API_CALL}/auth/EditRole/${RoleID}`, {
             method: "PUT",
@@ -300,7 +300,7 @@ export default {
               Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-              RoleName: this.formRole.RoleName, // Send the new role name to the API
+              role_name: this.formRole.role_name, // Send the new role name to the API
             }),
           });
           const json = await response.json();
@@ -323,7 +323,7 @@ export default {
     async deleteRole() {
       const accessToken = localStorage.getItem("@accessToken");
       this.isLoading = true; // Show loading spinner
-      const RoleID = this.formRole.RoleID; // Get the Role ID for deletion
+      const RoleID = this.formRole.role_id; // Get the Role ID for deletion
       try {
         const response = await fetch(`${API_CALL}/auth/DeleteRole/${RoleID}`, {
           method: "DELETE",

@@ -466,7 +466,7 @@ export default {
         userPhone: "",
         userEmail: "",
         userPassword: "",
-        RoleID: "",
+        role_id: "",
         business_name: "",
         business_address: "",
         business_website: "",
@@ -579,10 +579,10 @@ export default {
           const json = await response.json();
           if (response.ok) {
             localStorage.setItem("@accessToken", json.token);
-            localStorage.setItem("RoleName", json.RoleName);
-            localStorage.setItem("user_id", json.userID);
+            localStorage.setItem("role_name", json.role_name);
+            localStorage.setItem("user_id", json.user_id);
             localStorage.setItem("user_name", json.userF_name);
-            localStorage.setItem("RoleID", json.RoleID);
+            localStorage.setItem("role_id", json.role_id);
             localStorage.setItem("TokenCreate", json.TokenCreate);
             if (localStorage.getItem("@accessToken")) {
               console.log("Login successful:", json);

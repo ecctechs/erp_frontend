@@ -220,7 +220,7 @@ export default {
         userPhone: "", // User's phone number
         userEmail: "", // User's email
         userPassword: "", // User's password
-        RoleID: "", // The selected role ID for the user
+        role_id: "", // The selected role ID for the user
       },
       isEmpty: {
         // Stores form data for user creation or editing
@@ -230,15 +230,15 @@ export default {
         userPhone: "", // User's phone number
         userEmail: "", // User's email
         userPassword: "", // User's password
-        RoleID: "", // The selected role ID for the user
+        role_id: "", // The selected role ID for the user
       },
     };
   },
   computed: {
       roleOptions() {
         return this.Roles.map(role => ({
-          value: role.RoleID,
-          text: role.RoleName
+          value: role.role_id,
+          text: role.role_name
         }));
       },
     // Defines the table headers for the user list
@@ -321,7 +321,7 @@ export default {
         userPhone: "",
         userEmail: "",
         userPassword: "",
-        RoleID: "",
+        role_id: "",
       };
     },
     // Shows a success popup with the provided message
@@ -355,7 +355,7 @@ export default {
         userPhone: "",
         userEmail: "",
         userPassword: "",
-        RoleID: "",
+        role_id: "",
       };
       this.inputError = false; // Resets input error flag
       this.isPopupVisible_error = false;
@@ -365,7 +365,7 @@ export default {
       this.isPopupOpen = true; // Opens the popup
       this.isAddingMode = false; // We are editing, not adding
       this.isEditMode = true; // Sets the flag to editing mode
-      let role = this.Roles.find((r) => r.RoleName === item.Role); // Finds the role associated with the user
+      let role = this.Roles.find((r) => r.role_name === item.Role); // Finds the role associated with the user
       this.formData = {
         // Pre-populates the form with the selected user's data
         ID: item.ID,
@@ -374,7 +374,7 @@ export default {
         userPhone: item["Phone number"],
         userEmail: item.Email,
         userPassword: item.Password,
-        RoleID: role ? role.RoleID : "", // Finds the RoleID for the user
+        role_id: role ? role.role_id : "", // Finds the RoleID for the user
       };
     },
     // Opens the delete confirmation popup
@@ -421,12 +421,12 @@ export default {
           this.Users = json.data.map((item) => {
             // Maps API response to a table format
             return {
-              ID: item.userID,
+              ID: item.user_id,
               "First name": item.userF_name,
               "Last name": item.userL_name,
               "Phone number": item.userPhone,
               Email: item.userEmail,
-              Role: item.role.RoleName,
+              Role: item.role.role_name,
             };
           });
         } else {
@@ -458,7 +458,7 @@ export default {
               userPhone: this.formData.userPhone,
               userEmail: this.formData.userEmail.toLowerCase(),
               userPassword: this.formData.userPassword,
-              RoleID: this.formData.RoleID,
+              role_id: this.formData.role_id,
             }),
           }
         );
@@ -527,7 +527,7 @@ export default {
             userPhone: this.formData.userPhone,
             userEmail: this.formData.userEmail,
             userPassword: this.formData.userPassword,
-            RoleID: this.formData.RoleID,
+            role_id: this.formData.role_id,
           }),
         });
         const json = await response.json();
@@ -559,7 +559,7 @@ export default {
         userPhone: false,
         userEmail: false,
         userPassword: false,
-        RoleID: false,
+        role_id: false,
       };
 
       // ตรวจชื่อจริง
@@ -623,8 +623,8 @@ export default {
       }
 
       // // ตรวจนามสกุล
-      if (this.formData.RoleID === "") {
-        this.isEmpty.RoleID = true;
+      if (this.formData.role_id === "") {
+        this.isEmpty.role_id = true;
         errorMessages.push(this.$t("validation.RoleID"));
       }
 

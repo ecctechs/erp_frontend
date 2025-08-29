@@ -590,7 +590,7 @@
       </div>
       <div class="mb-3 div-for-formProfile">
         <label>{{ t("role") }}</label>
-        <a>{{ getRoleName(formDataUser.RoleID) }}</a>
+        <a>{{ getRoleName(formDataUser.role_id) }}</a>
         <div style="flex: 0.1"><a> </a></div>
       </div>
       <div
@@ -680,7 +680,7 @@
 </template>
 <script>
 const token = localStorage.getItem("@accessToken");
-const userRoles = localStorage.getItem("RoleName");
+const userRoles = localStorage.getItem("role_name");
 import Popup from "../components/popup.vue";
 import { config } from "../../constant.js";
 import { useI18n } from "vue-i18n"; //for switch language
@@ -789,7 +789,7 @@ export default {
         userPhone: "",
         userEmail: "",
         userPassword: "",
-        RoleID: "",
+        role_id: "",
       },
       navItems: [
         {
@@ -935,7 +935,7 @@ export default {
     },
     //get role of user from localstorage
     userRole() {
-      return localStorage.getItem("RoleName");
+      return localStorage.getItem("role_name");
     },
     //for chaeck current page
     activePage() {
@@ -1038,7 +1038,7 @@ export default {
         this.formDataUser.userPhone === "" ||
         this.formDataUser.userEmail === "" ||
         this.formDataUser.userPassword === "" ||
-        this.formDataUser.RoleID === ""
+        this.formDataUser.role_id === ""
       ) {
         this.inputError = true;
         this.showPopup_error("Please fill data");
@@ -1063,7 +1063,7 @@ export default {
         this.formDataUser.userPhone === "" ||
         this.formDataUser.userEmail === "" ||
         this.formDataUser.userPassword === "" ||
-        this.formDataUser.RoleID === ""
+        this.formDataUser.role_id === ""
       ) {
         this.inputError = true;
         this.showPopup_error("Please fill data");
@@ -1088,7 +1088,7 @@ export default {
         this.formDataUser.userL_name === "" ||
         this.formDataUser.userEmail === "" ||
         this.formDataUser.userPassword === "" ||
-        this.formDataUser.RoleID === ""
+        this.formDataUser.role_id === ""
       ) {
         this.inputError = true;
         this.showPopup_error("Please fill data");
@@ -1113,7 +1113,7 @@ export default {
         this.formDataUser.userL_name === "" ||
         this.formDataUser.userPhone === "" ||
         this.formDataUser.userPassword === "" ||
-        this.formDataUser.RoleID === ""
+        this.formDataUser.role_id === ""
       ) {
         this.inputError = true;
         this.showPopup_error("Please fill data");
@@ -1138,7 +1138,7 @@ export default {
         this.formDataUser.userL_name === "" ||
         this.formDataUser.userPhone === "" ||
         this.formDataUser.userEmail === "" ||
-        this.formDataUser.RoleID === ""
+        this.formDataUser.role_id === ""
       ) {
         this.inputError = true;
         this.showPopup_error("Please fill data");
@@ -1583,8 +1583,8 @@ export default {
     },
     //get Role name from roleID
     getRoleName(roleID) {
-      const role = this.Roles.find((r) => r.RoleID === roleID);
-      return role ? role.RoleName : "Unknown";
+      const role = this.Roles.find((r) => r.role_id === roleID);
+      return role ? role.role_name : "Unknown";
     },
     //get data of business
     async getBusiness() {
@@ -1666,13 +1666,13 @@ export default {
         const json = await response.json();
         if (json.statusCode === 200) {
           this.formDataUser = {
-            ID: json.data.userID,
+            ID: json.data.user_id,
             userF_name: json.data.userF_name,
             userL_name: json.data.userL_name,
             userPhone: json.data.userPhone,
             userEmail: json.data.userEmail,
             userPassword: json.data.userPassword,
-            RoleID: json.data.role.RoleID,
+            role_id: json.data.role.role_id,
           };
           this.userName = this.formDataUser.userF_name;
         } else {
@@ -1794,7 +1794,7 @@ export default {
             userPhone: this.formDataUser.userPhone,
             userEmail: this.formDataUser.userEmail.toLowerCase().trim(),
             userPassword: this.formDataUser.userPassword,
-            RoleID: this.formDataUser.RoleID,
+            role_id: this.formDataUser.role_id,
           }),
         });
         const json = await response.json();

@@ -235,10 +235,10 @@ export default {
         if (response.ok) {
           // On successful login, store token and user info in localStorage
           localStorage.setItem("@accessToken", json.token);
-          localStorage.setItem("RoleName", json.RoleName);
-          localStorage.setItem("user_id", json.userID);
+          localStorage.setItem("role_name", json.role_name);
+          localStorage.setItem("user_id", json.user_id);
           localStorage.setItem("user_name", json.userF_name);
-          localStorage.setItem("RoleID", json.RoleID);
+          localStorage.setItem("role_id", json.role_id);
           localStorage.setItem("TokenCreate", json.TokenCreate);
 
           // If token and user info are stored, redirect to home
