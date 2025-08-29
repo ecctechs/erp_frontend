@@ -38,7 +38,7 @@
             <input
               class="form-control col-sm-9 col-md-6"
               style="max-width: 50vh; margin-right: 10px"
-              v-model="formData.userEmail"
+              v-model="formData.user_email"
               type="text"
               required
             />
@@ -174,7 +174,7 @@ export default {
       inputValue: "",
       inputError: false,
       formData: {
-        userEmail: "",
+        user_email: "",
         userPassword: "",
       },
       isPopupVisible: false,
@@ -273,7 +273,7 @@ export default {
             Authorization: `Bearer ${accessToken}`, // Include access token in the request
           },
           body: JSON.stringify({
-            userEmail: this.formData.userEmail, // Send the entered email
+            user_email: this.formData.user_email, // Send the entered email
           }),
         });
         const json = await response.json();
@@ -308,7 +308,7 @@ export default {
             Authorization: `Bearer ${accessToken}`, // Include access token in the request
           },
           body: JSON.stringify({
-            userEmail: this.formData.userEmail, // Send the email and new password
+            user_email: this.formData.user_email, // Send the email and new password
             userPassword: this.formData.userPassword,
           }),
         });

@@ -224,7 +224,7 @@ export default {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            userEmail: this.formUser.useremail.toLowerCase().trim(), // Send user email
+            user_email: this.formUser.useremail.toLowerCase().trim(), // Send user email
             userPassword: this.formUser.password, // Send user password
           }),
         });
@@ -237,7 +237,7 @@ export default {
           localStorage.setItem("@accessToken", json.token);
           localStorage.setItem("role_name", json.role_name);
           localStorage.setItem("user_id", json.user_id);
-          localStorage.setItem("user_name", json.userF_name);
+          localStorage.setItem("user_name", json.user_first_name);
           localStorage.setItem("role_id", json.role_id);
           localStorage.setItem("TokenCreate", json.TokenCreate);
 

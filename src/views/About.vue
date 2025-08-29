@@ -294,8 +294,8 @@ export default {
           errorMessages.push(this.$t(`validation.${field}`));
         } else {
           // ตรวจสอบเฉพาะเบอร์โทรต้องเป็นตัวเลข 10 หลัก
-          if (field === "userPhone" && !/^\d{9,10}$/.test(value)) {
-            this.isEmpty.userPhone = true;
+          if (field === "user_phone" && !/^\d{9,10}$/.test(value)) {
+            this.isEmpty.user_phone = true;
             errorMessages.push(this.$t("validation.phone_invalid"));
           }
           if (field === "business_tel" && !/^\d{9,10}$/.test(value)) {
@@ -303,10 +303,10 @@ export default {
             errorMessages.push(this.$t("validation.phone_invalid"));
           }
           if (
-            field === "userEmail" &&
+            field === "user_email" &&
             !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
           ) {
-            this.isEmpty.userEmail = true;
+            this.isEmpty.user_email = true;
             errorMessages.push(this.$t("validation.email_invalid"));
           }
           if (field === "bank_number" && !/^\d{10,13}$/.test(value)) {

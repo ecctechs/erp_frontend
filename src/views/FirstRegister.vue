@@ -235,10 +235,10 @@ export default {
       isLoading: false,
       isPopupVisible: false,
       formData: {
-        userF_name: "",
-        userL_name: "",
-        userPhone: "",
-        userEmail: "",
+        user_first_name: "",
+        user_last_name: "",
+        user_phone: "",
+        user_email: "",
         userPassword: "",
         bus_id: "",
         business_name: "",
@@ -254,10 +254,10 @@ export default {
         user_title: "",
       },
       isEmpty: {
-        userF_name: false,
-        userL_name: false,
-        userPhone:false,
-        userEmail: false,
+        user_first_name: false,
+        user_last_name: false,
+        user_phone:false,
+        user_email: false,
         userPassword: false,
         bus_id: false,
         business_name: false,
@@ -329,10 +329,10 @@ export default {
     validateFormData() {
       let fieldsToCheck = [
         "user_title",
-        "userF_name",
-        "userL_name",
-        "userPhone",
-        "userEmail",
+        "user_first_name",
+        "user_last_name",
+        "user_phone",
+        "user_email",
         "userPassword",
         "userPassword2",
         "business_name",
@@ -357,17 +357,17 @@ export default {
           errorMessages.push(this.$t(`validation.${field}`));
         } else {
           if (
-            (field === "userPhone" || field === "business_tel") &&
+            (field === "user_phone" || field === "business_tel") &&
             !/^\d{9,10}$/.test(value)
           ) {
             this.isEmpty[field] = true;
             errorMessages.push(this.$t("validation.phone_invalid"));
           }
           if (
-            field === "userEmail" &&
+            field === "user_email" &&
             !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
           ) {
-            this.isEmpty.userEmail = true;
+            this.isEmpty.user_email = true;
             errorMessages.push(this.$t("validation.email_invalid"));
           }
           if (field === "userPassword") {
@@ -461,10 +461,10 @@ export default {
     },
     handleClearInput() {
       this.formData = {
-        userF_name: "",
-        userL_name: "",
-        userPhone: "",
-        userEmail: "",
+        user_first_name: "",
+        user_last_name: "",
+        user_phone: "",
+        user_email: "",
         userPassword: "",
         role_id: "",
         business_name: "",
@@ -529,12 +529,12 @@ export default {
       this.isLoading = true;
       const formDataBusiness = new FormData();
       formDataBusiness.append("user_title", this.formData.user_title);
-      formDataBusiness.append("userF_name", this.formData.userF_name);
-      formDataBusiness.append("userL_name", this.formData.userL_name);
-      formDataBusiness.append("userPhone", this.formData.userPhone);
+      formDataBusiness.append("user_first_name", this.formData.user_first_name);
+      formDataBusiness.append("user_last_name", this.formData.user_last_name);
+      formDataBusiness.append("user_phone", this.formData.user_phone);
       formDataBusiness.append(
-        "userEmail",
-        this.formData.userEmail.toLowerCase().trim()
+        "user_email",
+        this.formData.user_email.toLowerCase().trim()
       );
       formDataBusiness.append("userPassword", this.formData.userPassword);
       formDataBusiness.append("business_name", this.formData.business_name);
@@ -561,7 +561,7 @@ export default {
         console.log(json);
         if (json.data === "User already exists") {
           this.errorMessages = [];
-          this.isEmpty.userEmail = true;
+          this.isEmpty.user_email = true;
           this.errorMessages.push(this.$t("validation.User_already_exists"));
           this.showPopup_validate(this.errorMessages);
         }
@@ -572,7 +572,7 @@ export default {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              userEmail: this.formData.userEmail.toLowerCase().trim(),
+              user_email: this.formData.user_email.toLowerCase().trim(),
               userPassword: this.formData.userPassword,
             }),
           });
@@ -581,7 +581,7 @@ export default {
             localStorage.setItem("@accessToken", json.token);
             localStorage.setItem("role_name", json.role_name);
             localStorage.setItem("user_id", json.user_id);
-            localStorage.setItem("user_name", json.userF_name);
+            localStorage.setItem("user_name", json.user_first_name);
             localStorage.setItem("role_id", json.role_id);
             localStorage.setItem("TokenCreate", json.TokenCreate);
             if (localStorage.getItem("@accessToken")) {

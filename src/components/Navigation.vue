@@ -518,11 +518,11 @@
     <Popup :isOpen="isPopupOpen" :closePopup="closePopup">
       <div class="mb-3 mt-3 div-for-formProfile">
         <label>{{ t("firstname") }}</label>
-        <a v-if="isShowingF_name">{{ formDataUser.userF_name }}</a>
+        <a v-if="isShowingF_name">{{ formDataUser.user_first_name }}</a>
         <input
           class="form-control"
           v-if="isEditF_nameMode"
-          v-model="formDataUser.userF_name"
+          v-model="formDataUser.user_first_name"
           type="text"
           :class="{ error: inputError }"
         />
@@ -532,11 +532,11 @@
       </div>
       <div class="mb-3 div-for-formProfile">
         <label>{{ t("lastname") }}</label>
-        <a v-if="isShowingL_name">{{ formDataUser.userL_name }}</a>
+        <a v-if="isShowingL_name">{{ formDataUser.user_last_name }}</a>
         <input
           class="form-control"
           v-if="isEditL_nameMode"
-          v-model="formDataUser.userL_name"
+          v-model="formDataUser.user_last_name"
           type="text"
           :class="{ error: inputError }"
         />
@@ -546,11 +546,11 @@
       </div>
       <div class="mb-3 div-for-formProfile">
         <label>{{ t("phoneNum") }}</label>
-        <a v-if="isShowingPhone">{{ formDataUser.userPhone }}</a>
+        <a v-if="isShowingPhone">{{ formDataUser.user_phone }}</a>
         <input
           class="form-control"
           v-if="isEdituserPhoneMode"
-          v-model="formDataUser.userPhone"
+          v-model="formDataUser.user_phone"
           type="text"
           @keypress="validateInput"
           maxlength="10"
@@ -562,11 +562,11 @@
       </div>
       <div class="mb-3 div-for-formProfile">
         <label>{{ t("email") }}</label>
-        <a v-if="isShowingEmail">{{ formDataUser.userEmail }}</a>
+        <a v-if="isShowingEmail">{{ formDataUser.user_email }}</a>
         <input
           class="form-control"
           v-if="isEdituserEmailMode"
-          v-model="formDataUser.userEmail"
+          v-model="formDataUser.user_email"
           type="text"
           :class="{ error: inputError }"
         />
@@ -784,10 +784,10 @@ export default {
       },
       formDataUser: {
         ID: "",
-        userF_name: "",
-        userL_name: "",
-        userPhone: "",
-        userEmail: "",
+        user_first_name: "",
+        user_last_name: "",
+        user_phone: "",
+        user_email: "",
         userPassword: "",
         role_id: "",
       },
@@ -1034,9 +1034,9 @@ export default {
     //action for click edit first name from profile popup
     EditF_name() {
       if (
-        this.formDataUser.userL_name === "" ||
-        this.formDataUser.userPhone === "" ||
-        this.formDataUser.userEmail === "" ||
+        this.formDataUser.user_last_name === "" ||
+        this.formDataUser.user_phone === "" ||
+        this.formDataUser.user_email === "" ||
         this.formDataUser.userPassword === "" ||
         this.formDataUser.role_id === ""
       ) {
@@ -1059,9 +1059,9 @@ export default {
     //action for click edit last name from profile popup
     EditL_name() {
       if (
-        this.formDataUser.userF_name === "" ||
-        this.formDataUser.userPhone === "" ||
-        this.formDataUser.userEmail === "" ||
+        this.formDataUser.user_first_name === "" ||
+        this.formDataUser.user_phone === "" ||
+        this.formDataUser.user_email === "" ||
         this.formDataUser.userPassword === "" ||
         this.formDataUser.role_id === ""
       ) {
@@ -1084,9 +1084,9 @@ export default {
     //action for click edit phone from profile popup
     EditPhone() {
       if (
-        this.formDataUser.userF_name === "" ||
-        this.formDataUser.userL_name === "" ||
-        this.formDataUser.userEmail === "" ||
+        this.formDataUser.user_first_name === "" ||
+        this.formDataUser.user_last_name === "" ||
+        this.formDataUser.user_email === "" ||
         this.formDataUser.userPassword === "" ||
         this.formDataUser.role_id === ""
       ) {
@@ -1109,9 +1109,9 @@ export default {
     //action for click edit email from profile popup
     EditEmail() {
       if (
-        this.formDataUser.userF_name === "" ||
-        this.formDataUser.userL_name === "" ||
-        this.formDataUser.userPhone === "" ||
+        this.formDataUser.user_first_name === "" ||
+        this.formDataUser.user_last_name === "" ||
+        this.formDataUser.user_phone === "" ||
         this.formDataUser.userPassword === "" ||
         this.formDataUser.role_id === ""
       ) {
@@ -1134,15 +1134,15 @@ export default {
     //action for click edit password from profile popup
     EditPassword() {
       if (
-        this.formDataUser.userF_name === "" ||
-        this.formDataUser.userL_name === "" ||
-        this.formDataUser.userPhone === "" ||
-        this.formDataUser.userEmail === "" ||
+        this.formDataUser.user_first_name === "" ||
+        this.formDataUser.user_last_name === "" ||
+        this.formDataUser.user_phone === "" ||
+        this.formDataUser.user_email === "" ||
         this.formDataUser.role_id === ""
       ) {
         this.inputError = true;
         this.showPopup_error("Please fill data");
-      } else if (!this.validateEmail(this.formDataUser.userEmail)) {
+      } else if (!this.validateEmail(this.formDataUser.user_email)) {
         this.inputError = true;
         this.showPopup_error("Invalid email format");
       } else {
@@ -1667,14 +1667,14 @@ export default {
         if (json.statusCode === 200) {
           this.formDataUser = {
             ID: json.data.user_id,
-            userF_name: json.data.userF_name,
-            userL_name: json.data.userL_name,
-            userPhone: json.data.userPhone,
-            userEmail: json.data.userEmail,
+            user_first_name: json.data.user_first_name,
+            user_last_name: json.data.user_last_name,
+            user_phone: json.data.user_phone,
+            user_email: json.data.user_email,
             userPassword: json.data.userPassword,
             role_id: json.data.role.role_id,
           };
-          this.userName = this.formDataUser.userF_name;
+          this.userName = this.formDataUser.user_first_name;
         } else {
           this.showPopup_error(json.data); // call popup error
           console.log(json);
@@ -1688,44 +1688,44 @@ export default {
 
       // รีเซ็ตค่าว่าง
       this.isEmpty = {
-        userF_name: false,
-        userL_name: false,
-        userPhone: false,
-        userEmail: false,
+        user_first_name: false,
+        user_last_name: false,
+        user_phone: false,
+        user_email: false,
         userPassword: false,
       };
 
       // ตรวจชื่อจริง
-      if (this.formDataUser.userF_name.trim() === "") {
-        this.isEmpty.userF_name = true;
+      if (this.formDataUser.user_first_name.trim() === "") {
+        this.isEmpty.user_first_name = true;
         errorMessages.push(this.$t("validation.F_name"));
       }
 
       // ตรวจนามสกุล
-      if (this.formDataUser.userL_name.trim() === "") {
-        this.isEmpty.userL_name = true;
+      if (this.formDataUser.user_last_name.trim() === "") {
+        this.isEmpty.user_last_name = true;
         errorMessages.push(this.$t("validation.L_name"));
       }
 
       // ตรวจเบอร์โทร
-      const phone = this.formDataUser.userPhone.trim();
+      const phone = this.formDataUser.user_phone.trim();
       if (phone === "") {
-        this.isEmpty.userPhone = true;
+        this.isEmpty.user_phone = true;
 
         errorMessages.push(this.$t("validation.userPhone"));
       } else if (!/^\d{9,10}$/.test(phone)) {
-        this.isEmpty.userPhone = true;
+        this.isEmpty.user_phone = true;
         errorMessages.push(this.$t("validation.cus_tel_length"));
       }
 
       // ตรวจอีเมล
-      const email = this.formDataUser.userEmail.trim();
+      const email = this.formDataUser.user_email.trim();
       if (email === "") {
-        this.isEmpty.userEmail = true;
+        this.isEmpty.user_email = true;
 
         errorMessages.push(this.$t("validation.cus_email"));
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        this.isEmpty.userEmail = true;
+        this.isEmpty.user_email = true;
         errorMessages.push(this.$t("validation.cus_email2"));
       }
 
@@ -1789,10 +1789,10 @@ export default {
             Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify({
-            userF_name: this.formDataUser.userF_name,
-            userL_name: this.formDataUser.userL_name,
-            userPhone: this.formDataUser.userPhone,
-            userEmail: this.formDataUser.userEmail.toLowerCase().trim(),
+            user_first_name: this.formDataUser.user_first_name,
+            user_last_name: this.formDataUser.user_last_name,
+            user_phone: this.formDataUser.user_phone,
+            user_email: this.formDataUser.user_email.toLowerCase().trim(),
             userPassword: this.formDataUser.userPassword,
             role_id: this.formDataUser.role_id,
           }),
@@ -1800,7 +1800,7 @@ export default {
         const json = await response.json();
         if (json.statusCode === 200) {
           this.isPopupVisible_error = false;
-          this.userName = this.formDataUser.userF_name;
+          this.userName = this.formDataUser.user_first_name;
 
           console.log("Saved Profile");
           this.showPopup("Saved Profile");

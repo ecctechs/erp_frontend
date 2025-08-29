@@ -1,6 +1,6 @@
 [
   {
-    "key": "userF_name",
+    "key": "user_first_name",
     "label": "firstname",
     "componentType": "TextField",
     "type": "text",
@@ -8,7 +8,7 @@
     "col": "col-md-6"
   },
   {
-    "key": "userL_name",
+    "key": "user_last_name",
     "label": "lastname",
     "componentType": "TextField",
     "type": "text",
@@ -16,7 +16,7 @@
     "col": "col-md-6"
   },
   {
-    "key": "userPhone",
+    "key": "user_phone",
     "label": "phoneNum",
     "componentType": "TextField",
     "type": "tel",
@@ -26,7 +26,7 @@
     "col": "col-md-6"
   },
   {
-    "key": "userEmail",
+    "key": "user_email",
     "label": "email",
     "componentType": "TextField",
     "type": "email",

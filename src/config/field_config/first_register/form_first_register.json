@@ -1,9 +1,9 @@
 [
   { "key": "user_title", "label": "title", "group": "user", "componentType": "Dropdown", "required": true, "col": "col-md-2", "options": "titleOptions" },
-  { "key": "userF_name", "label": "firstname", "group": "user", "componentType": "TextField", "type": "text", "required": true, "col": "col-md-4", "maxlength": 50 },
-  { "key": "userL_name", "label": "lastname", "group": "user", "componentType": "TextField", "type": "text", "required": true, "col": "col-md-6" },
-  { "key": "userPhone", "label": "phoneNum", "group": "user", "componentType": "TextField", "type": "tel", "required": true, "col": "col-6", "maxlength": 10, "isNumeric": true },
-  { "key": "userEmail", "label": "email", "group": "user", "componentType": "TextField", "type": "email", "required": true, "col": "col-6" },
+  { "key": "user_first_name", "label": "firstname", "group": "user", "componentType": "TextField", "type": "text", "required": true, "col": "col-md-4", "maxlength": 50 },
+  { "key": "user_last_name", "label": "lastname", "group": "user", "componentType": "TextField", "type": "text", "required": true, "col": "col-md-6" },
+  { "key": "user_phone", "label": "phoneNum", "group": "user", "componentType": "TextField", "type": "tel", "required": true, "col": "col-6", "maxlength": 10, "isNumeric": true },
+  { "key": "user_email", "label": "email", "group": "user", "componentType": "TextField", "type": "email", "required": true, "col": "col-6" },
   { "key": "userPassword", "label": "password", "group": "user", "componentType": "Password", "required": true, "col": "col-md-6" },
   { "key": "userPassword2", "label": "comfrimpassword", "group": "user", "componentType": "Password", "required": true, "col": "col-md-6" },
   { "key": "business_name", "label": "customerName", "group": "business", "componentType": "TextField", "type": "text", "required": true, "col": "col-md-6" },

@@ -215,20 +215,20 @@ export default {
       formData: {
         // Stores form data for user creation or editing
         ID: "", // ID of the user (used when editing)
-        userF_name: "", // First name of the user
-        userL_name: "", // Last name of the user
-        userPhone: "", // User's phone number
-        userEmail: "", // User's email
+        user_first_name: "", // First name of the user
+        user_last_name: "", // Last name of the user
+        user_phone: "", // User's phone number
+        user_email: "", // User's email
         userPassword: "", // User's password
         role_id: "", // The selected role ID for the user
       },
       isEmpty: {
         // Stores form data for user creation or editing
         ID: "", // ID of the user (used when editing)
-        userF_name: "", // First name of the user
-        userL_name: "", // Last name of the user
-        userPhone: "", // User's phone number
-        userEmail: "", // User's email
+        user_first_name: "", // First name of the user
+        user_last_name: "", // Last name of the user
+        user_phone: "", // User's phone number
+        user_email: "", // User's email
         userPassword: "", // User's password
         role_id: "", // The selected role ID for the user
       },
@@ -264,10 +264,10 @@ export default {
     selectUser(id) {
       const selected = this.Employees.find((emp) => emp.employee_id === id);
       if (selected) {
-        this.formData.userF_name = selected.first_name;
-        this.formData.userL_name = selected.last_name;
-        this.formData.userPhone = selected.Phone_num;
-        this.formData.userEmail = selected.email;
+        this.formData.user_first_name = selected.user_first_name;
+        this.formData.user_last_name = selected.last_name;
+        this.formData.user_phone = selected.Phone_num;
+        this.formData.user_email = selected.email;
       }
     },
     async getEmployee() {
@@ -301,10 +301,10 @@ export default {
       if (type === "new") {
         this.isNewUser = true;
         this.isExistingUser = false;
-        this.formData.userF_name = "";
-        this.formData.userL_name = "";
-        this.formData.userPhone = "";
-        this.formData.userEmail = "";
+        this.formData.user_first_name = "";
+        this.formData.user_last_name = "";
+        this.formData.user_phone = "";
+        this.formData.user_email = "";
       } else {
         this.isNewUser = false;
         this.isExistingUser = true;
@@ -316,10 +316,10 @@ export default {
     // Clears all input fields in the form
     handleClearInput() {
       this.formData = {
-        userF_name: "",
-        userL_name: "",
-        userPhone: "",
-        userEmail: "",
+        user_first_name: "",
+        user_last_name: "",
+        user_phone: "",
+        user_email: "",
         userPassword: "",
         role_id: "",
       };
@@ -350,10 +350,10 @@ export default {
       this.isEditMode = false; // Resets the editing mode flag
       this.formData = {
         // Resets the form data
-        userF_name: "",
-        userL_name: "",
-        userPhone: "",
-        userEmail: "",
+        user_first_name: "",
+        user_last_name: "",
+        user_phone: "",
+        user_email: "",
         userPassword: "",
         role_id: "",
       };
@@ -369,10 +369,10 @@ export default {
       this.formData = {
         // Pre-populates the form with the selected user's data
         ID: item.ID,
-        userF_name: item["First name"],
-        userL_name: item["Last name"],
-        userPhone: item["Phone number"],
-        userEmail: item.Email,
+        user_first_name: item["First name"],
+        user_last_name: item["Last name"],
+        user_phone: item["Phone number"],
+        user_email: item.Email,
         userPassword: item.Password,
         role_id: role ? role.role_id : "", // Finds the RoleID for the user
       };
@@ -422,10 +422,10 @@ export default {
             // Maps API response to a table format
             return {
               ID: item.user_id,
-              "First name": item.userF_name,
-              "Last name": item.userL_name,
-              "Phone number": item.userPhone,
-              Email: item.userEmail,
+              "First name": item.user_first_name,
+              "Last name": item.user_last_name,
+              "Phone number": item.user_phone,
+              Email: item.user_email,
               Role: item.role.role_name,
             };
           });
@@ -453,10 +453,10 @@ export default {
               Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-              userF_name: this.formData.userF_name,
-              userL_name: this.formData.userL_name,
-              userPhone: this.formData.userPhone,
-              userEmail: this.formData.userEmail.toLowerCase(),
+              user_first_name: this.formData.user_first_name,
+              user_last_name: this.formData.user_last_name,
+              user_phone: this.formData.user_phone,
+              user_email: this.formData.user_email.toLowerCase(),
               userPassword: this.formData.userPassword,
               role_id: this.formData.role_id,
             }),
@@ -522,10 +522,10 @@ export default {
             Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify({
-            userF_name: this.formData.userF_name,
-            userL_name: this.formData.userL_name,
-            userPhone: this.formData.userPhone,
-            userEmail: this.formData.userEmail,
+            user_first_name: this.formData.user_first_name,
+            user_last_name: this.formData.user_last_name,
+            user_phone: this.formData.user_phone,
+            user_email: this.formData.user_email,
             userPassword: this.formData.userPassword,
             role_id: this.formData.role_id,
           }),
@@ -554,45 +554,45 @@ export default {
 
       // รีเซ็ตค่าว่าง
       this.isEmpty = {
-        userF_name: false,
-        userL_name: false,
-        userPhone: false,
-        userEmail: false,
+        user_first_name: false,
+        user_last_name: false,
+        user_phone: false,
+        user_email: false,
         userPassword: false,
         role_id: false,
       };
 
       // ตรวจชื่อจริง
-      if (this.formData.userF_name.trim() === "") {
-        this.isEmpty.userF_name = true;
+      if (this.formData.user_first_name.trim() === "") {
+        this.isEmpty.user_first_name = true;
         errorMessages.push(this.$t("validation.F_name"));
       }
 
       // ตรวจนามสกุล
-      if (this.formData.userL_name.trim() === "") {
-        this.isEmpty.userL_name = true;
+      if (this.formData.user_last_name.trim() === "") {
+        this.isEmpty.user_last_name = true;
         errorMessages.push(this.$t("validation.L_name"));
       }
 
       // ตรวจเบอร์โทร
-      const phone = this.formData.userPhone.trim();
+      const phone = this.formData.user_phone.trim();
       if (phone === "") {
-        this.isEmpty.userPhone = true;
+        this.isEmpty.user_phone = true;
 
         errorMessages.push(this.$t("validation.userPhone"));
       } else if (!/^\d{9,10}$/.test(phone)) {
-        this.isEmpty.userPhone = true;
+        this.isEmpty.user_phone = true;
         errorMessages.push(this.$t("validation.cus_tel_length"));
       }
 
       // ตรวจอีเมล
-      const email = this.formData.userEmail.trim();
+      const email = this.formData.user_email.trim();
       if (email === "") {
-        this.isEmpty.userEmail = true;
+        this.isEmpty.user_email = true;
 
         errorMessages.push(this.$t("validation.cus_email"));
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        this.isEmpty.userEmail = true;
+        this.isEmpty.user_email = true;
         errorMessages.push(this.$t("validation.cus_email2"));
       }
 
