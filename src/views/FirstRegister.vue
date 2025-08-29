@@ -189,7 +189,7 @@ import TextField from "../components/textField.vue";
 import formConfig from '../config/field_config/first_register/form_first_register.json';
 
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 
 export default {
   components: {
@@ -578,13 +578,13 @@ export default {
           });
           const json = await response.json();
           if (response.ok) {
-            localStorage.setItem("@accessToken", json.token);
+            localStorage.setItem("@access_token", json.token);
             localStorage.setItem("role_name", json.role_name);
             localStorage.setItem("user_id", json.user_id);
             localStorage.setItem("user_name", json.user_first_name);
             localStorage.setItem("role_id", json.role_id);
             localStorage.setItem("TokenCreate", json.TokenCreate);
-            if (localStorage.getItem("@accessToken")) {
+            if (localStorage.getItem("@access_token")) {
               console.log("Login successful:", json);
               this.$router.push("/home");
             } else {

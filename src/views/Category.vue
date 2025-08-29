@@ -155,7 +155,7 @@ import { useI18n } from "vue-i18n";
 import TextField from "../components/textField.vue";
 
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 
 export default {
   name: "ProductCategory",
@@ -300,7 +300,7 @@ export default {
       }, 2000);
     },
     async importCategory() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const formDataFile = new FormData();
@@ -309,7 +309,7 @@ export default {
         const response = await fetch(`${API_CALL}/migrate/importcsv`, {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
           body: formDataFile,
         });
@@ -329,12 +329,12 @@ export default {
       }
     },
     async getProductCategory() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/product/getCategory`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -356,7 +356,7 @@ export default {
       }
     },
     async addCategory() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (!(await this.validateFormData())) return;
       this.errorMessages = [];
       this.isLoading = true;
@@ -365,7 +365,7 @@ export default {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
           body: JSON.stringify({
             category_name: this.formData.category_name,
@@ -392,7 +392,7 @@ export default {
       }
     },
     async editCategory() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (!(await this.validateFormData())) return;
       this.errorMessages = [];
       this.isLoading = true;
@@ -404,7 +404,7 @@ export default {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               category_name: this.formData.category_name,
@@ -429,7 +429,7 @@ export default {
       }
     },
     async deleteCategory() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       const categoryID = this.formData.category_id;
       let errorMessages = [];
@@ -440,7 +440,7 @@ export default {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
           }
         );

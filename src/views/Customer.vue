@@ -272,7 +272,7 @@ import customerForms from '../config/field_config/customer/form_customer.json';
 
 
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 
 export default {
   name: "Customer",
@@ -491,7 +491,7 @@ export default {
       this.isPopupVisible_error = false;
     },
     async EditCustomer2() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (!(await this.validateFormData2())) return;
       this.errorMessages = [];
 
@@ -504,7 +504,7 @@ export default {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify(this.formDataCustomer),
           }
@@ -667,7 +667,7 @@ export default {
         };
         const response = await fetch(`${API_CALL}/Quotation/getCustomer`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -733,7 +733,7 @@ export default {
 
       const response = await fetch(`${API_CALL}/Quotation/getCustomer`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${access_token}`,
         },
       });
       const json = await response.json();
@@ -782,7 +782,7 @@ export default {
       return emailRegex.test(email);
     },
     async importCategory() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const formDataFile = new FormData();
@@ -791,7 +791,7 @@ export default {
         const response = await fetch(`${API_CALL}/migrate/importcsv`, {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
           body: formDataFile,
         });
@@ -811,12 +811,12 @@ export default {
       }
     },
     async getCustomer() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/Quotation/getCustomer`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -844,7 +844,7 @@ export default {
               `${API_CALL}/Quotation/getCompanyPerson`,
               {
                 headers: {
-                  Authorization: `Bearer ${accessToken}`,
+                  Authorization: `Bearer ${access_token}`,
                 },
               }
             );
@@ -873,7 +873,7 @@ export default {
       }
     },
     async addCompany() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
 
       if (!(await this.validateFormData2())) return;
       this.isLoading = true;
@@ -882,7 +882,7 @@ export default {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
           body: JSON.stringify(this.formDataCustomer),
         });
@@ -909,7 +909,7 @@ export default {
       }
     },
     async addCustomer() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
 
       if (!(await this.validateFormData())) return;
       this.isLoading = true;
@@ -918,7 +918,7 @@ export default {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
           body: JSON.stringify(this.formData),
         });
@@ -961,7 +961,7 @@ export default {
       }
     },
     async editCustomer() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (!(await this.validateFormData())) return;
       this.errorMessages = [];
 
@@ -974,7 +974,7 @@ export default {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify(this.formData),
           }
@@ -1006,7 +1006,7 @@ export default {
       }
     },
     async deleteCustomer() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       let cusID = null;
       this.isLoading = true;
 
@@ -1026,7 +1026,7 @@ export default {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
 

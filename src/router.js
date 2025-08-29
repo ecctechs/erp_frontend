@@ -182,7 +182,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const token = localStorage.getItem("@accessToken");
+  const token = localStorage.getItem("@access_token");
   const userRole = localStorage.getItem("role_name");
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
   const allowedRoles = to.meta.roles;

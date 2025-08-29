@@ -260,7 +260,7 @@ import Card from "../components/Card.vue";
 import ChartCard from '../components/chart_card.vue';
 
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 
 export default {
   name: "Sale Report",
@@ -425,12 +425,12 @@ export default {
       return d;
     },
     async getDepartment() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/employee/getDepartment`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -453,12 +453,12 @@ export default {
       }
     },
     async getPosition() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/employee/getPosition`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -481,12 +481,12 @@ export default {
       }
     },
     async getEmployee() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/employee/getEmployee`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -514,11 +514,11 @@ export default {
       }
     },
     async getLeave() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/employee/getLeave`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -555,11 +555,11 @@ export default {
       }
     },
     async getOvertime() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/employee/getOvertime`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();

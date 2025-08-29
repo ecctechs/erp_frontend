@@ -240,7 +240,7 @@ import TextField from "../components/textField.vue";
 import formConfig from '../config/field_config/product/form_product.json';
 
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 
 export default {
   name: "Product",
@@ -732,10 +732,10 @@ export default {
       }
     },
     async getProductType() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/product/getProductType`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${access_token}` },
         });
         const json = await response.json();
         if (json.statusCode === 200) {
@@ -748,11 +748,11 @@ export default {
       }
     },
     async getProduct() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/product/getProduct`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${access_token}` },
         });
         const json = await response.json();
         if (json.statusCode === 200) {
@@ -802,11 +802,11 @@ export default {
       }
     },
     async getProductByStatus() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/product/getProduct`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${access_token}` },
         });
         const json = await response.json();
         if (json.statusCode === 200) {
@@ -851,7 +851,7 @@ export default {
       }
     },
     async addProduct() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (!(await this.validateFormData())) return;
       this.errorMessage = [];
       this.isLoading = true;
@@ -859,7 +859,7 @@ export default {
         const formDataImage = this.createFormData();
         const response = await fetch(`${API_CALL}/product/AddProduct`, {
           method: "POST",
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${access_token}` },
           body: formDataImage,
         });
         const json = await response.json();
@@ -879,10 +879,10 @@ export default {
       }
     },
     async getCategory() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/product/getCategory`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${access_token}` },
         });
         const json = await response.json();
         if (json.statusCode === 200) {
@@ -913,7 +913,7 @@ export default {
       }
     },
     async editProduct() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (!(await this.validateFormData())) return;
       this.errorMessage = [];
       this.isLoading = true;
@@ -924,7 +924,7 @@ export default {
           `${API_CALL}/product/EditProduct/${productID}`,
           {
             method: "PUT",
-            headers: { Authorization: `Bearer ${accessToken}` },
+            headers: { Authorization: `Bearer ${access_token}` },
             body: formDataImage,
           }
         );
@@ -946,7 +946,7 @@ export default {
       }
     },
     async deleteProduct() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       const productID = this.formData.product_id;
 
@@ -955,7 +955,7 @@ export default {
           `${API_CALL}/product/DeleteProduct/${productID}`,
           {
             method: "DELETE",
-            headers: { Authorization: `Bearer ${accessToken}` },
+            headers: { Authorization: `Bearer ${access_token}` },
             body: JSON.stringify({ productID }),
           }
         );

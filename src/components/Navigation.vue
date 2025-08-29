@@ -679,7 +679,7 @@
   </div>
 </template>
 <script>
-const token = localStorage.getItem("@accessToken");
+const token = localStorage.getItem("@access_token");
 const userRoles = localStorage.getItem("role_name");
 import Popup from "../components/popup.vue";
 import { config } from "../../constant.js";
@@ -687,7 +687,7 @@ import { useI18n } from "vue-i18n"; //for switch language
 import { watchEffect } from "vue";
 
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 const userID = localStorage.getItem("user_id");
 
 export default {
@@ -1346,7 +1346,7 @@ export default {
       this.userName = localStorage.getItem("user_name");
     },
     Logout() {
-      localStorage.removeItem("@accessToken");
+      localStorage.removeItem("@access_token");
       localStorage.removeItem("userRole");
       console.log("Logout success" + token);
       this.$router.push("/login");
@@ -1588,8 +1588,8 @@ export default {
     },
     //get data of business
     async getBusiness() {
-      const accessToken = localStorage.getItem("@accessToken");
-      if (!accessToken) {
+      const access_token = localStorage.getItem("@access_token");
+      if (!access_token) {
         console.error("JWT token is missing");
       }
       this.isLoading = true;
@@ -1597,7 +1597,7 @@ export default {
         const response = await fetch(`${API_CALL}/Quotation/getBusinessByID`, {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1634,11 +1634,11 @@ export default {
     },
     //getrole of user
     async getRole() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/auth/GetRole`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1656,11 +1656,11 @@ export default {
     async getUser() {
       const userID = localStorage.getItem("user_id");
       this.getRole();
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/auth/GetUserByID/${userID}`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1780,13 +1780,13 @@ export default {
       this.inputError = false;
       this.isLoading = true; //call loading
       const userIds = this.formDataUser.ID;
-      const accessToken = localStorage.getItem("@accessToken"); // get token from local storage
+      const access_token = localStorage.getItem("@access_token"); // get token from local storage
       try {
         const response = await fetch(`${API_CALL}/auth/EditUsers/${userIds}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
           body: JSON.stringify({
             user_first_name: this.formDataUser.user_first_name,

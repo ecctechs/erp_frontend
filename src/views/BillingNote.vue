@@ -364,7 +364,7 @@ import th from "vue-datepicker-next/locale/th.es";
 import en from "vue-datepicker-next/locale/en.es";
 
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 
 export default {
   name: "BillingNote",
@@ -774,13 +774,13 @@ export default {
       this.expandedItems = new Set(this.expandedItems); // อัปเดต reactivity
     },
     async getBanks() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/Quotation/getBank`, {
           method: "GET", // เปลี่ยน method เป็น 'POST'
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
             "Content-Type": "application/json", // เพิ่ม header Content-Type
           },
         });
@@ -814,11 +814,11 @@ export default {
     },
     //function for edit data
     async getQuotationByID(id) {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/quotation/getQuotation`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1673,11 +1673,11 @@ export default {
       this.isPopupVisible_error = false;
     },
     async getBilling() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/quotation/getBilling`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1770,7 +1770,7 @@ export default {
       }
     },
     async editBilling() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       console.log("sale price: ", this.formData.remark);
 
       if (this.formData.billing_date === "" || this.formData.payments === "") {
@@ -1788,7 +1788,7 @@ export default {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${access_token}`,
               },
               body: JSON.stringify({
                 billing_date: this.formData.billing_date,
@@ -1814,7 +1814,7 @@ export default {
       }
     },
     async deleteBilling() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       const qty_id = this.formData.invoice_id;
 
@@ -1825,7 +1825,7 @@ export default {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               billing_id: qty_id,
@@ -1851,14 +1851,14 @@ export default {
       }
     },
     async getEmployee() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(
           `${API_CALL}/employee/getEmployeeQuotation`,
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
           }
         );
@@ -1885,12 +1885,12 @@ export default {
       }
     },
     async getProduct() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/product/getProduct`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1921,13 +1921,13 @@ export default {
       }
     },
     async getBusiness() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/quotation/getBusinessByID`, {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
             "Content-Type": "application/json",
           },
         });

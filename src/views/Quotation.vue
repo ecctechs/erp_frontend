@@ -384,7 +384,7 @@ import Department from "./Department.vue";
 import { reactive } from "vue";
 import { computed, watch, ref } from "vue";
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 import Button from "../components/button.vue";
 import Dropdown from "../components/dropdown.vue";
 import Icon from "../components/icon.vue";
@@ -1083,14 +1083,14 @@ export default {
       }
     },
     async getEmployee() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(
           `${API_CALL}/employee/getEmployeeQuotation`,
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
           }
         );
@@ -1118,11 +1118,11 @@ export default {
       }
     },
     async getCustomer() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/quotation/getCustomer`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1687,11 +1687,11 @@ export default {
       this.isPopupPDFOpen = false;
     },
     async getQuotationImg(id) {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/Quotation/getQuotation_img`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1711,11 +1711,11 @@ export default {
       }
     },
     async getQuotationByID(id) {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/quotation/getQuotation`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1736,11 +1736,11 @@ export default {
     },
 
     async getQuotation() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/quotation/getQuotation`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1985,7 +1985,7 @@ export default {
       }
       const response = await fetch(`${API_CALL}/product/getCategory`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${access_token}`,
         },
       });
       const json = await response.json();
@@ -2009,7 +2009,7 @@ export default {
           const res = await fetch(`${API_CALL}/product/AddProduct`, {
             method: "POST",
             headers: {
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: formData,
           });
@@ -2052,7 +2052,7 @@ export default {
         });
       }
 
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       this.formData.sale_date = new Date(this.formData.sale_date)
         .toISOString()
@@ -2074,7 +2074,7 @@ export default {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               customer_name: this.formData.customer_name,
@@ -2114,7 +2114,7 @@ export default {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
           body: JSON.stringify({
             sale_number: this.formData.sale_number,
@@ -2168,7 +2168,7 @@ export default {
         await fetch(`${API_CALL}/Quotation/AddQuotation_img`, {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
           body: formDataImage,
         });
@@ -2213,14 +2213,14 @@ export default {
         });
       }
       this.isLoading = true;
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         if (this.NotCustomerExit) {
           await fetch(`${API_CALL}/Quotation/addCustomer`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               customer_name: this.formData.customer_name,
@@ -2296,7 +2296,7 @@ export default {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               sale_number: this.formData.sale_number,
@@ -2337,7 +2337,7 @@ export default {
           await fetch(`${API_CALL}/Quotation/AddQuotation_img`, {
             method: "POST",
             headers: {
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: formDataImage,
           });
@@ -2360,7 +2360,7 @@ export default {
       // }
     },
     async editQuotation2() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       if (!(await this.validateFormData())) return;
 
@@ -2370,7 +2370,7 @@ export default {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               customer_name: this.formData.customer_name,
@@ -2469,7 +2469,7 @@ export default {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               sale_number: this.formData.sale_number,
@@ -2510,7 +2510,7 @@ export default {
           await fetch(`${API_CALL}/Quotation/AddQuotation_img`, {
             method: "POST",
             headers: {
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: formDataImage,
           });
@@ -2534,7 +2534,7 @@ export default {
       // }
     },
     async editQuotation3() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       if (!(await this.validateFormData())) return;
 
@@ -2544,7 +2544,7 @@ export default {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               customer_name: this.formData.customer_name,
@@ -2621,7 +2621,7 @@ export default {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               sale_number: this.formData.sale_number,
@@ -2662,7 +2662,7 @@ export default {
           await fetch(`${API_CALL}/Quotation/AddQuotation_img`, {
             method: "POST",
             headers: {
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: formDataImage,
           });
@@ -2686,13 +2686,13 @@ export default {
       // }
     },
     async getProduct() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
 
       try {
         const response = await fetch(`${API_CALL}/product/getProduct`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
 
@@ -2737,13 +2737,13 @@ export default {
     },
 
     async getBanks() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/Quotation/getBank`, {
           method: "GET", // เปลี่ยน method เป็น 'POST'
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
             "Content-Type": "application/json", // เพิ่ม header Content-Type
           },
         });
@@ -2762,13 +2762,13 @@ export default {
       }
     },
     async getBusiness() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/quotation/getBusinessByID`, {
           method: "GET", // เปลี่ยน method เป็น 'POST'
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
             "Content-Type": "application/json", // เพิ่ม header Content-Type
           },
         });
@@ -2787,7 +2787,7 @@ export default {
       }
     },
     async checkLastestQuotationNumber() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
 
       const now = new Date();
       const yy = String(now.getFullYear()).slice(-2); // ปี ค.ศ. 2 หลัก
@@ -2800,7 +2800,7 @@ export default {
           `${API_CALL}/quotation/checkLastestQuotation`,
           {
             headers: {
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
           }
         );
@@ -2828,7 +2828,7 @@ export default {
       }
     },
     async deleteQuotation() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       const qty_id = this.formData.sale_id;
       try {
@@ -2838,7 +2838,7 @@ export default {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               sale_id: qty_id,
@@ -2850,7 +2850,7 @@ export default {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
           body: JSON.stringify({
             quotation_id: this.formData.sale_number,
@@ -2874,7 +2874,7 @@ export default {
       }
     },
     async deleteInvoice(qty_id) {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       // const qty_id = this.formData.invoice_id;
       try {
@@ -2884,7 +2884,7 @@ export default {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               sale_id: qty_id,

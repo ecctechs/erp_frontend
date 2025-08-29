@@ -223,7 +223,7 @@ import { computed, watch, ref } from "vue";
 import moment from "moment";
 moment.locale("th");
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 import Card from "../components/Card.vue";
 import ChartCard from '../components/chart_card.vue';
 
@@ -343,11 +343,11 @@ export default {
       return d;
     },
     async getBilling() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/quotation/getBilling`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -502,12 +502,12 @@ export default {
       }
     },
     async getTypeOfProduct() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/product/getProductType`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -524,12 +524,12 @@ export default {
       }
     },
     async getProduct() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/product/getProduct`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -649,14 +649,14 @@ export default {
       chart = echarts.init(chartDom);
 
       try {
-        const accessToken = localStorage.getItem("@accessToken");
+        const access_token = localStorage.getItem("@access_token");
         // เรียก API เพื่อดึงข้อมูลยอดขายแยกตามประเภทสินค้า
         const response = await fetch(
           `${API_CALL}/quotation/get_sale_report_product_type`,
           {
             method: "POST",
             headers: {
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
@@ -747,7 +747,7 @@ export default {
           {
             method: "POST",
             headers: {
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
@@ -843,7 +843,7 @@ export default {
           {
             method: "POST",
             headers: {
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
@@ -924,7 +924,7 @@ export default {
           {
             method: "POST",
             headers: {
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
@@ -1131,13 +1131,13 @@ export default {
       return new Date(isoDateStr);
     },
     async getBusiness() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/Quotation/getBusinessByID`, {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1150,7 +1150,7 @@ export default {
       }
     },
     async getExpense() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.errorMessage = [];
       this.isLoading = true;
       try {
@@ -1158,7 +1158,7 @@ export default {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1182,12 +1182,12 @@ export default {
       }
     },
     async getProductCategory() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/product/getCategory`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();

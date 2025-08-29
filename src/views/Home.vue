@@ -353,7 +353,7 @@ import Icon from "../components/icon.vue";
 import fastAccessConfig from '../config/field_config/home/fast_access_buttons.json';
 
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 
 // ✅ นำเข้า locale ภาษาไทยและอังกฤษ
 import th from "vue-datepicker-next/locale/th.es";
@@ -552,7 +552,7 @@ export default {
       this.$router.push("/salesreport");
     },
     TestToken() {
-      const token = localStorage.getItem("@accessToken");
+      const token = localStorage.getItem("@access_token");
       const userRole = localStorage.getItem("role_name");
       const userID = localStorage.getItem("user_id");
       if (token) {
@@ -640,11 +640,11 @@ export default {
       }
     },
     async getBilling() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/quotation/getBilling`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -750,12 +750,12 @@ export default {
       }
     },
     async getProduct() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/product/getProduct`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -840,14 +840,14 @@ export default {
     },
     async getPaymentTable() {
       this.isLoading = true;
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       const userRole = localStorage.getItem("role_name");
       console.log("User Role : ", userRole);
       try {
         const response = await fetch(`${API_CALL}/employee/getPayment`, {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
 
@@ -911,11 +911,11 @@ export default {
       }
     },
     async getQuotation() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/quotation/getQuotation`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1014,11 +1014,11 @@ export default {
       }
     },
     async getInvoice() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/quotation/getInvoice`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1118,11 +1118,11 @@ export default {
       }
     },
     async getOvertime() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/employee/getOvertime`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1511,14 +1511,14 @@ export default {
       }, 2000); // 2 seconds
     },
     async getBusiness() {
-      const accessToken = localStorage.getItem("@accessToken");
-      // alert(accessToken);
+      const access_token = localStorage.getItem("@access_token");
+      // alert(access_token);
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/Quotation/getBusinessByID`, {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1531,7 +1531,7 @@ export default {
       }
     },
     async getExpense() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.errorMessage = [];
       this.isLoading = true;
       try {
@@ -1539,7 +1539,7 @@ export default {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();

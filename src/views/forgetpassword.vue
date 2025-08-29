@@ -131,7 +131,7 @@ import { useI18n } from "vue-i18n"; //for switch language
 import { watchEffect } from "vue";
 
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 
 export default {
   name: "ProductCategory", // Component name
@@ -270,7 +270,7 @@ export default {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`, // Include access token in the request
+            Authorization: `Bearer ${access_token}`, // Include access token in the request
           },
           body: JSON.stringify({
             user_email: this.formData.user_email, // Send the entered email
@@ -305,7 +305,7 @@ export default {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`, // Include access token in the request
+            Authorization: `Bearer ${access_token}`, // Include access token in the request
           },
           body: JSON.stringify({
             user_email: this.formData.user_email, // Send the email and new password

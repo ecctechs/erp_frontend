@@ -279,7 +279,7 @@ import monthMappings from '../config/global/month_mapping.json';
 
 const API_CALL = config["url"];
 // const API_CALL = 'https://erp-backend-9w1r.onrender.com'
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 export default {
   name: "Employee",
   components: {
@@ -1077,12 +1077,12 @@ export default {
     },
 
     async getEmployee() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/employee/getEmployee`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1154,12 +1154,12 @@ export default {
       }
     },
     async getemployeesSalary() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/employee/getEmployeeSalary`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1209,11 +1209,11 @@ export default {
       }
     },
     async getDepartment() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/employee/getDepartment`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1229,11 +1229,11 @@ export default {
       }
     },
     async getPosition() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/employee/getPosition`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1249,11 +1249,11 @@ export default {
       }
     },
     async getLeave() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/employee/getLeave`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1298,11 +1298,11 @@ export default {
       }
     },
     async getOvertime() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/employee/getOvertime`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1552,7 +1552,7 @@ export default {
       }
     },
     async addEmployee() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (!this.validateFormData()) return;
       this.isLoading = true;
 
@@ -1564,7 +1564,7 @@ export default {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
           body: JSON.stringify({
             title: this.formData.title,
@@ -1623,7 +1623,7 @@ export default {
       // }
     },
     async AddLeave() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (!(await this.validateLeave())) return;
       this.isLoading = true;
       if (this.leaveType === "full") {
@@ -1646,7 +1646,7 @@ export default {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               employee_id: this.formDataLeave.employee_id,
@@ -1690,7 +1690,7 @@ export default {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${access_token}`,
               },
               body: JSON.stringify({
                 employee_id: this.formDataLeave.employee_id,
@@ -1726,7 +1726,7 @@ export default {
       // }
     },
     async AddOvertime() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (
         this.formDataOvertime.employee_id === "" ||
         this.formDataOvertime.date === "" ||
@@ -1744,7 +1744,7 @@ export default {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               employee_id: this.formDataOvertime.employee_id,
@@ -1779,7 +1779,7 @@ export default {
     async editEmployee() {
       if (!this.validateFormData()) return;
       this.isLoading = true;
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
  
       function parseSalary(salaryString) {
         if (salaryString !== null && typeof salaryString !== "undefined") {
@@ -1805,7 +1805,7 @@ export default {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               title: this.formData.title,
@@ -1846,7 +1846,7 @@ export default {
       // }
     },
     async deleteEmployee() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       const employeeID = this.formData.employee_id;
       try {
@@ -1856,7 +1856,7 @@ export default {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               employee_id: employeeID,
@@ -1884,7 +1884,7 @@ export default {
       }
     },
     async deleteLeave() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       const id = this.leaving_id;
       try {
@@ -1892,7 +1892,7 @@ export default {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
           body: JSON.stringify({
             leaving_id: id,

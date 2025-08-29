@@ -174,7 +174,7 @@ import Dropdown from "../components/dropdown.vue";
 import formConfig from '../config/field_config/register/form_user.json';
 
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 
 export default {
   components: {
@@ -271,12 +271,12 @@ export default {
       }
     },
     async getEmployee() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/employee/getEmployee`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -393,10 +393,10 @@ export default {
     },
     // Fetches the roles from the API
     async getRole() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/auth/GetRole`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${access_token}` },
         });
         const json = await response.json();
         if (json.statusCode === 200) {
@@ -410,11 +410,11 @@ export default {
     },
     // Fetches the users from the API
     async getUser() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.getRole(); // Fetches the roles first
       try {
         const response = await fetch(`${API_CALL}/auth/GetUsers`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${access_token}` },
         });
         const json = await response.json();
         if (json.statusCode === 200) {
@@ -438,7 +438,7 @@ export default {
     },
     // Sends an API request to update the user data
     async editUser() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (!(await this.validateFormData())) return;
       this.inputError = false; // Resets the input error flag
       this.isLoading = true; // Sets the loading state
@@ -450,7 +450,7 @@ export default {
             method: "PUT", // Sends a PUT request to update the user
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               user_first_name: this.formData.user_first_name,
@@ -480,7 +480,7 @@ export default {
     },
     // Sends an API request to delete the user
     async deleteUser() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true; // Sets the loading state
       try {
         const response = await fetch(
@@ -489,7 +489,7 @@ export default {
             method: "DELETE", // Sends a DELETE request to remove the user
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
           }
         );
@@ -509,7 +509,7 @@ export default {
     },
     // Sends an API request to add a new user
     async addUser() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (!(await this.validateFormData())) return;
       this.inputError = false; // No validation errors
       this.isLoading = true; // Starts the loading indicator
@@ -519,7 +519,7 @@ export default {
           method: "POST", // Sends a POST request to add the user
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
           body: JSON.stringify({
             user_first_name: this.formData.user_first_name,

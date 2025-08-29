@@ -132,7 +132,7 @@ import TextField from "../components/textField.vue";
 import formConfig from "../config/field_config/about/form_about_business.json";
 
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 
 export default {
   name: "About",
@@ -375,7 +375,7 @@ export default {
     },
     //call api for add business data
     async editBusiness() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         if (!this.validateFormData()) return;
         this.isLoading = true;
@@ -402,7 +402,7 @@ export default {
           {
             method: "PUT",
             headers: {
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: formDataBusiness,
           }
@@ -429,13 +429,13 @@ export default {
     },
     //call api get business data
     async getBusiness() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/Quotation/getBusinessByID`, {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -489,13 +489,13 @@ export default {
       }
     },
     async getBanks() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/Quotation/getBank`, {
           method: "GET", // เปลี่ยน method เป็น 'POST'
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
             "Content-Type": "application/json", // เพิ่ม header Content-Type
           },
         });

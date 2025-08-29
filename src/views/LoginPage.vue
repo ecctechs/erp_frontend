@@ -234,7 +234,7 @@ export default {
 
         if (response.ok) {
           // On successful login, store token and user info in localStorage
-          localStorage.setItem("@accessToken", json.token);
+          localStorage.setItem("@access_token", json.token);
           localStorage.setItem("role_name", json.role_name);
           localStorage.setItem("user_id", json.user_id);
           localStorage.setItem("user_name", json.user_first_name);
@@ -242,7 +242,7 @@ export default {
           localStorage.setItem("TokenCreate", json.TokenCreate);
 
           // If token and user info are stored, redirect to home
-          if (localStorage.getItem("@accessToken")) {
+          if (localStorage.getItem("@access_token")) {
             console.log("Login successful:", json);
             this.$router.push("/home");
           } else {

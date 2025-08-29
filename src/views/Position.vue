@@ -157,7 +157,7 @@ import Button from "../components/button.vue";
 import TextField from "../components/textField.vue";
 
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 
 export default {
   name: "Positions",
@@ -357,11 +357,11 @@ export default {
     },
     // Fetches the list of departments from the API
     async getDepartment() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/employee/getDepartment`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${access_token}` },
         });
         const json = await response.json();
         if (json.statusCode === 200) {
@@ -382,7 +382,7 @@ export default {
     },
     // Adds a new department via API call
     async addDepartment() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (this.formData.department_name === "") {
         this.inputError = true;
         this.showPopup_error("Please fill data");
@@ -394,7 +394,7 @@ export default {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               department_name: this.formData.department_name,
@@ -417,7 +417,7 @@ export default {
     },
     // Edits an existing department via API call
     async editDepartment() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (this.formData.department_name === "") {
         this.inputError = true;
         this.showPopup_error("Please fill data");
@@ -432,7 +432,7 @@ export default {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${access_token}`,
               },
               body: JSON.stringify({
                 department_name: this.formData.department_name,
@@ -456,7 +456,7 @@ export default {
     },
     // Deletes a department via API call
     async deleteDepartment() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       const departmentID = this.formData.department_id;
       try {
@@ -466,7 +466,7 @@ export default {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
           }
         );
@@ -486,11 +486,11 @@ export default {
     },
     // Fetches the list of positions from the API
     async getPosition() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/employee/getPosition`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${access_token}` },
         });
         const json = await response.json();
         console.log(json.data);
@@ -512,7 +512,7 @@ export default {
     },
     // Adds a new position via API call
     async addPosition() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (!(await this.validateFormData())) return;
       this.isLoading = true;
 
@@ -521,7 +521,7 @@ export default {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
           body: JSON.stringify({ position_name: this.formPosition.position_name }),
         });
@@ -542,7 +542,7 @@ export default {
     },
     // Edits an existing position via API call
     async editPosition() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (this.formPosition.position_name === "") {
         this.inputError = true;
         this.showPopup_error("Please fill data");
@@ -557,7 +557,7 @@ export default {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${access_token}`,
               },
               body: JSON.stringify({ position_name: this.formPosition.position_name }),
             }
@@ -581,7 +581,7 @@ export default {
     },
     // Deletes a position via API call
     async deletePosition() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       const PositionID = this.formPosition.position_id;
       try {
@@ -591,7 +591,7 @@ export default {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
           }
         );

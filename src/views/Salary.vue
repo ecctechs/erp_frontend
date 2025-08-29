@@ -461,7 +461,7 @@ import Dropdown from "../components/dropdown.vue";
 import monthMappings from '../config/global/month_mapping.json';
 
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 
 export default {
   name: "Salary Management",
@@ -842,7 +842,7 @@ export default {
       return [header.join(","), ...rows].join("\r\n");
     },
     async comfrimEditSalary() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
 
       const payment_id = this.formDataEdit.payment_id;
       const currentDate = new Date();
@@ -855,7 +855,7 @@ export default {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               Date: formattedDate,
@@ -881,7 +881,7 @@ export default {
       }
     },
     async deleteSalary() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       const salary_id = this.salary_id;
       try {
@@ -891,7 +891,7 @@ export default {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
           }
         );
@@ -931,7 +931,7 @@ export default {
       this.deleteopenpopup = false;
     },
     async AddOvertime() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       console.log(this.selectedEmployeeID);
       if (
         this.selectedEmployeeID === "" ||
@@ -951,7 +951,7 @@ export default {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               employee_id: this.selectedEmployeeID,
@@ -1082,7 +1082,7 @@ export default {
     // Adds a payment record to the system
     async addPayment() {
       if (!(await this.validateFormData())) return;
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       // if (this.formEmployee.length === 0) {
       //   this.inputError = true;
       //   this.showPopup_error("Please fill data");
@@ -1116,7 +1116,7 @@ export default {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
           body: JSON.stringify({
             payments: this.formEmployee.map((form) => ({
@@ -1160,12 +1160,12 @@ export default {
     },
     // Fetches employee data from the API
     async getEmployee() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/employee/getEmployeeSalary`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1201,13 +1201,13 @@ export default {
     },
     // Fetches the payment data from the API and updates the payment table
     async getPaymentTable() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/employee/getPayment`, {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
 

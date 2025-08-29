@@ -342,7 +342,7 @@ import Dropdown from "../components/dropdown.vue";
 import formConfig from '../config/field_config/expenses/form_empenses.json';
 
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 
 import th from "vue-datepicker-next/locale/th.es";
 import en from "vue-datepicker-next/locale/en.es";
@@ -836,12 +836,12 @@ export default {
       this.endDate = this.formatDate(endDate);
     },
     async getBusiness() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/Quotation/getBusinessByID`, {
           method: "GET",
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${access_token}` },
         });
         const json = await response.json();
         this.BusinessJson = json.data;
@@ -999,7 +999,7 @@ export default {
       }
     },
     async getExpense() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.errorMessage = [];
       this.isLoading = true;
       try {
@@ -1007,7 +1007,7 @@ export default {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1046,7 +1046,7 @@ export default {
       return `${day}/${month}/${year}`;
     },
     async addExpense() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (!(await this.validateFormData())) return;
       this.errorMessage = [];
       this.isLoading = true;
@@ -1058,7 +1058,7 @@ export default {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
           body: JSON.stringify({
             expense_date: this.formData.DateExpense,
@@ -1087,7 +1087,7 @@ export default {
             `${API_CALL}/Quotation/AddExpense_img`,
             {
               method: "POST",
-              headers: { Authorization: `Bearer ${accessToken}` },
+              headers: { Authorization: `Bearer ${access_token}` },
               body: formDataImage,
             }
           );
@@ -1102,7 +1102,7 @@ export default {
       }
     },
     async editExpense() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (!(await this.validateFormData())) return;
       this.errorMessage = [];
       this.isLoading = true;
@@ -1117,7 +1117,7 @@ export default {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               expense_date: DateExpense,
@@ -1146,7 +1146,7 @@ export default {
             `${API_CALL}/Quotation/AddExpense_img`,
             {
               method: "POST",
-              headers: { Authorization: `Bearer ${accessToken}` },
+              headers: { Authorization: `Bearer ${access_token}` },
               body: formDataImage,
             }
           );
@@ -1162,7 +1162,7 @@ export default {
       }
     },
     async deleteExpenses() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (!(await this.validateFormData())) return;
       this.errorMessage = [];
       this.isLoading = true;
@@ -1173,7 +1173,7 @@ export default {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
           }
         );

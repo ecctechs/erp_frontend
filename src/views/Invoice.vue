@@ -384,7 +384,7 @@ import th from "vue-datepicker-next/locale/th.es";
 import en from "vue-datepicker-next/locale/en.es";
 
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 
 export default {
   name: "Invoice",
@@ -716,11 +716,11 @@ summaryFields() {
       }, 2000); // 2 seconds
     },
     async getQuotationImg(id) {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/Quotation/getQuotation_img`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1073,13 +1073,13 @@ summaryFields() {
       this.total_priceBeforeDiscount();
     },
     async getBanks() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/Quotation/getBank`, {
           method: "GET", // เปลี่ยน method เป็น 'POST'
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
             "Content-Type": "application/json", // เพิ่ม header Content-Type
           },
         });
@@ -1634,14 +1634,14 @@ summaryFields() {
       this.isPopupVisible_error = false;
     },
     async getEmployee() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(
           `${API_CALL}/employee/getEmployeeQuotation`,
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
           }
         );
@@ -1668,12 +1668,12 @@ summaryFields() {
       }
     },
     async getProduct() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/product/getProduct`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1704,11 +1704,11 @@ summaryFields() {
       }
     },
     async getQuotationByID(id) {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/quotation/getQuotation`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1728,13 +1728,13 @@ summaryFields() {
       }
     },
     async getBusiness() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/quotation/getBusinessByID`, {
           method: "GET", // เปลี่ยน method เป็น 'POST'
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
             "Content-Type": "application/json", // เพิ่ม header Content-Type
           },
         });
@@ -1753,11 +1753,11 @@ summaryFields() {
       }
     },
     async getInvoice() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         const response = await fetch(`${API_CALL}/quotation/getInvoice`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -1850,7 +1850,7 @@ summaryFields() {
     },
     async editInvoice() {
       // alert(this.formData.remark);
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       console.log("Testtttttttt: ", this.formData.invoice_status);
 
       // const date_invoice_date = new Date(this.formData.invoice_date); // ค่าที่ได้
@@ -1875,7 +1875,7 @@ summaryFields() {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${access_token}`,
               },
               body: JSON.stringify({
                 invoice_number: this.formData.invoice_number,
@@ -1909,7 +1909,7 @@ summaryFields() {
     },
     async editInvoice2() {
       // alert(this.formData.remark);
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       console.log("Testtttttttt: ", this.formData.invoice_status);
 
       // const date_invoice_date = new Date(this.formData.invoice_date); // ค่าที่ได้
@@ -1934,7 +1934,7 @@ summaryFields() {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${access_token}`,
               },
               body: JSON.stringify({
                 invoice_number: this.formData.invoice_number,
@@ -1965,7 +1965,7 @@ summaryFields() {
     },
     async editInvoice_Custome() {
       // alert(this.formData.remark);
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       console.log("Testtttttttt: ", this.formData.invoice_status);
 
       // const date_invoice_date = new Date(this.formData.invoice_date); // ค่าที่ได้
@@ -1990,7 +1990,7 @@ summaryFields() {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${access_token}`,
               },
               body: JSON.stringify({
                 invoice_number: this.formData.invoice_number,
@@ -2018,7 +2018,7 @@ summaryFields() {
       }
     },
     async deleteInvoice() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       const qty_id = this.formData.sale_id;
       try {
@@ -2028,7 +2028,7 @@ summaryFields() {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               invoice_id: qty_id,
@@ -2057,7 +2057,7 @@ summaryFields() {
       }
     },
     async deleteTaxInvoice(qty_id) {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       // const qty_id = this.formData.sale_id;
       // alert(qty_id);
@@ -2068,7 +2068,7 @@ summaryFields() {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               invoice_id: qty_id,

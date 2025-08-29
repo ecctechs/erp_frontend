@@ -147,7 +147,7 @@ import Dropdown from "../components/dropdown.vue";
 import formConfig from '../config/field_config/stock/form_stock_manage.json';
 
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 
 export default {
   name: "manageStock",
@@ -293,7 +293,7 @@ export default {
     },
     async getProduct() {
       const response = await fetch(`${API_CALL}/product/getProduct`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: { Authorization: `Bearer ${access_token}` },
       });
       const json = await response.json();
       this.Product = json.data;
@@ -467,14 +467,14 @@ export default {
     },
     async getProductByTypeID() {
       // Fetches products of a specific type (ID 1) from the server
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true;
       try {
         const response = await fetch(`${API_CALL}/product/getProduct`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -496,14 +496,14 @@ export default {
     },
     async getTransaction() {
       // Fetches all product transactions from the server
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       try {
         this.isLoading = true;
         const response = await fetch(`${API_CALL}/product/getTransaction`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -529,7 +529,7 @@ export default {
     },
     async producTransaction() {
       // Adds a new product transaction (either issue or receive)
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (!(await this.validateFormData())) return;
       this.errorMessage = [];
       this.isLoading = true;
@@ -538,7 +538,7 @@ export default {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
           body: JSON.stringify({
             product_id: this.formData.product_id,
@@ -572,7 +572,7 @@ export default {
     async editTransaction() {
       if (!(await this.validateFormData())) return;
       // Edits an existing product transaction
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
 
       this.errorMessage = [];
       this.isLoading = true;
@@ -585,7 +585,7 @@ export default {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               product_id: this.formData.product_id,

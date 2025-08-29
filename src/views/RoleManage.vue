@@ -128,7 +128,7 @@ import { useI18n } from "vue-i18n";
 import Button from "../components/button.vue";
 
 const API_CALL = config["url"];
-const accessToken = localStorage.getItem("@accessToken");
+const access_token = localStorage.getItem("@access_token");
 export default {
   components: {
     Navigate, // Component for navigation bar
@@ -217,12 +217,12 @@ export default {
     },
     // Fetch the list of roles from the server
     async getRole() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true; // Show loading spinner
       try {
         const response = await fetch(`${API_CALL}/auth/GetRole`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
         const json = await response.json();
@@ -248,7 +248,7 @@ export default {
     },
     // Add a new role to the system
     async addRole() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (this.formRole.role_name === "") {
         this.inputError = true; // Show validation error if role name is empty
         this.showPopup_error("Please fill data");
@@ -260,7 +260,7 @@ export default {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               role_name: this.formRole.role_name, // Send the role name to the API
@@ -285,7 +285,7 @@ export default {
     },
     // Edit an existing role
     async editRole() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       if (this.formRole.role_name === "") {
         this.inputError = true; // Show validation error if role name is empty
       } else {
@@ -297,7 +297,7 @@ export default {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               role_name: this.formRole.role_name, // Send the new role name to the API
@@ -321,7 +321,7 @@ export default {
     },
     // Delete a role
     async deleteRole() {
-      const accessToken = localStorage.getItem("@accessToken");
+      const access_token = localStorage.getItem("@access_token");
       this.isLoading = true; // Show loading spinner
       const RoleID = this.formRole.role_id; // Get the Role ID for deletion
       try {
@@ -329,7 +329,7 @@ export default {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
           body: JSON.stringify({ RoleID }), // Send the Role ID to the API
         });
