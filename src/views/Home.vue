@@ -467,7 +467,7 @@ export default {
       paidBillTotal: [],
       isPopupVisible_error: false,
       formData: {
-        bus_id: "",
+        business_id: "",
         customer_id: "",
         product_id: "",
         employee_id: "",

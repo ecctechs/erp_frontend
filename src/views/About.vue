@@ -165,7 +165,7 @@ export default {
       isLoading: false,
       isPopupVisible: false,
       formData: {
-        bus_id: "",
+        business_id: "",
         business_name: "",
         business_address: "",
         business_website: "",
@@ -177,7 +177,7 @@ export default {
         bank_number: "",
       },
       isEmpty: {
-        bus_id: false,
+        business_id: false,
         business_name: false,
         business_address: false,
         business_website: false,
@@ -265,7 +265,7 @@ export default {
     validateFormData() {
       // รายชื่อฟิลด์ทั้งหมดที่ต้องตรวจสอบ
       let fieldsToCheck = [
-        "bus_id",
+        "business_id",
         "business_name",
         "business_address",
         // "bus_website",
@@ -381,7 +381,7 @@ export default {
         this.isLoading = true;
         //Set data in the form to be used only when sending data with an image
         const formDataBusiness = new FormData();
-        formDataBusiness.append("bus_id", this.formData.bus_id);
+        formDataBusiness.append("business_id", this.formData.business_id);
         formDataBusiness.append("business_name", this.formData.business_name);
         formDataBusiness.append("business_address", this.formData.business_address);
         formDataBusiness.append("business_website", this.formData.business_website);
@@ -396,7 +396,7 @@ export default {
         for (const [key, value] of formDataBusiness.entries()) {
           console.log(`${key}: ${value}`);
         }
-        const busID = this.formData.bus_id;
+        const busID = this.formData.business_id;
         const response = await fetch(
           `${API_CALL}/Quotation/editBusiness/${busID}`,
           {
@@ -444,7 +444,7 @@ export default {
         if (json.statusCode === 200 && json.data) {
           //sendata to formData
           this.formData = {
-            bus_id: json.data.business.bus_id || "",
+            business_id: json.data.business.business_id || "",
             business_name: json.data.business.business_name || "",
             business_address: json.data.business.business_address || "",
             business_website: json.data.business.business_website || "",
@@ -469,7 +469,7 @@ export default {
           console.log("No data found:", json);
           this.showPopup_error("No data found");
           this.formData = {
-            bus_id: "",
+            business_id: "",
             business_name: "",
             business_address: "",
             business_website: "",

@@ -771,7 +771,7 @@ export default {
         employeereport: "Employee Report",
       },
       formDataBusiness: {
-        bus_id: 1,
+        business_id: 1,
         business_name: "",
         business_address: "",
         business_website: "",

@@ -525,7 +525,7 @@ export default {
       newSaleNumber: "",
       cus_drop_down: "",
       formData: {
-        bus_id: "",
+        business_id: "",
         customer_id: "",
         product_id: "",
         employee_id: "",
@@ -562,7 +562,7 @@ export default {
         remark_infernal: "",
       },
       isEmpty: {
-        bus_id: "",
+        business_id: "",
         customer_id: "",
         product_id: "",
         employee_id: "",
@@ -2083,7 +2083,7 @@ export default {
               customer_email: this.formData.customer_email,
               customer_tax: this.formData.customer_tax,
               customer_purchase: this.formData.customer_purchase,
-              bus_id: this.formData.bus_id,
+              business_id: this.formData.business_id,
               Status: "active",
             }),
           });
@@ -2141,7 +2141,7 @@ export default {
             sale_totalprice: parseFloat(
               this.formData.sale_totalprice.replace(/,/g, "")
             ),
-            bus_id: this.Business.bus_id,
+            business_id: this.Business.business_id,
             customer_id: this.formData.customer_id,
             employee_id: this.formData.employee_id,
             quotation_status: "Pending",
@@ -2229,7 +2229,7 @@ export default {
               customer_email: this.formData.customer_email,
               customer_tax: this.formData.customer_tax,
               customer_purchase: this.formData.customer_purchase,
-              bus_id: this.formData.bus_id,
+              business_id: this.formData.business_id,
               Status: "active",
             }),
           });
@@ -2307,7 +2307,7 @@ export default {
                 this.formData.vat_type !== "VATexcluding"
                   ? parseFloat(this.formData.sale_totalprice.replace(/,/g, ""))
                   : parseFloat(this.formData.sale_totalprice.replace(/,/g, "")),
-              bus_id: this.Business.bus_id,
+              business_id: this.Business.business_id,
               customer_id: this.formData.customer_id,
               employee_id: this.formData.employee_id,
               quotation_status: this.formData.quotation_status,
@@ -2379,7 +2379,7 @@ export default {
               customer_email: this.formData.customer_email,
               customer_tax: this.formData.customer_tax,
               customer_purchase: this.formData.customer_purchase,
-              bus_id: this.formData.bus_id,
+              business_id: this.formData.business_id,
               Status: "active",
             }),
           });
@@ -2480,7 +2480,7 @@ export default {
                 this.formData.vat_type !== "VATexcluding"
                   ? parseFloat(this.formData.sale_totalprice.replace(/,/g, ""))
                   : parseFloat(this.formData.sale_totalprice.replace(/,/g, "")),
-              bus_id: this.Business.bus_id,
+              business_id: this.Business.business_id,
               customer_id: this.formData.customer_id,
               employee_id: this.formData.employee_id,
               quotation_status: "Allowed",
@@ -2553,7 +2553,7 @@ export default {
               customer_email: this.formData.customer_email,
               customer_tax: this.formData.customer_tax,
               customer_purchase: this.formData.customer_purchase,
-              bus_id: this.formData.bus_id,
+              business_id: this.formData.business_id,
               Status: "active",
             }),
           });
@@ -2632,7 +2632,7 @@ export default {
                 this.formData.vat_type !== "VATexcluding"
                   ? parseFloat(this.formData.sale_totalprice.replace(/,/g, ""))
                   : parseFloat(this.formData.sale_totalprice.replace(/,/g, "")),
-              bus_id: this.Business.bus_id,
+              business_id: this.Business.business_id,
               customer_id: this.formData.customer_id,
               employee_id: this.formData.employee_id,
               quotation_status: "Pending",
@@ -2917,7 +2917,7 @@ export default {
       this.isEditMode = false;
       this.cus_drop_down;
       this.formData = {
-        bus_id: "",
+        business_id: "",
         customer_id: "",
         product_id: "",
         employee_id: "",
@@ -2987,7 +2987,7 @@ export default {
       this.isEditMode = false;
       //   this.cus_drop_down = ""
       this.formData = {
-        bus_id: "",
+        business_id: "",
         customer_id: "",
         product_id: "",
         employee_id: "",

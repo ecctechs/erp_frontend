@@ -441,7 +441,7 @@ export default {
       Employees: [],
       productForms: [],
       formData: {
-        bus_id: "",
+        business_id: "",
         customer_id: "",
         product_id: "",
         employee_id: "",
@@ -1631,7 +1631,7 @@ export default {
       this.isPopupOpen = false;
       this.isEditMode = false;
       this.formData = {
-        bus_id: "",
+        business_id: "",
         customer_id: "",
         product_id: "",
         employee_id: "",
