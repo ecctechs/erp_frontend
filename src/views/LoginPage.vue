@@ -225,7 +225,7 @@ export default {
           },
           body: JSON.stringify({
             user_email: this.formUser.useremail.toLowerCase().trim(), // Send user email
-            userPassword: this.formUser.password, // Send user password
+            user_password: this.formUser.password, // Send user password
           }),
         });
 

@@ -332,11 +332,11 @@ export default {
 
       // ตรวจสอบว่ารหัสผ่านและยืนยันรหัสผ่านตรงกัน
       if (
-        this.formData.userPassword &&
+        this.formData.user_password &&
         this.formData.userPassword2 &&
-        this.formData.userPassword !== this.formData.userPassword2
+        this.formData.user_password !== this.formData.userPassword2
       ) {
-        this.isEmpty.userPassword = true;
+        this.isEmpty.user_password = true;
         this.isEmpty.userPassword2 = true;
         errorMessages.push("รหัสผ่านและยืนยันรหัสผ่านไม่ตรงกัน");
       }

@@ -71,7 +71,7 @@
         v-model="formData[field.key]"
         :type="field.type"
         :class="{ error: isEmpty[field.key] }"
-        :disabled="isExistingUser && field.key !== 'userPassword'"
+        :disabled="isExistingUser && field.key !== 'user_password'"
         :maxlength="field.maxlength"
         @keypress="field.isNumeric ? validateInput($event) : null"
       />
@@ -219,7 +219,7 @@ export default {
         user_last_name: "", // Last name of the user
         user_phone: "", // User's phone number
         user_email: "", // User's email
-        userPassword: "", // User's password
+        user_password: "", // User's password
         role_id: "", // The selected role ID for the user
       },
       isEmpty: {
@@ -229,7 +229,7 @@ export default {
         user_last_name: "", // Last name of the user
         user_phone: "", // User's phone number
         user_email: "", // User's email
-        userPassword: "", // User's password
+        user_password: "", // User's password
         role_id: "", // The selected role ID for the user
       },
     };
@@ -320,7 +320,7 @@ export default {
         user_last_name: "",
         user_phone: "",
         user_email: "",
-        userPassword: "",
+        user_password: "",
         role_id: "",
       };
     },
@@ -354,7 +354,7 @@ export default {
         user_last_name: "",
         user_phone: "",
         user_email: "",
-        userPassword: "",
+        user_password: "",
         role_id: "",
       };
       this.inputError = false; // Resets input error flag
@@ -373,7 +373,7 @@ export default {
         user_last_name: item["Last name"],
         user_phone: item["Phone number"],
         user_email: item.Email,
-        userPassword: item.Password,
+        user_password: item.Password,
         role_id: role ? role.role_id : "", // Finds the RoleID for the user
       };
     },
@@ -457,7 +457,7 @@ export default {
               user_last_name: this.formData.user_last_name,
               user_phone: this.formData.user_phone,
               user_email: this.formData.user_email.toLowerCase(),
-              userPassword: this.formData.userPassword,
+              user_password: this.formData.user_password,
               role_id: this.formData.role_id,
             }),
           }
@@ -526,7 +526,7 @@ export default {
             user_last_name: this.formData.user_last_name,
             user_phone: this.formData.user_phone,
             user_email: this.formData.user_email,
-            userPassword: this.formData.userPassword,
+            user_password: this.formData.user_password,
             role_id: this.formData.role_id,
           }),
         });
@@ -558,7 +558,7 @@ export default {
         user_last_name: false,
         user_phone: false,
         user_email: false,
-        userPassword: false,
+        user_password: false,
         role_id: false,
       };
 
@@ -597,27 +597,27 @@ export default {
       }
 
       // ตรวจรหัสผ่าน
-      const password = this.formData.userPassword;
+      const password = this.formData.user_password;
       if (password === "" || password === undefined) {
-        this.isEmpty.userPassword = true;
+        this.isEmpty.user_password = true;
         errorMessages.push(this.$t("validation.userPassword"));
       }
 
       if (password) {
         if (password.length < 12) {
-          this.isEmpty.userPassword = true;
+          this.isEmpty.user_password = true;
           errorMessages.push(this.$t("validation.password_min_length"));
         }
         if (!/\d/.test(password)) {
-          this.isEmpty.userPassword = true;
+          this.isEmpty.user_password = true;
           errorMessages.push(this.$t("validation.password_number"));
         }
         if (password.toLowerCase() === password) {
-          this.isEmpty.userPassword = true;
+          this.isEmpty.user_password = true;
           errorMessages.push(this.$t("validation.password_uppercase"));
         }
         if (password.toUpperCase() === password) {
-          this.isEmpty.userPassword = true;
+          this.isEmpty.user_password = true;
           errorMessages.push(this.$t("validation.password_lowercase"));
         }
       }

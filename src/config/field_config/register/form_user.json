@@ -34,7 +34,7 @@
     "col": "col-md-6"
   },
   {
-    "key": "userPassword",
+    "key": "user_password",
     "label": "password",
     "componentType": "TextField",
     "type": "password",

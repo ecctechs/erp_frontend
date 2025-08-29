@@ -63,7 +63,7 @@
             <input
               class="form-control col-sm-9 col-md-6"
               style="max-width: 50vh; margin-right: 10px"
-              v-model="formData.userPassword"
+              v-model="formData.user_password"
               type="text"
               required
             />
@@ -175,7 +175,7 @@ export default {
       inputError: false,
       formData: {
         user_email: "",
-        userPassword: "",
+        user_password: "",
       },
       isPopupVisible: false,
       isPopupVisible_error: false,
@@ -309,7 +309,7 @@ export default {
           },
           body: JSON.stringify({
             user_email: this.formData.user_email, // Send the email and new password
-            userPassword: this.formData.userPassword,
+            user_password: this.formData.user_password,
           }),
         });
         const json = await response.json();

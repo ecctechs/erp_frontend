@@ -40,16 +40,16 @@
         </label>
         <div class="input-group">
           <TextField
-            :type="field.key === 'userPassword' ? (showPassword2 ? 'text' : 'password') : (showPassword ? 'text' : 'password')"
+            :type="field.key === 'user_password' ? (showPassword2 ? 'text' : 'password') : (showPassword ? 'text' : 'password')"
             :class="{ error: isEmpty[field.key] }"
             v-model="formData[field.key]"
           />
           <Button
             customClass="btn btn-outline-secondary"
             type="button"
-            @click="field.key === 'userPassword' ? togglePassword2() : togglePassword()"
+            @click="field.key === 'user_password' ? togglePassword2() : togglePassword()"
           >
-            <Icon v-if="field.key === 'userPassword'" :name="showPassword2 ? 'mdi-eye-off-outline' : 'mdi-eye-circle'" />
+            <Icon v-if="field.key === 'user_password'" :name="showPassword2 ? 'mdi-eye-off-outline' : 'mdi-eye-circle'" />
             <Icon v-else :name="showPassword ? 'mdi-eye-off-outline' : 'mdi-eye-circle'" />
           </Button>
         </div>
@@ -239,7 +239,7 @@ export default {
         user_last_name: "",
         user_phone: "",
         user_email: "",
-        userPassword: "",
+        user_password: "",
         bus_id: "",
         business_name: "",
         business_address: "",
@@ -258,7 +258,7 @@ export default {
         user_last_name: false,
         user_phone:false,
         user_email: false,
-        userPassword: false,
+        user_password: false,
         bus_id: false,
         business_name: false,
         business_address: false,
@@ -333,7 +333,7 @@ export default {
         "user_last_name",
         "user_phone",
         "user_email",
-        "userPassword",
+        "user_password",
         "userPassword2",
         "business_name",
         "business_address",
@@ -347,8 +347,8 @@ export default {
       });
 
       let errorMessages = [];
-      const password = this.formData.userPassword?.toString() || "";
-      this.isEmpty.userPassword = false;
+      const password = this.formData.user_password?.toString() || "";
+      this.isEmpty.user_password = false;
 
       fieldsToCheck.forEach((field) => {
         const value = this.formData[field]?.toString().trim();
@@ -370,22 +370,22 @@ export default {
             this.isEmpty.user_email = true;
             errorMessages.push(this.$t("validation.email_invalid"));
           }
-          if (field === "userPassword") {
+          if (field === "user_password") {
             const password = value;
             if (password.length < 12) {
-              this.isEmpty.userPassword = true;
+              this.isEmpty.user_password = true;
               errorMessages.push(this.$t("validation.password_min_length"));
             }
             if (!/\d/.test(password)) {
-              this.isEmpty.userPassword = true;
+              this.isEmpty.user_password = true;
               errorMessages.push(this.$t("validation.password_number"));
             }
             if (password.toLowerCase() === password) {
-              this.isEmpty.userPassword = true;
+              this.isEmpty.user_password = true;
               errorMessages.push(this.$t("validation.password_uppercase"));
             }
             if (password.toUpperCase() === password) {
-              this.isEmpty.userPassword = true;
+              this.isEmpty.user_password = true;
               errorMessages.push(this.$t("validation.password_lowercase"));
             }
           }
@@ -410,11 +410,11 @@ export default {
       }
 
       if (
-        this.formData.userPassword &&
+        this.formData.user_password &&
         this.formData.userPassword2 &&
-        this.formData.userPassword !== this.formData.userPassword2
+        this.formData.user_password !== this.formData.userPassword2
       ) {
-        this.isEmpty.userPassword = true;
+        this.isEmpty.user_password = true;
         this.isEmpty.userPassword2 = true;
         errorMessages.push("รหัสผ่านและยืนยันรหัสผ่านไม่ตรงกัน");
       }
@@ -465,7 +465,7 @@ export default {
         user_last_name: "",
         user_phone: "",
         user_email: "",
-        userPassword: "",
+        user_password: "",
         role_id: "",
         business_name: "",
         business_address: "",
@@ -536,7 +536,7 @@ export default {
         "user_email",
         this.formData.user_email.toLowerCase().trim()
       );
-      formDataBusiness.append("userPassword", this.formData.userPassword);
+      formDataBusiness.append("user_password", this.formData.user_password);
       formDataBusiness.append("business_name", this.formData.business_name);
       formDataBusiness.append("business_address", this.formData.business_address);
       formDataBusiness.append("business_website", this.formData.business_website);
@@ -573,7 +573,7 @@ export default {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               user_email: this.formData.user_email.toLowerCase().trim(),
-              userPassword: this.formData.userPassword,
+              user_password: this.formData.user_password,
             }),
           });
           const json = await response.json();

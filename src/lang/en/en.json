@@ -468,7 +468,7 @@
     "userL_name": "Please enter your last name",
     "userPhone": "Please enter your phone number",
     "userEmail": "Please enter your email",
-    "userPassword": "Please enter your password",
+    "user_password": "Please enter your password",
     "userPassword2": "Please confirm your password",
     "RoleID": "Please select a user role",
     "bus_name": "Please enter your business name",

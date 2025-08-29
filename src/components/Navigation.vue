@@ -576,11 +576,11 @@
       </div>
       <div class="mb-3 div-for-formProfile">
         <label>{{ t("password") }}</label>
-        <a v-if="isShowingPassword">{{ formDataUser.userPassword }}</a>
+        <a v-if="isShowingPassword">{{ formDataUser.user_password }}</a>
         <input
           class="form-control"
           v-if="isEdituserPasswordMode"
-          v-model="formDataUser.userPassword"
+          v-model="formDataUser.user_password"
           type="text"
           :class="{ error: inputError }"
         />
@@ -788,7 +788,7 @@ export default {
         user_last_name: "",
         user_phone: "",
         user_email: "",
-        userPassword: "",
+        user_password: "",
         role_id: "",
       },
       navItems: [
@@ -1037,7 +1037,7 @@ export default {
         this.formDataUser.user_last_name === "" ||
         this.formDataUser.user_phone === "" ||
         this.formDataUser.user_email === "" ||
-        this.formDataUser.userPassword === "" ||
+        this.formDataUser.user_password === "" ||
         this.formDataUser.role_id === ""
       ) {
         this.inputError = true;
@@ -1062,7 +1062,7 @@ export default {
         this.formDataUser.user_first_name === "" ||
         this.formDataUser.user_phone === "" ||
         this.formDataUser.user_email === "" ||
-        this.formDataUser.userPassword === "" ||
+        this.formDataUser.user_password === "" ||
         this.formDataUser.role_id === ""
       ) {
         this.inputError = true;
@@ -1087,7 +1087,7 @@ export default {
         this.formDataUser.user_first_name === "" ||
         this.formDataUser.user_last_name === "" ||
         this.formDataUser.user_email === "" ||
-        this.formDataUser.userPassword === "" ||
+        this.formDataUser.user_password === "" ||
         this.formDataUser.role_id === ""
       ) {
         this.inputError = true;
@@ -1112,7 +1112,7 @@ export default {
         this.formDataUser.user_first_name === "" ||
         this.formDataUser.user_last_name === "" ||
         this.formDataUser.user_phone === "" ||
-        this.formDataUser.userPassword === "" ||
+        this.formDataUser.user_password === "" ||
         this.formDataUser.role_id === ""
       ) {
         this.inputError = true;
@@ -1671,7 +1671,7 @@ export default {
             user_last_name: json.data.user_last_name,
             user_phone: json.data.user_phone,
             user_email: json.data.user_email,
-            userPassword: json.data.userPassword,
+            user_password: json.data.user_password,
             role_id: json.data.role.role_id,
           };
           this.userName = this.formDataUser.user_first_name;
@@ -1692,7 +1692,7 @@ export default {
         user_last_name: false,
         user_phone: false,
         user_email: false,
-        userPassword: false,
+        user_password: false,
       };
 
       // ตรวจชื่อจริง
@@ -1730,26 +1730,26 @@ export default {
       }
 
       // ตรวจรหัสผ่าน
-      const password = this.formDataUser.userPassword;
+      const password = this.formDataUser.user_password;
       if (password === "") {
-        this.isEmpty.userPassword = true;
+        this.isEmpty.user_password = true;
         errorMessages.push(this.$t("validation.userPassword"));
       }
 
       if (password.length < 12) {
-        this.isEmpty.userPassword = true;
+        this.isEmpty.user_password = true;
         errorMessages.push(this.$t("validation.password_min_length"));
       }
       if (!/\d/.test(password)) {
-        this.isEmpty.userPassword = true;
+        this.isEmpty.user_password = true;
         errorMessages.push(this.$t("validation.password_number"));
       }
       if (password.toLowerCase() === password) {
-        this.isEmpty.userPassword = true;
+        this.isEmpty.user_password = true;
         errorMessages.push(this.$t("validation.password_uppercase"));
       }
       if (password.toUpperCase() === password) {
-        this.isEmpty.userPassword = true;
+        this.isEmpty.user_password = true;
         errorMessages.push(this.$t("validation.password_lowercase"));
       }
 
@@ -1793,7 +1793,7 @@ export default {
             user_last_name: this.formDataUser.user_last_name,
             user_phone: this.formDataUser.user_phone,
             user_email: this.formDataUser.user_email.toLowerCase().trim(),
-            userPassword: this.formDataUser.userPassword,
+            user_password: this.formDataUser.user_password,
             role_id: this.formDataUser.role_id,
           }),
         });
