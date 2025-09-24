@@ -22,13 +22,13 @@
 
 ภาพรวมการทำงานของระบบ:
 
-![หน้าจอ Dashboard](./images/Picture1.png)  
+![หน้าจอ Dashboard](./images/Picture1.png)  https://github.com/ecctechs/erp_frontend/blob/main/images/Picture4.jpg) 
 *รูปที่ 1: หน้า Dashboard*
 
-![หน้าจอฟอร์มเพิ่มใบเสนอราคา](./images/Picture2.png)  
+![หน้าจอฟอร์มเพิ่มใบเสนอราคา](./images/Picture2.jpg)  
 *รูปที่ 2: ฟอร์มเพิ่ม Quotation ใหม่*
 
-![หน้าจอฟอร์มบริษัท](./images/Picture3.png)  
+![หน้าจอฟอร์มบริษัท](./images/Picture3.jpg)  
 *รูปที่ 3: ฟอร์มเพิ่ม ข้อมูลบริษัท ใหม่*
 
 ![หน้าจอฟอร์มธุรกิจคุณ](./images/Picture4.png)  
