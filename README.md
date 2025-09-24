@@ -22,7 +22,7 @@
 
 ภาพรวมการทำงานของระบบ:
 
-![หน้าจอ Dashboard](./images/Picture1.png)  https://github.com/ecctechs/erp_frontend/blob/main/images/Picture4.jpg) 
+![หน้าจอ Dashboard](./images/Picture1.jpg)
 *รูปที่ 1: หน้า Dashboard*
 
 ![หน้าจอฟอร์มเพิ่มใบเสนอราคา](./images/Picture2.jpg)  
@@ -40,8 +40,8 @@
 
 1. Clone โปรเจกต์นี้ลงเครื่องของคุณ:
    ```bash 
-   git clone https://github.com/ecctechs/KEYENCE_inkjet_printing_control_DEMO.git
-   cd KEYENCE_inkjet_printing_control_DEMO
+   git clone https://github.com/ecctechs/erp_frontend.git
+   cd erp_frontend
 
 
 # 🖥️ วิธีใช้งานโปรแกรม ERP
