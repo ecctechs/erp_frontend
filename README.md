@@ -1,5 +1,5 @@
 
-# 🚀 โปรแกรม ERP
+# 🚀 ระบบ ERP สำหรับจัดการธุรกิจครบวงจร
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/username/repo-name)
 ![GitHub contributors](https://img.shields.io/github/contributors/username/repo-name)
