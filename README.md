@@ -22,7 +22,7 @@
 
 ภาพรวมการทำงานของระบบ:
 
-![หน้าจอ Dashboard](./images/Picture1.jpg)
+![หน้าจอฟอร์มเพิ่มใบเสนอราคา](./images/Picture1.jpg)  
 *รูปที่ 1: หน้า Dashboard*
 
 ![หน้าจอฟอร์มเพิ่มใบเสนอราคา](./images/Picture2.jpg)  
