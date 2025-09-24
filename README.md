@@ -22,11 +22,17 @@
 
 ภาพรวมการทำงานของระบบ:
 
-![หน้าจอ Dashboard](./images/dashboard.png)  
-*รูปที่ 1: หน้า Dashboard แสดงข้อมูล Inkjet ทั้งหมด*
+![หน้าจอ Dashboard](./images/Picture1.png)  
+*รูปที่ 1: หน้า Dashboard*
 
-![หน้าจอฟอร์มเพิ่มสินค้า](./images/add_inkjet.png)  
-*รูปที่ 2: ฟอร์มเพิ่ม Inkjet ใหม่*
+![หน้าจอฟอร์มเพิ่มใบเสนอราคา](./images/Picture2.png)  
+*รูปที่ 2: ฟอร์มเพิ่ม Quotation ใหม่*
+
+![หน้าจอฟอร์มบริษัท](./images/Picture3.png)  
+*รูปที่ 3: ฟอร์มเพิ่ม ข้อมูลบริษัท ใหม่*
+
+![หน้าจอฟอร์มธุรกิจคุณ](./images/Picture4.png)  
+*รูปที่ 4: ฟอร์ม Setting ธุรกิจ*
 
 ---
 
