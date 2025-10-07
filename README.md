@@ -45,6 +45,60 @@
 
 ---
 
+## 📸 ตัวอย่างหน้าจอ (Screenshots)
+
+ภาพรวมการทำงานของระบบ:
+
+<div style="margin-bottom: 20px; text-align: center;">
+  <img src="./images/ex-dashboard.jpg" 
+       alt="หน้าจอฟอร์มเพิ่มใบเสนอราคา" 
+       style="border: 3px solid black; border-radius: 4px; max-width: 100%;"/>
+  <p><em>รูปที่ 1: หน้า Dashboard</em></p>
+</div>
+
+<div style="margin-bottom: 20px; text-align: center;">
+  <img src="./images/ex-category.jpg" 
+       alt="หน้าจอฟอร์มเพิ่ม category" 
+       style="border: 3px solid black; border-radius: 4px; max-width: 100%;"/>
+  <p><em>รูปที่ 2: ฟอร์มเพิ่ม category ใหม่</em></p>
+</div>
+
+<div style="margin-bottom: 20px; text-align: center;">
+  <img src="./images/ex-stock.jpg" 
+       alt="หน้าจอเพิ่ม-ลด สต็อกสินค้า" 
+       style="border: 3px solid black; border-radius: 4px; max-width: 100%;"/>
+  <p><em>รูปที่ 3: หน้าจัดการ เพิ่ม-ลด สต็อกสินค้า</em></p>
+</div>
+
+<div style="margin-bottom: 20px; text-align: center;">
+  <img src="./images/ex-invoice.jpg" 
+       alt="หน้าจอ invoice" 
+       style="border: 3px solid black; border-radius: 4px; max-width: 100%;"/>
+  <p><em>รูปที่ 4: รายการตัวอย่าง invoice</em></p>
+</div>
+
+<div style="margin-bottom: 20px; text-align: center;">
+  <img src="./images/ex-levea.jpg" 
+       alt="หน้าจอ leave" 
+       style="border: 3px solid black; border-radius: 4px; max-width: 100%;"/>
+  <p><em>รูปที่ 5: หน้ารายงานการลาพนักงาน</em></p>
+</div>
+
+<div style="margin-bottom: 20px; text-align: center;">
+  <img src="./images/sale-report.jpg" 
+       alt="หน้าจอรายงานการขาย" 
+       style="border: 3px solid black; border-radius: 4px; max-width: 100%;"/>
+  <p><em>รูปที่ 6: หน้ารายงานการขาย</em></p>
+</div>
+
+<div style="margin-bottom: 20px; text-align: center;">
+  <img src="./images/ex-invocie-pdf.jpg" 
+       alt="หน้าจอใบเสนอราคา PDF" 
+       style="border: 3px solid black; border-radius: 4px; max-width: 100%;"/>
+  <p><em>รูปที่ 7: ตัวอย่างใบเสนอราคา PDF</em></p>
+</div>
+
+
 ## ⚙️ วิธีการติดตั้ง
 
 1. Clone โปรเจกต์นี้ลงเครื่องของคุณ:
